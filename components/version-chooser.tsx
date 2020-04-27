@@ -37,23 +37,18 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   }
 
   return (
-    <div className='d-flex'>
-      <select value={major} onChange={({ target: { value } }) => setMajor(value)}>
+    <div className='d-flex flex-md-row flex-column'>
+      <select className='ml-md-2 my-2 my-md-0' value={major} onChange={({ target: { value } }) => setMajor(value)}>
         {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
       </select>
-      <select value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+      <select className='mx-md-2 my-2 my-md-0' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
         {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
       </select>
-      <select value={file} onChange={({ target: { value } }) => setFile(value)}>
+      <select className='mr-md-2 my-2 my-md-0' value={file} onChange={({ target: { value } }) => setFile(value)}>
         {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
       </select>
 
-      <div className='btn btn-sm btn-primary' onClick={() => goTo()}>Go</div>
-
-      <style jsx>{`
-        select:not(:first-child) { margin-left: 1rem; }
-        select:nth-of-type(3) { margin-right: 1rem; } 
-      `}</style>
+      <div className='btn btn-sm btn-primary my-2 my-md-0' onClick={() => goTo()}>Go</div>
     </div>
   )
 }

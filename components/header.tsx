@@ -41,6 +41,8 @@ const Header: FunctionComponent<Props> = ({ versions }) => {
       <style jsx>{`
         .navbar {
           min-height: 4rem;
+          max-width: 100%;
+          overflow-x: scroll;
         }
       `}</style>
     </>

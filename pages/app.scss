@@ -75,7 +75,56 @@ h1, h2, h3, h4 {
     visibility: hidden;
   }
 
+  overflow-x: scroll;
+
+  //body{
+  //  max-width:1080px;
+  //  margin-left:auto;
+  //  margin-right:auto;
+  //  font-family:raleway,segoe ui,sans-serif;
+  //  padding:64px;
+  //  background-color:#fdfdfd
+  //}
+
   table {
-    overflow-x: scroll;
+    display: block;
+    width: auto !important;
+    max-width: 100%;
+    overflow-x: auto;
+    //white-space: nowrap;
+
+    tbody {
+      display: table;
+      width: 100%;
+    }
+  }
+
+  h1 {
+    overflow-wrap: break-word;
+  }
+
+  /* Thanks, Jannis! */
+  td,th {
+    border:none;
+    border-width:1px;
+    padding:6px;
+    border-color:#656e73;
+    background-color:#ddfbdd
+  }
+
+  th {
+    background-color:#a5f1b2
+  }
+
+  a {
+    color:inherit
+  }
+
+  textarea {
+    padding:9px;
+    min-height:80px;
+    min-width:400px;
+    max-width:100%;
+    line-height:18px
   }
 }
