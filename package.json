@@ -1,5 +1,5 @@
 {
-  "name": "with-typescript",
+  "name": "bedrock-dev",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -8,10 +8,22 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "isomorphic-unfetch": "3.0.0",
+    "@mojang/web-theme-bootstrap": "^4.5.0",
+    "@types/cheerio": "^0.22.18",
+    "@types/classnames": "^2.2.10",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/nprogress": "^0.2.0",
+    "@types/semver": "^7.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "classnames": "^2.2.6",
     "next": "latest",
+    "nprogress": "^0.2.0",
+    "prismjs": "^1.20.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^16.12.0",
+    "sass": "^1.26.5",
+    "semver": "^7.3.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",

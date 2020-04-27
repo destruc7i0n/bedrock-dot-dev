@@ -1,0 +1,61 @@
+import { FunctionComponent, useEffect, useState } from 'react'
+
+import Router from 'next/router'
+
+import { compareBedrockVersions } from '../lib/util'
+
+import { TagsResponse } from '../lib/files'
+import { BedrockVersions } from '../pages/api/docs/list'
+
+type VersionChooserProps = {
+  versions: BedrockVersions
+  tags: TagsResponse
+}
+
+const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
+  const [ stableMajor, stableMinor ] = tags.stable
+
+  const [ major, setMajor ] = useState(stableMajor)
+  const [ minor, setMinor ] = useState(stableMinor)
+
+  let files: string[] = []
+  if (versions[major] && versions[major][minor]) {
+    files = versions[major][minor]
+  }
+
+  const [ file, setFile ] = useState(files[0])
+
+  let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
+  let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
+
+  useEffect(() => {
+    setMinor(minorVersions[minorVersions.length - 1])
+  }, [major])
+
+  const goTo = () => {
+    Router.push('/docs/[...slug]', `/docs/${major}/${minor}/${file}`)
+  }
+
+  return (
+    <div className='d-flex'>
+      <select value={major} onChange={({ target: { value } }) => setMajor(value)}>
+        {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
+      </select>
+      <select value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+        {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
+      </select>
+      <select value={file} onChange={({ target: { value } }) => setFile(value)}>
+        {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+      </select>
+
+      <div className='btn btn-sm btn-primary' onClick={() => goTo()}>Go</div>
+
+      <style jsx>{`
+        select:not(:first-child) { margin-left: 1rem; }
+        select:nth-of-type(3) { margin-right: 1rem; } 
+      `}</style>
+    </div>
+  )
+}
+
+export default VersionChooser

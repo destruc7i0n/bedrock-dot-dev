@@ -1,0 +1,81 @@
+$freyja-asset-path: '/assets';
+$master-head-height-lg: 112px;
+$master-head-height-md: 87px;
+$global-menu-height: 27px;
+
+@import '~bootstrap/scss/functions';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/colors';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/theme';
+//@import '~@mojang/web-theme-bootstrap/scss/abstract/keyframes';
+@import '~bootstrap/scss/variables';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/variables';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/mixins';
+@import '~bootstrap/scss/mixins';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/utilities';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/extendables';
+@import '~@mojang/web-theme-bootstrap/scss/abstract/columns';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/type';
+//@import '~bootstrap/scss/images';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/tables';
+//@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
+//@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
+//@import '~bootstrap/scss/card';
+//@import '~bootstrap/scss/alert';
+//@import '~bootstrap/scss/progress';
+//@import '~bootstrap/scss/input-group';
+//@import '~bootstrap/scss/close';
+//@import '~bootstrap/scss/modal';
+//@import '~bootstrap/scss/code';
+@import '~bootstrap/scss/utilities';
+@import '~@mojang/web-theme-bootstrap/scss/base/typography';
+@import '~@mojang/web-theme-bootstrap/scss/base/background';
+//@import '~@mojang/web-theme-bootstrap/scss/components/alert';
+//@import '~@mojang/web-theme-bootstrap/scss/components/radio';
+@import '~@mojang/web-theme-bootstrap/scss/components/checkbox';
+@import '~@mojang/web-theme-bootstrap/scss/components/buttons';
+@import '~@mojang/web-theme-bootstrap/scss/components/borders';
+//@import '~@mojang/web-theme-bootstrap/scss/components/forms';
+//@import '~@mojang/web-theme-bootstrap/scss/components/card';
+//@import '~@mojang/web-theme-bootstrap/scss/components/close';
+//@import '~@mojang/web-theme-bootstrap/scss/components/modal';
+//@import '~@mojang/web-theme-bootstrap/scss/components/progress';
+@import '~@mojang/web-theme-bootstrap/scss/components/navbar';
+@import '~@mojang/web-theme-bootstrap/scss/components/links';
+//@import '~@mojang/web-theme-bootstrap/scss/components/icons';
+//@import '~@mojang/web-theme-bootstrap/scss/components/animations';
+//@import '~@mojang/web-theme-bootstrap/scss/components/ribbons';
+//@import '~@mojang/web-theme-bootstrap/scss/components/tiles';
+//@import '~@mojang/web-theme-bootstrap/scss/components/footer';
+//@import '~@mojang/web-theme-bootstrap/scss/components/attribution';
+//@import '~@mojang/web-theme-bootstrap/scss/components/page-section';
+//@import '~@mojang/web-theme-bootstrap/scss/components/countdown';
+//@import '~@mojang/web-theme-bootstrap/scss/components/counter';
+//@import '~@mojang/web-theme-bootstrap/scss/components/area-overlay';
+//@import '~@mojang/web-theme-bootstrap/scss/components/loader';
+//@import '~@mojang/web-theme-bootstrap/scss/components/logo';
+
+@import '~prismjs/themes/prism.css';
+@import '~nprogress/nprogress.css';
+
+h1, h2, h3, h4 {
+  text-transform: none;
+}
+
+.docs-container {
+  [id]::before {
+    content: '';
+    display: block;
+    height:      64px;
+    margin-top: -64px;
+    visibility: hidden;
+  }
+
+  table {
+    overflow-x: scroll;
+  }
+}
