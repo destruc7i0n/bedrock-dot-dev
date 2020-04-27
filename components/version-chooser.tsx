@@ -36,19 +36,36 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     Router.push('/docs/[...slug]', `/docs/${major}/${minor}/${file}`)
   }
 
-  return (
-    <div className='d-flex flex-md-row flex-column'>
-      <select className='ml-md-2 my-2 my-md-0' value={major} onChange={({ target: { value } }) => setMajor(value)}>
-        {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
-      </select>
-      <select className='mx-md-2 my-2 my-md-0' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
-        {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
-      </select>
-      <select className='mr-md-2 my-2 my-md-0' value={file} onChange={({ target: { value } }) => setFile(value)}>
-        {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
-      </select>
+  const setBeta = () => {
+    setMajor(tags.beta[0])
+    setMinor(tags.beta[1])
+  }
 
-      <div className='btn btn-sm btn-primary my-2 my-md-0' onClick={() => goTo()}>Go</div>
+  const setStable = () => {
+    setMajor(tags.stable[0])
+    setMinor(tags.stable[1])
+  }
+
+  return (
+    <div className='d-flex flex-column'>
+      <div className='d-flex flex-md-row flex-column'>
+        <select className='my-2 my-md-0' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+          {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
+        </select>
+        <select className='mx-md-2 my-2 my-md-0' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+          {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
+        </select>
+        <select className='mr-md-2 my-2 my-md-0' value={file} onChange={({ target: { value } }) => setFile(value)}>
+          {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+        </select>
+
+        <div className='btn btn-sm btn-primary my-2 my-md-0' onClick={() => goTo()}>Go</div>
+      </div>
+
+      <div className='d-flex flex-row justify-content-around'>
+        <button className='btn btn-primary mt-2' onClick={() => setBeta()}>Beta</button>
+        <button className='btn btn-primary mt-2' onClick={() => setStable()}>Stable</button>
+      </div>
     </div>
   )
 }
