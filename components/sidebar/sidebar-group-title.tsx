@@ -10,8 +10,8 @@ type Props = {
 }
 
 const RightArrow = (
-  <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1.4 8.56L4.67 5M1.4 1.23L4.66 4.7" stroke="#000" strokeLinecap="square" />
+  <svg width='6' height='10' viewBox='0 0 6 10' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path d='M1.4 8.56L4.67 5M1.4 1.23L4.66 4.7' stroke='#000' strokeLinecap='square' />
   </svg>
 )
 
@@ -49,7 +49,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
           user-select: none;
           margin-left: auto;
           display: block;
-          margin-right: 1rem;
+          padding-right: 1rem;
           width: 20px;
           text-align: right;
           cursor: pointer;
