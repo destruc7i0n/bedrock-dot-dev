@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
-
-import cn from 'classnames'
 
 import { BedrockVersions } from '../api/docs/list'
 
@@ -12,10 +10,13 @@ import { parseHtml, ParseHtmlResponse, removeDisplayHtml } from '../../lib/html'
 
 import Layout from '../../components/layout'
 import Sidebar  from '../../components/sidebar'
-import LocationContext from '../../components/location-context'
+import DocsContainer from '../../components/docs-container'
+import VersionContext from '../../components/version-context'
+import { SidebarContextProvider } from '../../components/sidebar/sidebar-context'
 import Loading from '../../components/loading'
-import { useIsMobile } from '../../components/media-query'
+
 import { useScrollController } from '../../components/scroll-controller'
+import { useIsMobile } from '../../components/media-query';
 
 import { getBedrockVersions } from '../../lib/files'
 import { getDocsFilesFromRepo } from '../../lib/github/raw'
@@ -34,19 +35,15 @@ const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
 
   useScrollController()
 
-  useEffect(() => {
-    window.history.scrollRestoration = 'manual'
-  }, [])
-
-  const showSidebar = !isMobile
-
   // while loading...
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
       return (
-        <Layout title={'Loading...'} versions={bedrockVersions}>
-          <Loading />
-        </Layout>
+        <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
+          <Layout title={'Loading...'}>
+            <Loading />
+          </Layout>
+        </VersionContext.Provider>
       )
     } else {
       return <Error statusCode={404} />
@@ -54,21 +51,14 @@ const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
   }
 
   return (
-    <LocationContext.Provider value={{ major, minor, file }}>
-      <Layout title={parsedData && parsedData.title} versions={bedrockVersions}>
-        <div className='mb-3 row'>
-          {showSidebar && (
-            <div className='col-3'>
-              <Sidebar sidebar={parsedData && parsedData.sidebar}/>
-            </div>
-          )}
-          <div
-            dangerouslySetInnerHTML={{ __html: html }}
-            className={cn({'col-9': showSidebar, 'col-12': !showSidebar}, 'docs-container')}
-          />
-        </div>
-      </Layout>
-    </LocationContext.Provider>
+    <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
+      <SidebarContextProvider>
+        <Layout title={parsedData && parsedData.title}>
+          <Sidebar sidebar={parsedData && parsedData.sidebar} mobile={isMobile} />
+          <DocsContainer html={html} />
+        </Layout>
+      </SidebarContextProvider>
+    </VersionContext.Provider>
   )
 }
 

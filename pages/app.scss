@@ -62,6 +62,10 @@ $global-menu-height: 27px;
 @import '~prismjs/themes/prism.css';
 @import '~nprogress/nprogress.css';
 
+:root {
+  --sidebar-width: 400px;
+}
+
 h1, h2, h3, h4 {
   text-transform: none;
 }
@@ -70,8 +74,8 @@ h1, h2, h3, h4 {
   [id]::before {
     content: '';
     display: block;
-    height: 64px;
-    margin-top: -64px;
+    height: 8rem;
+    margin-top: -8rem;
     visibility: hidden;
   }
 

@@ -21,7 +21,7 @@ const SidebarGroupItem: FunctionComponent<Props> = ({ title, id }) => {
         a {
           color: #313131;
           display: block;
-          padding: .25rem 1.5rem;
+          padding: .25rem .5rem;
           font-size: 90%;
           width: 100%;
         }

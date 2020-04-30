@@ -40,7 +40,6 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
 
         .sidebar-title {
           display: block;
-          padding-left: 1rem;
           font-weight: 600;
           color: #000;
         }
@@ -49,10 +48,13 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
           user-select: none;
           margin-left: auto;
           display: block;
-          padding-right: 1rem;
           width: 20px;
           text-align: right;
           cursor: pointer;
+        }
+        
+        .sidebar-expand > :global(svg) {
+          transition: transform 0.15s ease;
         }
         
         .sidebar-expand:not(.open) > :global(svg) {

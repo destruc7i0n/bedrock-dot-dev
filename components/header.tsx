@@ -1,42 +1,38 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import cn from 'classnames'
 
-import Selectors from './selectors'
+import { setOpen, SidebarContext } from './sidebar/sidebar-context'
 
-import { BedrockVersions } from '../pages/api/docs/list'
-
-type Props = {
-  versions?: BedrockVersions
-}
-
-const Header: FunctionComponent<Props> = ({ versions }) => {
+const Header: FunctionComponent = () => {
   const router = useRouter()
-  const isDocsPage = router.pathname.startsWith('/docs')
+
+  const { state: { open }, dispatch } = useContext(SidebarContext)
+
   const centerHeader = [ '/', '/about' ].includes(router.pathname)
+  const isDocsPage = router.pathname.startsWith('/docs')
 
   return (
     <>
-      <nav className='navbar navbar-expand navbar-dark bg-dark sticky-top flex-md-row-reverse' id='navbar'>
-        <ul className='navbar-nav'>
+      <nav className='navbar navbar-expand navbar-dark bg-dark sticky-top' id='navbar'>
+        {isDocsPage && (
+          <button className='btn btn-primary btn-sm mr-2 py-1 px-2' onClick={() => dispatch(setOpen(!open))}>
+            &#9776;
+          </button>
+        )}
+        <Link href='/'>
+          <a className={cn('navbar-brand mr-0', { 'ml-auto mr-auto': centerHeader })}>bedrock.dev</a>
+        </Link>
+
+        <ul className='navbar-nav ml-auto'>
           <Link href='/about'>
-            <a className='btn btn-primary nav-item p-2'>
+            <a className='btn btn-primary nav-item py-1 px-2'>
               ?
             </a>
           </Link>
         </ul>
-        <Link href='/'>
-          <a className={cn('navbar-brand', { 'ml-auto mr-auto': centerHeader })}>bedrock.dev</a>
-        </Link>
-        {isDocsPage && versions && (
-          <ul className='navbar-nav mr-md-auto ml-auto ml-md-0'>
-            <li className='nav-item'>
-              <Selectors versions={versions}/>
-            </li>
-          </ul>
-        )}
       </nav>
       <style jsx>{`
         .navbar {

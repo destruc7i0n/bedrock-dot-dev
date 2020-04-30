@@ -2,22 +2,15 @@ import React, { ChangeEvent, FunctionComponent, useContext } from 'react'
 
 import Router from 'next/router'
 
-import { BedrockVersions } from '../pages/api/docs/list'
 import { compareBedrockVersions } from '../lib/util'
 
-import LocationContext from './location-context'
+import VersionContext from './version-context'
 
-type Props = {
-  versions: BedrockVersions | null
-}
-
-const Selectors: FunctionComponent<Props> = ({ versions }) => {
-  if (!versions) return null
-
+const Selectors: FunctionComponent = () => {
   // get from the context
-  const { major, minor, file } = useContext(LocationContext)
+  const { major, minor, file, versions } = useContext(VersionContext)
 
-  if (!major) return null
+  if (!major || !versions) return null
 
   const majorVersionsOrdered = Object.keys(versions).sort(compareBedrockVersions).reverse()
 
@@ -54,11 +47,11 @@ const Selectors: FunctionComponent<Props> = ({ versions }) => {
 
   return (
     <div className='d-flex flex-row'>
-      <select value={`${major}/${minor}`} onChange={onVersionChange}>
+      <select value={`${major}/${minor}`} onChange={onVersionChange} className='w-50'>
         {options}
       </select>
       {files && (
-        <select value={file} onChange={onFileChange} className='ml-2'>
+        <select value={file} onChange={onFileChange} className='ml-2 w-50'>
           {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
         </select>
       )}
