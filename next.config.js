@@ -8,7 +8,8 @@ const getTags = async () => {
 
 module.exports = {
   typescript: {
-    ignoreDevErrors: true
+    ignoreDevErrors: true,
+    // reactRefresh: true,
   },
   experimental: {
     modern: true,

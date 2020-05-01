@@ -29,7 +29,10 @@ type Props = {
 
 const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
   const { isFallback, query } = useRouter()
-  const { slug: [ major, minor, file ] } = query
+  const { slug } = query
+
+  let major = '', minor = '', file = ''
+  if (slug) [ major, minor, file ] = slug
 
   const isMobile = useIsMobile()
 
@@ -102,7 +105,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   if (typeof html === 'string') {
     displayHtml = html ? removeDisplayHtml(html) : ''
-    parsedData = parseHtml(html)
+
+    let file = ''
+    if (slug && slug.length === 3) file = slug[2]
+
+    parsedData = parseHtml(html, file)
   }
 
   return { props: { html: displayHtml, bedrockVersions, parsedData } }

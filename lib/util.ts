@@ -17,3 +17,7 @@ export function getTagsFromString(s: string) {
     minor: s,
   }
 }
+
+export const addHashIfNeeded = (s: string) => {
+  return s[0] === '#' ? s : `#${s}`
+}

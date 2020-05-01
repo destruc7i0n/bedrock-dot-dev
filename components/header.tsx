@@ -2,8 +2,6 @@ import React, { FunctionComponent, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import cn from 'classnames'
-
 import { setOpen, SidebarContext } from './sidebar/sidebar-context'
 
 const Header: FunctionComponent = () => {
@@ -11,7 +9,6 @@ const Header: FunctionComponent = () => {
 
   const { state: { open }, dispatch } = useContext(SidebarContext)
 
-  const centerHeader = [ '/', '/about' ].includes(router.pathname)
   const isDocsPage = router.pathname.startsWith('/docs')
 
   return (
@@ -23,7 +20,7 @@ const Header: FunctionComponent = () => {
           </button>
         )}
         <Link href='/'>
-          <a className={cn('navbar-brand mr-0', { 'ml-auto mr-auto': centerHeader })}>bedrock.dev</a>
+          <a className='navbar-brand mr-0'>bedrock.dev</a>
         </Link>
 
         <ul className='navbar-nav ml-auto'>

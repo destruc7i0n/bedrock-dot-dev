@@ -2,8 +2,41 @@ import { SidebarStructure } from '../components/sidebar'
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
 const TH_MATCH = /<th>(.*)<\/th>/
+const TD_MATCH = /<td style=".*">(minecraft:.*)<\/td>/g
 const LINK_MATCH = /<a href="(#.*)">(.*)<\/a>/
 const H1_MATCH = /<h1>(.*)<\/h1>/
+
+const getComponentsList = (html: string): SidebarStructure => {
+  let components: SidebarStructure = {
+    'Components': []
+  }
+
+  const getComponents = (id: string) => {
+    // this needs to be this disgusting to work for the older pages
+    const tableRegex =
+      `<h2><p id="${id}">${id}<\/p><\/h2>[^]*?` + TABLE_MATCH.source
+
+    const matchComponents = new RegExp(tableRegex)
+    const componentsTable = html.match(matchComponents)
+
+    // console.log(/<h2><p id="Components">Components<\/p><\/h2>.*<table .*>/.test(html))
+
+    if (componentsTable && componentsTable[1]) {
+      let match
+      while (match = TD_MATCH.exec(componentsTable[1])) components['Components'].push({
+        title: match[1],
+        id: match[1],
+      })
+      // console.log(components['Components'].length)
+    }
+  }
+
+  // match these two groups and add to the sidebar
+  getComponents('Components')
+  getComponents('Properties')
+
+  return components
+}
 
 const getSidebarContent = (html: string): SidebarStructure => {
   let format: SidebarStructure = {}
@@ -56,8 +89,20 @@ export type ParseHtmlResponse = {
   title: string
 }
 
-export const parseHtml = (html: string): ParseHtmlResponse => {
-  const sidebarContent = getSidebarContent(html)
+export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
+  let sidebarContent = getSidebarContent(html)
+  if (file && file === 'Entities') {
+    const componentsList = getComponentsList(html)
+    // only add the sidebar components entry if there are any found
+    if (componentsList['Components'].length) {
+      sidebarContent['Components'] = componentsList['Components'].sort((a, b) => a.title.localeCompare(b.title))
+      // order the object and bring the components list to the top
+      sidebarContent = {
+        'Components': sidebarContent['Components'],
+        ...sidebarContent
+      }
+    }
+  }
   const title = getTitle(html)
 
   return {

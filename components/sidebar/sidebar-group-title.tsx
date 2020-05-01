@@ -3,6 +3,7 @@ import React, { Children, FunctionComponent, useState } from 'react'
 import cn from 'classnames'
 
 import { scrollTo } from '../../lib/scroller'
+import { addHashIfNeeded } from '../../lib/util';
 
 type Props = {
   title: string
@@ -19,6 +20,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
   const [ open, setOpen ] = useState(true)
 
   const hasChildren = !!Children.count(children)
+  id = addHashIfNeeded(id)
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import { scrollTo } from '../../lib/scroller'
+import { addHashIfNeeded } from '../../lib/util'
 
 type Props = {
   title: string
@@ -8,6 +9,7 @@ type Props = {
 }
 
 const SidebarGroupItem: FunctionComponent<Props> = ({ title, id }) => {
+  id = addHashIfNeeded(id)
   return (
     <li>
       <a href={id} onClick={(e) => scrollTo(e, id)}>
