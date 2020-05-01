@@ -16,7 +16,6 @@ import { SidebarContextProvider } from '../../components/sidebar/sidebar-context
 import Loading from '../../components/loading'
 
 import { useScrollController } from '../../components/scroll-controller'
-import { useIsMobile } from '../../components/media-query';
 
 import { getBedrockVersions } from '../../lib/files'
 import { getDocsFilesFromRepo } from '../../lib/github/raw'
@@ -33,8 +32,6 @@ const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
 
   let major = '', minor = '', file = ''
   if (slug) [ major, minor, file ] = slug
-
-  const isMobile = useIsMobile()
 
   useScrollController()
 
@@ -57,7 +54,7 @@ const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
       <SidebarContextProvider>
         <Layout title={parsedData && parsedData.title}>
-          <Sidebar sidebar={parsedData && parsedData.sidebar} mobile={isMobile} />
+          <Sidebar sidebar={parsedData && parsedData.sidebar} />
           <DocsContainer html={html} />
         </Layout>
       </SidebarContextProvider>

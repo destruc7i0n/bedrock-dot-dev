@@ -2,6 +2,10 @@ import { useState, useCallback, useEffect } from 'react'
 
 // from https://github.com/zeit/next-site/blob/master/components/media-query.js
 
+const getMediaQuery = (width: number) => {
+  return (window.matchMedia && window.matchMedia(`(max-width: ${width}px)`)) || { matches: false }
+}
+
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false)
 
@@ -14,7 +18,7 @@ const useMediaQuery = (width: number) => {
   }, [])
 
   useEffect(() => {
-    const media = window.matchMedia(`(max-width: ${width}px)`)
+    const media = getMediaQuery(width)
     media.addListener(updateTarget)
 
     // Check on mount (callback is not called until a change occurs)
@@ -32,4 +36,4 @@ const useIsMobile = () => {
   return useMediaQuery(768)
 }
 
-export { useMediaQuery, useIsMobile }
+export { useMediaQuery, getMediaQuery, useIsMobile }
