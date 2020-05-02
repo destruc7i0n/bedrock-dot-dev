@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -23,10 +23,10 @@ import { getDocsFilesFromRepo } from '../../lib/github/raw'
 type Props = {
   html: string
   bedrockVersions: BedrockVersions,
-  parsedData: ParseHtmlResponse
+  parsedData: ParseHtmlResponse,
 }
 
-const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
+const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) => {
   const { isFallback, query } = useRouter()
   const { slug } = query
 
@@ -54,7 +54,7 @@ const Docs = ({ html, bedrockVersions, parsedData }: Props) => {
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
       <SidebarContextProvider>
         <Layout title={parsedData && parsedData.title}>
-          <Sidebar sidebar={parsedData && parsedData.sidebar} />
+          <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} />
           <DocsContainer html={html} />
         </Layout>
       </SidebarContextProvider>

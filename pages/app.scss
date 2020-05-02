@@ -62,6 +62,10 @@ $global-menu-height: 27px;
 @import '~prismjs/themes/prism.css';
 @import '~nprogress/nprogress.css';
 
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
 :root {
   --sidebar-width: 400px;
 }
@@ -102,6 +106,9 @@ h1, h2, h3, h4 {
 }
 
 .docs-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  overflow-x: auto;
+
   [id]::before {
     content: '';
     display: block;
@@ -109,8 +116,6 @@ h1, h2, h3, h4 {
     margin-top: -8rem;
     visibility: hidden;
   }
-
-  overflow-x: auto;
 
   //body{
   //  max-width:1080px;

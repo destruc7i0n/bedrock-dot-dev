@@ -29,7 +29,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
 
   useEffect(() => {
-    setMinor(minorVersions[minorVersions.length - 1])
+    setMinor(minorVersions[0])
   }, [major])
 
   const goTo = () => {

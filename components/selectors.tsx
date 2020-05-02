@@ -12,7 +12,7 @@ const Selectors: FunctionComponent = () => {
 
   if (!major || !versions) return null
 
-  const majorVersionsOrdered = Object.keys(versions).sort(compareBedrockVersions).reverse()
+  const majorVersionsOrdered = Object.keys(versions).sort(compareBedrockVersions)
 
   let options = []
 

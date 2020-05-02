@@ -17,10 +17,11 @@ export interface SidebarStructure {
 }
 
 type Props = {
-  sidebar: SidebarStructure
+  sidebar: SidebarStructure,
+  file: string
 }
 
-const Sidebar: FunctionComponent<Props> = ({ sidebar }) => {
+const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
   if (!sidebar) return null
 
   const mobile = useIsMobile()
@@ -67,9 +68,9 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar }) => {
             <Selectors />
             {Object.keys(sidebar).map((header, index) => {
               return (
-                <SidebarGroupTitle key={index} title={header} id={`#${header}`}>
+                <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`}>
                   {sidebar[header].map((title) =>
-                    <SidebarGroupItem key={title.id} id={title.id} title={title.title} />
+                    <SidebarGroupItem key={`${file}-item-${title.id}`} id={title.id} title={title.title} />
                   )}
                 </SidebarGroupTitle>
               )

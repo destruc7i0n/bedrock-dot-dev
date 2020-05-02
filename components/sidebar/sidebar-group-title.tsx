@@ -26,9 +26,11 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
     <div>
       <div className='sidebar-title-container'>
         <a href={id} className='sidebar-title' onClick={(e) => scrollTo(e, id)}>{title}</a>
-        {hasChildren && <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
-          {RightArrow}
-        </div>}
+        {hasChildren && (
+          <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
+            {RightArrow}
+          </div>
+        )}
       </div>
       <ul className='nav'>
         {open && children}
@@ -53,6 +55,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
           width: 20px;
           text-align: right;
           cursor: pointer;
+          vertical-align: center;
         }
         
         .sidebar-expand > :global(svg) {
