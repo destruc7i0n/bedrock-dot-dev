@@ -5,7 +5,7 @@ import Router from 'next/router'
 import { compareBedrockVersions } from '../lib/util'
 
 import { TagsResponse } from '../lib/files'
-import { BedrockVersions } from '../pages/api/docs/list'
+import { BedrockVersions } from '../lib/versions'
 
 type VersionChooserProps = {
   versions: BedrockVersions

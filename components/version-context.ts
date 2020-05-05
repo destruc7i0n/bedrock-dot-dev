@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-import { BedrockVersions } from '../pages/api/docs/list'
+import { BedrockVersions } from '../lib/versions'
 
 type ContextType = {
   major: string

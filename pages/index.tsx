@@ -6,7 +6,7 @@ import VersionChooser from '../components/version-chooser'
 
 import { getBedrockVersions, getTags, TagsResponse } from '../lib/files'
 
-import { BedrockVersions } from './api/docs/list'
+import { BedrockVersions } from '../lib/versions'
 
 type Props = {
   versions: BedrockVersions
@@ -15,7 +15,7 @@ type Props = {
 
 const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
   return (
-    <Layout title='bedrock.dev'>
+    <Layout title='bedrock.dev' description='Bedrock Documentation'>
       <div className='main-container'>
         <div className='d-flex h-100 justify-content-center align-items-center'>
           <VersionChooser versions={versions} tags={tags} />

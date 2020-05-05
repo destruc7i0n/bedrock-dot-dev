@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
-import { BedrockVersions } from '../api/docs/list'
+import { BedrockVersions } from '../../lib/versions'
 
 import { parseHtml, ParseHtmlResponse, removeDisplayHtml } from '../../lib/html'
 
@@ -53,7 +53,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   return (
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
       <SidebarContextProvider>
-        <Layout title={parsedData && parsedData.title}>
+        <Layout title={parsedData && parsedData.title} description={parsedData && parsedData.title}>
           <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} />
           <DocsContainer html={html} />
         </Layout>
@@ -74,7 +74,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
