@@ -20,17 +20,23 @@ module.exports = {
         {
           source: '/docs{/}?',
           destination: '/',
-          permanent: false
+          permanent: false,
         },
         {
           source: '/r/:file',
           destination: `/docs/${stable.join('/')}/:file`,
-          permanent: false
+          permanent: false,
         },
         {
           source: '/b/:file',
           destination: `/docs/${beta.join('/')}/:file`,
-          permanent: false
+          permanent: false,
+        },
+        {
+          // match version numbers
+          source: '/:major(\\d+\\.\\d+\\.\\d+\\.\\d+)/:minor(\\d+\\.\\d+\\.\\d+\\.\\d+)/:file',
+          destination: `/docs/:major/:minor/:file`,
+          permanent: false,
         },
       ]
     }
