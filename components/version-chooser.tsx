@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import { compareBedrockVersions } from '../lib/util'
-
 import { TagsResponse } from '../lib/files'
 import { BedrockVersions } from '../lib/versions'
 
@@ -12,11 +12,41 @@ type VersionChooserProps = {
   tags: TagsResponse
 }
 
+type ParsedUrlResponse = {
+  major: string
+  minor: string
+}
+const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlResponse => {
+  const parts = query.split('/')
+
+  let parsed: ParsedUrlResponse = { major: '', minor: '' }
+
+  if (parts.length > 0 && versions[parts[0]]) {
+    parsed['major'] = parts[0]
+    if (parts.length > 1 && versions[parts[0]][parts[1]]) {
+      parsed['minor'] = parts[1]
+    }
+  }
+
+  return parsed
+}
+
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
+  const router = useRouter()
+
+  let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
+
+  if (router.query && router.query.r && typeof router.query.r === 'string') {
+    parsedUrlQuery = parseUrlQuery(router.query.r, versions)
+  }
+
   const [ stableMajor, stableMinor ] = tags.stable
 
-  const [ major, setMajor ] = useState(stableMajor)
-  const [ minor, setMinor ] = useState(stableMinor)
+  let initialMajor = parsedUrlQuery.major || stableMajor
+  let initialMinor = parsedUrlQuery.minor || stableMinor
+
+  const [ major, setMajor ] = useState(initialMajor)
+  const [ minor, setMinor ] = useState(initialMinor)
 
   let files: string[] = []
   if (versions[major] && versions[major][minor]) {
