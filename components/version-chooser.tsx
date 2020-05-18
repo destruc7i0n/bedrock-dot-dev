@@ -77,7 +77,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   return (
     <>
       <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl'>
-        <div className='shadow-lg xl:shadow-xl px-3 py-1 rounded-xl font-extrabold'>
+        <div className='shadow-lg xl:shadow-xl px-3 py-1 rounded-lg font-extrabold'>
           <div className='flex flex-col xl:flex-row'>
             <span className='select-none'>bedrock.dev/docs/</span>
             <div className='flex flex-row items-center'>
@@ -109,13 +109,13 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
       </div>
       <div className='flex flex-col xl:flex-row text-xl xl:mt-2'>
         <button
-          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-lg text-center mt-2 xl:ml-2'
+          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 xl:ml-2'
           onClick={() => setBeta()}
         >
           Latest Beta
         </button>
         <button
-          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-lg text-center mt-2 xl:ml-2'
+          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 xl:ml-2'
           onClick={() => setStable()}
         >
           Latest Release
