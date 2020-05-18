@@ -4,21 +4,21 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
-import { BedrockVersions } from '../../lib/versions'
+import { BedrockVersions } from 'lib/versions'
 
-import { parseHtml, ParseHtmlResponse, removeDisplayHtml } from '../../lib/html'
+import { parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
 
-import Layout from '../../components/layout'
-import Sidebar  from '../../components/sidebar'
-import DocsContainer from '../../components/docs-container'
-import VersionContext from '../../components/version-context'
-import { SidebarContextProvider } from '../../components/sidebar/sidebar-context'
-import Loading from '../../components/loading'
+import Layout from 'components/layout'
+import Sidebar  from 'components/sidebar'
+import DocsContainer from 'components/docs-container'
+import VersionContext from 'components/version-context'
+import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
+import Loading from 'components/loading'
 
-import { useScrollController } from '../../components/scroll-controller'
+import { useScrollController } from 'components/scroll-controller'
 
-import { getBedrockVersions } from '../../lib/files'
-import { getDocsFilesFromRepo } from '../../lib/github/raw'
+import { getBedrockVersions } from 'lib/files'
+import { getDocsFilesFromRepo } from 'lib/github/raw'
 
 type Props = {
   html: string
@@ -55,7 +55,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
       <SidebarContextProvider>
         <Layout title={parsedData && parsedData.title} description={parsedData && parsedData.title}>
           <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} />
-          <DocsContainer html={html} />
+          <DocsContainer html={html} sidebarIds={parsedData && parsedData.sidebarIds} />
         </Layout>
       </SidebarContextProvider>
     </VersionContext.Provider>

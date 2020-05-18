@@ -1,6 +1,6 @@
-import { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import Router from 'next/router'
+import Link from 'next/link'
 
 import { compareBedrockVersions } from '../lib/util'
 
@@ -32,9 +32,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     setMinor(minorVersions[0])
   }, [major])
 
-  const goTo = () => {
-    Router.push('/docs/[...slug]', `/docs/${major}/${minor}/${file}`)
-  }
+  const link = `/docs/${major}/${minor}/${file}`
 
   const setBeta = () => {
     setMajor(tags.beta[0])
@@ -47,26 +45,53 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   }
 
   return (
-    <div className='d-flex flex-column'>
-      <div className='d-flex flex-md-row flex-column align-items-center'>
-        <select className='my-2 my-md-0' value={major} onChange={({ target: { value } }) => setMajor(value)}>
-          {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
-        </select>
-        <select className='mx-md-2 my-2 my-md-0' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
-          {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
-        </select>
-        <select className='mr-md-2 my-2 my-md-0' value={file} onChange={({ target: { value } }) => setFile(value)}>
-          {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
-        </select>
+    <>
+      <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl'>
+        <div className='shadow-lg xl:shadow-xl px-3 py-1 rounded-xl font-extrabold'>
+          <div className='flex flex-col xl:flex-row'>
+            <span className='select-none'>bedrock.dev/docs/</span>
+            <div className='flex flex-row items-center'>
+              <select className='my-2 md:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+                {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
+              </select>
+              <span className='select-none'>/</span>
+            </div>
+            <div className='flex flex-row items-center'>
+              <select className='my-2 md:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+                {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
+              </select>
+              <span className='select-none'>/</span>
+            </div>
+            <div className='flex flex-row'>
+              <select className='my-2 md:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
+                {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
 
-        <div className='btn btn-sm btn-primary my-md-0' onClick={() => goTo()}>Go</div>
+        <Link href={`/docs/[...slug]`} as={link}>
+          {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
+          <a className='bg-transparent border border-gray-600 hover:border-black text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
+            Go
+          </a>
+        </Link>
       </div>
-
-      <div className='d-flex flex-row justify-content-around'>
-        <button className='btn btn-primary mt-2' onClick={() => setBeta()}>Beta</button>
-        <button className='btn btn-primary mt-2' onClick={() => setStable()}>Stable</button>
+      <div className='flex flex-col xl:flex-row text-xl xl:mt-2'>
+        <button
+          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-lg text-center mt-2 xl:ml-2'
+          onClick={() => setBeta()}
+        >
+          Latest Beta
+        </button>
+        <button
+          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-lg text-center mt-2 xl:ml-2'
+          onClick={() => setStable()}
+        >
+          Latest Release
+        </button>
       </div>
-    </div>
+    </>
   )
 }
 

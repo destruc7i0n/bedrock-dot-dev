@@ -1,18 +1,20 @@
 import React, { FunctionComponent } from 'react'
 
-import { scrollTo } from '../../lib/scroller'
+import cn from 'classnames'
+
 import { addHashIfNeeded } from '../../lib/util'
 
 type Props = {
   title: string
   id: string
+  active?: boolean
 }
 
-const SidebarGroupItem: FunctionComponent<Props> = ({ title, id }) => {
+const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, active }) => {
   id = addHashIfNeeded(id)
   return (
     <li>
-      <a href={id} onClick={(e) => scrollTo(e, id)}>
+      <a className={cn('sidebar-item', { active })} href={id}>
         {title}
       </a>
       <style jsx>{`

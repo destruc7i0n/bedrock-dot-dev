@@ -1,0 +1,22 @@
+.navbar {
+  background: var(--navbar-bg);
+  color: var(--navbar-fg);
+  z-index: 10;
+  border-bottom: 1px solid;
+  border-color: theme('colors.gray-400');
+}
+
+.navlink {
+  color: var(--navlink-fg);
+  @apply flex;
+  @apply items-center;
+  //@apply px-5;
+  @apply h-8;
+  @apply p-2;
+  @apply rounded;
+}
+
+.navlink:hover {
+  color: var(--navlink-hover-fg);
+  background: var(--navlink-hover-bg);
+}

@@ -2,8 +2,7 @@ import React, { Children, FunctionComponent, useState } from 'react'
 
 import cn from 'classnames'
 
-import { scrollTo } from '../../lib/scroller'
-import { addHashIfNeeded } from '../../lib/util';
+import { addHashIfNeeded } from '../../lib/util'
 
 type Props = {
   title: string
@@ -25,7 +24,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
   return (
     <div>
       <div className='sidebar-title-container'>
-        <a href={id} className='sidebar-title' onClick={(e) => scrollTo(e, id)}>{title}</a>
+        <a href={id} className='sidebar-title'>{title}</a>
         {hasChildren && (
           <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
             {RightArrow}
@@ -35,41 +34,6 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
       <ul className='nav'>
         {open && children}
       </ul>
-      <style jsx>{`
-        .sidebar-title-container {
-          display: flex;
-          flex-direction: row;
-          padding-top: .25rem;
-        }
-
-        .sidebar-title {
-          display: block;
-          font-weight: 600;
-          color: #000;
-        }
-        
-        .sidebar-expand {
-          user-select: none;
-          margin-left: auto;
-          display: block;
-          width: 20px;
-          text-align: right;
-          cursor: pointer;
-          vertical-align: center;
-        }
-        
-        .sidebar-expand > :global(svg) {
-          transition: transform 0.15s ease;
-        }
-        
-        .sidebar-expand:not(.open) > :global(svg) {
-          transform: rotate(180deg);
-        }
-        
-        .sidebar-expand.open > :global(svg) {
-          transform: rotate(90deg);
-        }
-      `}</style>
     </div>
   )
 }

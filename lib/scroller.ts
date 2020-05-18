@@ -1,20 +1,34 @@
 import { MouseEvent } from 'react'
 
-import Router from 'next/router'
+import debounce from 'debounce'
+// @ts-ignore
+import inView from 'element-in-view'
+
+import { removeHashIfNeeded } from './util'
 
 export const scrollTo = async (e: MouseEvent | null, id: string) => {
   if (e) e.preventDefault()
-  const selector = document.getElementById(id.replace('#', ''))
+
+  const selector = document.getElementById(removeHashIfNeeded(id))
 
   if (selector) {
-    const { slug } = Router.query
-    if (slug && typeof slug === 'object') {
-      const base = `/docs/${slug.join('/')}`
-
-      await Router.replace('/docs/[...slug]', base + id, { shallow: true })
-    }
-
     // add the height of the header
-    window.scrollTo(0, selector.offsetTop + 64)
+    window.scrollTo({
+      top: selector.offsetTop + 64
+    })
   }
 }
+
+export const handleScroll = debounce((ids: string[]) => {
+  for (let id of ids) {
+    // remove the hash if there is
+    id = removeHashIfNeeded(id)
+
+    const heading = document.getElementById(id)
+    if (heading && inView(heading, { offset: 58 })) {
+      window.history.replaceState({}, '', `#${id}`)
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+      break
+    }
+  }
+}, 200)

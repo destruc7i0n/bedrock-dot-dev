@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
+import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 
 import cn from 'classnames'
 
@@ -8,6 +8,7 @@ import SidebarGroupItem from './sidebar/sidebar-group-item'
 import { SidebarContext, setOpen } from './sidebar/sidebar-context'
 import SidebarMask from './sidebar/sidebar-mask'
 import { getMediaQuery, useIsMobile } from './media-query'
+import { removeHashIfNeeded } from '../lib/util';
 
 export interface SidebarStructure {
   [key: string]: {
@@ -23,6 +24,9 @@ type Props = {
 
 const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
   if (!sidebar) return null
+
+  const [hash, setHash] = useState('')
+  const sidebarRef = useRef<HTMLDivElement | null>(null)
 
   const mobile = useIsMobile()
 
@@ -57,20 +61,41 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
     }
   }, [])
 
+  useEffect(() => {
+    setHash(decodeURIComponent(location.hash))
+    const onHashChange = () => {
+      if (location.hash && !mobile) {
+        const hash = decodeURIComponent(location.hash)
+        setHash(hash)
+        const el: HTMLAnchorElement | null = document.querySelector(
+          `.sidebar .sidebar-item[href="${hash}"]`
+        )
+        if (el) {
+          if (sidebarRef.current) {
+            sidebarRef.current.scrollTop = el.offsetTop - 64
+          }
+        }
+      }
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [ mobile ])
+
   const isShown = open
 
   return (
     <>
       <div className={cn('sidebar-container', { loaded })}>
         { isShown && mobile && <SidebarMask /> }
-        <div className={cn('sidebar', { open: isShown })}>
+        <div className={cn('sidebar', { open: isShown })} ref={sidebarRef}>
           <div className='sidebar-content'>
             <Selectors />
+            <hr className='mt-2 mb-1' />
             {Object.keys(sidebar).map((header, index) => {
               return (
                 <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`}>
-                  {sidebar[header].map((title) =>
-                    <SidebarGroupItem key={`${file}-item-${title.id}`} id={title.id} title={title.title} />
+                  {sidebar[header].map((item) =>
+                    <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={removeHashIfNeeded(item.id) === removeHashIfNeeded(hash)} />
                   )}
                 </SidebarGroupTitle>
               )
@@ -78,49 +103,6 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
           </div>
         </div>
       </div>
-      <style jsx>{`
-      .sidebar {
-        width: var(--sidebar-width);
-        position: fixed;
-        top: 4rem;
-        z-index: 9;
-        height: calc(100vh - 4rem);
-        overflow: auto;
-        margin-left: -15px;
-        background-color: #949494;
-        transform: translateX(-100%);
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-      
-      @media (max-width: 768px) {
-        .sidebar {
-          width: 80%;
-          transition: transform 0.5s cubic-bezier(0.5, 0.32, 0.01, 1);
-        }
-        
-        .sidebar-container:not(.loaded) {
-          display: none;
-        }
-      }
-      
-      .sidebar-content {
-        display: flex;
-        flex-direction: column;
-        margin-top: 0.25rem;
-        margin-bottom: 0.25rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-      
-      @supports(padding: max(0px)) {
-        .sidebar-content {
-          padding-bottom: env(safe-area-inset-bottom);
-        }
-      }
-    `}</style>
     </>
   )
 }

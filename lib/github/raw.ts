@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch'
-
 import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './constants'
 
 export function getErrorText(res: Response) {

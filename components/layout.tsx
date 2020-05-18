@@ -8,12 +8,14 @@ import Header from './header'
 type Props = {
   title?: string
   description?: string
+  header?: boolean
 }
 
 const Layout: FunctionComponent<Props> = ({
   children,
   title = 'bedrock.dev',
-  description= ''
+  description= '',
+  header = true
 }) => (
   <div>
     <Head>
@@ -22,8 +24,8 @@ const Layout: FunctionComponent<Props> = ({
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
     </Head>
     <NextSeo title={title} {...description && { description }} />
-    <Header />
-    <div className='container-fluid'>
+    {header && <Header/>}
+    <div>
       {children}
     </div>
   </div>

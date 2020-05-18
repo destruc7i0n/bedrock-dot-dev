@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react'
 import { GetStaticProps } from 'next'
 
-import Layout from '../components/layout'
-import VersionChooser from '../components/version-chooser'
+import Layout from 'components/layout'
+import VersionChooser from 'components/version-chooser'
 
-import { getBedrockVersions, getTags, TagsResponse } from '../lib/files'
+import { getBedrockVersions, getTags, TagsResponse } from 'lib/files'
 
-import { BedrockVersions } from '../lib/versions'
+import { BedrockVersions } from 'lib/versions'
 
 type Props = {
   versions: BedrockVersions
@@ -15,17 +15,12 @@ type Props = {
 
 const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
   return (
-    <Layout title='bedrock.dev' description='Bedrock Documentation'>
-      <div className='main-container'>
-        <div className='d-flex h-100 justify-content-center align-items-center'>
+    <Layout title='bedrock.dev' description='Bedrock Documentation' header={false}>
+      <div className='index-container'>
+        <div className='flex flex-col h-full justify-center items-center'>
           <VersionChooser versions={versions} tags={tags} />
         </div>
       </div>
-      <style jsx>{`
-        .main-container {
-          height: calc(50vh - 4rem)
-        }
-      `}</style>
     </Layout>
   )
 }

@@ -21,3 +21,5 @@ export function getTagsFromString(s: string) {
 export const addHashIfNeeded = (s: string) => {
   return s[0] === '#' ? s : `#${s}`
 }
+
+export const removeHashIfNeeded = (s: string) => s.replace('#', '')

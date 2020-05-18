@@ -1,0 +1,32 @@
+.listing {
+  max-width: 800px;
+
+  ul.listing-items {
+    @media (min-width: 768px) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    li.listing-item {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+
+      @apply py-2;
+
+      width: 230px;
+
+      @media (min-width: 768px) {
+
+        //padding-right: 20px;
+        @apply pr-2;
+      }
+
+      @media (min-width: 992px) {
+        //font-size: 13px;
+        box-sizing: border-box;
+        justify-content: flex-start;
+      }
+    }
+  }
+}

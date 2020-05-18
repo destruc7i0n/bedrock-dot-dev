@@ -4,7 +4,7 @@ import Router from 'next/router'
 
 import NProgress from 'nprogress'
 
-import './app.scss'
+import 'styles/app.scss'
 
 NProgress.configure({ showSpinner: false })
 

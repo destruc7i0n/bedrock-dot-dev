@@ -46,15 +46,19 @@ const Selectors: FunctionComponent = () => {
   }
 
   return (
-    <div className='d-flex flex-row'>
-      <select value={`${major}/${minor}`} onChange={onVersionChange} className='w-50'>
-        {options}
-      </select>
-      {files && (
-        <select value={file} onChange={onFileChange} className='ml-2 w-50'>
-          {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+    <div className='flex flex-row'>
+      <div className='w-1/2'>
+        <select value={`${major}/${minor}`} onChange={onVersionChange} className='block text-black w-full bg-white border border-gray-600 hover:border-black rounded shadow leading-tight focus:outline-none focus:shadow-outline'>
+          {options}
         </select>
-      )}
+      </div>
+      <div className='w-1/2 ml-2'>
+        {files && (
+          <select value={file} onChange={onFileChange} className='block text-black w-full bg-white border border-gray-600 hover:border-black rounded shadow leading-tight focus:outline-none focus:shadow-outline'>
+            {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+          </select>
+        )}
+      </div>
     </div>
   )
 }

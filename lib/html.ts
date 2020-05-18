@@ -79,13 +79,14 @@ const getTitle = (html: string): string => {
   const h1 = html.match(H1_MATCH)
   if (h1) {
     // remove the line break
-    return h1[1].replace('</br>', '')
+    return h1[1].replace(/<\/?br>/, '')
   }
   return 'DOCUMENTATION'
 }
 
 export type ParseHtmlResponse = {
   sidebar: SidebarStructure
+  sidebarIds: string[]
   title: string
 }
 
@@ -105,8 +106,17 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
   }
   const title = getTitle(html)
 
+  const sidebarIds = [
+    ...Object.keys(sidebarContent),
+    ...Object.keys(sidebarContent).reduce<string[]>((acc, el) => {
+      acc.push(...sidebarContent[el].map(e => e.id))
+      return acc
+    }, [])
+  ]
+
   return {
     sidebar: sidebarContent,
+    sidebarIds,
     title
   }
 }
@@ -114,6 +124,7 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
 const STYLESHEET_MATCH = /<link rel="stylesheet".*href=".*prism\.css.*"><\/link>/
 
 export const removeDisplayHtml = (html: string) => {
+  // html = html.replace(/[<br\/?>]*?<a .*>Back to top<\/a>[<br\/?>]*?/g, '')
   html = html.replace(TABLE_MATCH, '')
   html = html.replace(STYLESHEET_MATCH, '')
 

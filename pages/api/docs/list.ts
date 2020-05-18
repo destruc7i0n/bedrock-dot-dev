@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { allFilesList } from '../../../lib/versions'
+import { allFilesList } from 'lib/versions'
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   try {
