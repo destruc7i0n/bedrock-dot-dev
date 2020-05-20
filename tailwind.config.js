@@ -9,6 +9,8 @@ module.exports = {
       'xl': '1280px',
     },
   },
-  variants: {},
-  plugins: [],
+  variants: {
+    // backgroundColor: ['responsive', 'hover', 'focus', 'active'],
+  },
+  plugins: [require('@tailwindcss/ui')],
 }

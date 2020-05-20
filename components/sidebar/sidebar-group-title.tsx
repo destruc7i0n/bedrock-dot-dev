@@ -19,19 +19,20 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
   const [ open, setOpen ] = useState(true)
 
   const hasChildren = !!Children.count(children)
+
   id = addHashIfNeeded(id)
 
   return (
-    <div>
-      <div className='sidebar-title-container'>
-        <a href={id} className='sidebar-title'>{title}</a>
+    <div className='position-relative'>
+      <div className={cn('flex flex-row py-2 px-4 bg-white', { 'sticky top-0': open }, 'border-b')}>
+        <a className='font-bold text-black hover:text-gray-800' href={id}>{title}</a>
         {hasChildren && (
           <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
             {RightArrow}
           </div>
         )}
       </div>
-      <ul className='nav'>
+      <ul className={cn('nav px-4', { 'border-b border-gray-200': open && hasChildren })}>
         {open && children}
       </ul>
     </div>

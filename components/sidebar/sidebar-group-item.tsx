@@ -13,23 +13,10 @@ type Props = {
 const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, active }) => {
   id = addHashIfNeeded(id)
   return (
-    <li>
-      <a className={cn('sidebar-item', { active })} href={id}>
+    <li className='my-2'>
+      <a className={cn('block text-sm w-full px-2 text-black hover:text-gray-800', { 'font-bold': active })} href={id}>
         {title}
       </a>
-      <style jsx>{`
-        li {
-          width: 100%;
-        }
-
-        a {
-          color: #313131;
-          display: block;
-          padding: .25rem .5rem;
-          font-size: 90%;
-          width: 100%;
-        }
-      `}</style>
     </li>
   )
 }

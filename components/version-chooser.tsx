@@ -107,7 +107,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
           </a>
         </Link>
       </div>
-      <div className='flex flex-col xl:flex-row text-xl xl:mt-2'>
+      <div className='flex flex-row text-xl xl:mt-2'>
         <button
           className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 xl:ml-2'
           onClick={() => setBeta()}
@@ -115,7 +115,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
           Latest Beta
         </button>
         <button
-          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 xl:ml-2'
+          className='bg-transparent border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 ml-2'
           onClick={() => setStable()}
         >
           Latest Release

@@ -88,18 +88,21 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
       <div className={cn('sidebar-container', { loaded })}>
         { isShown && mobile && <SidebarMask /> }
         <div className={cn('sidebar', { open: isShown })} ref={sidebarRef}>
-          <div className='sidebar-content'>
+          <div className='w-full px-4 py-4 border-b border-gray-200'>
             <Selectors />
-            <hr className='mt-2 mb-1' />
-            {Object.keys(sidebar).map((header, index) => {
-              return (
-                <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`}>
-                  {sidebar[header].map((item) =>
-                    <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={removeHashIfNeeded(item.id) === removeHashIfNeeded(hash)} />
-                  )}
-                </SidebarGroupTitle>
-              )
-            })}
+          </div>
+          <div className='flex-1 flex flex-col overflow-auto pb-8 h-0'>
+            <div className='flex-1'>
+              {Object.keys(sidebar).map((header, index) => {
+                return (
+                  <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`}>
+                    {sidebar[header].map((item) =>
+                      <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={removeHashIfNeeded(item.id) === removeHashIfNeeded(hash)} />
+                    )}
+                  </SidebarGroupTitle>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
