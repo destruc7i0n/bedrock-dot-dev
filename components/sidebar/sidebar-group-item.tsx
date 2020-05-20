@@ -14,7 +14,7 @@ const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, active }) => {
   id = addHashIfNeeded(id)
   return (
     <li className='my-2'>
-      <a className={cn('block text-sm w-full px-2 text-black hover:text-gray-600', { 'font-bold': active })} href={id}>
+      <a className={cn('sidebar-id block text-sm w-full px-2', { 'text-blue-600 hover:text-blue-500': active, 'text-black hover:text-gray-600': !active })} href={id}>
         {title}
       </a>
     </li>

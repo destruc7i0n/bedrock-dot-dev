@@ -68,11 +68,11 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
         const hash = decodeURIComponent(location.hash)
         setHash(hash)
         const el: HTMLAnchorElement | null = document.querySelector(
-          `.sidebar .sidebar-item[href="${hash}"]`
+          `.sidebar .sidebar-id[href="${hash}"]`
         )
         if (el) {
           if (sidebarRef.current) {
-            sidebarRef.current.scrollTop = el.offsetTop - 64
+            sidebarRef.current.scrollTop = el.offsetTop - 132
           }
         }
       }
@@ -88,11 +88,11 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
     <>
       <div className={cn('sidebar-container', { loaded })}>
         { isShown && mobile && <SidebarMask /> }
-        <div className={cn('sidebar', { open: isShown })} ref={sidebarRef}>
+        <div className={cn('sidebar', { open: isShown })}>
           <div className='w-full px-4 py-4 border-b border-gray-200'>
             <Selectors />
           </div>
-          <div className='flex-1 flex flex-col overflow-auto pb-8 h-0'>
+          <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
             <div className='flex-1'>
               {Object.keys(sidebar).map((header, index) => {
                 return (
