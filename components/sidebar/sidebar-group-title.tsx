@@ -25,10 +25,10 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, acti
 
   return (
     <div className='position-relative'>
-      <div className={cn('flex flex-row py-2 px-4 bg-white', { 'sticky top-0': open }, 'border-b')}>
+      <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': open }, 'border-b')} onClick={() => setOpen(!open)}>
         <a className={cn({ 'font-extrabold text-blue-600 hover:text-blue-500': active, 'font-bold text-black hover:text-gray-600': !active })} href={id}>{title}</a>
         {hasChildren && (
-          <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
+          <div className={cn('sidebar-expand', {open})}>
             {RightArrow}
           </div>
         )}
