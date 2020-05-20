@@ -13,17 +13,17 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='fixed w-full top-0 left-0 h-12 navbar flex items-center justify-between px-5'>
+      <header className='navbar fixed w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-5'>
         <div className='flex items-center'>
           <h1 className='mr-8 text-2xl font-normal'>
             <Link href='/'>
-              <a>bedrock.dev</a>
+              <a className='hover:text-gray-900'>bedrock.dev</a>
             </Link>
           </h1>
           <ul className='flex'>
             <li className='mr-5 text-lg'>
               <Link href='/about'>
-                <a className='navlink'>
+                <a className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'>
                   About
                 </a>
               </Link>

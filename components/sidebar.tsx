@@ -82,6 +82,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
   }, [ mobile ])
 
   const isShown = open
+  const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
   return (
     <>
@@ -95,9 +96,9 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
             <div className='flex-1'>
               {Object.keys(sidebar).map((header, index) => {
                 return (
-                  <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`}>
+                  <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
                     {sidebar[header].map((item) =>
-                      <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={removeHashIfNeeded(item.id) === removeHashIfNeeded(hash)} />
+                      <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={isActive(item.id)} />
                     )}
                   </SidebarGroupTitle>
                 )

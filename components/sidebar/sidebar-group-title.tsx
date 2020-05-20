@@ -7,6 +7,7 @@ import { addHashIfNeeded } from '../../lib/util'
 type Props = {
   title: string
   id: string
+  active: boolean
 }
 
 const RightArrow = (
@@ -15,7 +16,7 @@ const RightArrow = (
   </svg>
 )
 
-const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) => {
+const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, active }) => {
   const [ open, setOpen ] = useState(true)
 
   const hasChildren = !!Children.count(children)
@@ -25,7 +26,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children }) =>
   return (
     <div className='position-relative'>
       <div className={cn('flex flex-row py-2 px-4 bg-white', { 'sticky top-0': open }, 'border-b')}>
-        <a className='font-bold text-black hover:text-gray-800' href={id}>{title}</a>
+        <a className={cn('font-bold text-black hover:text-gray-600', { 'font-extrabold': active })} href={id}>{title}</a>
         {hasChildren && (
           <div className={cn('sidebar-expand', {open})} onClick={() => setOpen(!open)}>
             {RightArrow}
