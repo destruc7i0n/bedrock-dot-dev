@@ -7,9 +7,9 @@
     top: 3rem;
     z-index: 9;
     height: calc(100vh - 3rem);
-    background-color: var(--sidebar-bg);
-    color: var(--sidebar-text-fg);
     transform: translateX(-100%);
+
+    @apply bg-white;
 
     @apply flex;
     @apply flex-col;
@@ -20,13 +20,13 @@
       transform: translateX(0);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       width: 80%;
       transition: transform ease-in-out 150ms;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     &:not(.loaded) {
       display: none;
     }
@@ -63,7 +63,7 @@
   z-index: 8;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar-mask {
     background-color: var(--sidebar-mask-color) !important;
   }

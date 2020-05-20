@@ -31,7 +31,7 @@ const Header: FunctionComponent = () => {
           </ul>
         </div>
         {isDocsPage && (
-          <div className='flex md:hidden'>
+          <div className='flex lg:hidden'>
             <button onClick={() => dispatch(setOpen(!open))}>
               <svg fill='currentColor' className='w-6 h-6' viewBox='0 0 20 20'>
                 <path

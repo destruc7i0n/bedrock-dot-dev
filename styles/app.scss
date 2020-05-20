@@ -44,13 +44,6 @@ h3 {
   @apply text-lg;
 }
 
-.index-container {
-  @apply px-5;
-  @apply py-5;
-
-  height: 75vh;
-}
-
 /* main */
 @import 'listing.scss';
 

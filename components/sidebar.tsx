@@ -8,7 +8,7 @@ import SidebarGroupItem from './sidebar/sidebar-group-item'
 import { SidebarContext, setOpen } from './sidebar/sidebar-context'
 import SidebarMask from './sidebar/sidebar-mask'
 import { getMediaQuery, useIsMobile } from './media-query'
-import { removeHashIfNeeded } from '../lib/util';
+import { removeHashIfNeeded } from '../lib/util'
 
 export interface SidebarStructure {
   [key: string]: {
@@ -56,7 +56,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
 
   useEffect(() => {
     // theres no need to prevent the animation on desktop
-    if (!getMediaQuery(768).matches) {
+    if (!getMediaQuery(1024).matches) {
       setLoaded(true)
     }
   }, [])

@@ -33,7 +33,7 @@ const useMediaQuery = (width: number) => {
 }
 
 const useIsMobile = () => {
-  return useMediaQuery(768)
+  return useMediaQuery(1024)
 }
 
 export { useMediaQuery, getMediaQuery, useIsMobile }

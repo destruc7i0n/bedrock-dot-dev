@@ -9,7 +9,6 @@ const getTags = async () => {
 module.exports = {
   typescript: {
     ignoreDevErrors: true,
-    // reactRefresh: true,
   },
   experimental: {
     modern: true,

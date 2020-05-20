@@ -11,9 +11,11 @@
   @apply px-5;
   @apply py-5;
 
-  @screen md {
+  @screen lg {
     //@apply px-8;
-    margin-left: var(--sidebar-width);
+    &.open {
+      margin-left: var(--sidebar-width);
+    }
   }
 
   [id]::before {
