@@ -37,14 +37,13 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   useScrollController()
 
   const loading = useLoading()
-  console.log(loading)
 
   // while loading...
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
       return (
         <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
-          <Layout title={'LoadingText...'}>
+          <Layout title='Loading...'>
             <LoadingText />
           </Layout>
         </VersionContext.Provider>

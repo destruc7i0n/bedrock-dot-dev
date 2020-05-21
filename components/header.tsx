@@ -22,9 +22,9 @@ const Header: FunctionComponent = () => {
           </h1>
           <ul className='flex'>
             <li className='text-lg'>
-              <Link href='/about'>
+              <Link href='/info'>
                 <a className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'>
-                  About
+                  Info
                 </a>
               </Link>
             </li>

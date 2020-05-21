@@ -34,8 +34,18 @@ module.exports = {
           permanent: false,
         },
         {
+          source: '/r{/}?',
+          destination: `/?r=${stable.join('/')}`,
+          permanent: false,
+        },
+        {
           source: '/b/:file',
           destination: `/docs/${beta.join('/')}/:file`,
+          permanent: false,
+        },
+        {
+          source: '/b{/}?',
+          destination: `/?r=${beta.join('/')}`,
           permanent: false,
         },
         {

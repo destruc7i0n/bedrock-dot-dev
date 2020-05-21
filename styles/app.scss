@@ -1,7 +1,7 @@
+@import './tailwind.scss';
+
 @import '~prismjs/themes/prism.css';
 @import '~nprogress/nprogress.css';
-
-@import './tailwind.scss';
 
 :root {
   --navbar-bg: #fff;
@@ -42,6 +42,17 @@ h2 {
 
 h3 {
   @apply text-lg;
+}
+
+.link {
+  @apply text-blue-500;
+  @apply transition;
+  @apply duration-75;
+  @apply ease-in-out;
+}
+
+.link:hover {
+  @apply text-blue-400;
 }
 
 /* main */

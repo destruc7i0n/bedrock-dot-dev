@@ -25,7 +25,7 @@ const Layout: FunctionComponent<Props> = ({
     </Head>
     <NextSeo title={title} {...description && { description }} />
     {header && <Header/>}
-    <div className='h-screen'>
+    <div>
       {children}
     </div>
   </div>

@@ -22,8 +22,8 @@
   [id]::before {
     content: '';
     display: block;
-    height: 8rem;
-    margin-top: -8rem;
+    height: 4rem;
+    margin-top: -4rem;
     visibility: hidden;
   }
 
@@ -76,5 +76,9 @@
     min-width:400px;
     max-width:100%;
     line-height:18px
+  }
+
+  pre {
+    @apply rounded;
   }
 }
