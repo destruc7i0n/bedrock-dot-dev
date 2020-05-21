@@ -21,7 +21,7 @@ const Header: FunctionComponent = () => {
             </Link>
           </h1>
           <ul className='flex'>
-            <li className='mr-5 text-lg'>
+            <li className='text-lg'>
               <Link href='/about'>
                 <a className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'>
                   About

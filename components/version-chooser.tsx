@@ -91,7 +91,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
             </select>
             <span className='select-none'>/</span>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <select className='my-2 md:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
               {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
             </select>

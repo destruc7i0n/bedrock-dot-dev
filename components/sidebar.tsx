@@ -20,9 +20,10 @@ export interface SidebarStructure {
 type Props = {
   sidebar: SidebarStructure,
   file: string
+  loading: boolean
 }
 
-const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
+const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   if (!sidebar) return null
 
   const [hash, setHash] = useState('')
@@ -84,6 +85,38 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
   const isShown = open
   const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
+  const loadingContent = (
+    <div className='w-full px-4 py-4'>
+      <div className='w-4/5 bg-gray-100 h-8' />
+      <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+      <div className='w-5/6 bg-gray-100 h-3 mt-4' />
+      <div className='w-1/2 bg-gray-100 h-3 mt-4' />
+
+      <div className='w-3/5 bg-gray-100 h-8 mt-10' />
+      <div className='w-2/4 bg-gray-100 h-s mt-4' />
+      <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+      <div className='w-3/4 bg-gray-100 h-3 mt-4' />
+      <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+      <div className='w-3/5 bg-gray-100 h-3 mt-4' />
+    </div>
+  )
+
+  const sidebarContent = (
+    <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
+      <div className='flex-1'>
+        {Object.keys(sidebar).map((header, index) => {
+          return (
+            <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
+              {sidebar[header].map((item) =>
+                <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={isActive(item.id)} />
+              )}
+            </SidebarGroupTitle>
+          )
+        })}
+      </div>
+    </div>
+  )
+
   return (
     <>
       <div className={cn('sidebar-container', { loaded })}>
@@ -92,19 +125,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file }) => {
           <div className='w-full px-4 py-4 border-b border-gray-200'>
             <Selectors />
           </div>
-          <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
-            <div className='flex-1'>
-              {Object.keys(sidebar).map((header, index) => {
-                return (
-                  <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
-                    {sidebar[header].map((item) =>
-                      <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={isActive(item.id)} />
-                    )}
-                  </SidebarGroupTitle>
-                )
-              })}
-            </div>
-          </div>
+          { loading ? loadingContent : sidebarContent }
         </div>
       </div>
     </>

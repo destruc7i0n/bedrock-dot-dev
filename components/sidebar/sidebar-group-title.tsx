@@ -2,7 +2,7 @@ import React, { Children, FunctionComponent, useState } from 'react'
 
 import cn from 'classnames'
 
-import { addHashIfNeeded } from '../../lib/util'
+import { addHashIfNeeded } from 'lib/util'
 
 type Props = {
   title: string

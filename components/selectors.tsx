@@ -2,7 +2,7 @@ import React, { ChangeEvent, FunctionComponent, useContext } from 'react'
 
 import Router from 'next/router'
 
-import { compareBedrockVersions } from '../lib/util'
+import { compareBedrockVersions } from 'lib/util'
 
 import VersionContext from './version-context'
 

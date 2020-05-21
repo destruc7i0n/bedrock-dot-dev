@@ -13,7 +13,8 @@ import Sidebar  from 'components/sidebar'
 import DocsContainer from 'components/docs-container'
 import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
-import Loading from 'components/loading'
+import LoadingText from 'components/loading-text'
+import useLoading from 'components/loading'
 
 import { useScrollController } from 'components/scroll-controller'
 
@@ -35,13 +36,16 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
 
   useScrollController()
 
+  const loading = useLoading()
+  console.log(loading)
+
   // while loading...
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
       return (
         <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
-          <Layout title={'Loading...'}>
-            <Loading />
+          <Layout title={'LoadingText...'}>
+            <LoadingText />
           </Layout>
         </VersionContext.Provider>
       )
@@ -54,8 +58,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
       <SidebarContextProvider>
         <Layout title={parsedData && parsedData.title} description={parsedData && parsedData.title}>
-          <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} />
-          <DocsContainer html={html} sidebarIds={parsedData && parsedData.sidebarIds} />
+          <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} loading={loading} />
+          <DocsContainer html={html} sidebarIds={parsedData && parsedData.sidebarIds} loading={loading} />
         </Layout>
       </SidebarContextProvider>
     </VersionContext.Provider>
