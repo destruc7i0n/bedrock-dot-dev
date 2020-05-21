@@ -14,7 +14,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash }) => {
   const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
   return (
-    <div className='flex-1'>
+    <>
       {Object.keys(sidebar).map((header, index) => {
         return (
           <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
@@ -24,7 +24,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash }) => {
           </SidebarGroupTitle>
         )
       })}
-    </div>
+    </>
   )
 }
 

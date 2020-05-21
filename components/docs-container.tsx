@@ -7,13 +7,27 @@ import { SidebarContext } from './sidebar/sidebar-context'
 import { handleScroll } from 'lib/scroller'
 import { useIsMobile } from './media-query'
 
-type Props = {
+type DocsContentProps = {
+  html: string
+  open: boolean
+}
+
+const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html, open }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: html }}
+      className={cn('docs-container', { sidebar: open })}
+    />
+  )
+})
+
+type DocsContainerProps = {
   html: string
   sidebarIds: string[]
   loading: boolean
 }
 
-const DocsContainer: FunctionComponent<Props> = ({ html, sidebarIds, loading }) => {
+const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, sidebarIds, loading }) => {
   const { state: { open } } = useContext(SidebarContext)
 
   const mobile = useIsMobile()
@@ -26,9 +40,11 @@ const DocsContainer: FunctionComponent<Props> = ({ html, sidebarIds, loading }) 
     return () => window.removeEventListener('scroll', handler)
   }, [ sidebarIds, mobile ])
 
+  const addSidebarMargin = open && !mobile
+
   if (loading) {
     return (
-      <div className={cn('docs-container my-8', { open })}>
+      <div className={cn('docs-container my-8', { sidebar: addSidebarMargin })}>
         <div className='w-4/5 bg-gray-100 h-8' />
         <div className='w-2/3 bg-gray-100 h-3 mt-10' />
         <div className='w-5/6 bg-gray-100 h-3 mt-4' />
@@ -54,12 +70,7 @@ const DocsContainer: FunctionComponent<Props> = ({ html, sidebarIds, loading }) 
     )
   }
 
-  return (
-    <div
-      dangerouslySetInnerHTML={{ __html: html }}
-      className={cn('docs-container', { sidebar: open && !mobile })}
-    />
-  )
+  return <DocsContent html={html} open={addSidebarMargin} />
 }
 
-export default memo(DocsContainer)
+export default DocsContainer
