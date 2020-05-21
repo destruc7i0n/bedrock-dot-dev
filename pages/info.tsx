@@ -23,6 +23,17 @@ const Info = () => (
         {' '}
         <a className='link' href='https://discord.gg/wAtvNQN' target='_blank' rel='noopener noreferrer'>Click here</a>
       </p>
+
+      <h3 className='text-bold text-lg mt-2'>Donations</h3>
+      <p className='flex flex-col my-4'>
+        <form action='https://www.paypal.com/cgi-bin/webscr' method='post' target='_top'>
+          <input type='hidden' name='cmd' value='_donations' />
+          <input type='hidden' name='business' value='9NZ66ET9MLMTN' />
+          <input type='hidden' name='currency_code' value='USD' />
+          <input type='image' src='https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif' style={{ border: 'none' }} name='submit' title='PayPal - The safer, easier way to pay online!' alt='Donate with PayPal button' />
+          <img alt='' style={{ border: 'none' }} src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
+        </form>
+      </p>
     </div>
   </Layout>
 )
