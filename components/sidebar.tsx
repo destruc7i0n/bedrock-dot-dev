@@ -3,13 +3,11 @@ import React, { FunctionComponent, useContext, useEffect, useRef, useState } fro
 import cn from 'classnames'
 
 import Selectors from './selectors'
-import SidebarGroupTitle from './sidebar/sidebar-group-title'
-import SidebarGroupItem from './sidebar/sidebar-group-item'
 import { SidebarContext, setOpen } from './sidebar/sidebar-context'
 import SidebarMask from './sidebar/sidebar-mask'
 import VersionContext from './version-context'
 import { getMediaQuery, useIsMobile } from './media-query'
-import { removeHashIfNeeded } from '../lib/util'
+import SidebarContent from './sidebar/sidebar-content'
 
 export interface SidebarStructure {
   [key: string]: {
@@ -84,9 +82,6 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [ mobile ])
 
-  const isShown = open
-  const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
-
   const loadingContent = (
     <div className='flex-1 flex px-4 py-4'>
       <div className='w-full'>
@@ -105,33 +100,19 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     </div>
   )
 
-  const sidebarContent = (
-    <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
-      <div className='flex-1'>
-        {Object.keys(sidebar).map((header, index) => {
-          return (
-            <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
-              {sidebar[header].map((item) =>
-                <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={isActive(item.id)} />
-              )}
-            </SidebarGroupTitle>
-          )
-        })}
-      </div>
-    </div>
-  )
-
   return (
     <>
       <div className={cn('sidebar-container', { loaded })}>
-        { isShown && mobile && <SidebarMask /> }
-        <div className={cn('sidebar', { open: isShown })}>
+        { open && mobile && <SidebarMask /> }
+        <div className={cn('sidebar', { open })}>
           <div className='w-full p-4 border-b border-gray-200'>
             <Selectors />
           </div>
           { loading ? loadingContent : (
             <>
-              {sidebarContent}
+              <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
+                <SidebarContent sidebar={sidebar} file={file} hash={hash}  />
+              </div>
               <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200'>
                 <a className='text-gray-500 hover:text-gray-400 font-normal float-right'
                    target='_blank'

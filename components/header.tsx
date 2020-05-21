@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react'
+import React, { FunctionComponent, memo, useContext } from 'react'
 import Link from 'next/link'
 
 import { setOpen, SidebarContext } from './sidebar/sidebar-context'
@@ -48,4 +48,4 @@ const Header: FunctionComponent = () => {
   )
 }
 
-export default Header
+export default memo(Header)

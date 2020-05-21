@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect } from 'react'
+import React, { FunctionComponent, memo, useContext, useEffect } from 'react'
 
 import cn from 'classnames'
 
@@ -57,9 +57,9 @@ const DocsContainer: FunctionComponent<Props> = ({ html, sidebarIds, loading }) 
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
-      className={cn('docs-container', { open })}
+      className={cn('docs-container', { sidebar: open && !mobile })}
     />
   )
 }
 
-export default DocsContainer
+export default memo(DocsContainer)

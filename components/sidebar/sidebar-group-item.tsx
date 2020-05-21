@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, memo } from 'react'
 
 import cn from 'classnames'
 
@@ -7,7 +7,7 @@ import { addHashIfNeeded } from 'lib/util'
 type Props = {
   title: string
   id: string
-  active?: boolean
+  active: boolean
 }
 
 const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, active }) => {
@@ -21,4 +21,4 @@ const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, active }) => {
   )
 }
 
-export default SidebarGroupItem
+export default memo(SidebarGroupItem)

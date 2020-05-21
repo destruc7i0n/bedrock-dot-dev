@@ -13,8 +13,7 @@
   @apply pb-5;
 
   @screen lg {
-    //@apply px-8;
-    &.open {
+    &.sidebar {
       margin-left: var(--sidebar-width);
     }
   }

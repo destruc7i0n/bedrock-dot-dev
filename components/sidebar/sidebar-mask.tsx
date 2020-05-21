@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react'
+import React, { FunctionComponent, memo, useContext } from 'react'
 
 import { SidebarContext, setOpen } from './sidebar-context'
 
@@ -12,4 +12,4 @@ const SidebarMask: FunctionComponent = () => {
   )
 }
 
-export default SidebarMask
+export default memo(SidebarMask)

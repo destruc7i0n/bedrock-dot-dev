@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, useContext } from 'react'
+import React, { ChangeEvent, FunctionComponent, memo, useContext } from 'react'
 
 import Router from 'next/router'
 
@@ -63,4 +63,4 @@ const Selectors: FunctionComponent = () => {
   )
 }
 
-export default Selectors
+export default memo(Selectors)
