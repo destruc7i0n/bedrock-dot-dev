@@ -26,7 +26,7 @@ type Props = {
 const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   if (!sidebar) return null
 
-  const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState('')
   const [hash, setHash] = useState('')
   const sidebarRef = useRef<HTMLDivElement | null>(null)
 
@@ -39,8 +39,8 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   // as it will show for a split second until the media query updates
   const [ loaded, setLoaded ] = useState(false)
 
-  // reset search when the page changes
-  useEffect(() => setSearch(''), [ file ])
+  // reset filter when the page changes
+  useEffect(() => setFilter(''), [ file ])
 
   useEffect(() => {
     // disable scrolling when in sidebar
@@ -112,12 +112,12 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         <div className={cn('sidebar', { open })}>
           <div className='w-full p-4 border-b border-gray-200'>
             <Selectors />
-            <SidebarFilter setValue={setSearch} value={search} />
+            <SidebarFilter setValue={setFilter} value={filter} />
           </div>
           { loading ? loadingContent : (
             <>
               <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
-                <SidebarContent search={search} sidebar={sidebar} file={file} hash={hash}  />
+                <SidebarContent search={filter} sidebar={sidebar} file={file} hash={hash}  />
               </div>
               <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200'>
                 <a className='text-sm text-gray-500 hover:text-gray-400 font-normal float-right'

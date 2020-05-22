@@ -14,17 +14,21 @@ type Props = {
 const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash, search }) => {
   const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
+  // sort if searching
   if (search) {
     let filteredSidebar: SidebarStructure = {}
 
+    search = search.toLowerCase()
+
     const keys = Object.keys(sidebar)
     for (let key of keys) {
+      // check if the key includes the search term by chance
       if (key.toLowerCase().includes(search)) {
         if (!filteredSidebar[key]) filteredSidebar[key] = []
       }
 
       for (let id of sidebar[key]) {
-        if (id.title.toLowerCase().includes(search)) {
+        if (id.title.toLowerCase().includes(search) || id.id.includes(search)) {
           if (!filteredSidebar[key]) filteredSidebar[key] = []
 
           filteredSidebar[key].push(id)
