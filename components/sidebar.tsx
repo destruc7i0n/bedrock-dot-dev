@@ -8,7 +8,7 @@ import SidebarMask from './sidebar/sidebar-mask'
 import VersionContext from './version-context'
 import { getMediaQuery, useIsMobile } from './media-query'
 import SidebarContent from './sidebar/sidebar-content'
-import SidebarSearch from './sidebar/sidebar-search';
+import SidebarFilter from './sidebar/sidebar-filter'
 
 export interface SidebarStructure {
   [key: string]: {
@@ -112,7 +112,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         <div className={cn('sidebar', { open })}>
           <div className='w-full p-4 border-b border-gray-200'>
             <Selectors />
-            <SidebarSearch setValue={setSearch} value={search} />
+            <SidebarFilter setValue={setSearch} value={search} />
           </div>
           { loading ? loadingContent : (
             <>
