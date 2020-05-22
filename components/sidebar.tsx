@@ -2,12 +2,13 @@ import React, { FunctionComponent, useContext, useEffect, useRef, useState } fro
 
 import cn from 'classnames'
 
-import Selectors from './selectors'
+import Selectors from './sidebar/sidebar-selectors'
 import { SidebarContext, setOpen } from './sidebar/sidebar-context'
 import SidebarMask from './sidebar/sidebar-mask'
 import VersionContext from './version-context'
 import { getMediaQuery, useIsMobile } from './media-query'
 import SidebarContent from './sidebar/sidebar-content'
+import SidebarSearch from './sidebar/sidebar-search';
 
 export interface SidebarStructure {
   [key: string]: {
@@ -25,6 +26,7 @@ type Props = {
 const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   if (!sidebar) return null
 
+  const [search, setSearch] = useState('')
   const [hash, setHash] = useState('')
   const sidebarRef = useRef<HTMLDivElement | null>(null)
 
@@ -36,6 +38,9 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   // this is meant to stop the animation on load of the sidebar
   // as it will show for a split second until the media query updates
   const [ loaded, setLoaded ] = useState(false)
+
+  // reset search when the page changes
+  useEffect(() => setSearch(''), [ file ])
 
   useEffect(() => {
     // disable scrolling when in sidebar
@@ -73,7 +78,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         )
         if (el) {
           if (sidebarRef.current) {
-            sidebarRef.current.scrollTop = el.offsetTop - 115
+            sidebarRef.current.scrollTop = el.offsetTop - 165
           }
         }
       }
@@ -107,14 +112,15 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         <div className={cn('sidebar', { open })}>
           <div className='w-full p-4 border-b border-gray-200'>
             <Selectors />
+            <SidebarSearch setValue={setSearch} value={search} />
           </div>
           { loading ? loadingContent : (
             <>
               <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
-                <SidebarContent sidebar={sidebar} file={file} hash={hash}  />
+                <SidebarContent search={search} sidebar={sidebar} file={file} hash={hash}  />
               </div>
               <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200'>
-                <a className='text-gray-500 hover:text-gray-400 font-normal float-right'
+                <a className='text-sm text-gray-500 hover:text-gray-400 font-normal float-right'
                    target='_blank'
                    rel='noopener noreferrer'
                    href={`https://github.com/bedrock-dot-dev/docs/blob/master/${versionContext.major}/${versionContext.minor}/${versionContext.file}.html`}>View on GitHub</a>

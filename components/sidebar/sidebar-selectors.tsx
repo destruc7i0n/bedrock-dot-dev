@@ -4,9 +4,9 @@ import Router from 'next/router'
 
 import { compareBedrockVersions } from 'lib/util'
 
-import VersionContext from './version-context'
+import VersionContext from '../version-context'
 
-const Selectors: FunctionComponent = () => {
+const SidebarSelectors: FunctionComponent = () => {
   // get from the context
   const { major, minor, file, versions } = useContext(VersionContext)
 
@@ -52,7 +52,7 @@ const Selectors: FunctionComponent = () => {
           {options}
         </select>
       </div>
-      <div className='w-1/2 ml-2'>
+      <div className='w-1/2 ml-4'>
         {files && (
           <select value={file} onChange={onFileChange} className='block w-full leading-4 form-select text-black'>
             {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
@@ -63,4 +63,4 @@ const Selectors: FunctionComponent = () => {
   )
 }
 
-export default memo(Selectors)
+export default memo(SidebarSelectors)
