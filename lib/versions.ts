@@ -51,18 +51,19 @@ const getFormattedFilesList = async () => {
 }
 
 const allFilesList = async () => {
-  if (process.env.NODE_ENV === 'production') {
+  // when in prod and not building
+  if (process.env.NODE_ENV === 'production' && !process.env.BUILDING) {
     return await getFormattedFilesList()
   }
 
   // only use local cache in dev
   const check = checkCache()
   if (check) {
-    console.log('Using local cache for files list')
+    // console.log('Using local cache for files list')
     return check
   }
   else {
-    console.log('Fetching files list')
+    // console.log('Fetching files list')
     const files = await getFormattedFilesList()
     setCache(files)
     return  files
