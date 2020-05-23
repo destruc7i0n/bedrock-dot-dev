@@ -28,6 +28,15 @@ const Header: FunctionComponent = () => {
                 </a>
               </Link>
             </li>
+            <li className='text-lg'>
+              <a
+                className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
+                href='https://wiki.bedrock.dev'
+                target='_blank' rel='noreferrer noopener'
+              >
+                Wiki
+              </a>
+            </li>
           </ul>
         </div>
         {isDocsPage && (

@@ -31,7 +31,72 @@ const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlRespo
   return parsed
 }
 
+type MoreProps = {
+  stable: string[]
+  beta: string[]
+  versions: BedrockVersions
+}
+
+const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
+
+const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versions }) => {
+  const [ stableMajor, stableMinor ] = stable
+  const [ betaMajor, betaMinor ] = beta
+
+  const stableFiles = versions[stableMajor][stableMinor]
+  const betaFiles = versions[betaMajor][betaMinor]
+
+  const [stableFile, setStableFile] = useState(stableFiles[0])
+  const [betaFile, setBetaFile] = useState(betaFiles[0])
+
+  return (
+    <div className='w-full text-2xl xl:text-3xl p-3 pt-2 border-t border-gray-200'>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold'>
+        <div className='flex text-xl rounded-full bg-green-400 px-3 mr-2 font-bold'>
+          <span>Stable Version</span>
+        </div>
+        <div className='flex flex-1 flex-row items-center justify-between'>
+          <div className='flex flex-row items-center'>
+            <span className='select-none'>bedrock.dev/r/</span>
+            <select className='my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
+              {stableFiles.map((file) => <option key={`s-file-${file}`} value={file}>{file}</option>)}
+            </select>
+          </div>
+
+          <Link href={`/docs/[...slug]`} as={getLink(stableMajor, stableMinor, stableFile)}>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center xl:ml-2'>
+              Go
+            </a>
+          </Link>
+        </div>
+      </div>
+
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center mt-2 font-extrabold'>
+        <div className='text-xl rounded-full bg-red-400 px-3 mr-2 font-bold'>
+          <span>Beta Version</span>
+        </div>
+        <div className='flex flex-1 flex-row items-center justify-between'>
+          <div className='flex flex-row items-center'>
+            <span className='select-none'>bedrock.dev/b/</span>
+            <select className='my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
+              {betaFiles.map((file) => <option key={`b-file-${file}`} value={file}>{file}</option>)}
+            </select>
+          </div>
+
+          <Link href={`/docs/[...slug]`} as={getLink(betaMajor, betaMinor, betaFile)}>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center xl:ml-2'>
+              Go
+            </a>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
+  const [open, setOpen] = useState(false)
+
   // set from query string if possible
   useEffect(() => {
     let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
@@ -64,22 +129,12 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     if (!minorVersions.includes(minor)) setMinor(minorVersions[0])
   }, [ major ])
 
-  const link = `/docs/${major}/${minor}/${file}`
-
-  const setBeta = () => {
-    setMajor(tags.beta[0])
-    setMinor(tags.beta[1])
-  }
-
-  const setStable = () => {
-    setMajor(tags.stable[0])
-    setMinor(tags.stable[1])
-  }
+  const link = getLink(major, minor, file)
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl bg-white border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out pl-3 pr-3 xl:pr-1 py-3 xl:py-1 rounded-lg font-extrabold'>
-        <div className='flex flex-col xl:flex-row'>
+      <div className='flex flex-col bg-white border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
+        <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl font-extrabold pl-3 pr-3 pt-3 pb-3 xl:pb-2'>
           <span className='select-none'>bedrock.dev/docs/</span>
           <div className='flex flex-row items-center'>
             <select className='my-2 md:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
@@ -101,26 +156,25 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
           <Link href={`/docs/[...slug]`} as={link}>
             {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-140 ease-in-out text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
               Go
             </a>
           </Link>
         </div>
-      </div>
 
-      <div className='flex flex-row items-center justify-center text-xl xl:p-2 rounded-sm'>
-        <button
-          className='bg-white border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2'
-          onClick={() => setBeta()}
-        >
-          Latest Beta
-        </button>
-        <button
-          className='bg-white border border-gray-600 hover:border-black text-black font-bold py-1 px-4 rounded-md text-center mt-2 ml-2'
-          onClick={() => setStable()}
-        >
-          Latest Release
-        </button>
+        <div className='flex w-full'>
+          {!open ? (
+            <div className='w-full flex justify-center hover:bg-gray-100 rounded-b-lg transition transition-150 ease-in-out text-sm py-1 cursor-pointer' onClick={() => setOpen(true)}>
+              <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAgklEQVRIS+3Vyw2AMAwDUHdSGIFRGAE2RebEp03jgHpKj1GiVzlSWzDglAEGEpFSzrjCcc0AJmnabt4BbGx57oTFPyACvPR5aov/Ct2AFsJ6FHoBFhKBqkAPUaAm4EE8kAl4EQvqAgpSg1yAilwhNxBBOLMAWJWXIV9hJa3846W0cAB59RUaIJkXiwAAAABJRU5ErkJggg==' alt='Expand' />
+            </div>
+          ) : (
+            <VersionChooserMore
+              stable={tags.stable}
+              beta={tags.beta}
+              versions={versions}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

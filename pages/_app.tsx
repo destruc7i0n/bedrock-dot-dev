@@ -14,7 +14,7 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    console.log('Hey!')
+    console.log('Hey there!')
   }, [])
 
   return (
