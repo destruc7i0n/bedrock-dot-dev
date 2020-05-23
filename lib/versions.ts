@@ -45,12 +45,25 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
   return versions
 }
 
+const getFormattedFilesList = async () => {
+  const response = await listAllFiles()
+  return formatTree(response)
+}
+
 const allFilesList = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    return await getFormattedFilesList()
+  }
+
+  // only use local cache in dev
   const check = checkCache()
-  if (check) return check
+  if (check) {
+    console.log('Using local cache for files list')
+    return check
+  }
   else {
-    const response = await listAllFiles()
-    const files = formatTree(response)
+    console.log('Fetching files list')
+    const files = await getFormattedFilesList()
     setCache(files)
     return  files
   }

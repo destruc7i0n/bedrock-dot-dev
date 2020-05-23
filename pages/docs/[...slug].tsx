@@ -6,7 +6,7 @@ import Error from 'next/error'
 
 import { BedrockVersions } from 'lib/versions'
 
-import { parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
+import { highlightTextarea, parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
 
 import Layout from 'components/layout'
 import Sidebar  from 'components/sidebar'
@@ -101,15 +101,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     } catch (e) {
       console.log('Could not get file!')
     }
-  }
 
-  if (typeof html === 'string') {
-    displayHtml = html ? removeDisplayHtml(html) : ''
+    if (typeof html === 'string') {
+      displayHtml = html ? highlightTextarea(removeDisplayHtml(html), slug[2]) : ''
 
-    let file = ''
-    if (slug && slug.length === 3) file = slug[2]
+      let file = ''
+      if (slug && slug.length === 3) file = slug[2]
 
-    parsedData = parseHtml(html, file)
+      parsedData = parseHtml(html, file)
+    }
   }
 
   return { props: { html: displayHtml, bedrockVersions, parsedData } }

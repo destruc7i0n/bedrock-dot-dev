@@ -1,3 +1,9 @@
+import Prism from 'prismjs'
+// @ts-ignore
+import loadLanguges from 'prismjs/components/index'
+
+loadLanguges(['json'])
+
 import { SidebarStructure } from '../components/sidebar'
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
@@ -127,6 +133,42 @@ export const removeDisplayHtml = (html: string) => {
   // html = html.replace(/[<br\/?>]*?<a .*>Back to top<\/a>[<br\/?>]*?/g, '')
   html = html.replace(TABLE_MATCH, '')
   html = html.replace(STYLESHEET_MATCH, '')
+
+  return html
+}
+
+const TEXTAREA_MATCH = /<textarea.*?>([^]*?)<\/textarea>/g
+
+export const highlightTextarea = (html: string, file: string) => {
+  if (file === 'Schemas') {
+    return highlightSchemas(html)
+  }
+
+  const jsPages = [ 'Scripting', 'UI' ]
+  const language = jsPages.includes(file) ? 'javascript' : 'json'
+
+  return html.replace(TEXTAREA_MATCH, (_, group) => {
+    const hl = Prism.highlight(group, Prism.languages[language], language)
+    return `<pre class="language-${language}">${hl}</pre>`
+  })
+}
+
+const MARKDOWN_CODE_MATCH = /```(.*)```/
+
+const highlightSchemas = (html: string) => {
+  let schemaContent = html.match(MARKDOWN_CODE_MATCH)
+
+  if (schemaContent) {
+    let content = schemaContent[1]
+
+    content = content
+      .replace(/<\/br>-+<\/br>/g, '\n') // remove the ----- lines
+      .replace(/<\/?br ?\/?>/g, '\n') // remove br and replace with newlines
+
+    content = Prism.highlight(content, Prism.languages.json, 'json')
+
+    html = html.replace(MARKDOWN_CODE_MATCH, '<pre class="language-json">' + content + '</pre>')
+  }
 
   return html
 }

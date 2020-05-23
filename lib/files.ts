@@ -1,6 +1,7 @@
 import { allFilesList, BedrockVersions } from './versions'
 
 export const getBedrockVersions = async (): Promise<BedrockVersions>  => {
+  console.log('Fetching all files...')
   return await allFilesList()
 }
 

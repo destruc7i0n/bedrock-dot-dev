@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import Router from 'next/router'
 
@@ -13,6 +13,10 @@ Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
 function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    console.log('Hey!')
+  }, [])
+
   return (
     <Component {...pageProps} />
   )
