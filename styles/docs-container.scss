@@ -43,8 +43,10 @@
     //white-space: nowrap;
 
     tbody {
-      display: table;
-      width: 100%;
+      @media (max-width: 1024px) {
+        display: table;
+        width: 100%;
+      }
     }
   }
 
