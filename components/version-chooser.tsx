@@ -50,21 +50,21 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
   const [betaFile, setBetaFile] = useState(betaFiles[0])
 
   return (
-    <div className='w-full text-2xl xl:text-3xl p-3 pt-2 border-t border-gray-200'>
+    <div className='w-full text-2xl xl:text-3xl p-3 border-t border-gray-200'>
       <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold'>
         <div className='flex text-xl rounded-full bg-green-400 px-3 mr-2 font-bold'>
           <span>Stable Version</span>
         </div>
-        <div className='flex flex-1 flex-row items-center justify-between'>
+        <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-row items-center'>
-            <span className='select-none'>bedrock.dev/r/</span>
+            <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/r/</span>
             <select className='my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
               {stableFiles.map((file) => <option key={`s-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
 
           <Link href={`/docs/[...slug]`} as={getLink(stableMajor, stableMinor, stableFile)}>
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center xl:ml-2'>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center ml-2'>
               Go
             </a>
           </Link>
@@ -75,16 +75,16 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
         <div className='text-xl rounded-full bg-red-400 px-3 mr-2 font-bold'>
           <span>Beta Version</span>
         </div>
-        <div className='flex flex-1 flex-row items-center justify-between'>
+        <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-row items-center'>
-            <span className='select-none'>bedrock.dev/b/</span>
+            <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/b/</span>
             <select className='my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
               {betaFiles.map((file) => <option key={`b-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
 
           <Link href={`/docs/[...slug]`} as={getLink(betaMajor, betaMinor, betaFile)}>
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center xl:ml-2'>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center ml-2'>
               Go
             </a>
           </Link>
@@ -135,7 +135,8 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     <div className='flex flex-col'>
       <div className='flex flex-col bg-white border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
         <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl font-extrabold pl-3 pr-3 pt-3 pb-3 xl:pb-2'>
-          <span className='select-none'>bedrock.dev/docs/</span>
+          {open && <div className='block xl:hidden'>bedrock.dev</div>}
+          <span className='flex flex-row select-none'><span className={open ? 'hidden xl:block' : 'block'}>bedrock.dev</span>/docs/</span>
           <div className='flex flex-row items-center'>
             <select className='my-2 md:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
               {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}

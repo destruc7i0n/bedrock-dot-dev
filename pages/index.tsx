@@ -16,8 +16,8 @@ type Props = {
 const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
   return (
     <Layout title='bedrock.dev' description='Bedrock Documentation' header={false}>
-      <div className='h-screen'>
-        <div className='flex bg-gray-50 flex-col h-full justify-center items-center'>
+      <div className='h-screen bg-gray-50'>
+        <div className='flex pt-24 xl:pt-64 flex-col justify-center items-center'>
           <VersionChooser versions={versions} tags={tags} />
         </div>
       </div>
