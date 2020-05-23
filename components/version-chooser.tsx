@@ -52,7 +52,7 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
   return (
     <div className='w-full text-2xl xl:text-3xl p-3 border-t border-gray-200'>
       <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold'>
-        <div className='flex text-xl rounded-full bg-green-400 px-3 mr-2 font-bold'>
+        <div className='text-xl rounded-full bg-green-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span>Stable Version</span>
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
@@ -72,7 +72,7 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
       </div>
 
       <div className='w-full flex flex-col xl:flex-row items-start xl:items-center mt-2 font-extrabold'>
-        <div className='text-xl rounded-full bg-red-400 px-3 mr-2 font-bold'>
+        <div className='text-xl rounded-full bg-red-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span>Beta Version</span>
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
