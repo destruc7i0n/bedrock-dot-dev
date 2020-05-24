@@ -68,24 +68,24 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   }, [])
 
   useEffect(() => {
-    setHash(decodeURIComponent(location.hash))
-    const onHashChange = () => {
-      if (location.hash && !mobile) {
-        const hash = decodeURIComponent(location.hash)
-        setHash(hash)
-        const el: HTMLAnchorElement | null = document.querySelector(
-          `.sidebar .sidebar-id[href="${hash}"]`
-        )
-        if (el) {
-          if (sidebarRef.current) {
-            sidebarRef.current.scrollTop = el.offsetTop - 165
-          }
+    if (location.hash) {
+      const hash = decodeURIComponent(location.hash)
+      setHash(hash)
+      const el: HTMLAnchorElement | null = document.querySelector(
+        `.sidebar .sidebar-id[href="${hash}"]`
+      )
+      if (el) {
+        if (sidebarRef.current) {
+          sidebarRef.current.scrollTop = el.offsetTop - 165
         }
       }
     }
+
+    const onHashChange = () => setHash(decodeURIComponent(location.hash))
+
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
-  }, [ mobile ])
+  }, [])
 
   const loadingContent = (
     <div className='flex-1 flex px-4 py-4'>

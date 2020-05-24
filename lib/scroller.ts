@@ -27,7 +27,6 @@ export const handleScroll = debounce((ids: string[]) => {
     const heading = document.getElementById(id)
     if (heading && inView(heading, { offset: 58 })) {
       window.history.replaceState({}, '', `#${id}`)
-      window.dispatchEvent(new HashChangeEvent('hashchange'))
       break
     }
   }
