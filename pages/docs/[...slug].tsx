@@ -58,7 +58,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
       <SidebarContextProvider>
         <Layout title={parsedData && parsedData.title} description={parsedData && parsedData.title}>
           <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} loading={loading} />
-          <DocsContainer html={html} sidebarIds={parsedData && parsedData.sidebarIds} loading={loading} />
+          <DocsContainer html={html} loading={loading} />
         </Layout>
       </SidebarContextProvider>
     </VersionContext.Provider>

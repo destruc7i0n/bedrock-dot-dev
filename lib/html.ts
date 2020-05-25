@@ -92,7 +92,6 @@ const getTitle = (html: string): string => {
 
 export type ParseHtmlResponse = {
   sidebar: SidebarStructure
-  sidebarIds: string[]
   title: string
 }
 
@@ -112,17 +111,8 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
   }
   const title = getTitle(html)
 
-  const sidebarIds = [
-    ...Object.keys(sidebarContent),
-    ...Object.keys(sidebarContent).reduce<string[]>((acc, el) => {
-      acc.push(...sidebarContent[el].map(e => e.id))
-      return acc
-    }, [])
-  ]
-
   return {
     sidebar: sidebarContent,
-    sidebarIds,
     title
   }
 }

@@ -6,6 +6,7 @@ const useScrollController = () => {
   useEffect(() => {
     const handleRouteChange = () => {}
     const handleRouteChangeComplete = () => {
+      if (window.location.hash) return
       window.scrollTo(0, 0)
     }
 

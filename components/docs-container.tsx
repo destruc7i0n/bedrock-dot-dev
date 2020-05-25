@@ -1,10 +1,9 @@
-import React, { FunctionComponent, memo, useContext, useEffect } from 'react'
+import React, { FunctionComponent, memo, useContext } from 'react'
 
 import cn from 'classnames'
 
 import { SidebarContext } from './sidebar/sidebar-context'
 
-import { handleScroll } from 'lib/scroller'
 import { useIsMobile } from './media-query'
 
 type DocsContentProps = {
@@ -23,22 +22,13 @@ const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html, open }) =
 
 type DocsContainerProps = {
   html: string
-  sidebarIds: string[]
   loading: boolean
 }
 
-const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, sidebarIds, loading }) => {
+const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading }) => {
   const { state: { open } } = useContext(SidebarContext)
 
   const mobile = useIsMobile()
-
-  const handler = () => handleScroll(sidebarIds)
-  useEffect(() => {
-    if (!mobile) {
-      window.addEventListener('scroll', handler)
-    }
-    return () => window.removeEventListener('scroll', handler)
-  }, [ sidebarIds, mobile ])
 
   const addSidebarMargin = open && !mobile
 
