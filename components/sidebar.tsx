@@ -3,10 +3,10 @@ import React, { FunctionComponent, useContext, useEffect, useRef, useState } fro
 import cn from 'classnames'
 
 import Selectors from './sidebar/sidebar-selectors'
-import { SidebarContext, setOpen } from './sidebar/sidebar-context'
+import { SidebarContext } from './sidebar/sidebar-context'
 import SidebarMask from './sidebar/sidebar-mask'
 import VersionContext from './version-context'
-import { getMediaQuery, useIsMobile } from './media-query'
+import { useIsMobile } from './media-query'
 import SidebarContent from './sidebar/sidebar-content'
 import SidebarFilter from './sidebar/sidebar-filter'
 
@@ -32,12 +32,8 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
 
   const mobile = useIsMobile()
 
-  const { state: { open }, dispatch } = useContext(SidebarContext)
+  const { state: { open }, loaded } = useContext(SidebarContext)
   const versionContext = useContext(VersionContext)
-
-  // this is meant to stop the animation on load of the sidebar
-  // as it will show for a split second until the media query updates
-  const [ loaded, setLoaded ] = useState(false)
 
   // reset filter when the page changes
   useEffect(() => setFilter(''), [ file ])
@@ -46,26 +42,6 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     // disable scrolling when in sidebar
     if (mobile) document.body.style.overflow = open ? 'hidden' : 'initial'
   }, [ open ])
-
-  useEffect(() => {
-    let updatedOpen = open
-
-    if (!mobile && !open) updatedOpen = true
-    if (mobile && open) updatedOpen = false
-
-    if (updatedOpen !== open) {
-      dispatch(setOpen(updatedOpen))
-      // when there is a view change, allow it to happen
-      if (!loaded) setLoaded(true)
-    }
-  }, [ mobile ])
-
-  useEffect(() => {
-    // theres no need to prevent the animation on desktop
-    if (!getMediaQuery(1024).matches) {
-      setLoaded(true)
-    }
-  }, [])
 
   useEffect(() => {
     if (location.hash) {

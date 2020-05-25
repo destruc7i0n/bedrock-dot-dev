@@ -6,6 +6,8 @@ const getMediaQuery = (width: number) => {
   return (window.matchMedia && window.matchMedia(`(max-width: ${width}px)`)) || { matches: false }
 }
 
+const isLg = () => !getMediaQuery(1024).matches
+
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false)
 
@@ -36,4 +38,4 @@ const useIsMobile = () => {
   return useMediaQuery(1024)
 }
 
-export { useMediaQuery, getMediaQuery, useIsMobile }
+export { useMediaQuery, getMediaQuery, useIsMobile, isLg }

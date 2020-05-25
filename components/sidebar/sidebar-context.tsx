@@ -1,6 +1,7 @@
-import React, { createContext, Dispatch, useReducer } from 'react'
+import React, { createContext, Dispatch, useEffect, useReducer, useState } from 'react'
 
 import { sidebarReducer, Actions, setOpen } from './sidebar-context-reducer'
+import { isLg } from '../media-query'
 
 export type ContextType = {
   open: boolean
@@ -11,16 +12,34 @@ let initialState: ContextType = { open: true }
 export const SidebarContext = createContext<{
   state: ContextType
   dispatch: Dispatch<Actions>
+  loaded: boolean
 }>({
   state: initialState,
-  dispatch: () => null
+  dispatch: () => null,
+  loaded: false,
 })
 
 export const SidebarContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(sidebarReducer, initialState)
+  const [loaded, setLoaded] = useState(false)
+
+  // rehyrate the open state from the localstorage
+  useEffect(() => {
+    const { open } = JSON.parse(localStorage.getItem('sidebar') as string)
+    if (isLg()) {
+      dispatch(setOpen(open))
+    } else {
+      dispatch(setOpen(false))
+    }
+    setLoaded(true)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('sidebar', JSON.stringify(state))
+  }, [ state ])
 
   return (
-    <SidebarContext.Provider value={{state, dispatch}}>
+    <SidebarContext.Provider value={{state, dispatch, loaded}}>
       {children}
     </SidebarContext.Provider>
   )

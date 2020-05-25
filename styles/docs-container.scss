@@ -13,8 +13,10 @@
   @apply pb-5;
 
   @screen lg {
-    &.sidebar {
-      margin-left: var(--sidebar-width);
+    margin-left: var(--sidebar-width);
+
+    &.sidebar-hidden {
+      margin-left: 0 !important;
     }
   }
 

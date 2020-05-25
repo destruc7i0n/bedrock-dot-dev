@@ -4,18 +4,16 @@ import cn from 'classnames'
 
 import { SidebarContext } from './sidebar/sidebar-context'
 
-import { useIsMobile } from './media-query'
-
 type DocsContentProps = {
   html: string
-  open: boolean
+  sidebarHidden: boolean
 }
 
-const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html, open }) => {
+const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html, sidebarHidden }) => {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
-      className={cn('docs-container', { sidebar: open })}
+      className={cn('docs-container', { 'sidebar-hidden': sidebarHidden })}
     />
   )
 })
@@ -26,15 +24,13 @@ type DocsContainerProps = {
 }
 
 const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading }) => {
-  const { state: { open } } = useContext(SidebarContext)
+  const { state: { open }, loaded } = useContext(SidebarContext)
 
-  const mobile = useIsMobile()
-
-  const addSidebarMargin = open && !mobile
+  const isSidebarHidden = !open && loaded
 
   if (loading) {
     return (
-      <div className={cn('docs-container my-8', { sidebar: addSidebarMargin })}>
+      <div className={cn('docs-container my-8', { 'sidebar-hidden': isSidebarHidden })}>
         <div className='w-4/5 bg-gray-100 h-8' />
         <div className='w-2/3 bg-gray-100 h-3 mt-10' />
         <div className='w-5/6 bg-gray-100 h-3 mt-4' />
@@ -60,7 +56,7 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
     )
   }
 
-  return <DocsContent html={html} open={addSidebarMargin} />
+  return <DocsContent html={html} sidebarHidden={isSidebarHidden} />
 }
 
 export default DocsContainer

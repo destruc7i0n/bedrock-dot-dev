@@ -11,11 +11,28 @@ const Header: FunctionComponent = () => {
 
   const isDocsPage = router.pathname.startsWith('/docs')
 
+  const toggleButton = (
+    <button onClick={() => dispatch(setOpen(!open))}>
+      <svg fill='currentColor' className='w-6 h-6' viewBox='0 0 20 20'>
+        <path
+          d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
+          clipRule='evenodd'
+          fillRule='evenodd'
+        />
+      </svg>
+    </button>
+  )
+
   return (
     <>
-      <header className='navbar fixed w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-5'>
+      <header className='navbar fixed w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4'>
         <div className='flex items-center'>
-          <h1 className='mr-8 text-2xl font-normal'>
+          {isDocsPage && (
+            <div className='hidden lg:flex mr-2'>
+              {toggleButton}
+            </div>
+          )}
+          <h1 className='mr-6 text-2xl font-normal'>
             <Link href='/'>
               <a className='hover:text-gray-900'>bedrock.dev</a>
             </Link>
@@ -41,15 +58,7 @@ const Header: FunctionComponent = () => {
         </div>
         {isDocsPage && (
           <div className='flex lg:hidden'>
-            <button onClick={() => dispatch(setOpen(!open))}>
-              <svg fill='currentColor' className='w-6 h-6' viewBox='0 0 20 20'>
-                <path
-                  d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
-                  clipRule='evenodd'
-                  fillRule='evenodd'
-                />
-              </svg>
-            </button>
+            {toggleButton}
           </div>
         )}
       </header>
