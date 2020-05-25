@@ -34,10 +34,11 @@ export const SidebarContextProvider: React.FC = ({ children }) => {
       ({ open } = JSON.parse(localStorageItem))
     }
 
+    // not open if on small screen
     if (!isLg()) open = false
 
     unstable_batchedUpdates(() => {
-      setOpen(open)
+      dispatch(setOpen(open))
       setLoaded(true)
     })
   }, [])

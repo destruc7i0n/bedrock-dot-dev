@@ -27,7 +27,7 @@ const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlRespo
   return parsed
 }
 
-type MoreProps = {
+type QuickProps = {
   stable: string[]
   beta: string[]
   versions: BedrockVersions
@@ -35,7 +35,7 @@ type MoreProps = {
 
 const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
 
-const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versions }) => {
+const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, versions }) => {
   const [ stableMajor, stableMinor ] = stable
   const [ betaMajor, betaMinor ] = beta
 
@@ -46,8 +46,8 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
   const [betaFile, setBetaFile] = useState(betaFiles[0])
 
   return (
-    <div className='w-full text-2xl xl:text-3xl p-3 border-t border-gray-200'>
-      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold'>
+    <div className='w-full text-2xl p-3 border-t border-gray-200'>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold mb-2'>
         <div className='text-xl rounded-full bg-green-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span title='Stable Version'>{stableMinor}</span>
         </div>
@@ -67,7 +67,7 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
         </div>
       </div>
 
-      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center mt-2 font-extrabold'>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold pt-2 border-t border-gray-200'>
         <div className='text-xl rounded-full bg-red-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span title='Beta Version'>{betaMinor}</span>
         </div>
@@ -96,8 +96,6 @@ type VersionChooserProps = {
 }
 
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
-  const [open, setOpen] = useState(false)
-
   // set from query string if possible
   useEffect(() => {
     let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
@@ -135,23 +133,26 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   return (
     <div className='flex flex-col'>
       <div className='flex flex-col bg-white border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
-        <div className='flex flex-col xl:flex-row text-3xl lg:text-5xl font-extrabold pl-3 pr-3 pt-3 pb-3 xl:pb-2'>
-          {open && <div className='block xl:hidden'>bedrock.dev</div>}
-          <span className='flex flex-row select-none'><span className={open ? 'hidden xl:block' : 'block'}>bedrock.dev</span>/docs/</span>
+        <div className='flex flex-col xl:flex-row xl:items-center text-2xl lg:text-3xl font-extrabold pl-3 pr-3 pt-3 pb-3 xl:pb-2'>
+          <div className='block xl:hidden'>bedrock.dev</div>
+          <span className='flex flex-row select-none'>
+            <span className='hidden xl:flex'>bedrock.dev</span>
+            <span>/docs/</span>
+          </span>
           <div className='flex flex-row items-center'>
-            <select className='my-2 md:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+            <select className='my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
               {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
             </select>
             <span className='select-none'>/</span>
           </div>
           <div className='flex flex-row items-center'>
-            <select className='my-2 md:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+            <select className='my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
               {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
             </select>
             <span className='select-none'>/</span>
           </div>
           <div className='flex flex-row items-center'>
-            <select className='my-2 md:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
+            <select className='my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
               {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
@@ -165,17 +166,17 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
         </div>
 
         <div className='flex w-full'>
-          {!open ? (
-            <div className='w-full flex justify-center hover:bg-gray-100 rounded-b-lg transition transition-150 ease-in-out text-sm py-1 cursor-pointer' onClick={() => setOpen(true)}>
-              <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAgklEQVRIS+3Vyw2AMAwDUHdSGIFRGAE2RebEp03jgHpKj1GiVzlSWzDglAEGEpFSzrjCcc0AJmnabt4BbGx57oTFPyACvPR5aov/Ct2AFsJ6FHoBFhKBqkAPUaAm4EE8kAl4EQvqAgpSg1yAilwhNxBBOLMAWJWXIV9hJa3846W0cAB59RUaIJkXiwAAAABJRU5ErkJggg==' alt='Expand' />
-            </div>
-          ) : (
-            <VersionChooserMore
-              stable={tags.stable}
-              beta={tags.beta}
-              versions={versions}
-            />
-          )}
+          <QuickVersionChooser
+            stable={tags.stable}
+            beta={tags.beta}
+            versions={versions}
+          />
+        </div>
+        <div className='w-full p-3 border-t border-gray-200 text-center'>
+          <Link href='/info'>
+            <a className='link'>Info</a>
+          </Link>
+          {' '} • Website by <a className='link' href='https://thedestruc7i0n.ca'>TheDestruc7i0n</a>
         </div>
       </div>
     </div>

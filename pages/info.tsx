@@ -4,7 +4,7 @@ import Layout from 'components/layout'
 
 const Info = () => (
   <Layout title='Info'>
-    <div className='mt-12 p-5'>
+    <div className='p-5'>
       <h3 className='text-bold text-lg mb-2'>About</h3>
       <p className='my-4'>
         An <b>unofficial</b> Minecraft Bedrock Edition documentation website hosted by <a href='https://thedestruc7i0n.ca' className='link'>TheDestruc7i0n</a>.
