@@ -25,7 +25,13 @@ export const SidebarContextProvider: React.FC = ({ children }) => {
 
   // rehyrate the open state from the localstorage
   useEffect(() => {
-    const { open } = JSON.parse(localStorage.getItem('sidebar') as string)
+    // attempt to get from localstorage
+    let open = true
+    const localStorageItem = localStorage.getItem('sidebar')
+    if (typeof localStorageItem === 'string') {
+      ({ open } = JSON.parse(localStorageItem))
+    }
+
     if (isLg()) {
       dispatch(setOpen(open))
     } else {
