@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
 
+import { unstable_batchedUpdates } from 'react-dom'
+
 import cn from 'classnames'
 
 import Selectors from './sidebar/sidebar-selectors'
@@ -35,8 +37,13 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   const { state: { open }, loaded } = useContext(SidebarContext)
   const versionContext = useContext(VersionContext)
 
-  // reset filter when the page changes
-  useEffect(() => setFilter(''), [ file ])
+  // reset when the page changes
+  useEffect(() => {
+    unstable_batchedUpdates(() => {
+      setFilter('')
+      setHash('')
+    })
+  }, [ file ])
 
   useEffect(() => {
     // disable scrolling when in sidebar

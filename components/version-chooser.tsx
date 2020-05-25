@@ -7,15 +7,11 @@ import { compareBedrockVersions } from '../lib/util'
 import { TagsResponse } from '../lib/files'
 import { BedrockVersions } from '../lib/versions'
 
-type VersionChooserProps = {
-  versions: BedrockVersions
-  tags: TagsResponse
-}
-
 type ParsedUrlResponse = {
   major: string
   minor: string
 }
+
 const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlResponse => {
   const parts = query.split('/')
 
@@ -92,6 +88,11 @@ const VersionChooserMore: FunctionComponent<MoreProps> = ({ stable, beta, versio
       </div>
     </div>
   )
+}
+
+type VersionChooserProps = {
+  versions: BedrockVersions
+  tags: TagsResponse
 }
 
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {

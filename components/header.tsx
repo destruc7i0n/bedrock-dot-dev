@@ -1,8 +1,8 @@
 import React, { FunctionComponent, memo, useContext } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { setOpen, SidebarContext } from './sidebar/sidebar-context'
-import { useRouter } from 'next/router';
 
 const Header: FunctionComponent = () => {
   const router = useRouter()

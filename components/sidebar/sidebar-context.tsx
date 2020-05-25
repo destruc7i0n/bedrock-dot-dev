@@ -1,5 +1,7 @@
 import React, { createContext, Dispatch, useEffect, useReducer, useState } from 'react'
 
+import { unstable_batchedUpdates } from 'react-dom'
+
 import { sidebarReducer, Actions, setOpen } from './sidebar-context-reducer'
 import { isLg } from '../media-query'
 
@@ -32,12 +34,12 @@ export const SidebarContextProvider: React.FC = ({ children }) => {
       ({ open } = JSON.parse(localStorageItem))
     }
 
-    if (isLg()) {
-      dispatch(setOpen(open))
-    } else {
-      dispatch(setOpen(false))
-    }
-    setLoaded(true)
+    if (!isLg()) open = false
+
+    unstable_batchedUpdates(() => {
+      setOpen(open)
+      setLoaded(true)
+    })
   }, [])
 
   useEffect(() => {
