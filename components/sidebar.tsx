@@ -52,7 +52,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
       )
       if (el) {
         if (sidebarRef.current) {
-          sidebarRef.current.scrollTop = el.offsetTop - 165
+          sidebarRef.current.scrollTop = el.offsetTop - 164
         }
       }
     }

@@ -25,7 +25,7 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='navbar fixed w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4'>
+      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4'>
         <div className='flex items-center'>
           {isDocsPage && (
             <div className='hidden lg:flex mr-2'>

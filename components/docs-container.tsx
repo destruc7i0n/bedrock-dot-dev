@@ -30,7 +30,7 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
 
   if (loading) {
     return (
-      <div className={cn('docs-container my-8', { 'sidebar-hidden': isSidebarHidden })}>
+      <div className={cn('docs-container mb-8', { 'sidebar-hidden': isSidebarHidden })}>
         <div className='w-4/5 bg-gray-100 h-8' />
         <div className='w-2/3 bg-gray-100 h-3 mt-10' />
         <div className='w-5/6 bg-gray-100 h-3 mt-4' />

@@ -6,7 +6,6 @@
     @apply underline;
   }
 
-  @apply mt-12;
   @apply pt-4;
   @apply pr-5;
   @apply pl-5;
@@ -23,7 +22,7 @@
   [id]::before {
     content: '';
     display: block;
-    height: 4rem;
+    padding-top: 4rem;
     margin-top: -4rem;
     visibility: hidden;
   }
