@@ -4,7 +4,7 @@ import loadLanguges from 'prismjs/components/index'
 
 loadLanguges(['json'])
 
-import { SidebarStructure } from '../components/sidebar'
+import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
 const TH_MATCH = /<th>(.*)<\/th>/
@@ -12,36 +12,45 @@ const TD_MATCH = /<td style=".*">(minecraft:.*)<\/td>/g
 const LINK_MATCH = /<a href="(#.*)">(.*)<\/a>/
 const H1_MATCH = /<h1>(.*)<\/h1>/
 
-const getComponentsList = (html: string): SidebarStructure => {
-  let components: SidebarStructure = {
-    'Components': []
-  }
+const scrapeTable = (html: string, id: string) => {
+  let elements: SidebarStructureElement[] = []
 
-  const getComponents = (id: string) => {
-    // this needs to be this disgusting to work for the older pages
-    const tableRegex =
-      `<h2><p id="${id}">${id}<\/p><\/h2>[^]*?` + TABLE_MATCH.source
+  // this needs to be this disgusting to work for the older pages
+  const tableRegex =
+    `<h2><p id="${id}">${id}<\/p><\/h2>[^]*?` + TABLE_MATCH.source
 
-    const matchComponents = new RegExp(tableRegex)
-    const componentsTable = html.match(matchComponents)
+  const matchComponents = new RegExp(tableRegex)
+  const table = html.match(matchComponents)
 
-    // console.log(/<h2><p id="Components">Components<\/p><\/h2>.*<table .*>/.test(html))
-
-    if (componentsTable && componentsTable[1]) {
-      let match
-      while (match = TD_MATCH.exec(componentsTable[1])) components['Components'].push({
+  if (table && table[1]) {
+    let match
+    while (match = TD_MATCH.exec(table[1]))
+      elements.push({
         title: match[1],
         id: match[1],
       })
-      // console.log(components['Components'].length)
-    }
   }
 
-  // match these two groups and add to the sidebar
-  getComponents('Components')
-  getComponents('Properties')
+  return elements
+}
 
+const getComponentsList = (html: string): SidebarStructureElement[] => {
+  console.log('Generating components list...')
+  const components = [
+    ...scrapeTable(html, 'Components'),
+    ...scrapeTable(html, 'Properties')
+  ]
+  console.log(`Found ${components.length} components`)
   return components
+}
+
+const getAIGoals = (html: string): SidebarStructureElement[] => {
+  console.log('Generating AI Goals list...')
+  const goals = [
+    ...scrapeTable(html, 'AI Goals')
+  ]
+  console.log(`Found ${goals.length} AI goals`)
+  return goals
 }
 
 const getSidebarContent = (html: string): SidebarStructure => {
@@ -100,12 +109,21 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
   if (file && file === 'Entities') {
     const componentsList = getComponentsList(html)
     // only add the sidebar components entry if there are any found
-    if (componentsList['Components'].length) {
-      sidebarContent['Components'] = componentsList['Components'].sort((a, b) => a.title.localeCompare(b.title))
+    if (componentsList.length) {
+      sidebarContent['Components'] =
+        componentsList.sort((a, b) => a.title.localeCompare(b.title))
       // order the object and bring the components list to the top
       sidebarContent = {
         'Components': sidebarContent['Components'],
         ...sidebarContent
+      }
+    }
+
+    if (!sidebarContent['AI Goals']) {
+      sidebarContent = {
+        'Components': sidebarContent['Components'],
+        'AI Goals': getAIGoals(html),
+        ...sidebarContent,
       }
     }
   }

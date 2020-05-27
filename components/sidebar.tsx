@@ -12,11 +12,13 @@ import { useIsMobile } from './media-query'
 import SidebarContent from './sidebar/sidebar-content'
 import SidebarFilter from './sidebar/sidebar-filter'
 
+export interface SidebarStructureElement {
+  title: string
+  id: string
+}
+
 export interface SidebarStructure {
-  [key: string]: {
-    title: string
-    id: string
-  }[]
+  [key: string]: SidebarStructureElement[]
 }
 
 type Props = {

@@ -52,7 +52,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
           <span title='Stable Version'>{stableMinor}</span>
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
-          <div className='flex flex-row items-center'>
+          <div className='flex flex-1 flex-row items-center'>
             <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/r/</span>
             <select className='my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
               {stableFiles.map((file) => <option key={`s-file-${file}`} value={file}>{file}</option>)}
@@ -72,7 +72,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
           <span title='Beta Version'>{betaMinor}</span>
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
-          <div className='flex flex-row items-center'>
+          <div className='flex flex-1 flex-row items-center'>
             <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/b/</span>
             <select className='my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
               {betaFiles.map((file) => <option key={`b-file-${file}`} value={file}>{file}</option>)}

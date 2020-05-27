@@ -108,6 +108,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       let file = ''
       if (slug && slug.length === 3) file = slug[2]
 
+      console.log(`Processing ${slug.join('/')}...`)
+
       parsedData = parseHtml(html, file)
     }
   }

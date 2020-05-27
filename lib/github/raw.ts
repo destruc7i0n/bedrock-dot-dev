@@ -14,7 +14,9 @@ async function getError(res: Response): Promise<Error> {
 }
 
 export const getRawFileFromGitHub = async (path: string): Promise<string | Error> => {
-  const res = await fetch(RAW_GITHUB_URL + path)
+  const url = RAW_GITHUB_URL + path
+  console.log(`Fetching ${url}`)
+  const res = await fetch(url)
 
   if (res.ok) return res.text()
   throw await getError(res)
