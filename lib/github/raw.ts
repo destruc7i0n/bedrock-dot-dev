@@ -1,3 +1,5 @@
+import Log, { logLinkColor } from 'lib/log'
+
 import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './constants'
 
 export function getErrorText(res: Response) {
@@ -15,7 +17,7 @@ async function getError(res: Response): Promise<Error> {
 
 export const getRawFileFromGitHub = async (path: string): Promise<string | Error> => {
   const url = RAW_GITHUB_URL + path
-  console.log(`Fetching ${url}`)
+  Log.info(`Fetching ${logLinkColor(path)}`)
   const res = await fetch(url)
 
   if (res.ok) return res.text()

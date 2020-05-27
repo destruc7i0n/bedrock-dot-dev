@@ -20,6 +20,7 @@ import { useScrollController } from 'components/scroll-controller'
 
 import { getBedrockVersions } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
+import Log, { logLinkColor } from 'lib/log'
 
 type Props = {
   html: string
@@ -99,7 +100,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     try {
       html = await getDocsFilesFromRepo(path.join('/'))
     } catch (e) {
-      console.log('Could not get file!')
+      Log.error('Could not get file!')
     }
 
     if (typeof html === 'string') {
@@ -108,9 +109,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       let file = ''
       if (slug && slug.length === 3) file = slug[2]
 
-      console.log(`Processing ${slug.join('/')}...`)
-
+      const path = slug.join('/')
+      Log.info(`Processing ${logLinkColor(path)}...`)
       parsedData = parseHtml(html, file)
+      Log.info('Done processing ' + logLinkColor(path))
     }
   }
 

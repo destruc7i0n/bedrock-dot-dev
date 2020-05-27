@@ -2,9 +2,11 @@ import Prism from 'prismjs'
 // @ts-ignore
 import loadLanguges from 'prismjs/components/index'
 
-loadLanguges(['json'])
+import Log from './log'
 
 import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
+
+loadLanguges(['json'])
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
 const TH_MATCH = /<th>(.*)<\/th>/
@@ -35,21 +37,21 @@ const scrapeTable = (html: string, id: string) => {
 }
 
 const getComponentsList = (html: string): SidebarStructureElement[] => {
-  console.log('Generating components list...')
+  Log.info('Generating components list...')
   const components = [
     ...scrapeTable(html, 'Components'),
     ...scrapeTable(html, 'Properties')
   ]
-  console.log(`Found ${components.length} components`)
+  Log.info(`Found ${components.length} components`)
   return components
 }
 
 const getAIGoals = (html: string): SidebarStructureElement[] => {
-  console.log('Generating AI Goals list...')
+  Log.info('Generating AI Goals list...')
   const goals = [
     ...scrapeTable(html, 'AI Goals')
   ]
-  console.log(`Found ${goals.length} AI goals`)
+  Log.info(`Found ${goals.length} AI goals`)
   return goals
 }
 

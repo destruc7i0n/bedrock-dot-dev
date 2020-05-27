@@ -34,6 +34,7 @@
     "@types/prismjs": "^1.16.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "chalk": "^4.0.0",
     "cross-env": "^7.0.2",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.4.6",

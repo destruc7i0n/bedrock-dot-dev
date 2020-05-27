@@ -1,5 +1,7 @@
 import { allFilesList, BedrockVersions } from './versions'
 
+import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './github/constants'
+
 export const getBedrockVersions = async (): Promise<BedrockVersions>  => {
   // console.log('Fetching all files...')
   return await allFilesList()
@@ -12,6 +14,6 @@ export interface TagsResponse {
 
 export const getTags = async (): Promise<TagsResponse> => {
   // fetch the tags from the server
-  const tags = await fetch('https://raw.githubusercontent.com/bedrock-dot-dev/docs/master/tags.json')
+  const tags = await fetch(`${RAW_GITHUB_URL}/${REPO_NAME}/${REPO_TAG}/tags.json`)
   return await tags.json()
 }
