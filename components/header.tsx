@@ -39,19 +39,21 @@ const Header: FunctionComponent = () => {
           </h1>
           <ul className='flex'>
             <li className='text-lg'>
-              <Link href='/info'>
-                <a className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'>
-                  Info
-                </a>
-              </Link>
-            </li>
-            <li className='text-lg'>
               <a
                 className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
                 href='https://wiki.bedrock.dev'
                 target='_blank' rel='noreferrer noopener'
               >
                 Wiki
+              </a>
+            </li>
+            <li className='text-lg'>
+              <a
+                className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
+                href='https://guide.bedrock.dev'
+                target='_blank' rel='noreferrer noopener'
+              >
+                Guide
               </a>
             </li>
           </ul>

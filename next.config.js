@@ -24,7 +24,7 @@ module.exports = {
           permanent: false,
         },
         {
-          source: `/docs/:path((?:${version})\\/?(?:(?:${version})\\/?)?)`,
+          source: `/{docs/}?:path((?:${version})\\/?(?:(?:${version})\\/?)?)`,
           destination: '/?r=:path',
           permanent: false
         },

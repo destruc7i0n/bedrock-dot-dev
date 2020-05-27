@@ -47,7 +47,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
 
   return (
     <div className='w-full text-2xl p-3 border-t border-gray-200'>
-      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold mb-2'>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-bold mb-2'>
         <div className='text-xl rounded-full bg-green-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span title='Stable Version'>{stableMinor}</span>
         </div>
@@ -67,7 +67,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         </div>
       </div>
 
-      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-extrabold pt-2 border-t border-gray-200'>
+      <div className='w-full flex flex-col xl:flex-row items-start xl:items-center font-bold pt-3 border-t border-gray-200'>
         <div className='text-xl rounded-full bg-red-400 px-3 mr-2 mb-2 xl:mb-0 font-bold'>
           <span title='Beta Version'>{betaMinor}</span>
         </div>
@@ -131,55 +131,46 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   const link = getLink(major, minor, file)
 
   return (
-    <div className='flex flex-col'>
-      <div className='flex flex-col bg-white border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
-        <div className='flex flex-col xl:flex-row xl:items-center text-2xl lg:text-3xl font-extrabold pl-3 pr-3 pt-3 pb-3 xl:pb-2'>
-          <div className='block xl:hidden'>bedrock.dev</div>
-          <span className='flex flex-row select-none'>
-            <span className='hidden xl:flex'>bedrock.dev</span>
-            <span>/docs/</span>
-          </span>
-          <div className='flex flex-row items-center'>
-            <select className='my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
-              {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
-            </select>
-            <span className='select-none'>/</span>
-          </div>
-          <div className='flex flex-row items-center'>
-            <select className='my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
-              {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
-            </select>
-            <span className='select-none'>/</span>
-          </div>
-          <div className='flex flex-row items-center'>
-            <select className='my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
-              {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
-            </select>
-          </div>
-
-          <Link href={`/docs/[...slug]`} as={link}>
-            {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
-              Go
-            </a>
-          </Link>
+    <>
+      <div className='flex flex-col xl:flex-row xl:items-center text-2xl font-bold p-3'>
+        <span className='flex flex-row select-none'>
+          {/*<span className='hidden xl:block'>bedrock.dev</span>*/}
+          <span>/docs/</span>
+        </span>
+        <div className='flex flex-row items-center'>
+          <select className='my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+            {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
+          </select>
+          <span className='select-none'>/</span>
+        </div>
+        <div className='flex flex-row items-center'>
+          <select className='my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+            {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
+          </select>
+          <span className='select-none'>/</span>
+        </div>
+        <div className='flex flex-row items-center'>
+          <select className='my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
+            {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+          </select>
         </div>
 
-        <div className='flex w-full'>
-          <QuickVersionChooser
-            stable={tags.stable}
-            beta={tags.beta}
-            versions={versions}
-          />
-        </div>
-        <div className='w-full p-3 border-t border-gray-200 text-center'>
-          <Link href='/info'>
-            <a className='link'>Info</a>
-          </Link>
-          {' '} • Website by <a className='link' href='https://thedestruc7i0n.ca'>TheDestruc7i0n</a>
-        </div>
+        <Link href={`/docs/[...slug]`} as={link}>
+          {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
+          <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
+            Go
+          </a>
+        </Link>
       </div>
-    </div>
+
+      <div className='flex w-full'>
+        <QuickVersionChooser
+          stable={tags.stable}
+          beta={tags.beta}
+          versions={versions}
+        />
+      </div>
+    </>
   )
 }
 
