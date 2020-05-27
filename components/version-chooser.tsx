@@ -54,7 +54,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-1 flex-row items-center'>
             <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/r/</span>
-            <select className='my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
+            <select className='bg-white my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
               {stableFiles.map((file) => <option key={`s-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
@@ -74,7 +74,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-1 flex-row items-center'>
             <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/b/</span>
-            <select className='my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
+            <select className='bg-white my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
               {betaFiles.map((file) => <option key={`b-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
@@ -138,19 +138,19 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
           <span>/docs/</span>
         </span>
         <div className='flex flex-row items-center'>
-          <select className='my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+          <select className='bg-white my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
             {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
           </select>
           <span className='select-none'>/</span>
         </div>
         <div className='flex flex-row items-center'>
-          <select className='my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+          <select className='bg-white my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
             {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
           </select>
           <span className='select-none'>/</span>
         </div>
         <div className='flex flex-row items-center'>
-          <select className='my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
+          <select className='bg-white my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
             {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
           </select>
         </div>

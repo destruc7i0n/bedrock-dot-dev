@@ -91,30 +91,28 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   )
 
   return (
-    <>
-      <div className={cn('sidebar-container', { loaded })}>
-        { open && mobile && <SidebarMask /> }
-        <div className={cn('sidebar', { open })}>
-          <div className='w-full p-4 border-b border-gray-200'>
-            <Selectors />
-            <SidebarFilter setValue={setFilter} value={filter} />
-          </div>
-          { loading ? loadingContent : (
-            <>
-              <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
-                <SidebarContent search={filter} sidebar={sidebar} file={file} hash={hash}  />
-              </div>
-              <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200'>
-                <a className='text-sm text-gray-500 hover:text-gray-400 font-normal float-right'
-                   target='_blank'
-                   rel='noopener noreferrer'
-                   href={`https://github.com/bedrock-dot-dev/docs/blob/master/${versionContext.major}/${versionContext.minor}/${versionContext.file}.html`}>View on GitHub</a>
-              </div>
-            </>
-          ) }
+    <div className={cn('sidebar-container', { loaded })}>
+      { open && mobile && <SidebarMask /> }
+      <aside className={cn('sidebar', { open })}>
+        <div className='w-full p-4 border-b border-gray-200'>
+          <Selectors />
+          <SidebarFilter setValue={setFilter} value={filter} />
         </div>
-      </div>
-    </>
+        { loading ? loadingContent : (
+          <>
+            <div className='flex-1 flex flex-col overflow-auto pb-8 h-0' ref={sidebarRef}>
+              <SidebarContent search={filter} sidebar={sidebar} file={file} hash={hash}  />
+            </div>
+            <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200'>
+              <a className='text-sm text-gray-500 hover:text-gray-400 font-normal float-right'
+                 target='_blank'
+                 rel='noopener noreferrer'
+                 href={`https://github.com/bedrock-dot-dev/docs/blob/master/${versionContext.major}/${versionContext.minor}/${versionContext.file}.html`}>View on GitHub</a>
+            </div>
+          </>
+        ) }
+      </aside>
+    </div>
   )
 }
 

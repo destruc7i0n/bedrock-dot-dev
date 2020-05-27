@@ -30,7 +30,7 @@ const Donate = () => (
     >
       Donate
     </button>
-    <img alt='' style={{ border: 'none' }} src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
+    <img alt='' className='border-0' src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
   </form>
 )
 
@@ -46,7 +46,7 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
     <Layout title='bedrock.dev' description='Bedrock Documentation' header={false}>
       <div className='min-h-screen bg-gray-50'>
         <div className='flex py-24 xl:py-64 xl:pb-0 flex-col justify-center items-center'>
-          <div className='flex flex-col bg-white max-w-3/4 border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
+          <div role='main' className='flex flex-col bg-white max-w-3/4 border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
             <div className='w-full p-3 border-b border-gray-200 text-center'>
               <div className='block'>
                 <span className='flex justify-center text-3xl font-extrabold'>
