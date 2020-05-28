@@ -1,12 +1,9 @@
 import Prism from 'prismjs'
-// @ts-ignore
-import loadLanguges from 'prismjs/components/index'
+import 'prismjs/components/prism-json'
 
 import Log from './log'
 
 import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
-
-loadLanguges(['json'])
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
 const TH_MATCH = /<th>(.*)<\/th>/
