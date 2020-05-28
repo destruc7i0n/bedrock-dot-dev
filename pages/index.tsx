@@ -60,16 +60,7 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
             <VersionChooser versions={versions} tags={tags} />
 
             <div className='w-full py-2 px-3 border-t border-gray-200 text-center'>
-              <div className='w-full pb-2'>
-                By {' '}
-                <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener noreferrer'>
-                  TheDestruc7i0n
-                </a>
-                {' '} • {' '}
-                <Donate />
-              </div>
-
-              <div className='w-full pt-2 border-t border-gray-200 text-center'>
+              <div className='w-full'>
                 <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Wiki</a>
                 {' '} • {' '}
                 <a href='https://guide.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Guide</a>
@@ -86,6 +77,16 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className='w-full border-t border-gray-200 text-center'>
+        <div className='p-3 pb-8 md:pb-3'>
+          Website By {' '}
+          <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener noreferrer'>
+            TheDestruc7i0n
+          </a>
+          {' '} • {' '}
+          <Donate />
         </div>
       </div>
     </Layout>
