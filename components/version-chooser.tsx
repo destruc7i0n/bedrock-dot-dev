@@ -42,8 +42,8 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
   const stableFiles = versions[stableMajor][stableMinor]
   const betaFiles = versions[betaMajor][betaMinor]
 
-  const [stableFile, setStableFile] = useState(stableFiles[0])
-  const [betaFile, setBetaFile] = useState(betaFiles[0])
+  const [stableFile, setStableFile] = useState('Entities')
+  const [betaFile, setBetaFile] = useState('Entities')
 
   return (
     <div className='w-full text-2xl p-3 border-t border-gray-200'>
@@ -119,7 +119,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     files = versions[major][minor]
   }
 
-  const [ file, setFile ] = useState(files[0])
+  const [ file, setFile ] = useState('Entities')
 
   let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
   let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
