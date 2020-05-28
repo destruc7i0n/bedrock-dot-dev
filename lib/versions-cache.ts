@@ -1,9 +1,13 @@
+import { join } from 'path'
+
 import flatCache from 'flat-cache'
 
 import { BedrockVersions } from './versions'
 
+const cacheDirectory = join(process.cwd(), '.cache')
+
 const checkCache = () => {
-  const cache = flatCache.load('versions')
+  const cache = flatCache.create('versions', cacheDirectory)
   const timestamp = cache.getKey('timestamp')
   if (!timestamp) {
     return false
@@ -19,7 +23,7 @@ const checkCache = () => {
 }
 
 const setCache = (files: BedrockVersions) => {
-  const cache = flatCache.load('versions')
+  const cache = flatCache.create('versions', cacheDirectory)
   cache.setKey('timestamp', new Date().getTime())
   cache.setKey('files', files)
   cache.save()
