@@ -4,9 +4,8 @@ import flatCache from 'flat-cache'
 
 import { BedrockVersions } from './versions'
 
-const cacheDirectory = join(
-  process.env.NODE_ENV !== 'production' ? process.cwd() : '/tmp', '.cache'
-)
+// use tmp on production
+const cacheDirectory = process.env.NODE_ENV !== 'production' ? join('/tmp', '.cache') : ''
 
 const checkCache = () => {
   const cache = flatCache.create('versions', cacheDirectory)
