@@ -90,13 +90,27 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     </div>
   )
 
+  const loadingSelectors = (
+    <div className='w-full'>
+      <div className='flex flex-row'>
+        <div className='w-2/4 bg-gray-100 h-8' />
+        <div className='w-2/4 bg-gray-100 h-8 ml-2' />
+      </div>
+      <div className='w-4/5 bg-gray-100 h-8 mt-4' />
+    </div>
+  )
+
   return (
     <div className={cn('sidebar-container', { loaded })}>
       { open && mobile && <SidebarMask /> }
       <aside className={cn('sidebar', { open })}>
         <div className='w-full p-4 border-b border-gray-200'>
-          <Selectors />
-          <SidebarFilter setValue={setFilter} value={filter} />
+          {Object.keys(sidebar).length ? (
+            <>
+              <Selectors/>
+              <SidebarFilter setValue={setFilter} value={filter} />
+            </>
+          ) : loadingSelectors}
         </div>
         { loading ? loadingContent : (
           <>

@@ -13,7 +13,6 @@ import Sidebar  from 'components/sidebar'
 import DocsContainer from 'components/docs-container'
 import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
-import LoadingText from 'components/loading-text'
 import useLoading from 'components/loading'
 
 import { useScrollController } from 'components/scroll-controller'
@@ -33,22 +32,20 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   const { slug } = query
 
   let major = '', minor = '', file = ''
-  if (slug) [ major, minor, file ] = slug
+  if (slug && typeof slug === 'object') [ major, minor, file ] = slug
 
   useScrollController()
 
-  const loading = useLoading()
+  let loading = useLoading()
 
   // while loading...
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
-      return (
-        <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
-          <Layout title='Loading...'>
-            <LoadingText />
-          </Layout>
-        </VersionContext.Provider>
-      )
+      loading = true
+      parsedData = {
+        title: 'Loading...',
+        sidebar: {},
+      }
     } else {
       return <Error statusCode={404} />
     }
@@ -78,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
