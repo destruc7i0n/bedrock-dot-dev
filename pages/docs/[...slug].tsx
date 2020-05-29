@@ -51,10 +51,13 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
     }
   }
 
+  const title = parsedData && parsedData.title
+  const description = parsedData && parsedData.title && `Minecraft Bedrock ${parsedData.title}`
+
   return (
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
       <SidebarContextProvider>
-        <Layout title={parsedData && parsedData.title} description={parsedData && parsedData.title}>
+        <Layout title={title} description={description}>
           <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} loading={loading} />
           <DocsContainer html={html} loading={loading} />
         </Layout>

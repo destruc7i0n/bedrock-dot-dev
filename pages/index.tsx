@@ -43,9 +43,9 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <Layout title='bedrock.dev' description='Bedrock Documentation' header={false}>
+    <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation' header={false}>
       <div className='min-h-screen bg-gray-50'>
-        <div className='flex py-24 xl:py-64 xl:pb-0 flex-col justify-center items-center'>
+        <div className='flex py-24 xl:py-64 flex-col justify-center items-center'>
           <div role='main' className='flex flex-col bg-white max-w-3/4 border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
             <div className='w-full p-3 border-b border-gray-200 text-center'>
               <div className='block'>
