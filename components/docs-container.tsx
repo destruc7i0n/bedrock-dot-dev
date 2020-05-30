@@ -1,7 +1,6 @@
 import React, { FunctionComponent, memo, useContext } from 'react'
 
 import cn from 'classnames'
-
 import { SidebarContext } from './sidebar/sidebar-context'
 
 type DocsContentProps = {

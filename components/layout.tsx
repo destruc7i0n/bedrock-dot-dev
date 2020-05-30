@@ -17,18 +17,17 @@ const Layout: FunctionComponent<Props> = ({
   description= '',
   header = true
 }) => (
-  <div>
+  <>
     <Head>
-      <title>{title}</title>
       <meta charSet='utf-8' />
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
     </Head>
-    <NextSeo title={title} {...description && { description }} />
+    <NextSeo title={title} {...description && { description }} twitter={{ handle: '@TheDestruc7i0n' }} />
     {header && <Header/>}
     <div>
       {children}
     </div>
-  </div>
+  </>
 )
 
 export default Layout
