@@ -60,7 +60,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
           </div>
 
           <Link href={`/docs/[...slug]`} as={getLink(stableMajor, stableMinor, stableFile)}>
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center ml-2'>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-2 rounded-lg text-center ml-2'>
               Go
             </a>
           </Link>
@@ -80,7 +80,7 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
           </div>
 
           <Link href={`/docs/[...slug]`} as={getLink(betaMajor, betaMinor, betaFile)}>
-            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-0.5 px-2 rounded-lg text-center ml-2'>
+            <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-2 rounded-lg text-center ml-2'>
               Go
             </a>
           </Link>
@@ -157,7 +157,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
         <Link href={`/docs/[...slug]`} as={link}>
           {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
-          <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-4 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
+          <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-2 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
             Go
           </a>
         </Link>

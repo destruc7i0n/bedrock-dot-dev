@@ -80,7 +80,7 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
         </div>
       </div>
       <div className='w-full border-t border-gray-200 text-center'>
-        <div className='p-3 pb-8 md:pb-3'>
+        <div className='p-3 bottom-safe-area-inset'>
           Website By {' '}
           <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener noreferrer'>
             TheDestruc7i0n

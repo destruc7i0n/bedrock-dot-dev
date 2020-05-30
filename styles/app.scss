@@ -55,6 +55,12 @@ h3 {
   @apply text-blue-400;
 }
 
+.bottom-safe-area-inset {
+  @supports (padding: max(0px)) {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
 /* main */
 @import 'listing.scss';
 

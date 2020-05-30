@@ -89,13 +89,19 @@ const getSidebarContent = (html: string): SidebarStructure => {
   return format
 }
 
+const toTitleCase = (s: string) => s.split(' ').map(p => p[0].toUpperCase() + p.slice(1).toLowerCase()).join(' ')
+
 const getTitle = (html: string): string => {
+  let title = 'Documentation'
+
   const h1 = html.match(H1_MATCH)
   if (h1) {
     // remove the line break
-    return h1[1].replace(/<\/?br>/, '')
+    title = h1[1].replace(/<\/?br>/, '')
   }
-  return 'DOCUMENTATION'
+
+  title = toTitleCase(title)
+  return title
 }
 
 export type ParseHtmlResponse = {
