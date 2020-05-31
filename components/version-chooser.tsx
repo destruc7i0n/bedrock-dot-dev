@@ -50,7 +50,7 @@ const QuickVersionChooser: FunctionComponent<QuickVersionChooserProps> = ({ titl
 
   return (
     <div className={cn('w-full flex flex-col md:flex-row items-start md:items-center pb-3', { 'border-t border-gray-200': margin })}>
-      <div className={`text-base font-bold rounded-full bg-${color}-400 px-3 mr-2 xl:mb-0`}>
+      <div className={`text-base font-bold rounded-full ${color === 'red' ? 'bg-red-400' : 'bg-green-400'} px-3 mr-2 xl:mb-0`}>
         <span title={`${title} Version`}>
           {minor}
         </span>

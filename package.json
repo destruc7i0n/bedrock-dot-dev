@@ -5,7 +5,7 @@
     "dev": "next",
     "build": "next build && yarn sitemap",
     "start": "next start",
-    "sitemap": "node generate_sitemap.js",
+    "sitemap": "node scripts/generate_sitemap.js",
     "type-check": "tsc"
   },
   "dependencies": {
