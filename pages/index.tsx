@@ -45,11 +45,11 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
   return (
     <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation' header={false}>
       <div className='min-h-screen bg-gray-50'>
-        <div className='flex py-24 xl:py-64 flex-col justify-center items-center'>
+        <div className='flex py-24 xl:py-32 flex-col justify-center items-center'>
           <div role='main' className='flex flex-col bg-white max-w-3/4 border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
-            <div className='w-full p-3 border-b border-gray-200 text-center'>
-              <div className='block'>
-                <span className='flex justify-center text-3xl font-extrabold'>
+            <div className='p-3 border-b border-gray-200 text-center'>
+              <div className='flex flex-col'>
+                <span className='text-center text-3xl font-extrabold'>
                   bedrock.dev
                 </span>
                 <span>
@@ -57,9 +57,10 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
                 </span>
               </div>
             </div>
+
             <VersionChooser versions={versions} tags={tags} />
 
-            <div className='w-full py-2 px-3 border-t border-gray-200 text-center'>
+            <div className='py-2 px-3 border-t border-gray-200 text-center'>
               <div className='w-full'>
                 <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Wiki</a>
                 {' '} • {' '}
@@ -71,7 +72,7 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
               <DownArrow click={() => setOpen(true)} />
             ) : (
               <div className='px-3'>
-                <div className='w-full py-2 border-t border-gray-200 text-center'>
+                <div className='py-2 border-t border-gray-200 text-center'>
                   <a href='https://discord.gg/wAtvNQN' className='link' target='_blank' rel='noopener noreferrer'>Bedrock Scripting Discord</a>
                 </div>
               </div>

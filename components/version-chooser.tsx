@@ -27,13 +27,13 @@ const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlRespo
   return parsed
 }
 
+const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
+
 type QuickProps = {
   stable: string[]
   beta: string[]
   versions: BedrockVersions
 }
-
-const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
 
 const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, versions }) => {
   const [ stableMajor, stableMinor ] = stable
@@ -53,8 +53,8 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-1 flex-row items-center'>
-            <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/r/</span>
-            <select className='bg-white my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
+            <label htmlFor='stable' className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/r/</label>
+            <select id='stable' className='bg-white my-2 md:my-0 w-full' value={stableFile} onChange={({ target: { value } }) => setStableFile(value)}>
               {stableFiles.map((file) => <option key={`s-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
@@ -73,8 +73,8 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         </div>
         <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
           <div className='flex flex-1 flex-row items-center'>
-            <span className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/b/</span>
-            <select className='bg-white my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
+            <label htmlFor='beta' className='flex flex-row select-none'><span className='hidden xl:block'>bedrock.dev</span>/b/</label>
+            <select id='beta' className='bg-white my-2 md:my-0 w-full' value={betaFile} onChange={({ target: { value } }) => setBetaFile(value)}>
               {betaFiles.map((file) => <option key={`b-file-${file}`} value={file}>{file}</option>)}
             </select>
           </div>
@@ -87,6 +87,19 @@ const QuickVersionChooser: FunctionComponent<QuickProps> = ({ stable, beta, vers
         </div>
       </div>
     </div>
+  )
+}
+
+type VersionFileProps = {
+  title: string
+  link: string
+}
+
+const VersionFile: FunctionComponent<VersionFileProps> = ({ title, link }) => {
+  return (
+    <Link href={`/docs/[...slug]`} as={link}>
+      <a className='link truncate w-1/2 p-2 text-base xl:text-lg'>{title}</a>
+    </Link>
   )
 }
 
@@ -119,8 +132,6 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     files = versions[major][minor]
   }
 
-  const [ file, setFile ] = useState('Entities')
-
   let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
   let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
 
@@ -128,39 +139,38 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     if (!minorVersions.includes(minor)) setMinor(minorVersions[0])
   }, [ major ])
 
-  const link = getLink(major, minor, file)
-
   return (
     <>
-      <div className='flex flex-col xl:flex-row xl:items-center text-2xl font-bold p-3'>
-        <span className='flex flex-row select-none'>
-          {/*<span className='hidden xl:block'>bedrock.dev</span>*/}
-          <span>/docs/</span>
-        </span>
-        <div className='flex flex-row items-center'>
-          <select className='bg-white my-2 xl:my-0 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
-            {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
-          </select>
-          <span className='select-none'>/</span>
-        </div>
-        <div className='flex flex-row items-center'>
-          <select className='bg-white my-2 xl:my-0 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
-            {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
-          </select>
-          <span className='select-none'>/</span>
-        </div>
-        <div className='flex flex-row items-center'>
-          <select className='bg-white my-2 xl:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
-            {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
-          </select>
+      <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
+        <div className='w-full flex flex-row'>
+          <div className='w-1/2 mb-2 pr-2'>
+            <label className='block text-sm font-bold mb-2' htmlFor='major'>
+              Major
+            </label>
+            <select id='major' className='bg-white w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+              {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
+            </select>
+          </div>
+          <div className='w-1/2 mb-2'>
+            <label className='block text-sm font-bold mb-2' htmlFor='minor'>
+              Minor
+            </label>
+            <select id='minor' className='bg-white w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+              {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
+            </select>
+          </div>
         </div>
 
-        <Link href={`/docs/[...slug]`} as={link}>
-          {/*bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded*/}
-          <a className='bg-white border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-1 px-2 rounded-lg text-center mt-2 xl:mt-0 xl:ml-2'>
-            Go
-          </a>
-        </Link>
+        <div className='w-full flex flex-col mt-2'>
+          <label className='block text-sm font-bold mb-2'>
+            Files
+          </label>
+          <div className='version-files-container overflow-y-auto w-full flex flex-wrap bg-gray-50 border border-gray-200 p-2 rounded-lg'>
+            {files.map((file) => (
+              <VersionFile title={file} link={getLink(major, minor, file)} />
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className='flex w-full'>

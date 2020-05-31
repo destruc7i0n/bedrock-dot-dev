@@ -110,6 +110,10 @@ export type ParseHtmlResponse = {
 }
 
 export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
+  const title = getTitle(html)
+
+  Log.info(`Title: "${title}"`)
+
   let sidebarContent = getSidebarContent(html)
   if (file && file === 'Entities') {
     const componentsList = getComponentsList(html)
@@ -132,7 +136,8 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
       }
     }
   }
-  const title = getTitle(html)
+
+  Log.info(`Found ${Object.keys(sidebarContent).length} sidebar headings`)
 
   return {
     sidebar: sidebarContent,

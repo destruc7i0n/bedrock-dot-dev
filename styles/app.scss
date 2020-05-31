@@ -61,6 +61,11 @@ h3 {
   }
 }
 
+.version-files-container {
+  max-height: 256px;
+  max-width: 544px;
+}
+
 /* main */
 @import 'listing.scss';
 
