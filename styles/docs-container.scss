@@ -11,16 +11,9 @@
     font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     overflow-x: auto;
 
-    @apply bg-white;
-
     a {
       @apply underline;
     }
-
-    @apply pt-4;
-    @apply pr-5;
-    @apply pl-5;
-    @apply pb-5;
 
     [id]::before {
       content: '';

@@ -89,7 +89,13 @@ const getSidebarContent = (html: string): SidebarStructure => {
   return format
 }
 
-const toTitleCase = (s: string) => s.split(' ').map(p => p[0].toUpperCase() + p.slice(1).toLowerCase()).join(' ')
+const toTitleCase = (s: string) =>
+  s.split(' ')
+    .map(p =>
+      p === p.toUpperCase() && p.length < 4
+        ? p
+        : p[0].toUpperCase() + p.slice(1).toLowerCase())
+    .join(' ')
 
 const getTitle = (html: string): string => {
   let title = 'Documentation'
