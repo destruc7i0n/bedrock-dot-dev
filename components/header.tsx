@@ -25,44 +25,46 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4'>
-        <div className='flex items-center'>
+      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 px-4'>
+        <div className='flex items-center justify-between mx-auto'>
+          <div className='flex items-center'>
+            {isDocsPage && (
+              <div className='hidden lg:flex mr-2'>
+                {toggleButton}
+              </div>
+            )}
+            <h1 className='mr-6 text-2xl font-normal'>
+              <Link href='/'>
+                <a className='hover:text-gray-900'>bedrock.dev</a>
+              </Link>
+            </h1>
+            <ul className='flex'>
+              <li className='text-lg'>
+                <a
+                  className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
+                  href='https://wiki.bedrock.dev'
+                  target='_blank' rel='noreferrer noopener'
+                >
+                  Wiki
+                </a>
+              </li>
+              <li className='text-lg'>
+                <a
+                  className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
+                  href='https://guide.bedrock.dev'
+                  target='_blank' rel='noreferrer noopener'
+                >
+                  Guide
+                </a>
+              </li>
+            </ul>
+          </div>
           {isDocsPage && (
-            <div className='hidden lg:flex mr-2'>
+            <div className='flex lg:hidden'>
               {toggleButton}
             </div>
           )}
-          <h1 className='mr-6 text-2xl font-normal'>
-            <Link href='/'>
-              <a className='hover:text-gray-900'>bedrock.dev</a>
-            </Link>
-          </h1>
-          <ul className='flex'>
-            <li className='text-lg'>
-              <a
-                className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
-                href='https://wiki.bedrock.dev'
-                target='_blank' rel='noreferrer noopener'
-              >
-                Wiki
-              </a>
-            </li>
-            <li className='text-lg'>
-              <a
-                className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
-                href='https://guide.bedrock.dev'
-                target='_blank' rel='noreferrer noopener'
-              >
-                Guide
-              </a>
-            </li>
-          </ul>
         </div>
-        {isDocsPage && (
-          <div className='flex lg:hidden'>
-            {toggleButton}
-          </div>
-        )}
       </header>
     </>
   )

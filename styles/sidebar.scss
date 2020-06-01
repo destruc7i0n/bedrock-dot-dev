@@ -14,10 +14,17 @@
     @apply flex;
     @apply flex-col;
     @apply border-r;
+    @apply border-l;
     @apply border-gray-200;
 
     &.open {
       transform: translateX(0);
+    }
+
+    &:not(.open) {
+      @screen xl {
+        display: none;
+      }
     }
 
     @media (max-width: 1024px) {

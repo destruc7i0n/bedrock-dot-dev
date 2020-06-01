@@ -1,18 +1,4 @@
 .docs-container {
-  font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  overflow-x: auto;
-
-  @apply bg-white;
-
-  a {
-    @apply underline;
-  }
-
-  @apply pt-4;
-  @apply pr-5;
-  @apply pl-5;
-  @apply pb-5;
-
   @screen lg {
     margin-left: var(--sidebar-width);
 
@@ -21,68 +7,75 @@
     }
   }
 
-  [id]::before {
-    content: '';
-    display: block;
-    padding-top: 4rem;
-    margin-top: -4rem;
-    visibility: hidden;
-  }
-
-  //body{
-  //  max-width:1080px;
-  //  margin-left:auto;
-  //  margin-right:auto;
-  //  font-family:raleway,segoe ui,sans-serif;
-  //  padding:64px;
-  //  background-color:#fdfdfd
-  //}
-
-  table {
-    display: block;
-    width: auto !important;
-    max-width: 100%;
+  .docs-content {
+    font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     overflow-x: auto;
-    //white-space: nowrap;
 
-    tbody {
-      @media (max-width: 1024px) {
-        display: table;
-        width: 100%;
+    @apply bg-white;
+
+    a {
+      @apply underline;
+    }
+
+    @apply pt-4;
+    @apply pr-5;
+    @apply pl-5;
+    @apply pb-5;
+
+    [id]::before {
+      content: '';
+      display: block;
+      padding-top: 4rem;
+      margin-top: -4rem;
+      visibility: hidden;
+    }
+
+    table {
+      display: block;
+      width: auto !important;
+      max-width: 100%;
+      overflow-x: auto;
+      //white-space: nowrap;
+
+      tbody {
+        @media (max-width: 1024px) {
+          display: table;
+          width: 100%;
+        }
       }
     }
-  }
 
-  h1 {
-    overflow-wrap: break-word;
-  }
+    h1 {
+      overflow-wrap: break-word;
+    }
 
-  /* Thanks, Jannis! */
-  td,th {
-    border:none;
-    border-width:1px;
-    padding:6px;
-    border-color:#656e73;
-    background-color:#ddfbdd
-  }
+    /* Thanks, Jannis! */
+    td,th {
+      border:none;
+      border-width:1px;
+      padding:6px;
+      border-color:#656e73;
+      background-color:#ddfbdd
+    }
 
-  th {
-    background-color:#a5f1b2
-  }
+    th {
+      background-color:#a5f1b2
+    }
 
-  a {
-    color:inherit
-  }
+    a {
+      color:inherit
+    }
 
-  textarea {
-    padding:9px;
-    min-height:80px;
-    min-width:400px;
-    max-width:100%;
-    line-height:18px
-  }
+    textarea {
+      padding:9px;
+      min-height:80px;
+      min-width:400px;
+      max-width:100%;
+      line-height:18px
+    }
 
-  pre {
-    @apply rounded;
+    pre {
+      @apply rounded;
+    }
   }
 }

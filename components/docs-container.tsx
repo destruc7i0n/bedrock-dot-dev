@@ -5,14 +5,13 @@ import { SidebarContext } from './sidebar/sidebar-context'
 
 type DocsContentProps = {
   html: string
-  sidebarHidden: boolean
 }
 
-const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html, sidebarHidden }) => {
+const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html }) => {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
-      className={cn('docs-container', { 'sidebar-hidden': sidebarHidden })}
+      className='docs-content max-w-screen-lg mx-auto'
     />
   )
 })
@@ -55,7 +54,11 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
     )
   }
 
-  return <DocsContent html={html} sidebarHidden={isSidebarHidden} />
+  return (
+    <div className={cn('docs-container', { 'sidebar-hidden': isSidebarHidden })}>
+      <DocsContent html={html} />
+    </div>
+  )
 }
 
 export default DocsContainer
