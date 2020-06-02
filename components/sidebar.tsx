@@ -53,6 +53,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   }, [ open ])
 
   useEffect(() => {
+    // automatically scroll to the hash in the sidebar on page load
     if (location.hash) {
       const hash = decodeURIComponent(location.hash)
       setHash(hash)
@@ -66,6 +67,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
       }
     }
 
+    // store the hash for re-render
     const onHashChange = () => setHash(decodeURIComponent(location.hash))
 
     window.addEventListener('hashchange', onHashChange)
@@ -105,7 +107,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
       { open && mobile && <SidebarMask /> }
       <aside className={cn('sidebar', { open })}>
         <div className='w-full p-4 border-b border-gray-200'>
-          {Object.keys(sidebar).length ? (
+          {!!Object.keys(sidebar).length ? (
             <>
               <Selectors/>
               <SidebarFilter setValue={setFilter} value={filter} />

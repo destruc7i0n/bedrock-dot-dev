@@ -1,4 +1,4 @@
-# bedrock.dev
+# [bedrock.dev](https://bedrock.dev)
 
 Unofficial Minecraft Bedrock Edition documentation.
 
@@ -6,21 +6,28 @@ Unofficial Minecraft Bedrock Edition documentation.
 
 The documentation files are sourced from [bedrock-dot-dev/docs](https://github.com/bedrock-dot-dev/docs)
 
-Written in TypeScript using Next.js.
+Feel free to make any contributions there.
+
+Written in TypeScript using Next.js framework.
 
 ## Features
 
 * Sidebar for faster navigation
-* Fast page transitions
-* Redirects to help navigate to the latest docs 
+* Speedy page transitions
+* Redirects to help navigate to the latest docs
+  * `bedrock.dev/r/Entities` for the latest release entities file
+  * `bedrock.dev/b/Entities` for the latest beta entities file
+* Updated design 
 
-## Deployment
-
-This site is deployed on [Vercel](https://vercel.com).
+## Screenshots
+![Documentation Page](https://github.com/destruc7i0n/bedrock-dot-dev/raw/master/images/screenshot_1.png)
 
 ## Contributing
 
-Contributions are welcome
+Contributions are welcome.
 
 ## License
+
 MIT
+
+This website is not affiliated with Mojang Studios or Microsoft in any way.

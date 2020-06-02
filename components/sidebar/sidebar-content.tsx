@@ -1,8 +1,9 @@
 import React, { FunctionComponent, memo } from 'react'
-import SidebarGroupTitle from './sidebar-group-title';
-import SidebarGroupItem from './sidebar-group-item';
-import { removeHashIfNeeded } from '../../lib/util';
-import { SidebarStructure } from '../sidebar';
+
+import { SidebarStructure } from '../sidebar'
+import SidebarGroupTitle from './sidebar-group-title'
+import SidebarGroupItem from './sidebar-group-item'
+import { removeHashIfNeeded } from '../../lib/util'
 
 type Props = {
   sidebar: SidebarStructure
@@ -12,9 +13,10 @@ type Props = {
 }
 
 const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash, search }) => {
+  // function to check if an id is active
   const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
-  // sort if searching
+  // filter if filtering
   if (search) {
     let filteredSidebar: SidebarStructure = {}
 
@@ -43,9 +45,9 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash, search 
     <>
       {Object.keys(sidebar).map((header, index) => {
         return (
-          <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={`#${header}`} active={isActive(header)}>
+          <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={header} active={isActive(header)}>
             {sidebar[header].map((item) =>
-              <SidebarGroupItem key={`${file}-item-${removeHashIfNeeded(item.id)}`} id={item.id} title={item.title} active={isActive(item.id)} />
+              <SidebarGroupItem key={`${file}-item-${item.id}`} id={item.id} title={item.title} active={isActive(item.id)} />
             )}
           </SidebarGroupTitle>
         )

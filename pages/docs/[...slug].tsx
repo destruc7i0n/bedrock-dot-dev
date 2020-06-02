@@ -15,8 +15,6 @@ import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 
-import { useScrollController } from 'components/scroll-controller'
-
 import { getBedrockVersions } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
@@ -34,11 +32,10 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   let major = '', minor = '', file = ''
   if (slug && typeof slug === 'object') [ major, minor, file ] = slug
 
-  useScrollController()
-
+  // when the page is transitioning, in a loading state
   let loading = useLoading()
 
-  // while loading...
+  // while loading, probably during fallback mode
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
       loading = true
@@ -51,8 +48,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
     }
   }
 
-  const title = parsedData && parsedData.title
-  const description = parsedData && parsedData.title && `Minecraft Bedrock ${parsedData.title}`
+  const title = parsedData?.title
+  const description = parsedData?.title && `Minecraft Bedrock ${parsedData.title}`
 
   return (
     <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>

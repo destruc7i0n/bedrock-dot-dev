@@ -19,8 +19,12 @@ export interface BedrockVersions {
 function formatTree (resp: GitHubTreeResponse): BedrockVersions {
   let versions: BedrockVersions = {}
 
+  // convert the recursive output to one that follows `BedrockVersions` format
   for (let treeItem of resp.tree) {
     if (treeItem.type === 'blob') {
+      // ignore any non html files
+      if (!treeItem.path.endsWith('.html')) continue
+
       const pathParts = treeItem.path.split('/')
       if (pathParts.length > 1) { // [ major, minor, file ]
         let major: string, minor: string, file: string
@@ -28,10 +32,12 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
         if (pathParts.length === 3) {
           [ major, minor, file ] = pathParts
         } else {
+          // if 1.8, set to the same version
           [ major, file ] = pathParts
           minor = major
         }
 
+        // initialize the objects
         if (!versions[major]) versions[major] = {}
         if (!versions[major][minor]) versions[major][minor] = []
 
@@ -61,7 +67,7 @@ const allFilesList = async () => {
     // console.log('Fetching files list')
     const files = await getFormattedFilesList()
     setCache(files)
-    return  files
+    return files
   }
 }
 

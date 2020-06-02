@@ -16,6 +16,7 @@ const SidebarSelectors: FunctionComponent = () => {
 
   let options = []
 
+  // generate the dropdown
   for (let major of majorVersionsOrdered) {
     options.push(<option key={`version-${major}`} disabled>{major}</option>)
 
@@ -34,6 +35,7 @@ const SidebarSelectors: FunctionComponent = () => {
     const files = versions[major][minor]
 
     let newPath = [ major, minor, file ]
+    // if the file isn't available go to the first one
     if (!files.includes(file)) {
       newPath[2] = files[0]
     }

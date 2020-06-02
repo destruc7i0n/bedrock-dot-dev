@@ -4,6 +4,7 @@ import 'prismjs/components/prism-json'
 import Log from './log'
 
 import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
+import { removeHashIfNeeded } from './util'
 
 const TABLE_MATCH = /<table .*>([^]*?)<\/table>/
 const TH_MATCH = /<th>(.*)<\/th>/
@@ -21,12 +22,13 @@ const scrapeTable = (html: string, id: string) => {
   const matchComponents = new RegExp(tableRegex)
   const table = html.match(matchComponents)
 
+  // match all the elements of the table
   if (table && table[1]) {
     let match
     while (match = TD_MATCH.exec(table[1]))
       elements.push({
-        title: match[1],
         id: match[1],
+        title: match[1],
       })
   }
 
@@ -58,28 +60,34 @@ const getSidebarContent = (html: string): SidebarStructure => {
   // get the first table on the page
   const table = html.match(TABLE_MATCH)
   if (table) {
+    // the inner html of the table
     const inner = table[1]
     const lines = inner.split('\n')
 
+    // the current title of the group
     let currentTitle = ''
     for (let line of lines) {
+      // get the data from the link on the line
       const link = line.match(LINK_MATCH)
       if (link) {
         const id = link[1]
         const title = link[2].trimLeft()
 
+        // if this is a title, then update the current title
         let isTitle = false
         if (TH_MATCH.test(line)) {
           currentTitle = title
           isTitle = true
         }
 
+        // initialize title object
         if (!format[currentTitle]) format[currentTitle] = []
 
+        // add the link to the current title
         if (!isTitle && title && title.length && id && id.length) {
           format[currentTitle].push({
-            id,
-            title
+            id: removeHashIfNeeded(id),
+            title: removeHashIfNeeded(title)
           })
         }
       }
@@ -106,6 +114,7 @@ const getTitle = (html: string): string => {
     title = h1[1].replace(/<\/?br>/, '')
   }
 
+  // convert to title case
   title = toTitleCase(title)
   return title
 }
@@ -153,6 +162,7 @@ export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
 
 const STYLESHEET_MATCH = /<link rel="stylesheet".*href=".*prism\.css.*"><\/link>/
 
+// remove any html from the old generator
 export const removeDisplayHtml = (html: string) => {
   // html = html.replace(/[<br\/?>]*?<a .*>Back to top<\/a>[<br\/?>]*?/g, '')
   html = html.replace(TABLE_MATCH, '')
@@ -163,14 +173,18 @@ export const removeDisplayHtml = (html: string) => {
 
 const TEXTAREA_MATCH = /<textarea.*?>([^]*?)<\/textarea>/g
 
+// use prism to highlight the code blocks
 export const highlightTextarea = (html: string, file: string) => {
+  // the schemas file has a special format
   if (file === 'Schemas') {
     return highlightSchemas(html)
   }
 
+  // highlight JS pages accordingly
   const jsPages = [ 'Scripting', 'UI' ]
   const language = jsPages.includes(file) ? 'javascript' : 'json'
 
+  // replace all textarea with the prism highlight
   return html.replace(TEXTAREA_MATCH, (_, group) => {
     const hl = Prism.highlight(group, Prism.languages[language], language)
     return `<pre class="language-${language}">${hl}</pre>`

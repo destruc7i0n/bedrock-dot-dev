@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { allFilesList } from 'lib/versions'
 
 export default async (_: NextApiRequest, res: NextApiResponse) => {
+  // cache on vercel
   res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate')
 
   try {

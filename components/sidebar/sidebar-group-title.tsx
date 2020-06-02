@@ -2,8 +2,6 @@ import React, { Children, FunctionComponent, useState, MouseEvent } from 'react'
 
 import cn from 'classnames'
 
-import { addHashIfNeeded } from 'lib/util'
-
 type Props = {
   title: string
   id: string
@@ -21,8 +19,6 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, acti
 
   const hasChildren = !!Children.count(children)
 
-  id = addHashIfNeeded(id)
-
   const handleClick = (e: MouseEvent) => {
     // do not toggle open if this was a click on the link
     if ((e.nativeEvent.target as HTMLElement).nodeName === 'A') {
@@ -34,7 +30,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, acti
   return (
     <div className='position-relative'>
       <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': open, 'select-none': hasChildren }, 'border-b border-gray-200')} onClick={handleClick}>
-        <a className={cn({ 'font-extrabold text-blue-600 hover:text-blue-500': active, 'font-bold text-black hover:text-gray-600': !active })} href={id}>{title}</a>
+        <a className={cn({ 'font-extrabold text-blue-600 hover:text-blue-500': active, 'font-bold text-black hover:text-gray-600': !active })} href={`#${id}`}>{title}</a>
         {hasChildren && (
           <div className={cn('sidebar-expand', { open })}>
             {RightArrow}

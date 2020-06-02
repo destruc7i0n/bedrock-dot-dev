@@ -9,6 +9,7 @@ type ContextType = {
   versions: BedrockVersions
 }
 
+// the context for which versions there are
 const VersionContext = createContext<ContextType>({ major: '', minor: '', file: '', versions: {} })
 
 export default VersionContext

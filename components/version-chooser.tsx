@@ -97,7 +97,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
     let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
 
     const { query } = Router
-    if (query && query.r && typeof query.r === 'string') {
+    if (query?.r && typeof query.r === 'string') {
       parsedUrlQuery = parseUrlQuery(query.r, versions)
 
       if (parsedUrlQuery.major) setMajor(parsedUrlQuery.major)
@@ -107,6 +107,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
   const [ stableMajor, stableMinor ] = tags.stable
 
+  // initialize to the current stable version
   const [ major, setMajor ] = useState(stableMajor)
   const [ minor, setMinor ] = useState(stableMinor)
 
@@ -118,6 +119,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
   let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
 
+  // if the major version changes, set the minor to the latest minor from that major version
   useEffect(() => {
     if (!minorVersions.includes(minor)) setMinor(minorVersions[0])
   }, [ major ])

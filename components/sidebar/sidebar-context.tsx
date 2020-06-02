@@ -43,8 +43,10 @@ export const SidebarContextProvider: React.FC = ({ children }) => {
     })
   }, [])
 
+  // update localstorage on sidebar change
   useEffect(() => {
-    localStorage.setItem('sidebar', JSON.stringify(state))
+    // only update when on large screen
+    if (isLg()) localStorage.setItem('sidebar', JSON.stringify(state))
   }, [ state ])
 
   return (

@@ -7,6 +7,7 @@ import { BedrockVersions } from './versions'
 // use tmp on production
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
 
+// store ratelimited call as a file and fetch when needed
 const checkCache = () => {
   const cache = flatCache.create('versions', cacheDirectory)
   const timestamp = cache.getKey('timestamp')
@@ -15,9 +16,11 @@ const checkCache = () => {
   } else {
     const cachedTime = new Date(timestamp)
     const currentTime = new Date()
+    // difference in mins
     const difference = Math.round((currentTime.getTime() - cachedTime.getTime()) / 60000)
 
     const files: BedrockVersions = cache.getKey('files')
+    // update every 10 min
     if (difference < 10 && files) return files
     return false
   }
