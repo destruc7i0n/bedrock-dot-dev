@@ -19,27 +19,25 @@
     "next-seo": "^4.5.0",
     "nextjs-sitemap-generator": "^1.0.0",
     "nprogress": "^0.2.0",
-    "prism-themes": "^1.4.0",
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "sass": "^1.26.7"
+    "sass": "^1.26.7",
+    "tailwindcss": "^1.4.6"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.18",
     "@types/classnames": "^2.2.10",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^14.0.6",
+    "@types/node": "^14.0.9",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/semver": "^7.2.0",
     "chalk": "^4.0.0",
-    "cross-env": "^7.0.2",
     "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.4.6",
     "typescript": "3.9.3"
   },
   "license": "MIT"

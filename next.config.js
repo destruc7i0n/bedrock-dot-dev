@@ -1,5 +1,3 @@
-const fetch = require('node-fetch')
-
 const getTags = async () => {
   // fetch the tags from the server
   const tags = await fetch('https://raw.githubusercontent.com/bedrock-dot-dev/docs/master/tags.json')
@@ -7,6 +5,7 @@ const getTags = async () => {
 }
 
 module.exports = {
+  reactStrictMode: true,
   typescript: {
     ignoreDevErrors: true,
   },

@@ -18,22 +18,6 @@ const DownArrow: FunctionComponent<{ click: () => void }> = ({ click }) => (
   </div>
 )
 
-const Donate = () => (
-  <form className='inline-block' action='https://www.paypal.com/cgi-bin/webscr' method='post' target='_top'>
-    <input type='hidden' name='cmd' value='_donations' />
-    <input type='hidden' name='business' value='9NZ66ET9MLMTN' />
-    <input type='hidden' name='currency_code' value='USD' />
-    <button
-      className='link'
-      type='submit'
-      title='PayPal - The safer, easier way to pay online!'
-    >
-      Donate
-    </button>
-    <img alt='' className='border-0' src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
-  </form>
-)
-
 type Props = {
   versions: BedrockVersions
   tags: TagsResponse
@@ -88,8 +72,6 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
           <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener noreferrer'>
             TheDestruc7i0n
           </a>
-          {' '} • {' '}
-          <Donate />
         </div>
       </div>
     </Layout>
