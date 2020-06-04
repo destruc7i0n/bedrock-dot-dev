@@ -50,13 +50,15 @@ const SidebarSelectors: FunctionComponent = () => {
   return (
     <div className='flex flex-row'>
       <div className='w-1/2'>
-        <select value={`${major}/${minor}`} onChange={onVersionChange} className='block w-full leading-4 form-select text-black'>
+        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='version'>Version</label>
+        <select value={`${major}/${minor}`} id='version' onChange={onVersionChange} className='block w-full leading-4 form-select text-black'>
           {options}
         </select>
       </div>
       <div className='w-1/2 ml-4'>
+        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='file'>File</label>
         {files && (
-          <select value={file} onChange={onFileChange} className='block w-full leading-4 form-select text-black'>
+          <select value={file} id='file' onChange={onFileChange} className='block w-full leading-4 form-select text-black'>
             {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
           </select>
         )}

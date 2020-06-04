@@ -12,7 +12,7 @@ const Header: FunctionComponent = () => {
   const isDocsPage = router.pathname.startsWith('/docs')
 
   const toggleButton = (
-    <button onClick={() => dispatch(setOpen(!open))} className='no-double-tap-zoom'>
+    <button onClick={() => dispatch(setOpen(!open))} className='no-double-tap-zoom' aria-label='Toggle navbar'>
       <svg fill='currentColor' className='w-6 h-6' viewBox='0 0 20 20'>
         <path
           d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
