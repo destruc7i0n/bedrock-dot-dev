@@ -1,13 +1,10 @@
 .sidebar-container {
-  @apply flex;
-
   .sidebar {
-    width: var(--sidebar-width);
-    position: fixed;
+    position: sticky;
     top: 3rem;
     z-index: 9;
+    width: var(--sidebar-width);
     height: calc(100vh - 3rem);
-    transform: translateX(-100%);
 
     @apply bg-white;
 
@@ -17,19 +14,23 @@
     @apply border-l;
     @apply border-gray-200;
 
-    &.open {
-      transform: translateX(0);
-    }
+    // lg screen
+    @media (max-width: 1024px) {
+      position: fixed;
+      transform: translateX(-100%);
 
-    &:not(.open) {
-      @screen xl {
-        display: none;
+      width: 80%;
+      transition: transform ease-in-out 150ms;
+
+      &.open {
+        transform: translateX(0);
       }
     }
 
-    @media (max-width: 1024px) {
-      width: 80%;
-      transition: transform ease-in-out 150ms;
+    @media (min-width: 1024px) {
+      &:not(.open) {
+        display: none;
+      }
     }
   }
 
@@ -68,10 +69,8 @@
   left: 0;
   right: 0;
   z-index: 8;
-}
 
-@media (max-width: 1024px) {
-  .sidebar-mask {
+  @media (max-width: 1024px) {
     background-color: var(--sidebar-mask-color) !important;
   }
 }

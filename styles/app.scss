@@ -4,6 +4,7 @@
 @import '~nprogress/nprogress.css';
 
 :root {
+  --sidebar-breakpoint: 1024px;
   --sidebar-width: 400px;
   --sidebar-mask-color: rgba(0, 0, 0, 0.3);
 }
@@ -55,8 +56,10 @@ h3 {
   max-width: 544px;
 }
 
-/* main */
-@import 'listing.scss';
+/* header */
+.no-double-tap-zoom {
+  touch-action: manipulation;
+}
 
 /* navbar */
 @import './navbar.scss';

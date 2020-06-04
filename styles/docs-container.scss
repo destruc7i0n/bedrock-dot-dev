@@ -1,12 +1,4 @@
 .docs-container {
-  @screen lg {
-    margin-left: var(--sidebar-width);
-
-    &.sidebar-hidden {
-      margin-left: 0 !important;
-    }
-  }
-
   .docs-content {
     font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     overflow-x: auto;
@@ -28,7 +20,6 @@
       width: auto !important;
       max-width: 100%;
       overflow-x: auto;
-      //white-space: nowrap;
 
       tbody {
         @media (max-width: 1024px) {

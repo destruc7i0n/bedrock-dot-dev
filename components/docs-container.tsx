@@ -1,12 +1,10 @@
-import React, { FunctionComponent, memo, useContext } from 'react'
-
-import cn from 'classnames'
-import { SidebarContext } from './sidebar/sidebar-context'
+import React, { FunctionComponent, memo } from 'react'
 
 type DocsContentProps = {
   html: string
 }
 
+const docsContainerClass = 'docs-container flex-1 min-w-0 bg-white'
 const docsContentClass = 'docs-content pt-4 pr-5 pl-5 pb-5 max-w-screen-lg mx-auto'
 
 const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html }) => {
@@ -24,13 +22,9 @@ type DocsContainerProps = {
 }
 
 const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading }) => {
-  const { state: { open }, loaded } = useContext(SidebarContext)
-
-  const isSidebarHidden = !open && loaded
-
   if (loading) {
     return (
-      <div className={cn('docs-container', { 'sidebar-hidden': isSidebarHidden })}>
+      <div className={docsContainerClass}>
         <div className={docsContentClass}>
           <div className='w-4/5 bg-gray-100 h-8' />
           <div className='w-2/3 bg-gray-100 h-3 mt-10' />
@@ -59,7 +53,7 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
   }
 
   return (
-    <div className={cn('docs-container bg-white', { 'sidebar-hidden': isSidebarHidden })}>
+    <div className={docsContainerClass}>
       <DocsContent html={html} />
     </div>
   )
