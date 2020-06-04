@@ -51,6 +51,8 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
                 <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Wiki</a>
                 {' '} • {' '}
                 <a href='https://guide.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Guide</a>
+                {' '} • {' '}
+                <a href='https://github.com/destruc7i0n/bedrock-dot-dev/' className='link' target='_blank' rel='noopener noreferrer'>GitHub</a>
               </div>
             </div>
 

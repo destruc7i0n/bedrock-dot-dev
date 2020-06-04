@@ -4,7 +4,7 @@ type DocsContentProps = {
   html: string
 }
 
-const docsContainerClass = 'docs-container flex-1 min-w-0 bg-white'
+const docsContainerClass = 'flex-1 min-w-0 bg-white'
 const docsContentClass = 'docs-content pt-4 pr-5 pl-5 pb-5 max-w-screen-lg mx-auto'
 
 const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html }) => {

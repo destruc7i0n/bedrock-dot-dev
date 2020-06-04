@@ -1,65 +1,66 @@
-.docs-container {
-  .docs-content {
-    font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    overflow-x: auto;
+.docs-content {
+  font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  overflow-x: auto;
 
-    a {
-      @apply underline;
-    }
+  a {
+    @apply underline;
+  }
 
-    [id]::before {
-      content: '';
-      display: block;
-      padding-top: 4rem;
-      margin-top: -4rem;
-      visibility: hidden;
-    }
+  [id]::before {
+    content: '';
+    display: block;
+    padding-top: 4rem;
+    margin-top: -4rem;
+    visibility: hidden;
+  }
 
-    table {
-      display: block;
-      width: auto !important;
-      max-width: 100%;
+  table {
+    display: block;
+    width: auto !important;
+    max-width: 100%;
+
+    @screen md {
       overflow-x: auto;
+    }
 
-      tbody {
-        @media (max-width: 1024px) {
-          display: table;
-          width: 100%;
-        }
+    tbody {
+      @media (max-width: 1024px) {
+        display: table;
+        width: 100%;
       }
     }
+  }
 
-    h1 {
-      overflow-wrap: break-word;
-    }
+  h1 {
+    overflow-wrap: break-word;
+  }
 
-    /* Thanks, Jannis! */
-    td,th {
-      border:none;
-      border-width:1px;
-      padding:6px;
-      border-color:#656e73;
-      background-color:#ddfbdd
-    }
+  /* Thanks, Jannis! */
+  td,th {
+    border:none;
+    border-width:1px;
+    padding:6px;
+    border-color:#656e73;
+    background-color:#ddfbdd
+  }
 
-    th {
-      background-color:#a5f1b2
-    }
+  th {
+    background-color:#a5f1b2
+  }
 
-    a {
-      color:inherit
-    }
+  a {
+    color:inherit
+  }
 
-    textarea {
-      padding:9px;
-      min-height:80px;
-      min-width:400px;
-      max-width:100%;
-      line-height:18px
-    }
+  textarea {
+    padding:9px;
+    min-height:80px;
+    min-width:400px;
+    max-width:100%;
+    line-height:18px
+  }
 
-    pre {
-      @apply rounded;
-    }
+  pre {
+    @apply rounded;
   }
 }

@@ -103,9 +103,9 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   )
 
   return (
-    <div className={cn('sidebar-container', { loaded })}>
+    <>
       { open && mobile && <SidebarMask /> }
-      <aside className={cn('sidebar', { open })}>
+      <aside className={cn('sidebar', { open, loaded })}>
         <div className='w-full p-4 border-b border-gray-200'>
           {!!Object.keys(sidebar).length ? (
             <>
@@ -128,7 +128,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
           </>
         ) }
       </aside>
-    </div>
+    </>
   )
 }
 

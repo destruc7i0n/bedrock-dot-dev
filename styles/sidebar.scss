@@ -1,36 +1,38 @@
-.sidebar-container {
-  .sidebar {
-    position: sticky;
-    top: 3rem;
-    z-index: 9;
-    width: var(--sidebar-width);
-    height: calc(100vh - 3rem);
+.sidebar {
+  position: sticky;
+  top: 3rem;
+  z-index: 9;
+  width: var(--sidebar-width);
+  height: calc(100vh - 3rem);
 
-    @apply bg-white;
+  @apply bg-white;
 
-    @apply flex;
-    @apply flex-col;
-    @apply border-r;
-    @apply border-l;
-    @apply border-gray-200;
+  @apply flex;
+  @apply flex-col;
+  @apply border-r;
+  @apply border-l;
+  @apply border-gray-200;
 
-    // lg screen
-    @media (max-width: 1024px) {
-      position: fixed;
-      transform: translateX(-100%);
+  // lg screen
+  @media (max-width: 1024px) {
+    position: fixed;
+    transform: translateX(-100%);
 
-      width: 80%;
-      transition: transform ease-in-out 150ms;
-
-      &.open {
-        transform: translateX(0);
-      }
+    width: 80%;
+    @screen md {
+      width: auto;
     }
 
-    @media (min-width: 1024px) {
-      &:not(.open) {
-        display: none;
-      }
+    transition: transform ease-in-out 150ms;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    &:not(.open) {
+      display: none;
     }
   }
 
