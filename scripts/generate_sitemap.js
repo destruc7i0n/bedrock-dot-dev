@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const sitemap = require('nextjs-sitemap-generator')
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL_GITHUB_DEPLOYMENT) {
   console.log('sitemap.xml not generated')
   process.exit(0)
 }
