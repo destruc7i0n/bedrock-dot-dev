@@ -1,3 +1,5 @@
+@import '~prism-themes/themes/prism-atom-dark.css';
+
 .docs-content {
   font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   overflow-x: auto;
@@ -60,7 +62,10 @@
     line-height:18px
   }
 
-  pre {
+  pre[class*=language-] {
     @apply rounded;
+    @apply text-base;
+    @apply bg-gray-900;
+    @apply p-4;
   }
 }

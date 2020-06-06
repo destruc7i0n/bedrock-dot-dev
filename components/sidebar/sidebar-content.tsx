@@ -16,6 +16,8 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash, search 
   // function to check if an id is active
   const isActive = (id: string) => removeHashIfNeeded(id) === removeHashIfNeeded(hash)
 
+  const defaultOpen = file !== 'Entities'
+
   // filter if filtering
   if (search) {
     let filteredSidebar: SidebarStructure = {}
@@ -45,7 +47,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, hash, search 
     <>
       {Object.keys(sidebar).map((header, index) => {
         return (
-          <SidebarGroupTitle key={`${file}-title-${index}`} title={header} id={header} active={isActive(header)}>
+          <SidebarGroupTitle key={`${file}-title-${index}`} defaultOpen={defaultOpen} title={header} id={header} active={isActive(header)}>
             {sidebar[header].map((item) =>
               <SidebarGroupItem key={`${file}-item-${item.id}`} id={item.id} title={item.title} active={isActive(item.id)} />
             )}

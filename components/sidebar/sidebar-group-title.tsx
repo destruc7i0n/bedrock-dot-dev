@@ -6,6 +6,7 @@ type Props = {
   title: string
   id: string
   active: boolean
+  defaultOpen: boolean
 }
 
 const RightArrow = (
@@ -14,8 +15,8 @@ const RightArrow = (
   </svg>
 )
 
-const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, active }) => {
-  const [ open, setOpen ] = useState(true)
+const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, active, defaultOpen }) => {
+  const [ open, setOpen ] = useState(defaultOpen)
 
   const hasChildren = !!Children.count(children)
 

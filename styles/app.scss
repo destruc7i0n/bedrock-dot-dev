@@ -1,6 +1,5 @@
 @import './tailwind.scss';
 
-@import '~prismjs/themes/prism.css';
 @import '~nprogress/nprogress.css';
 
 :root {
@@ -62,7 +61,9 @@ h3 {
 }
 
 /* navbar */
-@import './navbar.scss';
+.navbar {
+  z-index: 10;
+}
 
 /* sidebar */
 @import './sidebar.scss';
