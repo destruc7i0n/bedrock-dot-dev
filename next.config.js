@@ -48,10 +48,10 @@ module.exports = {
           permanent: false,
         },
         {
-          // match version numbers
+          // match version numbers, old routing
           source: `/:major(${version})/:minor(${version})/:file`,
           destination: `/docs/:major/:minor/:file`,
-          permanent: false,
+          permanent: true,
         },
       ]
     }

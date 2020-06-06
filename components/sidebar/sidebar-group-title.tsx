@@ -2,11 +2,14 @@ import React, { Children, FunctionComponent, useState, MouseEvent } from 'react'
 
 import cn from 'classnames'
 
+import { removeHashIfNeeded } from 'lib/util'
+
 type Props = {
   title: string
   id: string
-  active: boolean
+  hash: string
   defaultOpen: boolean
+  searching: boolean
 }
 
 const RightArrow = (
@@ -15,7 +18,7 @@ const RightArrow = (
   </svg>
 )
 
-const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, active, defaultOpen }) => {
+const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash, defaultOpen, searching }) => {
   const [ open, setOpen ] = useState(defaultOpen)
 
   const hasChildren = !!Children.count(children)
@@ -28,18 +31,21 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, acti
     setOpen(!open)
   }
 
+  const active = removeHashIfNeeded(hash) === id
+  const isOpen = open || searching
+
   return (
     <div className='position-relative'>
-      <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': open, 'select-none': hasChildren }, 'border-b border-gray-200')} onClick={handleClick}>
+      <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': isOpen, 'select-none': hasChildren }, 'border-b border-gray-200')} onClick={handleClick}>
         <a className={cn({ 'font-extrabold text-blue-600 hover:text-blue-500': active, 'font-bold text-black hover:text-gray-600': !active })} href={`#${id}`}>{title}</a>
         {hasChildren && (
-          <div className={cn('sidebar-expand', { open })}>
+          <div className={cn('sidebar-expand', { open: isOpen })}>
             {RightArrow}
           </div>
         )}
       </div>
-      <ul className={cn('nav px-4', { 'border-b border-gray-200': open && hasChildren })}>
-        {open && children}
+      <ul className={cn('nav px-4', { 'border-b border-gray-200': isOpen && hasChildren })}>
+        {isOpen && children}
       </ul>
     </div>
   )
