@@ -19,9 +19,11 @@ const nextPagesPath = process.env.VERCEL_GITHUB_DEPLOYMENT
 
 sitemap({
   baseUrl: 'https://bedrock.dev',
-  pagesDirectory: path.join(__dirname, nextPagesPath, '/pages'),
-  targetDirectory : 'public/',
-  ignoredPaths: ['[fallback]', 'api'],
+  pagesDirectory: path.join(__dirname, nextPagesPath, 'pages'),
+  targetDirectory : 'public',
+  ignoredPaths: ['[fallback]', 'api', '[...slug]', '404',],
+  pagesConfig: {},
+  ignoreIndexFiles: true,
 })
 
 console.log(`sitemap.xml generated!`)

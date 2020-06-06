@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useEffect, useReducer, useState } from 'react'
+import React, { createContext, Dispatch, useEffect, useReducer, useState, FunctionComponent } from 'react'
 
 import { unstable_batchedUpdates } from 'react-dom'
 
@@ -21,7 +21,7 @@ export const SidebarContext = createContext<{
   loaded: false,
 })
 
-export const SidebarContextProvider: React.FC = ({ children }) => {
+export const SidebarContextProvider: FunctionComponent = ({ children }) => {
   const [state, dispatch] = useReducer(sidebarReducer, initialState)
   const [loaded, setLoaded] = useState(false)
 

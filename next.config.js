@@ -49,7 +49,7 @@ module.exports = {
         },
         {
           // match version numbers, old routing
-          source: `/:major(${version})/:minor(${version})/:file`,
+          source: `/:major(${version})/:minor(${version})/:file.:ext?`,
           destination: `/docs/:major/:minor/:file`,
           permanent: true,
         },
