@@ -27,16 +27,18 @@ module.exports = {
           destination: '/?r=:path',
           permanent: false
         },
+        // redirect to latest stable
         {
-          source: '/r/:file',
+          source: '/(r|c)/:file',
           destination: `/docs/${stable.join('/')}/:file`,
           permanent: false,
         },
         {
-          source: '/r{/}?',
+          source: '/(r|c){/}?',
           destination: `/?r=${stable.join('/')}`,
           permanent: false,
         },
+        // redirect to latest beta
         {
           source: '/b/:file',
           destination: `/docs/${beta.join('/')}/:file`,
