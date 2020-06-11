@@ -32,6 +32,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
 
   const [filter, setFilter] = useState('')
   const [hash, setHash] = useState('')
+  const [mounted, setMounted] = useState(false)
   const sidebarRef = useRef<HTMLDivElement | null>(null)
 
   const mobile = useIsMobile()
@@ -44,6 +45,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     unstable_batchedUpdates(() => {
       setFilter('')
       setHash('')
+      setMounted(true)
     })
   }, [ file ])
 
@@ -105,7 +107,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   return (
     <>
       { open && mobile && <SidebarMask /> }
-      <aside className={cn('sidebar', { open })}>
+      <aside className={cn('sidebar', { open, mounted })}>
         <div className='w-full p-4 border-b border-gray-200'>
           {!!Object.keys(sidebar).length ? (
             <>

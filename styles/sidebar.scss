@@ -30,12 +30,19 @@
     }
   }
 
-  .sidebar-closed & {
-    display: none;
+  @media (min-width: 1024px) {
+    // hide based on pre-flight class
+    .sidebar-closed &,
+    // when on a larger screen, the sidebar should only rely on the open class
+    &:not(.open) {
+      display: none;
+    }
   }
 
-  @media (min-width: 1024px) {
-    &:not(.open) {
+  // when on mobile, wait for the component to be mounted
+  // so as to prevent a closing animation when loading the page
+  @media (max-width: 1024px) {
+    &:not(.mounted) {
       display: none;
     }
   }
