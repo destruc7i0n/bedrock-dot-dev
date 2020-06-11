@@ -30,14 +30,12 @@
     }
   }
 
-  @media (min-width: 1024px) {
-    &:not(.open) {
-      display: none;
-    }
+  .sidebar-closed & {
+    display: none;
   }
 
-  @media (max-width: 1024px) {
-    &:not(.loaded) {
+  @media (min-width: 1024px) {
+    &:not(.open) {
       display: none;
     }
   }

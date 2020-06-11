@@ -21,6 +21,18 @@ class BedrockDevDocument extends Document {
           <link rel='shortcut icon' href='/favicon/favicon.ico' />
           <meta name='theme-color' content='#ffffff' />
           <AnalyticsHeadTags />
+          <script
+            dangerouslySetInnerHTML={{ __html: `
+            try {
+              var sidebar = window.localStorage.getItem('sidebar');
+              if (sidebar) {
+                var open = JSON.parse(sidebar).open;
+                if (!open) document.documentElement.classList.add('sidebar-closed');
+              }
+            } catch (e) {}
+            `
+            }}
+          />
         </Head>
         <body>
           <Main />

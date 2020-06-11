@@ -18,10 +18,11 @@ const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlRespo
   const parts = query.split('/')
 
   let parsed: ParsedUrlResponse = { major: '', minor: '' }
+  const [ major, minor ] = parts
 
-  if (parts.length > 0 && versions[parts[0]]) {
+  if (major && versions[major]) {
     parsed['major'] = parts[0]
-    if (parts.length > 1 && versions[parts[0]][parts[1]]) {
+    if (minor && versions[major][minor]) {
       parsed['minor'] = parts[1]
     }
   }
@@ -135,7 +136,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
             <label className='block text-sm font-bold mb-2' htmlFor='major'>
               Major
             </label>
-            <select id='major' className='form-select leading-5 bg-white w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+            <select id='major' className='form-select leading-5 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
               {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
             </select>
           </div>
@@ -143,7 +144,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
             <label className='block text-sm font-bold mb-2' htmlFor='minor'>
               Minor
             </label>
-            <select id='minor' className='form-select leading-5 bg-white w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+            <select id='minor' className='form-select leading-5 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
               {minorVersions.map((version) => <option key={`minor-${version}`} value={version}>{version}</option>)}
             </select>
           </div>

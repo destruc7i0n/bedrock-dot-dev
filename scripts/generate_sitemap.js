@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const sitemap = require('nextjs-sitemap-generator')
 
-if (!process.env.VERCEL_GITHUB_DEPLOYMENT) {
+if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== 'darwin') {
   console.log('sitemap.xml not generated')
   process.exit(0)
 }

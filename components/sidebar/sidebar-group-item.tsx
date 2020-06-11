@@ -15,7 +15,7 @@ const SidebarGroupItem: FunctionComponent<Props> = ({ title, id, hash }) => {
 
   return (
     <li className='my-2'>
-      <a className={cn('sidebar-id block text-sm w-full px-2', { 'text-blue-600 hover:text-blue-500': active, 'text-black hover:text-gray-600': !active })} href={`#${id}`}>
+      <a className={cn('sidebar-id block text-sm w-full px-2', { 'text-blue-600 hover:text-blue-500': active, 'hover:opacity-75 transition-opacity duration-75 ease-in-out': !active })} href={`#${id}`}>
         {title}
       </a>
     </li>

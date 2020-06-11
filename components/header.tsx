@@ -2,17 +2,29 @@ import React, { FunctionComponent, memo, useContext } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { setOpen, SidebarContext } from './sidebar/sidebar-context'
+import { SidebarContext } from './sidebar/sidebar-context'
+
+const HeaderLink: FunctionComponent<{ link: string, title: string }> = ({ link, title }) => (
+  <li className='text-lg'>
+    <a
+      className='flex items-center p-2 rounded text-gray-500 dark:text-dark-gray-500 hover:text-gray-900 dark-hover:text-white transition duration-150 ease-in-out'
+      href={link}
+      target='_blank' rel='noreferrer noopener'
+    >
+      {title}
+    </a>
+  </li>
+)
 
 const Header: FunctionComponent = () => {
   const router = useRouter()
 
-  const { state: { open }, dispatch } = useContext(SidebarContext)
+  const { open, setOpen } = useContext(SidebarContext)
 
   const isDocsPage = router.pathname.startsWith('/docs')
 
   const toggleButton = (
-    <button onClick={() => dispatch(setOpen(!open))} className='no-double-tap-zoom' aria-label='Toggle navbar'>
+    <button onClick={() => setOpen(!open)} className='no-double-tap-zoom' aria-label='Toggle navbar'>
       <svg fill='currentColor' className='w-6 h-6' viewBox='0 0 20 20'>
         <path
           d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
@@ -39,24 +51,8 @@ const Header: FunctionComponent = () => {
               </Link>
             </h1>
             <ul className='flex'>
-              <li className='text-lg'>
-                <a
-                  className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
-                  href='https://wiki.bedrock.dev'
-                  target='_blank' rel='noreferrer noopener'
-                >
-                  Wiki
-                </a>
-              </li>
-              <li className='text-lg'>
-                <a
-                  className='flex items-center h=8 p-2 rounded text-gray-500 hover:text-gray-900'
-                  href='https://guide.bedrock.dev'
-                  target='_blank' rel='noreferrer noopener'
-                >
-                  Guide
-                </a>
-              </li>
+              <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
+              <HeaderLink link='https://guide.bedrock.dev' title='Guide' />
             </ul>
           </div>
           {isDocsPage && (

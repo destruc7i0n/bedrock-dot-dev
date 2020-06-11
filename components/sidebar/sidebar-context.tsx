@@ -1,29 +1,19 @@
-import React, { createContext, Dispatch, useEffect, useReducer, useState, FunctionComponent } from 'react'
+import React, { createContext, useEffect, useState, FunctionComponent } from 'react'
 
-import { unstable_batchedUpdates } from 'react-dom'
-
-import { sidebarReducer, Actions, setOpen } from './sidebar-context-reducer'
 import { isLg } from '../media-query'
 
-export type ContextType = {
+type ContextType = {
   open: boolean
+  setOpen: (open: boolean) => void
 }
 
-let initialState: ContextType = { open: true }
-
-export const SidebarContext = createContext<{
-  state: ContextType
-  dispatch: Dispatch<Actions>
-  loaded: boolean
-}>({
-  state: initialState,
-  dispatch: () => null,
-  loaded: false,
+export const SidebarContext = createContext<ContextType>({
+  open: true,
+  setOpen: () => null
 })
 
 export const SidebarContextProvider: FunctionComponent = ({ children }) => {
-  const [state, dispatch] = useReducer(sidebarReducer, initialState)
-  const [loaded, setLoaded] = useState(false)
+  const [open, setOpen] = useState<boolean>(true)
 
   // rehyrate the open state from the localstorage
   useEffect(() => {
@@ -37,23 +27,21 @@ export const SidebarContextProvider: FunctionComponent = ({ children }) => {
     // not open if on small screen
     if (!isLg()) open = false
 
-    unstable_batchedUpdates(() => {
-      dispatch(setOpen(open))
-      setLoaded(true)
-    })
+    setOpen(open)
+    // remove the class from the preflight if it's there
+    if (document.documentElement.classList.contains('sidebar-closed'))
+      document.documentElement.classList.remove('sidebar-closed')
   }, [])
 
   // update localstorage on sidebar change
   useEffect(() => {
     // only update when on large screen
-    if (isLg()) localStorage.setItem('sidebar', JSON.stringify(state))
-  }, [ state ])
+    if (isLg()) localStorage.setItem('sidebar', JSON.stringify({ open }))
+  }, [ open ])
 
   return (
-    <SidebarContext.Provider value={{state, dispatch, loaded}}>
+    <SidebarContext.Provider value={{ open, setOpen }}>
       {children}
     </SidebarContext.Provider>
   )
 }
-
-export { setOpen }

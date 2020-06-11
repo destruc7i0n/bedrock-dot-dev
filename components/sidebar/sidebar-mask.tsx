@@ -1,12 +1,12 @@
 import React, { FunctionComponent, memo, useContext } from 'react'
 
-import { SidebarContext, setOpen } from './sidebar-context'
+import { SidebarContext } from './sidebar-context'
 
 const SidebarMask: FunctionComponent = () => {
-  const { dispatch } = useContext(SidebarContext)
+  const { setOpen } = useContext(SidebarContext)
 
   return (
-    <div className='sidebar-mask' onClick={() => dispatch(setOpen(false))} />
+    <div className='sidebar-mask' onClick={() => setOpen(false)} />
   )
 }
 
