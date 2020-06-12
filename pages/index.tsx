@@ -5,8 +5,7 @@ import Layout from 'components/layout'
 import VersionChooser from 'components/version-chooser'
 
 import { getBedrockVersions, getTags, TagsResponse } from 'lib/files'
-
-import { BedrockVersions } from 'lib/versions'
+import { transformInbound, TransformedOutbound, transformOutbound } from 'lib/bedrock-versions-transformer'
 
 const DownArrow: FunctionComponent<{ click: () => void }> = ({ click }) => (
   <div className='w-full flex justify-center hover:bg-gray-100 rounded-b-lg transition transition-150 ease-in-out text-sm py-0.5 cursor-pointer' onClick={click}>
@@ -19,12 +18,15 @@ const DownArrow: FunctionComponent<{ click: () => void }> = ({ click }) => (
 )
 
 type Props = {
-  versions: BedrockVersions
+  bedrockVersions: TransformedOutbound
   tags: TagsResponse
 }
 
-const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
+const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   const [open, setOpen] = useState(false)
+
+  // transform to string representation
+  const versions = transformInbound(bedrockVersions)
 
   return (
     <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation' header={false}>
@@ -39,7 +41,7 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
                 <span>
                   <span title='Not affiliated with Mojang Studios or Microsoft' className='cursor-pointer'>
                     Unofficial
-                  </span> Minecraft Bedrock Edition documentation
+                  </span> Minecraft Bedrock Edition documentation host
                 </span>
               </div>
             </div>
@@ -81,10 +83,11 @@ const IndexPage: FunctionComponent<Props> = ({ versions, tags }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const bedrockVersions = await getBedrockVersions()
+  // transform to "compressed" version
+  const bedrockVersions = transformOutbound(await getBedrockVersions())
   const tags = await getTags()
 
-  return { props: { versions: bedrockVersions, tags } }
+  return { props: { bedrockVersions, tags } }
 }
 
 export default IndexPage

@@ -79,17 +79,20 @@ h3 {
 /* scrollbars */
 
 body {
+   ::-webkit-scrollbar,
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
     height: 10px;
   }
 
+   ::-webkit-scrollbar-track,
   &::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0;
   }
 
+   ::-webkit-scrollbar-thumb,
   &::-webkit-scrollbar-thumb {
     cursor: pointer;
     border-radius: 5px;
@@ -98,10 +101,12 @@ body {
     transition: color 0.2s ease;
   }
 
+   ::-webkit-scrollbar-thumb:window-inactive,
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.15);
   }
 
+   ::-webkit-scrollbar-thumb:hover,
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.4);
   }

@@ -4,8 +4,6 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
-import { BedrockVersions } from 'lib/versions'
-
 import { highlightTextarea, parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
 
 import Layout from 'components/layout'
@@ -18,10 +16,11 @@ import useLoading from 'components/loading'
 import { getBedrockVersions } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
+import { transformOutbound, transformInbound, TransformedOutbound } from 'lib/bedrock-versions-transformer'
 
 type Props = {
   html: string
-  bedrockVersions: BedrockVersions,
+  bedrockVersions: TransformedOutbound,
   parsedData: ParseHtmlResponse,
 }
 
@@ -51,8 +50,11 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   const title = parsedData?.title
   const description = parsedData?.title && `Minecraft Bedrock ${parsedData.title}`
 
+  // transform to string representation
+  const versions = transformInbound(bedrockVersions)
+
   return (
-    <VersionContext.Provider value={{ major, minor, file, versions: bedrockVersions }}>
+    <VersionContext.Provider value={{ major, minor, file, versions }}>
       <SidebarContextProvider>
         <Layout title={title} description={description}>
           <div className='flex'>
@@ -89,7 +91,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { slug } = params
 
-  const bedrockVersions = await getBedrockVersions()
+  // transform to "compressed" version
+  const bedrockVersions = transformOutbound(await getBedrockVersions())
 
   if (typeof slug === 'object' && slug.length === 3) {
     let path = [ ...slug ]

@@ -1,8 +1,8 @@
-import { allFilesList, BedrockVersions } from './versions'
+import { allFilesList } from './versions'
 
 import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './github/constants'
 
-export const getBedrockVersions = async (): Promise<BedrockVersions>  => {
+export const getBedrockVersions = async () => {
   // console.log('Fetching all files...')
   return await allFilesList()
 }
