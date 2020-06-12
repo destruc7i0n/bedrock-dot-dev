@@ -118,7 +118,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         </div>
         { loading ? loadingContent : (
           <>
-            <div className='flex-1 flex flex-col overflow-scroll scrolling-touch pb-48 md:pb-8 h-0' ref={sidebarRef}>
+            <div className='flex-1 flex flex-col overflow-y-auto pb-48 md:pb-8 h-0' ref={sidebarRef}>
               <SidebarContent search={filter} sidebar={sidebar} file={file} hash={hash}  />
             </div>
             <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200 bottom-safe-area-inset inset-2'>
