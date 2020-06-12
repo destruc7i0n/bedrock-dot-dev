@@ -51,7 +51,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   const description = parsedData?.title && `Minecraft Bedrock ${parsedData.title}`
 
   // transform to string representation
-  const versions = transformInbound(bedrockVersions)
+  let versions = {}
+  if (bedrockVersions) versions = transformInbound(bedrockVersions)
 
   return (
     <VersionContext.Provider value={{ major, minor, file, versions }}>
@@ -79,7 +80,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
