@@ -47,7 +47,7 @@ const Header: FunctionComponent = () => {
             )}
             <h1 className='mr-6 text-2xl font-normal'>
               <Link href='/'>
-                <a className='hover:text-gray-900'>bedrock.dev</a>
+                <a className='hover:text-gray-800'>bedrock.dev</a>
               </Link>
             </h1>
             <ul className='flex'>

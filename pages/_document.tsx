@@ -14,6 +14,7 @@ class BedrockDevDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
+          <meta charSet='utf-8' />
           <link rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png' />
           <link rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png' />
@@ -21,18 +22,6 @@ class BedrockDevDocument extends Document {
           <link rel='shortcut icon' href='/favicon/favicon.ico' />
           <meta name='theme-color' content='#ffffff' />
           <AnalyticsHeadTags />
-          <script
-            dangerouslySetInnerHTML={{ __html: `
-            try {
-              var sidebar = window.localStorage.getItem('sidebar');
-              if (sidebar) {
-                var open = JSON.parse(sidebar).open;
-                if (!open) document.documentElement.classList.add('sidebar-closed');
-              }
-            } catch (e) {}
-            `
-            }}
-          />
         </Head>
         <body>
           <Main />

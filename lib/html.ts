@@ -104,30 +104,45 @@ const toTitleCase = (s: string) =>
         ? p
         : p[0].toUpperCase() + p.slice(1).toLowerCase())
     .join(' ')
+    .replace('Molang', 'MoLang') // custom name
 
-const getTitle = (html: string): string => {
-  let title = 'Documentation'
+export type TitleResponse = {
+  version: string,
+  title: string,
+}
+
+const getTitle = (html: string): TitleResponse => {
+  let title = ''
 
   const h1 = html.match(H1_MATCH)
   if (h1) {
     // remove the line break
     title = h1[1].replace(/<\/?br>/, '')
   }
-
   // convert to title case
   title = toTitleCase(title)
-  return title
+
+  let resp: TitleResponse = { version: '', title: '' }
+  const titleRe = /(.*) Documentation Version: (\d+\.\d+\.\d+\.\d+)/
+
+  const titleMatch = title.match(titleRe)
+  if (titleMatch) {
+    resp.title = titleMatch[1]
+    resp.version = titleMatch[2]
+  }
+
+  return resp
 }
 
 export type ParseHtmlResponse = {
   sidebar: SidebarStructure
-  title: string
+  title: TitleResponse
 }
 
 export const parseHtml = (html: string, file: string): ParseHtmlResponse => {
   const title = getTitle(html)
 
-  Log.info(`Title: "${title}"`)
+  Log.info(`Title data: "${title.title} ${title.version}"`)
 
   let sidebarContent = getSidebarContent(html)
   if (file && file === 'Entities') {

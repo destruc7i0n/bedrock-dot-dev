@@ -2,12 +2,13 @@ import React, { FunctionComponent } from 'react'
 
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Error from 'next/error'
 
 import { highlightTextarea, parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
 
 import Layout from 'components/layout'
-import Sidebar  from 'components/sidebar'
+import Sidebar, { SidebarStructure } from 'components/sidebar'
 import DocsContainer from 'components/docs-container'
 import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
@@ -38,33 +39,51 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   if (!html || !parsedData || !bedrockVersions) {
     if (isFallback) {
       loading = true
-      parsedData = {
-        title: 'Loading...',
-        sidebar: {},
-      }
     } else {
       return <Error statusCode={404} />
     }
   }
 
-  const title = parsedData?.title
-  const description = parsedData?.title && `Minecraft Bedrock ${parsedData.title}`
+  const sidebar: SidebarStructure = parsedData.sidebar || {}
+  let title = 'Loading...'
+  let description = ''
+  if (!loading && parsedData.title) {
+    const { title: documentTitle, version } = parsedData.title
+    title = `${documentTitle} Documentation | ${version} | bedrock.dev`
+    description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
+  }
 
   // transform to string representation
   let versions = {}
   if (bedrockVersions) versions = transformInbound(bedrockVersions)
 
   return (
-    <VersionContext.Provider value={{ major, minor, file, versions }}>
-      <SidebarContextProvider>
-        <Layout title={title} description={description}>
-          <div className='flex'>
-            <Sidebar sidebar={parsedData && parsedData.sidebar} file={file} loading={loading} />
-            <DocsContainer html={html} loading={loading} />
-          </div>
-        </Layout>
-      </SidebarContextProvider>
-    </VersionContext.Provider>
+    <>
+      <Head>
+        <script
+          dangerouslySetInnerHTML={{ __html: `
+            try {
+              var sidebar = window.localStorage.getItem('sidebar');
+              if (sidebar) {
+                var open = JSON.parse(sidebar).open;
+                if (!open) document.documentElement.classList.add('sidebar-closed');
+              }
+            } catch (e) {}
+            `
+          }}
+        />
+      </Head>
+      <VersionContext.Provider value={{ major, minor, file, versions }}>
+        <SidebarContextProvider>
+          <Layout title={title} description={description}>
+            <div className='flex'>
+              <Sidebar sidebar={sidebar} file={file} loading={loading} />
+              <DocsContainer html={html} loading={loading} />
+            </div>
+          </Layout>
+        </SidebarContextProvider>
+      </VersionContext.Provider>
+    </>
   )
 }
 
