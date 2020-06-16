@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react'
 
 import { unstable_batchedUpdates } from 'react-dom'
 
@@ -31,9 +31,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   if (!sidebar) return null
 
   const [filter, setFilter] = useState('')
-  const [hash, setHash] = useState('')
   const [mounted, setMounted] = useState(false)
-  const sidebarRef = useRef<HTMLDivElement | null>(null)
 
   const mobile = useIsMobile()
 
@@ -44,7 +42,6 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   useEffect(() => {
     unstable_batchedUpdates(() => {
       setFilter('')
-      setHash('')
       setMounted(true)
     })
   }, [ file ])
@@ -53,28 +50,6 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
     // disable scrolling when in sidebar
     if (mobile) document.body.style.overflow = open ? 'hidden' : 'initial'
   }, [ open ])
-
-  useEffect(() => {
-    // automatically scroll to the hash in the sidebar on page load
-    if (location.hash) {
-      const hash = decodeURIComponent(location.hash)
-      setHash(hash)
-      const el: HTMLAnchorElement | null = document.querySelector(
-        `.sidebar .sidebar-id[href="${hash}"]`
-      )
-      if (el) {
-        if (sidebarRef.current) {
-          sidebarRef.current.scrollTop = el.offsetTop - 164
-        }
-      }
-    }
-
-    // store the hash for re-render
-    const onHashChange = () => setHash(decodeURIComponent(location.hash))
-
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
-  }, [])
 
   const loadingContent = (
     <div className='flex-1 flex px-4 py-4'>
@@ -118,9 +93,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         </div>
         { loading ? loadingContent : (
           <>
-            <div className='flex-1 flex flex-col overflow-y-auto pb-48 md:pb-8 h-0' ref={sidebarRef}>
-              <SidebarContent search={filter} sidebar={sidebar} file={file} hash={hash}  />
-            </div>
+            <SidebarContent search={filter} sidebar={sidebar} file={file} />
             <div className='hidden lg:block bg-white w-full px-4 py-2 border-t border-gray-200 bottom-safe-area-inset inset-2'>
               <a className='text-sm text-gray-500 hover:text-gray-400 font-normal float-right'
                  target='_blank'

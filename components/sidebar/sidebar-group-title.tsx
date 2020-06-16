@@ -1,4 +1,4 @@
-import React, { Children, FunctionComponent, useState, MouseEvent } from 'react'
+import React, { Children, FunctionComponent, MouseEvent } from 'react'
 
 import cn from 'classnames'
 
@@ -8,7 +8,8 @@ type Props = {
   title: string
   id: string
   hash: string
-  defaultOpen: boolean
+  open: boolean
+  setOpen: (open: boolean) => void
   searching: boolean
 }
 
@@ -18,9 +19,7 @@ const RightArrow = (
   </svg>
 )
 
-const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash, defaultOpen, searching }) => {
-  const [ open, setOpen ] = useState(defaultOpen)
-
+const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash, open, setOpen, searching }) => {
   const hasChildren = !!Children.count(children)
 
   const handleClick = (e: MouseEvent) => {
