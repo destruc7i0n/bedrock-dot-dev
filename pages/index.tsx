@@ -32,7 +32,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
     <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation' header={false}>
       <div className='min-h-screen bg-gray-50'>
         <div className='flex py-24 flex-col justify-center items-center'>
-          <div role='main' className='flex flex-col bg-white max-w-3/4 border-gray-200 rounded-lg outline-none shadow shadow-sm hover:shadow-lg appearance-none hover:border-gray-300 transition duration-150 ease-in-out rounded-lg'>
+          <div role='main' className='flex flex-col bg-white max-w-3/4 shadow shadow-sm rounded-lg outline-none appearance-none transition duration-150 ease-in-out rounded-lg'>
             <div className='p-3 border-b border-gray-200 text-center'>
               <div className='flex flex-col'>
                 <span className='text-center text-3xl font-extrabold'>
