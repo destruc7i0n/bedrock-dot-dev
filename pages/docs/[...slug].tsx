@@ -16,7 +16,7 @@ import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 
-import { getBedrockVersions } from 'lib/files'
+import { getBedrockVersions, getTags } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
 import { transformOutbound, transformInbound, TransformedOutbound } from 'lib/bedrock-versions-transformer'
@@ -92,16 +92,22 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
 export const getStaticPaths: GetStaticPaths = async () => {
   const bedrockVersions = await getBedrockVersions()
 
+  const tags = await getTags()
+  const { beta: [ betaMajor ], stable: [ stableMajor ] } = tags
+
   let paths = []
   for (let major of Object.keys(bedrockVersions)) {
     for (let minor of Object.keys(bedrockVersions[major])) {
+      if (process.env.NODE_ENV === 'production') {
+        if (![betaMajor, stableMajor].includes(major)) continue
+      }
       for (let file of bedrockVersions[major][minor]) {
         paths.push({params: {slug: [major, minor, file]}})
       }
     }
   }
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

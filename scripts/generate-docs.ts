@@ -10,6 +10,9 @@ const main = async () => {
   const docs = await getFormattedFilesList()
 
   const dir = path.resolve('public/static/docs.json')
+
+  if (!fs.existsSync('public/static')) fs.mkdirSync('public/static')
+
   fs.writeFileSync(dir, JSON.stringify(docs))
   console.log('static docs file generated!')
 }
