@@ -71,4 +71,4 @@ const allFilesList = async () => {
   }
 }
 
-export { formatTree, allFilesList }
+export { formatTree, allFilesList, getFormattedFilesList }

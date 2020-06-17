@@ -5,7 +5,9 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Error from 'next/error'
 
-import { highlightTextarea, parseHtml, ParseHtmlResponse, removeDisplayHtml } from 'lib/html'
+import { extractDataFromHtml, ParseHtmlResponse } from 'lib/html'
+import { cleanHtmlForDisplay } from 'lib/html/clean'
+import { highlightHtml } from 'lib/html/highlight'
 
 import Layout from 'components/layout'
 import Sidebar, { SidebarStructure } from 'components/sidebar'
@@ -126,14 +128,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
 
     if (typeof html === 'string') {
-      displayHtml = html ? highlightTextarea(removeDisplayHtml(html), slug[2]) : ''
+      displayHtml = cleanHtmlForDisplay(html)
+      displayHtml = highlightHtml(displayHtml, slug[2])
 
       let file = ''
       if (slug && slug.length === 3) file = slug[2]
 
       const path = slug.join('/')
       Log.info(`Processing ${logLinkColor(path)}...`)
-      parsedData = parseHtml(html, file)
+      parsedData = extractDataFromHtml(html, file)
       Log.info('Done processing ' + logLinkColor(path))
     }
   }

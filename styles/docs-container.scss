@@ -20,21 +20,15 @@
     display: block;
     width: auto !important;
     max-width: 100%;
-
-    @screen md {
-      overflow-x: auto;
-    }
+    overflow-x: auto;
 
     tbody {
       @media (max-width: 1024px) {
         display: table;
         width: 100%;
+        @apply border;
       }
     }
-  }
-
-  h1 {
-    overflow-wrap: break-word;
   }
 
   /* Thanks, Jannis! */
@@ -54,15 +48,62 @@
     color:inherit
   }
 
-  textarea {
-    padding:9px;
-    min-height:80px;
-    min-width:400px;
-    max-width:100%;
-    line-height:18px
-  }
-
   pre[class*=language-] {
     @apply rounded;
+  }
+
+  /* headings */
+  h1, h2 {
+    overflow-wrap: break-word;
+  }
+
+  h1 {
+    @apply leading-snug;
+    @apply text-3xl;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+    @apply pb-1;
+  }
+
+  h2 {
+    @apply leading-snug;
+    @apply text-2xl;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h3 {
+    @apply leading-snug;
+    @apply text-lg;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h4 {
+    @apply leading-none;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h5, h6 {
+    @apply leading-tight;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply mb-2;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
   }
 }

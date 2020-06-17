@@ -3,4 +3,6 @@
 node_modules
 .next
 old-css.css
-sitemap.xml
+
+public/sitemap.xml
+public/static/docs.json

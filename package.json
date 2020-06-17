@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
-    "build": "next build && yarn sitemap",
+    "build": "yarn generate-docs-file && next build && yarn sitemap",
     "start": "next start",
-    "sitemap": "node scripts/generate_sitemap.js",
+    "sitemap": "node scripts/generate-sitemap.js",
+    "generate-docs-file": "ts-node -P scripts/tsconfig.json scripts/generate-docs.ts",
     "type-check": "tsc"
   },
   "dependencies": {
@@ -14,7 +15,6 @@
     "debounce": "^1.2.0",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
-    "isomorphic-fetch": "^2.2.1",
     "next": "^9.4.4",
     "next-seo": "^4.5.0",
     "nextjs-sitemap-generator": "^1.0.0",
@@ -38,7 +38,9 @@
     "@types/react-dom": "^16.9.8",
     "@types/semver": "^7.2.0",
     "chalk": "^4.1.0",
+    "isomorphic-unfetch": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
+    "ts-node": "^8.10.2",
     "typescript": "3.9.5"
   },
   "license": "MIT"

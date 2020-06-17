@@ -1,4 +1,4 @@
-import Log, { logLinkColor } from 'lib/log'
+import Log, { logLinkColor } from '../log'
 
 import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './constants'
 
