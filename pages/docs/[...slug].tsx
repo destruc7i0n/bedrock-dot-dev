@@ -46,7 +46,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
     }
   }
 
-  const sidebar: SidebarStructure = parsedData.sidebar || {}
+  const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = 'Loading...'
   let description = ''
   if (!loading && parsedData.title) {
