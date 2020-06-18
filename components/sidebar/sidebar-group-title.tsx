@@ -36,7 +36,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
   return (
     <div className='position-relative'>
       <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': isOpen && hasChildren, 'select-none': hasChildren }, 'border-b border-gray-200')} onClick={handleClick}>
-        <a className={cn({ 'font-extrabold text-blue-600 hover:text-blue-500': active, 'font-bold hover:text-gray-800': !active }, 'transition-all duration-75 ease-in-out')} href={`#${id}`}>{title}</a>
+        <a className={cn('font-bold', { 'text-blue-600 hover:text-blue-500': active, 'hover:text-gray-800': !active }, 'transition-all duration-75 ease-in-out')} href={`#${id}`}>{title}</a>
         {hasChildren && (
           <div className={cn('sidebar-expand', { open: isOpen })}>
             {RightArrow}
