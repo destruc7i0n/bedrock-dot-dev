@@ -16,7 +16,7 @@ import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 
-import { getBedrockVersions, getTags } from 'lib/files'
+import { getBedrockVersions } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
 import { transformOutbound, transformInbound, TransformedOutbound } from 'lib/bedrock-versions-transformer'
@@ -92,22 +92,16 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
 export const getStaticPaths: GetStaticPaths = async () => {
   const bedrockVersions = await getBedrockVersions()
 
-  const tags = await getTags()
-  const { beta: [ betaMajor ], stable: [ stableMajor ] } = tags
-
   let paths = []
   for (let major of Object.keys(bedrockVersions)) {
     for (let minor of Object.keys(bedrockVersions[major])) {
-      if (process.env.NODE_ENV === 'production') {
-        if (![betaMajor, stableMajor].includes(major)) continue
-      }
       for (let file of bedrockVersions[major][minor]) {
         paths.push({params: {slug: [major, minor, file]}})
       }
     }
   }
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -122,25 +116,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // transform to "compressed" version
   const bedrockVersions = transformOutbound(await getBedrockVersions())
 
+  // [ major, minor, file ]
   if (typeof slug === 'object' && slug.length === 3) {
-    let path = [ ...slug ]
-    // when there is only one file available
-    if (path[0] === path[1]) path = [ path[0], path[2] ]
+    const file = slug[2]
+    const path = slug.join('/')
 
     try {
-      html = await getDocsFilesFromRepo(path.join('/'))
+      html = await getDocsFilesFromRepo(path)
     } catch (e) {
       Log.error('Could not get file!')
     }
 
     if (typeof html === 'string') {
       displayHtml = cleanHtmlForDisplay(html)
-      displayHtml = highlightHtml(displayHtml, slug[2])
+      displayHtml = highlightHtml(displayHtml, file)
 
-      let file = ''
-      if (slug && slug.length === 3) file = slug[2]
-
-      const path = slug.join('/')
       Log.info(`Processing ${logLinkColor(path)}...`)
       parsedData = extractDataFromHtml(html, file)
       Log.info('Done processing ' + logLinkColor(path))
