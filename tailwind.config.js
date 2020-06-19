@@ -1,3 +1,15 @@
+const screens = {
+  'sm': '640px',
+  'md': '768px',
+  'lg': '1024px',
+  'xl': '1280px',
+  '2xl': '1536px',
+}
+const maxScreens = Object.keys(screens).reduce((acc, key) => {
+  acc[`${key}-max`] = { max: screens[key] }
+  return acc
+}, {})
+
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
@@ -9,11 +21,8 @@ module.exports = {
       },
     },
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
+      ...screens,
+      ...maxScreens,
     },
   },
   variants: {},

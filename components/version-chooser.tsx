@@ -128,9 +128,9 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   return (
     <>
       <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
-        <div className='w-full pb-3 text-xl font-bold'>
+        <h3 className='w-full pb-3 text-xl font-bold'>
           Version Selection
-        </div>
+        </h3>
         <div className='w-full flex flex-row'>
           <div className='w-1/2 mb-2 pr-2'>
             <label className='block text-sm font-bold mb-2' htmlFor='major'>
@@ -164,9 +164,9 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
       <div className='flex w-full'>
         <div className='w-full px-3 border-t border-gray-200'>
-          <div className='w-full py-3 text-xl font-bold'>
+          <h3 className='w-full py-3 text-xl font-bold'>
             Latest Version Selection
-          </div>
+          </h3>
           <QuickVersionChooser title='Stable' versions={versions} version={tags.stable} directory='r' id='stable' color='green' margin={false} />
           <QuickVersionChooser title='Beta' versions={versions} version={tags.beta} directory='b' id='beta' color='red' margin={false} />
         </div>

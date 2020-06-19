@@ -23,7 +23,7 @@
     overflow-x: auto;
 
     tbody {
-      @media (max-width: 1024px) {
+      @screen lg-max {
         display: table;
         width: 100%;
         @apply border;
@@ -97,7 +97,7 @@
     @apply mb-2;
   }
 
-  @media (max-width: 768px) {
+  @screen md-max {
     h1 {
       @apply text-2xl;
     }

@@ -35,9 +35,9 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
           <div role='main' className='flex flex-col bg-white max-w-3/4 shadow shadow-sm rounded-lg outline-none appearance-none transition duration-150 ease-in-out rounded-lg'>
             <div className='p-3 border-b border-gray-200 text-center'>
               <div className='flex flex-col'>
-                <span className='text-center text-3xl font-extrabold'>
+                <h1 className='text-center text-3xl font-extrabold'>
                   bedrock.dev
-                </span>
+                </h1>
                 <span>
                   <span title='Not affiliated with Mojang Studios or Microsoft' className='cursor-pointer'>
                     Unofficial

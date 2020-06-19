@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "yarn generate-docs-file && next build && yarn sitemap",
+    "build-analyze": "ANALYZE=true yarn build",
     "start": "next start",
     "sitemap": "node scripts/generate-sitemap.js",
     "generate-docs-file": "ts-node -P scripts/tsconfig.json scripts/generate-docs.ts",
@@ -12,11 +13,9 @@
   "dependencies": {
     "@tailwindcss/ui": "^0.3.0",
     "classnames": "^2.2.6",
-    "debounce": "^1.2.0",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
     "next": "^9.4.4",
-    "next-seo": "^4.5.0",
     "nextjs-sitemap-generator": "^1.0.0",
     "nprogress": "^0.2.0",
     "prism-themes": "^1.4.0",
@@ -41,7 +40,8 @@
     "isomorphic-unfetch": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "ts-node": "^8.10.2",
-    "typescript": "3.9.5"
+    "typescript": "3.9.5",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "license": "MIT"
 }

@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import Head from 'next/head'
 
-import { NextSeo } from 'next-seo'
-
 import Header from './header'
 
 type Props = {
@@ -19,10 +17,15 @@ const Layout: FunctionComponent<Props> = ({
 }) => (
   <>
     <Head>
-      <meta charSet='utf-8' />
-      <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      <title>{title}</title>
+      {description && (
+        <>
+          <meta name='description' content={description} />
+          <meta property='og:description' content={description} />
+        </>
+      )}
+      <meta property='og:title' content={title} />
     </Head>
-    <NextSeo title={title} {...description && { description }} twitter={{ handle: '@TheDestruc7i0n' }} />
     {header && <Header/>}
     <div>
       {children}

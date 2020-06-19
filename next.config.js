@@ -58,4 +58,18 @@ module.exports = {
       ]
     }
   },
+  webpack (config, options) {
+    if (process.env.ANALYZE === 'true') {
+      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          reportFilename: options.isServer
+            ? '../analyze/server.html'
+            : './analyze/client.html',
+        })
+      )
+    }
+    return config
+  },
 }
