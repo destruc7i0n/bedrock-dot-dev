@@ -1,5 +1,6 @@
 import { BedrockVersions } from './versions'
-import { compareBedrockVersions } from './util';
+
+import { compareBedrockVersions } from './util'
 
 export interface TransformedOutbound {
   key: string[]
@@ -7,6 +8,18 @@ export interface TransformedOutbound {
     number[], // the minecraft version
     number[] // the files
   ][]
+}
+
+// helper generator to sort and loop through all bedrock versions
+function* bedrockVersionsInOrder (versions: BedrockVersions): IterableIterator<[ string, string, string[] ]> {
+  const majorVersions = Object.keys(versions).sort(compareBedrockVersions)
+  for (let major of majorVersions) {
+    const minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
+    for (let minor of minorVersions) {
+      const files = versions[major][minor]
+      yield [ major, minor, files ]
+    }
+  }
 }
 
 const transformInbound = (data: TransformedOutbound) => {
@@ -30,28 +43,22 @@ const transformInbound = (data: TransformedOutbound) => {
 const transformOutbound = (data: BedrockVersions) => {
   const out: TransformedOutbound = { key: [], versions: [] }
 
-  const majorVersions = Object.keys(data).sort(compareBedrockVersions)
+  for (let [ major, minor ] of bedrockVersionsInOrder(data)) {
+    const version = minor.split('.').map(Number)
 
-  for (let major of majorVersions) {
-    const minorVersions = Object.keys(data[major]).sort(compareBedrockVersions)
-
-    for (let minor of minorVersions) {
-      const version = minor.split('.').map(Number)
-
-      let map = []
-      for (let file of data[major][minor]) {
-        if (!out.key.includes(file)) out.key.push(file)
-        map.push(out.key.indexOf(file))
-      }
-
-      out.versions.push([
-        version,
-        map
-      ])
+    let map = []
+    for (let file of data[major][minor]) {
+      if (!out.key.includes(file)) out.key.push(file)
+      map.push(out.key.indexOf(file))
     }
+
+    out.versions.push([
+      version,
+      map
+    ])
   }
 
   return out
 }
 
-export { transformInbound, transformOutbound }
+export { transformInbound, transformOutbound, bedrockVersionsInOrder }

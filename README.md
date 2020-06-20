@@ -8,7 +8,7 @@ The documentation files are sourced from [bedrock-dot-dev/docs](https://github.c
 
 Feel free to make any contributions there.
 
-Written in TypeScript using Next.js framework.
+Written in TypeScript using the Next.js framework.
 
 ## Features
 
@@ -26,8 +26,6 @@ Written in TypeScript using Next.js framework.
 
 Contributions are welcome.
 
-## License
-
-MIT
+## Legal
 
 This website is not affiliated with Mojang Studios or Microsoft in any way.

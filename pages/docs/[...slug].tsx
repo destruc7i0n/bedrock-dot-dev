@@ -19,7 +19,12 @@ import useLoading from 'components/loading'
 import { getBedrockVersions } from 'lib/files'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
-import { transformOutbound, transformInbound, TransformedOutbound } from 'lib/bedrock-versions-transformer'
+import {
+  transformOutbound,
+  transformInbound,
+  TransformedOutbound,
+  bedrockVersionsInOrder
+} from 'lib/bedrock-versions-transformer'
 
 type Props = {
   html: string
@@ -93,11 +98,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const bedrockVersions = await getBedrockVersions()
 
   let paths = []
-  for (let major of Object.keys(bedrockVersions)) {
-    for (let minor of Object.keys(bedrockVersions[major])) {
-      for (let file of bedrockVersions[major][minor]) {
-        paths.push({params: {slug: [major, minor, file]}})
-      }
+
+  for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
+    for (let file of files) {
+      paths.push({params: {slug: [major, minor, file]}})
     }
   }
 

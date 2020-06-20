@@ -24,6 +24,8 @@ class BedrockDevDocument extends Document {
           <meta name='theme-color' content='#ffffff' />
           <meta name='twitter:card' content='summary' />
           <meta name='twitter:creator' content='@TheDestruc7i0n' />
+          <meta name='twitter:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' />
+          <meta name='og:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' />
           <AnalyticsHeadTags />
         </Head>
         <body>

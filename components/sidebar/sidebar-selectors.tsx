@@ -2,9 +2,8 @@ import React, { ChangeEvent, FunctionComponent, memo, useContext } from 'react'
 
 import Router from 'next/router'
 
-import { compareBedrockVersions } from 'lib/util'
-
 import VersionContext from '../version-context'
+import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
 
 const SidebarSelectors: FunctionComponent = () => {
   // get from the context
@@ -12,19 +11,18 @@ const SidebarSelectors: FunctionComponent = () => {
 
   if (!major || !versions) return null
 
-  const majorVersionsOrdered = Object.keys(versions).sort(compareBedrockVersions)
-
   let options = []
 
   // generate the dropdown
-  for (let major of majorVersionsOrdered) {
-    options.push(<option key={`version-${major}`} disabled>{major}</option>)
-
-    const minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
-    for (let minor of minorVersions) {
-      let path = `${major}/${minor}`
-      options.push(<option key={`version-${major}-${minor}`} value={path}>{minor}</option>)
+  let majorVersions: string[] = []
+  for (let [ major, minor ] of bedrockVersionsInOrder(versions)) {
+    // only add the major version once
+    if (!majorVersions.includes(major)) {
+      options.push(<option key={`version-${major}`} disabled>{major}</option>)
+      majorVersions.push(major)
     }
+    let path = `${major}/${minor}`
+    options.push(<option key={`version-${major}-${minor}`} value={path}>{minor}</option>)
   }
 
   const files = versions[major] && versions[major][minor]
