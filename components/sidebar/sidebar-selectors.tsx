@@ -4,6 +4,7 @@ import Router from 'next/router'
 
 import VersionContext from '../version-context'
 import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
+import { getLink } from 'lib/util'
 
 const SidebarSelectors: FunctionComponent = () => {
   // get from the context
@@ -32,17 +33,17 @@ const SidebarSelectors: FunctionComponent = () => {
     const [ major, minor ] = parts
     const files = versions[major][minor]
 
-    let newPath = [ major, minor, file ]
+    let newFile = file
     // if the file isn't available go to the first one
     if (!files.includes(file)) {
-      newPath[2] = files[0]
+      newFile = files[0]
     }
 
-    Router.push('/docs/[...slug]', `/docs/${newPath.join('/')}`)
+    Router.push('/docs/[...slug]', getLink(major, minor, newFile))
   }
 
   const onFileChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
-    Router.push('/docs/[...slug]', `/docs/${[ major, minor, value ].join('/')}`)
+    Router.push('/docs/[...slug]', getLink(major, minor, value))
   }
 
   return (

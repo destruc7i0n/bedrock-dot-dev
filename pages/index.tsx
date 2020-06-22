@@ -41,7 +41,8 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
                 <span>
                   <span title='Not affiliated with Mojang Studios or Microsoft' className='cursor-pointer'>
                     Unofficial
-                  </span> Minecraft Bedrock Edition documentation host
+                  </span>
+                  {' '}Minecraft Bedrock Edition documentation host
                 </span>
               </div>
             </div>

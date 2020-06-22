@@ -1,3 +1,5 @@
+import { BedrockVersions } from './versions';
+
 export function compareBedrockVersions (a: string, b: string) {
   const sa = a.split('.')
   const sb = b.split('.')
@@ -10,16 +12,31 @@ export function compareBedrockVersions (a: string, b: string) {
   return 0
 }
 
-export function getTagsFromString(s: string) {
-  const parts = s.split('.')
-  return {
-    major: [ parts[0], parts[1], '0', '0' ].join('.'),
-    minor: s,
-  }
-}
+export const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
 
 export const addHashIfNeeded = (s: string) => {
   return s[0] === '#' ? s : `#${s}`
 }
 
 export const removeHashIfNeeded = (s: string) => s.replace('#', '')
+
+export type ParsedUrlResponse = {
+  major: string
+  minor: string
+}
+
+export const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedUrlResponse => {
+  const parts = query.split('/')
+
+  let parsed: ParsedUrlResponse = { major: '', minor: '' }
+  const [ major, minor ] = parts
+
+  if (major && versions[major]) {
+    parsed['major'] = parts[0]
+    if (minor && versions[major][minor]) {
+      parsed['minor'] = parts[1]
+    }
+  }
+
+  return parsed
+}
