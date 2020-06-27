@@ -67,15 +67,25 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   let description = ''
   if (!loading && parsedData.title) {
     const { title: documentTitle, version } = parsedData.title
-    if (!versionTag) {
-      title = `${documentTitle} Documentation | ${version} | bedrock.dev`
-    } else {
-      let tagTitle = ''
-      if (versionTag === Tags.Beta) tagTitle = 'Beta'
-      if (versionTag === Tags.Stable) tagTitle = 'Stable'
-      title = `${documentTitle} Documentation | ${tagTitle} | bedrock.dev`
-    }
+    title = `${documentTitle} Documentation | ${version} | bedrock.dev`
     description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
+
+    // custom titles for version tag
+    if (versionTag) {
+      switch (versionTag) {
+        case Tags.Stable: {
+          title = `${documentTitle} Documentation | bedrock.dev`
+          description = `Minecraft Bedrock ${documentTitle} Documentation`
+          break
+        }
+        case Tags.Beta: {
+          title = `Beta ${documentTitle} Documentation | bedrock.dev`
+          description = `Minecraft Bedrock Beta ${documentTitle} Documentation`
+          break
+        }
+        default: break
+      }
+    }
   }
 
   // transform to string representation

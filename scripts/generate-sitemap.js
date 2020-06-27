@@ -36,6 +36,19 @@ const main = async () => {
       })
     }
   }
+
+  // for (let major of Object.keys(versions)) {
+  //   for (let minor of Object.keys(versions[major])) {
+  //     for (let file of versions[major][minor]) {
+  //       stream.write({
+  //         url: `/docs/${major}/${minor}/${file}`,
+  //         changefreq: 'weekly',
+  //         priority: 0.6,
+  //       })
+  //     }
+  //   }
+  // }
+
   stream.end()
 
   const sitemap = (await streamToPromise(stream)).toString()
