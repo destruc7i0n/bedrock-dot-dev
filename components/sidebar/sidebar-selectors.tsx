@@ -4,11 +4,11 @@ import Router from 'next/router'
 
 import VersionContext from '../version-context'
 import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
-import { getLink } from 'lib/util'
+import { getLink, getMinorVersionTitle } from 'lib/util'
 
 const SidebarSelectors: FunctionComponent = () => {
   // get from the context
-  const { major, minor, file, versions } = useContext(VersionContext)
+  const { major, minor, file, versions, tags } = useContext(VersionContext)
 
   if (!major || !versions) return null
 
@@ -23,7 +23,9 @@ const SidebarSelectors: FunctionComponent = () => {
       majorVersions.push(major)
     }
     let path = `${major}/${minor}`
-    options.push(<option key={`version-${major}-${minor}`} value={path}>{minor}</option>)
+
+    const title = getMinorVersionTitle([ major, minor ], tags)
+    options.push(<option key={`version-${major}-${minor}`} value={path}>{title}</option>)
   }
 
   const files = versions[major] && versions[major][minor]
@@ -39,11 +41,11 @@ const SidebarSelectors: FunctionComponent = () => {
       newFile = files[0]
     }
 
-    Router.push('/docs/[...slug]', getLink(major, minor, newFile))
+    Router.push('/docs/[...slug]', getLink(major, minor, newFile, tags))
   }
 
   const onFileChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
-    Router.push('/docs/[...slug]', getLink(major, minor, value))
+    Router.push('/docs/[...slug]', getLink(major, minor, value, tags))
   }
 
   return (

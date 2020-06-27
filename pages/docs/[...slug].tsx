@@ -17,27 +17,38 @@ import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 
 import { getBedrockVersions } from 'lib/files'
+import { getTags, Tags, TagsResponse } from 'lib/tags'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
 import {
-  transformOutbound,
-  transformInbound,
+  bedrockVersionsInOrder,
   TransformedOutbound,
-  bedrockVersionsInOrder
+  transformInbound,
+  transformOutbound
 } from 'lib/bedrock-versions-transformer'
+import { areVersionsEqual } from 'lib/util'
 
 type Props = {
   html: string
-  bedrockVersions: TransformedOutbound,
-  parsedData: ParseHtmlResponse,
+  bedrockVersions: TransformedOutbound
+  tags: TagsResponse
+  parsedData: ParseHtmlResponse
+  version: string[]
 }
 
-const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) => {
-  const { isFallback, query } = useRouter()
-  const { slug } = query
+const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedData, version }) => {
+  const { isFallback, query: { slug } } = useRouter()
 
-  let major = '', minor = '', file = ''
-  if (slug && typeof slug === 'object') [ major, minor, file ] = slug
+  let [ major, minor, file ] = version
+
+  let versionTag: null | Tags = null
+
+  if (typeof slug === 'object' && slug.length === 2) {
+    if (['stable', 'beta'].includes(slug[0])) {
+      if (slug[0] === 'stable') versionTag = Tags.Stable
+      else if (slug[0] === 'beta') versionTag = Tags.Beta
+    }
+  }
 
   // when the page is transitioning, in a loading state
   let loading = useLoading()
@@ -56,7 +67,14 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
   let description = ''
   if (!loading && parsedData.title) {
     const { title: documentTitle, version } = parsedData.title
-    title = `${documentTitle} Documentation | ${version} | bedrock.dev`
+    if (!versionTag) {
+      title = `${documentTitle} Documentation | ${version} | bedrock.dev`
+    } else {
+      let tagTitle = ''
+      if (versionTag === Tags.Beta) tagTitle = 'Beta'
+      if (versionTag === Tags.Stable) tagTitle = 'Stable'
+      title = `${documentTitle} Documentation | ${tagTitle} | bedrock.dev`
+    }
     description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
   }
 
@@ -80,7 +98,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
           }}
         />
       </Head>
-      <VersionContext.Provider value={{ major, minor, file, versions }}>
+      <VersionContext.Provider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
           <Layout title={title} description={description}>
             <div className='flex'>
@@ -96,11 +114,19 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, parsedData }) =
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bedrockVersions = await getBedrockVersions()
+  const tags = await getTags()
 
   let paths = []
 
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
+      // handle stable and beta routes
+      if (areVersionsEqual([ major, minor ], tags[Tags.Stable])) {
+        paths.push({ params: {slug: ['stable', file]} })
+      } else if (areVersionsEqual([ major, minor ], tags[Tags.Beta])) {
+        paths.push({ params: {slug: ['beta', file]} })
+      }
+      // add numeric route as well
       paths.push({params: {slug: [major, minor, file]}})
     }
   }
@@ -116,14 +142,32 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params) return { props: { html } }
 
   const { slug } = params
+  let version: string[] = []
 
   // transform to "compressed" version
   const bedrockVersions = transformOutbound(await getBedrockVersions())
+  const tags = await getTags()
 
   // [ major, minor, file ]
-  if (typeof slug === 'object' && slug.length === 3) {
-    const file = slug[2]
-    const path = slug.join('/')
+  if (typeof slug === 'object' && slug.length >= 2) {
+    version = [ ...slug ]
+
+    if (slug.length == 2 && ['stable', 'beta'].includes(slug[0])) {
+      switch (slug[0]) {
+        case 'stable': {
+          version = [ ...tags.stable, slug[1] ]
+          break
+        }
+        case 'beta': {
+          version = [ ...tags.beta, slug[1] ]
+          break
+        }
+        default: break
+      }
+    }
+
+    const file = version[2]
+    const path = version.join('/')
 
     try {
       html = await getDocsFilesFromRepo(path)
@@ -141,7 +185,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
-  return { props: { html: displayHtml, bedrockVersions, parsedData } }
+  return { props: { html: displayHtml, bedrockVersions, tags, parsedData, version } }
 }
 
 export default Docs

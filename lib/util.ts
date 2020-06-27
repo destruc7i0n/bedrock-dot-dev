@@ -1,4 +1,5 @@
-import { BedrockVersions } from './versions';
+import { BedrockVersions } from './versions'
+import { Tags, TagsResponse } from './tags'
 
 export function compareBedrockVersions (a: string, b: string) {
   const sa = a.split('.')
@@ -12,13 +13,29 @@ export function compareBedrockVersions (a: string, b: string) {
   return 0
 }
 
-export const getLink = (major: string, minor: string, file?: string) => `/docs/${major}/${minor}/${file}`
+export const getLink = (major: string, minor: string, file: string, tags?: TagsResponse) => {
+  if (tags) {
+    let version = [major, minor]
+    if (areVersionsEqual(version, tags[Tags.Stable])) return `/docs/stable/${file}`
+    if (areVersionsEqual(version, tags[Tags.Beta])) return `/docs/beta/${file}`
+  }
+  return `/docs/${major}/${minor}/${file}`
+}
+
+export const getMinorVersionTitle = (version: string[], tags: TagsResponse) => {
+  let title = version[1]
+  if (areVersionsEqual(version, tags[Tags.Beta])) title += ' (Beta)'
+  if (areVersionsEqual(version, tags[Tags.Stable])) title += ' (Stable)'
+  return title
+}
 
 export const addHashIfNeeded = (s: string) => {
   return s[0] === '#' ? s : `#${s}`
 }
 
 export const removeHashIfNeeded = (s: string) => s.replace('#', '')
+
+export const areVersionsEqual = (a: string[], b: string[]) => a[0] === b[0] && a[1] === b[1]
 
 export type ParsedUrlResponse = {
   major: string

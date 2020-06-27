@@ -86,7 +86,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         <div className='w-full p-4 border-b border-gray-200'>
           {!!Object.keys(sidebar).length ? (
             <>
-              <Selectors/>
+              <Selectors />
               <SidebarFilter setValue={setFilter} value={filter} />
             </>
           ) : loadingSelectors}

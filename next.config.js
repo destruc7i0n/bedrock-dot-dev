@@ -30,7 +30,7 @@ module.exports = {
         // redirect to latest stable
         {
           source: '/(r|c)/:file',
-          destination: `/docs/${stable.join('/')}/:file`,
+          destination: `/docs/stable/:file`,
           permanent: false,
         },
         {
@@ -41,7 +41,7 @@ module.exports = {
         // redirect to latest beta
         {
           source: '/b/:file',
-          destination: `/docs/${beta.join('/')}/:file`,
+          destination: `/docs/beta/:file`,
           permanent: false,
         },
         {
