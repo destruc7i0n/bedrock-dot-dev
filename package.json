@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.3.0",
+    "autoprefixer": "^9.8.4",
     "classnames": "^2.2.6",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",

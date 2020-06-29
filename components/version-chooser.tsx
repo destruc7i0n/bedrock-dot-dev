@@ -5,7 +5,6 @@ import Link from 'next/link'
 
 import SpecificVersionChooser from './version-chooser/specific-version-chooser'
 import TagVersionChooser from './version-chooser/tag-version-chooser'
-// import QuickVersionChooser from './version-chooser/quick-version-chooser'
 
 import {
   compareBedrockVersions,

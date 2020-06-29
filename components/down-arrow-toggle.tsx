@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-const DownArrow: FunctionComponent<{ click: () => void }> = ({ click }) => (
+const DownArrowToggle: FunctionComponent<{ click: () => void }> = ({ click }) => (
   <div className='w-full flex justify-center hover:bg-gray-100 rounded-b-lg transition transition-150 ease-in-out text-sm py-0.5 cursor-pointer' onClick={click}>
     <svg aria-hidden='true' focusable='false'
          className='w-5 h-5' xmlns='http://www.w3.org/2000/svg'
@@ -10,4 +10,4 @@ const DownArrow: FunctionComponent<{ click: () => void }> = ({ click }) => (
   </div>
 )
 
-export default DownArrow
+export default DownArrowToggle

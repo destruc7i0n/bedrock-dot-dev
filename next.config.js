@@ -25,12 +25,12 @@ module.exports = {
         },
         // redirect to latest stable
         {
-          source: '/(r|c)/:file',
+          source: '/(r|c|s)/:file',
           destination: `/docs/stable/:file`,
           permanent: false,
         },
         {
-          source: '/(r|c){/}?',
+          source: '/(r|c|s){/}?',
           destination: `/?r=${stable.join('/')}`,
           permanent: false,
         },

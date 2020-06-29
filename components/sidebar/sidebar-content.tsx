@@ -118,9 +118,9 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
             id={header}
             hash={hash}
           >
-            {sidebar[header].map((item) =>
+            {sidebar[header].map((item, index) =>
               <SidebarGroupItem
-                key={`${file}-item-${item.id}`}
+                key={`${file}-item-${index}-${item.id}`}
                 id={item.id}
                 title={item.title}
                 hash={hash}

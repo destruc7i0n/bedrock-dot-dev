@@ -13,9 +13,9 @@ type Props = {
   searching: boolean
 }
 
-const RightArrow = (
-  <svg width='6' height='10' viewBox='0 0 6 10' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
-    <path d='M1.4 8.56L4.67 5M1.4 1.23L4.66 4.7' stroke='#000' strokeLinecap='square' />
+const DownArrow = (
+  <svg viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' fill='none' shapeRendering='geometricPrecision'>
+    <path d='M15 18l-6-6 6-6' />
   </svg>
 )
 
@@ -38,8 +38,8 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
       <div className={cn('flex flex-row py-2 px-4 bg-white cursor-pointer', { 'sticky top-0': isOpen && hasChildren, 'select-none': hasChildren }, 'border-b border-gray-200')} onClick={handleClick}>
         <a className={cn('font-bold', { 'text-blue-600 hover:text-blue-500': active, 'hover:text-gray-800': !active }, 'transition-all duration-75 ease-in-out')} href={`#${id}`}>{title}</a>
         {hasChildren && (
-          <div className={cn('sidebar-expand', { open: isOpen })}>
-            {RightArrow}
+          <div className={cn('flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out', { '-rotate-90': isOpen })}>
+            {DownArrow}
           </div>
         )}
       </div>
