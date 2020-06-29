@@ -13,8 +13,8 @@ export function compareBedrockVersions (a: string, b: string) {
   return 0
 }
 
-export const getLink = (major: string, minor: string, file: string, tags?: TagsResponse) => {
-  if (tags) {
+export const getLink = (major: string, minor: string, file: string, tags: TagsResponse, replaceWithTagged: boolean = true) => {
+  if (replaceWithTagged) {
     let version = [major, minor]
     if (areVersionsEqual(version, tags[Tags.Stable])) return `/docs/stable/${file}`
     if (areVersionsEqual(version, tags[Tags.Beta])) return `/docs/beta/${file}`
@@ -36,6 +36,16 @@ export const addHashIfNeeded = (s: string) => {
 export const removeHashIfNeeded = (s: string) => s.replace('#', '')
 
 export const areVersionsEqual = (a: string[], b: string[]) => a[0] === b[0] && a[1] === b[1]
+
+export const getTagFromSlug = (slug: string | string[] | undefined) => {
+  if (typeof slug === 'object' && slug.length === 2) {
+    if (['stable', 'beta'].includes(slug[0])) {
+      if (slug[0] === 'stable') return Tags.Stable
+      else if (slug[0] === 'beta') return Tags.Beta
+    }
+  }
+  return null
+}
 
 export type ParsedUrlResponse = {
   major: string

@@ -37,7 +37,7 @@ const QuickVersionChooser: FunctionComponent<Props> = ({ title, id, directory, c
           </select>
         </div>
 
-        <Link href={`/docs/[...slug]`} as={getLink(major, minor, file, tags)}>
+        <Link href={`/docs/[...slug]`} as={getLink(major, minor, file, tags, true)}>
           <button className='bg-white leading-4 border border-black xl:border-none hover:bg-gray-100 transition transition-150 ease-in-out text-black font-semibold py-2 px-2 rounded-lg text-center ml-2' title={`Go to latest ${title} version`}>
             Go
           </button>

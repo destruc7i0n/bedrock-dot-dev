@@ -41,11 +41,11 @@ const SidebarSelectors: FunctionComponent = () => {
       newFile = files[0]
     }
 
-    Router.push('/docs/[...slug]', getLink(major, minor, newFile, tags))
+    Router.push('/docs/[...slug]', getLink(major, minor, newFile, tags, true))
   }
 
   const onFileChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
-    Router.push('/docs/[...slug]', getLink(major, minor, value, tags))
+    Router.push('/docs/[...slug]', getLink(major, minor, value, tags, true))
   }
 
   return (

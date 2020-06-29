@@ -26,7 +26,7 @@ import {
   transformInbound,
   transformOutbound
 } from 'lib/bedrock-versions-transformer'
-import { areVersionsEqual } from 'lib/util'
+import { areVersionsEqual, getTagFromSlug } from 'lib/util'
 
 type Props = {
   html: string
@@ -41,14 +41,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 
   let [ major, minor, file ] = version
 
-  let versionTag: null | Tags = null
-
-  if (typeof slug === 'object' && slug.length === 2) {
-    if (['stable', 'beta'].includes(slug[0])) {
-      if (slug[0] === 'stable') versionTag = Tags.Stable
-      else if (slug[0] === 'beta') versionTag = Tags.Beta
-    }
-  }
+  let versionTag: null | Tags = getTagFromSlug(slug)
 
   // when the page is transitioning, in a loading state
   let loading = useLoading()
@@ -162,18 +155,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (typeof slug === 'object' && slug.length >= 2) {
     version = [ ...slug ]
 
-    if (slug.length == 2 && ['stable', 'beta'].includes(slug[0])) {
-      switch (slug[0]) {
-        case 'stable': {
-          version = [ ...tags.stable, slug[1] ]
-          break
-        }
-        case 'beta': {
-          version = [ ...tags.beta, slug[1] ]
-          break
-        }
-        default: break
+    // check if tagged version in slug
+    const versionTag = getTagFromSlug(slug)
+    switch (versionTag) {
+      case 'stable': {
+        version = [ ...tags.stable, slug[1] ]
+        break
       }
+      case 'beta': {
+        version = [ ...tags.beta, slug[1] ]
+        break
+      }
+      default: break
     }
 
     const file = version[2]
