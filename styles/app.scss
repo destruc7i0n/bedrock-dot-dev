@@ -45,7 +45,17 @@ h1, h2, h3, h4 {
 
 .version-files-container {
   max-height: 288px;
-  max-width: 544px;
+
+  // the width is constant on larger devices
+  @screen md {
+    width: 448px;
+  }
+
+  // on smaller screens make the width be auto to fit better
+  @screen md-max {
+    width: auto;
+    max-width: 448px;
+  }
 }
 
 /* header */

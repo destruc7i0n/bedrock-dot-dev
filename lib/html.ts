@@ -3,7 +3,6 @@ import Log from './log'
 import { SidebarStructure } from '../components/sidebar'
 import { getTitle, TitleResponse } from './html/scrape/title'
 import { getAIGoals, getComponentsList }  from './html/scrape/table'
-import { getScriptingEvents, getScriptingComponents } from './html/scrape/scripting'
 import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from './html/regex'
 import { removeHashIfNeeded } from './util'
 
@@ -81,34 +80,6 @@ export const extractDataFromHtml = (html: string, file: string): ParseHtmlRespon
         ...sidebarContent,
       }
     }
-  }
-
-  // insert the scraped component and event list from the html at the correct location
-  if (file && file === 'Scripting') {
-    let newSidebarContent: SidebarStructure = {}
-    for (let key of Object.keys(sidebarContent)) {
-      switch (key) {
-        case 'Script Components': {
-          newSidebarContent = {
-            ...newSidebarContent,
-            ...getScriptingComponents(html)
-          }
-          break
-        }
-        case 'Script Events': {
-          newSidebarContent = {
-            ...newSidebarContent,
-            ...getScriptingEvents(html)
-          }
-          break
-        }
-        default: {
-          newSidebarContent[key] = sidebarContent[key]
-          break
-        }
-      }
-    }
-    sidebarContent = newSidebarContent
   }
 
   Log.info(`Found ${Object.keys(sidebarContent).length} sidebar headings`)
