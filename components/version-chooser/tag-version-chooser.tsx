@@ -23,8 +23,8 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({ tags, setM
         Version
       </label>
       <select id='tag' className='form-select leading-5 w-full' value={version} onChange={({ target: { value } }) => setVersion(value as Tags)}>
-        <option value={Tags.Stable}>Stable ({tags.stable[1]})</option>
-        <option value={Tags.Beta}>Beta ({tags.beta[1]})</option>
+        <option value={Tags.Stable}>{tags.stable[1]} (Stable)</option>
+        <option value={Tags.Beta}>{tags.beta[1]} (Beta)</option>
       </select>
     </div>
   )
