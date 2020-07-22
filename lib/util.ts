@@ -67,3 +67,5 @@ export const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedU
 
   return parsed
 }
+
+export const oneLine = (str: string) => str.split('\n').map(e => e.trim()).join('')

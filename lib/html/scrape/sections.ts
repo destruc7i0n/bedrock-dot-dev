@@ -1,6 +1,24 @@
 // get the regex for the title
 import { SidebarStructure } from '../../../components/sidebar'
-import { H_TITLE_MATCH } from '../regex'
+
+import { H_TITLE_MATCH, P_ID_MATCH } from '../regex'
+
+import { oneLine } from '../../util'
+
+const addAnchors = (html: string) => {
+  return html.replace(H_TITLE_MATCH, (value) => {
+    const [ el, id, title ] = value.match(P_ID_MATCH)!
+    const anchoredEl = oneLine(
+      `<p id="${id}">
+        <span class="anchored">
+          <a href="#${encodeURIComponent(id)}" tabindex="-1" class="anchor" aria-label="Anchor" aria-hidden="true">#</a>
+          ${title}
+        </span>
+      </p>`
+    )
+    return value.replace(el, anchoredEl)
+  })
+}
 
 const getSection = (html: string, title: string) => {
   // match the title and everything up to the next title or eof
@@ -40,4 +58,4 @@ const getSections = (html: string, sections: string[]) => {
   return resp
 }
 
-export { getSections }
+export { getSections, addAnchors }

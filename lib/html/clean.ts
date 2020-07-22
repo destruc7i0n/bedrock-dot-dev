@@ -1,7 +1,12 @@
 import { STYLESHEET_MATCH, TABLE_MATCH } from './regex'
 
+import { addAnchors } from './scrape/sections'
+
 export const cleanHtmlForDisplay = (html: string) => {
-  return removeDisplayHtml(html)
+  html = removeDisplayHtml(html)
+  html = addAnchors(html)
+
+  return html
 }
 
 // remove any html from the old generator
