@@ -37,12 +37,12 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   const [quickSelect, setQuickSelect] = useState(true)
 
   const router = useRouter()
+  const { query } = router
 
   // set from query string if possible
   useEffect(() => {
     let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
 
-    const { query } = router
     if (query?.r && typeof query.r === 'string') {
       parsedUrlQuery = parseUrlQuery(query.r, versions)
 
@@ -50,7 +50,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
       if (parsedUrlQuery.major) setMajor(parsedUrlQuery.major)
       if (parsedUrlQuery.minor) setMinor(parsedUrlQuery.minor)
     }
-  }, [])
+  }, [ query ])
 
   const [ stableMajor, stableMinor ] = tags[Tags.Stable]
 
