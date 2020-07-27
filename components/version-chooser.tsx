@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import SpecificVersionChooser from './version-chooser/specific-version-chooser'
@@ -36,11 +36,13 @@ type VersionChooserProps = {
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
   const [quickSelect, setQuickSelect] = useState(true)
 
+  const router = useRouter()
+
   // set from query string if possible
   useEffect(() => {
     let parsedUrlQuery: ParsedUrlResponse = { major: '', minor: '' }
 
-    const { query } = Router
+    const { query } = router
     if (query?.r && typeof query.r === 'string') {
       parsedUrlQuery = parseUrlQuery(query.r, versions)
 

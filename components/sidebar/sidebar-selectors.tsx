@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, memo, useContext } from 'react'
 
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 
 import VersionContext from '../version-context'
 import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
@@ -9,6 +9,8 @@ import { getLink, getMinorVersionTitle } from 'lib/util'
 const SidebarSelectors: FunctionComponent = () => {
   // get from the context
   const { major, minor, file, versions, tags } = useContext(VersionContext)
+
+  const router = useRouter()
 
   if (!major || !versions) return null
 
@@ -41,11 +43,11 @@ const SidebarSelectors: FunctionComponent = () => {
       newFile = files[0]
     }
 
-    Router.push('/docs/[...slug]', getLink(major, minor, newFile, tags, true))
+    router.push('/docs/[...slug]', getLink(major, minor, newFile, tags, true))
   }
 
   const onFileChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
-    Router.push('/docs/[...slug]', getLink(major, minor, value, tags, true))
+    router.push('/docs/[...slug]', getLink(major, minor, value, tags, true))
   }
 
   return (

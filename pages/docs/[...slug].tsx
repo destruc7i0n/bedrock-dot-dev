@@ -41,7 +41,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 
   let [ major, minor, file ] = version
 
-  let versionTag: null | Tags = getTagFromSlug(slug)
+  let versionTag: Tags | null = getTagFromSlug(slug)
 
   // when the page is transitioning, in a loading state
   let loading = useLoading()
@@ -179,6 +179,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
 
     if (typeof html === 'string') {
+      // the html to be presented on the site
       displayHtml = cleanHtmlForDisplay(html)
       displayHtml = highlightHtml(displayHtml, file)
 
