@@ -13,6 +13,21 @@ type Props = {
   tags: TagsResponse
 }
 
+const Donate = () => (
+  <form className='inline-block' action='https://www.paypal.com/cgi-bin/webscr' method='post' target='_top'>
+    <input type='hidden' name='cmd' value='_donations' />
+    <input type='hidden' name='business' value='9NZ66ET9MLMTN' />
+    <input type='hidden' name='currency_code' value='USD' />
+    <button
+      className='link'
+      type='submit'
+    >
+      Donate
+    </button>
+    <img alt='' style={{ border: 'none' }} src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
+  </form>
+)
+
 const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   // transform to string representation
   const versions = transformInbound(bedrockVersions)
@@ -40,9 +55,9 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
 
             <div className='py-2 px-3 border-t border-gray-200 text-center'>
               <div className='w-full'>
-                <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Wiki</a>
+                <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener'>Wiki</a>
                 {' '} • {' '}
-                <a href='https://guide.bedrock.dev/' className='link' target='_blank' rel='noopener noreferrer'>Guide</a>
+                <a href='https://guide.bedrock.dev/' className='link' target='_blank' rel='noopener'>Guide</a>
                 {' '} • {' '}
                 <a href='https://github.com/destruc7i0n/bedrock-dot-dev/' className='link' target='_blank' rel='noopener noreferrer'>GitHub</a>
                 {' '} • {' '}
@@ -53,9 +68,11 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
             <div className='px-3'>
               <div className='py-2 border-t border-gray-200 text-center'>
                 Website By {' '}
-                <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener noreferrer'>
+                <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener'>
                   TheDestruc7i0n
                 </a>
+                {' '} • {' '}
+                <Donate />
               </div>
             </div>
           </div>

@@ -1,11 +1,13 @@
-import React, { memo } from 'react'
+import React from 'react'
+
+import { GA_TRACKING_ID } from '../lib/analytics'
 
 const AnalyticsHeadTags = () => {
-  return process.env.GA_TRACKING_ID ? (
+  return process.env.NODE_ENV !== 'development' ? (
     <>
       <script
         async
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
       />
       <script
         dangerouslySetInnerHTML={{
@@ -13,7 +15,7 @@ const AnalyticsHeadTags = () => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${process.env.GA_TRACKING_ID}');
+          gtag('config', '${GA_TRACKING_ID}');
         `,
         }}
       />
@@ -21,4 +23,4 @@ const AnalyticsHeadTags = () => {
   ) : null
 }
 
-export default memo(AnalyticsHeadTags)
+export default AnalyticsHeadTags
