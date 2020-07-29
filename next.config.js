@@ -21,6 +21,17 @@ module.exports = {
         destination: '/?r=:path',
         permanent: false
       },
+      // redirect long fast root links
+      {
+        source: '/docs/stable{/}?',
+        destination: `/?r=${stable.join('/')}`,
+        permanent: false
+      },
+      {
+        source: '/docs/beta{/}?',
+        destination: `/?r=${beta.join('/')}`,
+        permanent: false
+      },
       // redirect to latest stable
       {
         source: '/(r|c|s)/:file',
