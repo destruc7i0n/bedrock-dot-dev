@@ -26,27 +26,29 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
     return (
       <div className={docsContainerClass}>
         <div className={docsContentClass}>
-          <div className='w-4/5 bg-gray-100 h-8' />
-          <div className='w-2/3 bg-gray-100 h-3 mt-10' />
-          <div className='w-5/6 bg-gray-100 h-3 mt-4' />
-          <div className='w-4/5 bg-gray-100 h-3 mt-4' />
-          <div className='w-3/4 bg-gray-100 h-s mt-4' />
-          <div className='w-2/3 bg-gray-100 h-3 mt-4' />
-          <div className='w-2/4 bg-gray-100 h-3 mt-4' />
+          <div className='animate-pulse w-full'>
+            <div className='w-4/5 bg-gray-100 h-8' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-10' />
+            <div className='w-5/6 bg-gray-100 h-3 mt-4' />
+            <div className='w-4/5 bg-gray-100 h-3 mt-4' />
+            <div className='w-3/4 bg-gray-100 h-s mt-4' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+            <div className='w-2/4 bg-gray-100 h-3 mt-4' />
 
-          <div className='w-2/3 bg-gray-100 h-3 mt-10' />
-          <div className='w-4/5 bg-gray-100 h-3 mt-4' />
-          <div className='w-5/6 bg-gray-100 h-3 mt-4' />
-          <div className='w-3/4 bg-gray-100 h-3 mt-4' />
-          <div className='w-3/4 bg-gray-100 h-3 mt-4' />
-          <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-10' />
+            <div className='w-4/5 bg-gray-100 h-3 mt-4' />
+            <div className='w-5/6 bg-gray-100 h-3 mt-4' />
+            <div className='w-3/4 bg-gray-100 h-3 mt-4' />
+            <div className='w-3/4 bg-gray-100 h-3 mt-4' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-4' />
 
-          <div className='w-3/4 bg-gray-100 h-3 mt-10' />
-          <div className='w-4/5 bg-gray-100 h-3 mt-4' />
-          <div className='w-2/3 bg-gray-100 h-3 mt-4' />
-          <div className='w-5/6 bg-gray-100 h-3 mt-4' />
-          <div className='w-3/4 bg-gray-100 h-3 mt-4' />
-          <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+            <div className='w-3/4 bg-gray-100 h-3 mt-10' />
+            <div className='w-4/5 bg-gray-100 h-3 mt-4' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+            <div className='w-5/6 bg-gray-100 h-3 mt-4' />
+            <div className='w-3/4 bg-gray-100 h-3 mt-4' />
+            <div className='w-2/3 bg-gray-100 h-3 mt-4' />
+          </div>s
         </div>
       </div>
     )

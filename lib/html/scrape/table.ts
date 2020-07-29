@@ -31,6 +31,7 @@ export const getComponentsList = (html: string): SidebarStructureElement[] => {
   Log.info('Generating components list...')
   const components = [
     ...scrapeTable(html, 'Components'),
+    ...scrapeTable(html, 'Attributes'),
     ...scrapeTable(html, 'Properties')
   ]
   Log.info(`Found ${components.length} components`)
