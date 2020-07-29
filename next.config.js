@@ -2,9 +2,6 @@ const getTags = require('./scripts/lib/tags')
 
 module.exports = {
   reactStrictMode: true,
-  typescript: {
-    ignoreDevErrors: true,
-  },
   async redirects () {
     const { stable, beta } = await getTags()
 

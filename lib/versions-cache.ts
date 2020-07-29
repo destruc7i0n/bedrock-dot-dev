@@ -7,11 +7,19 @@ import { BedrockVersions } from './versions'
 // use tmp on production
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
 
-const checkHardFile = () => {
+let docsContent: BedrockVersions
+
+const checkHardFile = (): BedrockVersions | undefined => {
   const docsFile = resolve('public/docs.json')
+
+  if (docsContent) return docsContent
+
   if (fs.existsSync(docsFile)) {
     const textContent = fs.readFileSync(docsFile).toString()
-    if (textContent) return JSON.parse(textContent)
+    if (textContent) {
+      docsContent = JSON.parse(textContent)
+      return docsContent
+    }
   }
 }
 
@@ -19,7 +27,7 @@ const checkHardFile = () => {
 const checkCache = (): BedrockVersions | undefined => {
   // get from the hard file in production to not use the api
   if (process.env.NODE_ENV === 'production') {
-    const hardFile: BedrockVersions = checkHardFile()
+    const hardFile = checkHardFile()
     if (hardFile) return hardFile
   }
 
