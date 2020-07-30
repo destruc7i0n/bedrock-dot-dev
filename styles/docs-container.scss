@@ -74,7 +74,7 @@
     background-color:#ddfbdd;
 
     .dark-mode & {
-      @apply border-dark-gray-800;
+      @apply border-black;
       @apply bg-dark-gray-900;
     }
   }
@@ -85,6 +85,10 @@
     .dark-mode & {
       @apply bg-dark-gray-950;
     }
+  }
+
+  tr:nth-child(2n+3) td {
+    @apply bg-dark-gray-850;
   }
 
   a {
