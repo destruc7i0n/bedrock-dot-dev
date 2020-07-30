@@ -87,8 +87,10 @@
     }
   }
 
-  tr:nth-child(2n+3) td {
-    @apply bg-dark-gray-850;
+  .dark-mode & {
+    tr:nth-child(2n+3) td {
+      @apply bg-dark-gray-850;
+    }
   }
 
   a {
