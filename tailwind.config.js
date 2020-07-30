@@ -13,6 +13,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
+    darkSelector: '.dark-mode',
     extend: {
       maxWidth: {
         '1/4': '25%',
@@ -23,12 +24,28 @@ module.exports = {
         '3/5': '60%',
         '4/5': '80%',
       },
+      colors: {
+        'dark-gray': {
+          '950': '#141414',
+          '900': '#1a1a1a',
+          '800': '#282828',
+          '700': '#323232',
+        }
+      },
     },
     screens: {
       ...screens,
       ...maxScreens,
     },
   },
-  variants: {},
-  plugins: [require('@tailwindcss/ui')],
+  variants: {
+    backgroundColor: ['dark', 'dark-hover', 'hover', 'responsive'],
+    textColor: ['dark', 'dark-hover', 'hover', 'responsive'],
+    borderColor: ['dark', 'responsive', 'hover'],
+    opacity: ['hover', 'dark-hover', 'responsive'],
+  },
+  plugins: [
+    require('@tailwindcss/ui'),
+    require('tailwindcss-dark-mode')(),
+  ],
 }

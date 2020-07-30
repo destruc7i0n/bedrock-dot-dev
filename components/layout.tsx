@@ -15,7 +15,7 @@ const Layout: FunctionComponent<Props> = ({
   description= '',
   header = true
 }) => (
-  <>
+  <div>
     <Head>
       <title>{title}</title>
       {description && (
@@ -30,7 +30,7 @@ const Layout: FunctionComponent<Props> = ({
     <div>
       {children}
     </div>
-  </>
+  </div>
 )
 
 export default Layout

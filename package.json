@@ -28,7 +28,8 @@
     "react-dom": "^16.12.0",
     "sass": "^1.26.10",
     "sitemap": "^6.2.0",
-    "tailwindcss": "^1.6.0"
+    "tailwindcss": "^1.6.0",
+    "tailwindcss-dark-mode": "^1.1.5"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",

@@ -7,7 +7,7 @@ import { SidebarContext } from './sidebar/sidebar-context'
 const HeaderLink: FunctionComponent<{ link: string, title: string }> = ({ link, title }) => (
   <li className='text-lg'>
     <a
-      className='flex items-center p-2 rounded text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out'
+      className='flex items-center p-2 rounded text-gray-500 hover:text-gray-400 transition duration-150 ease-in-out'
       href={link}
       target='_blank' rel='noopener'
     >
@@ -37,8 +37,8 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 border-b border-gray-200 px-4'>
-        <div className='flex items-center justify-between mx-auto'>
+      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 dark:bg-black border-b border-gray-200 dark:border-dark-gray-800 px-4'>
+        <div className='flex items-center justify-between mx-auto text-gray-900 dark:text-gray-200'>
           <div className='flex items-center'>
             {isDocsPage && (
               <div className='hidden lg:flex mr-2'>
@@ -47,7 +47,7 @@ const Header: FunctionComponent = () => {
             )}
             <h1 className='mr-6 text-2xl font-normal'>
               <Link href='/'>
-                <a className='hover:text-gray-800'>bedrock.dev</a>
+                <a className='text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
               </Link>
             </h1>
             <ul className='flex'>

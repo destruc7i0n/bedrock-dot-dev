@@ -1,5 +1,3 @@
-@import '~prismjs/themes/prism.css';
-
 .docs-content {
   font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   overflow-x: auto;
@@ -68,16 +66,25 @@
   }
 
   /* Thanks, Jannis! */
-  td,th {
+  td, th {
     border:none;
     border-width:1px;
     padding:6px;
     border-color:#656e73;
-    background-color:#ddfbdd
+    background-color:#ddfbdd;
+
+    .dark-mode & {
+      @apply border-dark-gray-800;
+      @apply bg-dark-gray-900;
+    }
   }
 
   th {
-    background-color:#a5f1b2
+    background-color:#a5f1b2;
+
+    .dark-mode & {
+      @apply bg-dark-gray-950;
+    }
   }
 
   a {
@@ -87,6 +94,15 @@
   pre[class*=language-] {
     @apply rounded;
   }
+
+  :not(.dark-mode) & {
+    @import 'code/light.scss';
+  }
+
+  .dark-mode & {
+    @import 'code/dark.scss';
+  }
+
 
   /* headings */
   h1, h2 {
