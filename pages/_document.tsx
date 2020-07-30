@@ -32,8 +32,9 @@ class BedrockDevDocument extends Document {
               var query = window.matchMedia('(prefers-color-scheme: dark)')
               var pref = window.localStorage.getItem('theme')
               
-              if (pref && pref === 'dark') document.documentElement.classList.add('dark-mode')
-              if (!pref && query.matches) document.documentElement.classList.add('dark-mode')
+              if ((pref === 'system' && query.matches) || pref === 'dark') {
+                document.documentElement.classList.add('dark-mode')
+              }
             } catch (e) {}
             `
             }}

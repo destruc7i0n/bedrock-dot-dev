@@ -1,15 +1,21 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
+
+enum Theme {
+  System = 'system',
+  Light = 'light',
+  Dark = 'dark',
+}
 
 const svgClass = 'pointer-events-none w-4 h-4'
 const icons = {
-  // system: (
-  //   <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
-  //        stroke-width='2' stroke-linecap='round' stroke-linejoin='round' className={svgClass}>
-  //     <rect x='2' y='3' width='20' height='14' rx='2' ry='2' />
-  //     <line x1='8' y1='21' x2='16' y2='21' />
-  //     <line x1='12' y1='17' x2='12' y2='21' />
-  //   </svg>
-  // ),
+  system: (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
+         strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className={svgClass}>
+      <rect x='2' y='3' width='20' height='14' rx='2' ry='2' />
+      <line x1='8' y1='21' x2='16' y2='21' />
+      <line x1='12' y1='17' x2='12' y2='21' />
+    </svg>
+  ),
   moon: (
     <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
          strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className={svgClass}>
@@ -33,55 +39,76 @@ const icons = {
 }
 
 const themes = {
-  // system: {
-  //   icon: icons.system
-  // },
-  light: {
+  [Theme.System]: {
+    icon: icons.system
+  },
+  [Theme.Light]: {
     icon: icons.sun
   },
-  dark: {
+  [Theme.Dark]: {
     icon: icons.moon
   },
 }
-type ThemeStrings = keyof typeof themes
 
 const ModeSelect: FunctionComponent = () => {
-  const [ theme, setTheme ] = useState<ThemeStrings>('light')
+  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useState<Theme>(Theme.System)
+  const [themeName, setThemeName] = useState<Theme>(Theme.System)
 
+  // refresh the theme from the localstorage
   useEffect(() => {
-    if (document.documentElement.classList.contains('dark-mode')) setTheme('dark')
-    else setTheme('light')
+    try {
+      const pref = localStorage.getItem('theme') as Theme
+      if (pref) handleChange(pref)
+    } catch (e) {}
+    setMounted(true)
   }, [])
 
-  const handleChange = (value: ThemeStrings) => {
-    switch (value) {
-      case 'dark': {
-        document.documentElement.classList.add('dark-mode');
-        break
-      }
-      case 'light': {
-        document.documentElement.classList.remove('dark-mode');
-        break
-      }
-      default:
-        break
+  // update the theme of the page
+  useEffect(() => {
+    if (theme === Theme.Dark) {
+      document.documentElement.classList.add('dark-mode')
+    } else if (theme === Theme.Light) {
+      document.documentElement.classList.remove('dark-mode')
     }
-    if (theme !== value && window.localStorage) {
-      localStorage.setItem('theme', value)
-      setTheme(value)
+  }, [ theme, themeName ])
+
+  // callback when the system theme changes
+  const listenerCallback = useCallback((e: MediaQueryList | MediaQueryListEvent) => {
+    setTheme(e.matches ? Theme.Dark : Theme.Light)
+  }, [])
+
+  // listener to the system theme change
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-color-scheme: dark)')
+    // only update based on system once the localstorage has been checked
+    if (themeName === Theme.System && mounted) {
+      query.addListener(listenerCallback)
+      listenerCallback(query)
     }
-  }
+    return () => query.removeListener(listenerCallback)
+  }, [ theme, themeName, mounted ])
+
+  // update the preferred theme from the dropdown
+  const handleChange = useCallback((value: Theme) => {
+    setThemeName(value)
+    setTheme(value)
+    try {
+      window.localStorage.setItem('theme', value)
+    } catch (e) {}
+  }, [])
 
   return (
     <div className='relative dark:text-gray-200'>
       <div className='absolute inset-y-0 left-0 pl-3 flex items-center'>
         <span className='leading-3'>
-          {themes[theme].icon}
+          {themes[themeName].icon}
         </span>
       </div>
-      <select value={theme} onChange={({ target: { value } }) => handleChange(value as ThemeStrings)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
-        <option value='dark'>Dark</option>
-        <option value='light'>Light</option>
+      <select value={themeName} onChange={({ target: { value } }) => handleChange(value as Theme)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
+        <option value={Theme.System}>System</option>
+        <option value={Theme.Dark}>Dark</option>
+        <option value={Theme.Light}>Light</option>
       </select>
     </div>
   )

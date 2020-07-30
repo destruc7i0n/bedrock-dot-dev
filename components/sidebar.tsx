@@ -93,7 +93,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         { loading ? loadingContent : (
           <>
             <SidebarContent search={filter} sidebar={sidebar} file={file} />
-            <div className='hidden lg:flex justify-between items-center bg-white dark:bg-black w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2'>
+            <div className='flex justify-end items-center bg-white dark:bg-black w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2'>
               <ModeSelect />
             </div>
           </>

@@ -19,7 +19,7 @@
     "classnames": "^2.2.6",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
-    "next": "^9.5.0",
+    "next": "^9.5.1",
     "nextjs-sitemap-generator": "^1.0.0",
     "nprogress": "^0.2.0",
     "prism-themes": "^1.4.0",
