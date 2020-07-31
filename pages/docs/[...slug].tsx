@@ -15,6 +15,7 @@ import DocsContainer from 'components/docs-container'
 import VersionContext from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
+import BackToTop from 'components/back-to-top'
 
 import { getBedrockVersions } from 'lib/files'
 import { getTags, Tags, TagsResponse } from 'lib/tags'
@@ -108,6 +109,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
               <Sidebar sidebar={sidebar} file={file} loading={loading} />
               <DocsContainer html={html} loading={loading} />
             </div>
+            <BackToTop />
           </Layout>
         </SidebarContextProvider>
       </VersionContext.Provider>
