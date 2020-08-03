@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next'
 
 import Layout from 'components/layout'
 import VersionChooser from 'components/version-chooser'
+import ModeSelect from 'components/mode-select'
 
 import { getBedrockVersions} from 'lib/files'
 import { getTags, TagsResponse } from 'lib/tags'
@@ -75,6 +76,10 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
                 <Donate />
               </div>
             </div>
+          </div>
+
+          <div className='mt-2'>
+            <ModeSelect />
           </div>
         </div>
       </div>

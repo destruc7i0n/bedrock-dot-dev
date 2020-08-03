@@ -80,7 +80,7 @@
 
   .dark-mode & {
     td, th {
-      @apply border-black;
+      @apply border-dark-gray-700;
       @apply bg-dark-gray-900;
     }
 
