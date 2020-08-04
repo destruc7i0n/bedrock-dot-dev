@@ -26,6 +26,19 @@ class BedrockDevDocument extends Document {
           <meta name='twitter:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' />
           <meta name='og:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' />
           <AnalyticsHeadTags />
+          <script
+            dangerouslySetInnerHTML={{ __html: `
+            try {
+              var query = window.matchMedia('(prefers-color-scheme: dark)')
+              var pref = window.localStorage.getItem('theme')
+              
+              if ((pref === 'system' && query.matches) || pref === 'dark') {
+                document.documentElement.classList.add('dark-mode')
+              }
+            } catch (e) {}
+            `
+            }}
+          />
         </Head>
         <body>
           <Main />

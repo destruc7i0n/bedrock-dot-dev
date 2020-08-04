@@ -13,6 +13,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
+    darkSelector: '.dark-mode',
     extend: {
       maxWidth: {
         '1/4': '25%',
@@ -23,12 +24,41 @@ module.exports = {
         '3/5': '60%',
         '4/5': '80%',
       },
+      colors: {
+        // dark theme colours
+        'dark-gray': {
+          '975': '#18191a', // the navbar
+          '950': '#242526', // the sidebar
+          '900': '#2d2e2f', // behind the docs
+          '850': '#3a3b3c', // alt color table
+          '800': '#3e4042', // accent
+          '700': '#4b4c4e', // table border
+        }
+      },
     },
     screens: {
       ...screens,
       ...maxScreens,
     },
   },
-  variants: {},
-  plugins: [require('@tailwindcss/ui')],
+  variants: {
+    backgroundColor: ['dark', 'dark-hover', 'hover', 'responsive'],
+    textColor: ['dark', 'dark-hover', 'hover', 'responsive'],
+    borderColor: ['dark', 'responsive', 'hover'],
+    opacity: ['hover', 'dark-hover', 'responsive'],
+  },
+  plugins: [
+    require('@tailwindcss/ui'),
+    require('tailwindcss-dark-mode')(),
+  ],
 }
+
+/**
+ * blue theme
+ *'975': '#131417', // the navbar
+ '950': '#1e1f26', // the sidebar
+ '900': '#252830', // behind the docs
+ // '850': '#1e1e1e',
+ '800': '#40444b', // accent
+ // '700': '#323232',
+ */

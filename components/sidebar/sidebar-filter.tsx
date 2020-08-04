@@ -19,7 +19,7 @@ const SidebarFilter: FunctionComponent<Props> = ({ value, setValue }) => {
         </div>
         <input
           id='filter'
-          className='form-input bg-white pl-8 xl:pl-7 px-4 block w-full leading-4'
+          className='form-input pl-8 xl:pl-7 px-4 block w-full leading-4 bg-white dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'
           type='text'
           placeholder='Filter'
           value={value}

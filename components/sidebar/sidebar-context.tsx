@@ -19,10 +19,12 @@ export const SidebarContextProvider: FunctionComponent = ({ children }) => {
   useEffect(() => {
     // attempt to get from localstorage
     let open = true
-    const localStorageItem = localStorage.getItem('sidebar')
-    if (typeof localStorageItem === 'string') {
-      ({ open } = JSON.parse(localStorageItem))
-    }
+    try {
+      const localStorageItem = localStorage.getItem('sidebar')
+      if (typeof localStorageItem === 'string') {
+        ({ open } = JSON.parse(localStorageItem))
+      }
+    } catch (e) {}
 
     // not open if on small screen
     if (!isLg()) open = false
@@ -36,7 +38,11 @@ export const SidebarContextProvider: FunctionComponent = ({ children }) => {
   // update localstorage on sidebar change
   useEffect(() => {
     // only update when on large screen
-    if (isLg()) localStorage.setItem('sidebar', JSON.stringify({ open }))
+    if (isLg()) {
+      try {
+        localStorage.setItem('sidebar', JSON.stringify({open}))
+      } catch (e) {}
+    }
   }, [ open ])
 
   return (

@@ -54,14 +54,14 @@ const SidebarSelectors: FunctionComponent = () => {
     <div className='flex flex-row'>
       <div className='w-1/2'>
         <label className='block text-sm font-bold mb-1 sr-only' htmlFor='version'>Version</label>
-        <select value={`${major}/${minor}`} id='version' onChange={onVersionChange} className='block w-full leading-4 form-select text-black'>
+        <select value={`${major}/${minor}`} id='version' onChange={onVersionChange} className='block w-full leading-4 form-select text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'>
           {options}
         </select>
       </div>
       <div className='w-1/2 ml-4'>
         <label className='block text-sm font-bold mb-1 sr-only' htmlFor='file'>File</label>
         {files && (
-          <select value={file} id='file' onChange={onFileChange} className='block w-full leading-4 form-select text-black'>
+          <select value={file} id='file' onChange={onFileChange} className='block w-full leading-4 form-select text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'>
             {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
           </select>
         )}

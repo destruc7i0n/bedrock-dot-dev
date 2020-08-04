@@ -106,7 +106,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
   }
 
   return (
-    <div className='flex-1 flex flex-col overflow-y-auto pb-48 md:pb-8 h-0' ref={sidebarRef}>
+    <div className='flex-1 flex flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8 h-0' ref={sidebarRef}>
       {Object.keys(sidebar).map((header, index) => {
         return (
           <SidebarGroupTitle

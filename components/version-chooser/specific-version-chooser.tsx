@@ -22,7 +22,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({ major
         <label className='block text-sm font-bold mb-2' htmlFor='major'>
           Major
         </label>
-        <select id='major' className='form-select leading-5 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
+        <select id='major' className='form-select dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full' value={major} onChange={({ target: { value } }) => setMajor(value)}>
           {majorVersions.map((version) => <option key={`major-${version}`} value={version}>{version}</option>)}
         </select>
       </div>
@@ -30,7 +30,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({ major
         <label className='block text-sm font-bold mb-2' htmlFor='minor'>
           Minor
         </label>
-        <select id='minor' className='form-select leading-5 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
+        <select id='minor' className='form-select dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full' value={minor} onChange={({ target: { value } }) => setMinor(value)}>
           {minorVersions.map((version) => {
             const title = getMinorVersionTitle([ major, version ], tags)
             return (

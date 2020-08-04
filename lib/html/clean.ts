@@ -11,7 +11,7 @@ export const cleanHtmlForDisplay = (html: string) => {
 
 // remove any html from the old generator
 export const removeDisplayHtml = (html: string) => {
-  // html = html.replace(/[<br\/?>]*?<a .*>Back to top<\/a>[<br\/?>]*?/g, '')
+  html = html.replace(/<a .*>Back to top<\/a>(?:<br\/?>)?/g, '')
   html = html.replace(TABLE_MATCH, '')
   html = html.replace(STYLESHEET_MATCH, '')
 
