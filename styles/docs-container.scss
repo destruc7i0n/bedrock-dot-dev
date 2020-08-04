@@ -81,15 +81,22 @@
   .dark-mode & {
     td, th {
       @apply border-dark-gray-700;
-      @apply bg-dark-gray-900;
     }
 
     th {
       @apply bg-dark-gray-950;
     }
 
+    td {
+      @apply bg-dark-gray-900;
+    }
+
     tr:nth-child(2n+3) td {
-      @apply bg-dark-gray-850;
+      @apply bg-dark-gray-850 #{!important};
+
+      table td {
+        @apply bg-dark-gray-900 #{!important};
+      }
     }
   }
 
