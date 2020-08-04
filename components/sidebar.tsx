@@ -46,9 +46,15 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   }, [ file ])
 
   useEffect(() => {
-    // disable scrolling when in sidebar
     if (mobile) document.body.style.overflow = open ? 'hidden' : 'initial'
   }, [ open ])
+
+  // on unmount ensure scrolling
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'initial'
+    }
+  }, [])
 
   const loadingContent = (
     <div className='flex-1 flex px-4 py-4'>

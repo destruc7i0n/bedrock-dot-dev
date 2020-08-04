@@ -7,7 +7,7 @@ import { SidebarContext } from './sidebar/sidebar-context'
 const HeaderLink: FunctionComponent<{ link: string, title: string }> = ({ link, title }) => (
   <li className='text-lg'>
     <a
-      className='flex items-center p-2 rounded text-gray-500 hover:text-gray-400 transition duration-150 ease-in-out'
+      className='flex items-center p-2 rounded text-gray-500 hover:text-gray-900 dark-hover:text-gray-400 transition duration-150 ease-in-out'
       href={link}
       target='_blank' rel='noopener'
     >
