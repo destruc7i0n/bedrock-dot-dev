@@ -2,11 +2,6 @@
 
 @import '~nprogress/nprogress.css';
 
-:root {
-  --sidebar-breakpoint: 1024px;
-  --sidebar-mask-color: rgba(0, 0, 0, 0.3);
-}
-
 body {
   -webkit-font-smoothing: antialiased;
 
@@ -93,3 +88,56 @@ h1, h2, h3, h4 {
   bottom: 20px;
   right: 20px;
 }
+
+/* scrollbars */
+
+body {
+  ::-webkit-scrollbar,
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+
+    .dark-mode & {
+      background: rgba(255,255,255,.1)
+    }
+  }
+
+  ::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+
+    .dark-mode & {
+      background: rgba(255,255,255,.25)
+    }
+  }
+
+  ::-webkit-scrollbar-thumb:window-inactive,
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.15);
+
+    .dark-mode & {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+
+    .dark-mode & {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  }
+}
+

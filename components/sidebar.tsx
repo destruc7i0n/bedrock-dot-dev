@@ -59,7 +59,7 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
   const loadingContent = (
     <div className='flex-1 flex px-4 py-4'>
       <div className='animate-pulse w-full'>
-        <div className='w-4/5 bg-gray-100 dark:bg-dark-gray-800 dark:bg-dark-gray-800 h-8' />
+        <div className='w-4/5 bg-gray-100 dark:bg-dark-gray-800 h-8' />
         <div className='w-2/3 bg-gray-100 dark:bg-dark-gray-800 h-3 mt-4' />
         <div className='w-5/6 bg-gray-100 dark:bg-dark-gray-800 h-3 mt-4' />
         <div className='w-1/2 bg-gray-100 dark:bg-dark-gray-800 h-3 mt-4' />
