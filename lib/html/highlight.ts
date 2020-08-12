@@ -19,7 +19,7 @@ const highlightTextarea = (html: string, file: string) => {
   })
 }
 
-const MARKDOWN_CODE_MATCH = /```(.*)```/
+const MARKDOWN_CODE_MATCH = /```([^]+)```/
 
 const highlightSchemas = (html: string) => {
   let schemaContent = html.match(MARKDOWN_CODE_MATCH)

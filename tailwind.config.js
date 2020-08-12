@@ -52,13 +52,3 @@ module.exports = {
     require('tailwindcss-dark-mode')(),
   ],
 }
-
-/**
- * blue theme
- *'975': '#131417', // the navbar
- '950': '#1e1f26', // the sidebar
- '900': '#252830', // behind the docs
- // '850': '#1e1e1e',
- '800': '#40444b', // accent
- // '700': '#323232',
- */
