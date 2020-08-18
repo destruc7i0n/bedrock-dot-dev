@@ -1,6 +1,10 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const getTags = require('./scripts/lib/tags')
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   async redirects () {
     const { stable, beta } = await getTags()
@@ -59,18 +63,4 @@ module.exports = {
       },
     ]
   },
-  webpack (config, options) {
-    if (process.env.ANALYZE === 'true') {
-      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          reportFilename: options.isServer
-            ? '../analyze/server.html'
-            : './analyze/client.html',
-        })
-      )
-    }
-    return config
-  },
-}
+})

@@ -37,6 +37,7 @@ const main = async () => {
     }
   }
 
+  // generate the rest of the versions
   // for (let major of Object.keys(versions)) {
   //   for (let minor of Object.keys(versions[major])) {
   //     for (let file of versions[major][minor]) {

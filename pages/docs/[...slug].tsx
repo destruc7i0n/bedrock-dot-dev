@@ -29,6 +29,10 @@ import {
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug } from 'lib/util'
 
+// extract type from inside a promise
+type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
+type PathsType = ReturnTypePromise<GetStaticPaths>['paths']
+
 type Props = {
   html: string
   bedrockVersions: TransformedOutbound
@@ -121,20 +125,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const bedrockVersions = await getBedrockVersions()
   const tags = await getTags()
 
-  let paths = []
+  let paths: PathsType = []
+  let quick: PathsType = []
 
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
+      const version = [ major, minor ]
       // handle stable and beta routes
-      if (areVersionsEqual([ major, minor ], tags[Tags.Stable])) {
-        paths.push({ params: {slug: ['stable', file]} })
-      } else if (areVersionsEqual([ major, minor ], tags[Tags.Beta])) {
-        paths.push({ params: {slug: ['beta', file]} })
+      if (areVersionsEqual(version, tags[Tags.Stable])) {
+        quick.push({ params: {slug: ['stable', file]} })
+      } else if (areVersionsEqual(version, tags[Tags.Beta])) {
+        quick.push({ params: {slug: ['beta', file]} })
       }
       // add numeric route as well
       paths.push({params: {slug: [major, minor, file]}})
     }
   }
+
+  paths.push(...quick)
 
   return { paths, fallback: false }
 }

@@ -14,20 +14,20 @@ type Props = {
   tags: TagsResponse
 }
 
-const Donate = () => (
-  <form className='inline-block' action='https://www.paypal.com/cgi-bin/webscr' method='post' target='_top'>
-    <input type='hidden' name='cmd' value='_donations' />
-    <input type='hidden' name='business' value='9NZ66ET9MLMTN' />
-    <input type='hidden' name='currency_code' value='USD' />
-    <button
-      className='link'
-      type='submit'
-    >
-      Donate
-    </button>
-    <img alt='' style={{ border: 'none' }} src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
-  </form>
-)
+// const Donate = () => (
+//   <form className='inline-block' action='https://www.paypal.com/cgi-bin/webscr' method='post' target='_top'>
+//     <input type='hidden' name='cmd' value='_donations' />
+//     <input type='hidden' name='business' value='9NZ66ET9MLMTN' />
+//     <input type='hidden' name='currency_code' value='USD' />
+//     <button
+//       className='link'
+//       type='submit'
+//     >
+//       Donate
+//     </button>
+//     <img alt='' style={{ border: 'none' }} src='https://www.paypal.com/en_CA/i/scr/pixel.gif' width='1' height='1' />
+//   </form>
+// )
 
 const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   // transform to string representation
@@ -68,12 +68,12 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
 
             <div className='px-3'>
               <div className='py-2 border-t border-gray-200 dark:border-dark-gray-800 text-center'>
-                Website By {' '}
+                Website by {' '}
                 <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener'>
                   TheDestruc7i0n
                 </a>
                 {' '} • {' '}
-                <Donate />
+                <a href='https://patreon.com/destruc7i0n' className='link' target='_blank' rel='noopener'>Donate</a>
               </div>
             </div>
           </div>
