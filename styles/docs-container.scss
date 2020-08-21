@@ -6,30 +6,29 @@
     @apply underline;
   }
 
-  [id]::before {
-    content: '';
-    display: block;
-    padding-top: 4rem;
-    margin-top: -4rem;
-    visibility: hidden;
-  }
-
-  .anchored {
+  .anchored-heading {
     position: relative;
 
     &:hover {
-      .anchor {
+      .anchor-link {
         opacity: 1;
       }
     }
 
     .anchor {
-      opacity: 0;
+      margin-top: -4rem;
+      display: inline-block;
       position: absolute;
-      height: 100%;
+      width: 1px;
+    }
+
+    .anchor-link {
+      position: absolute;
+      opacity: 0;
       width: 1.50rem;
       padding-right: 0.50rem;
       margin-left: -1.25rem;
+      user-select: none;
 
       @screen lg-max {
         margin-left: -1.00rem;

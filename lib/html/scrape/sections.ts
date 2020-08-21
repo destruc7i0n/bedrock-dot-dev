@@ -6,17 +6,17 @@ import { H_TITLE_MATCH, P_ID_MATCH } from '../regex'
 import { oneLine } from '../../util'
 
 const addAnchors = (html: string) => {
-  return html.replace(H_TITLE_MATCH, (value) => {
-    const [ el, id, title ] = value.match(P_ID_MATCH)!
-    const anchoredEl = oneLine(
-      `<p id="${id}">
-        <span class="anchored">
-          <a href="#${encodeURIComponent(id)}" tabindex="-1" class="anchor" aria-label="Anchor" aria-hidden="true">#</a>
-          ${title}
-        </span>
-      </p>`
-    )
-    return value.replace(el, anchoredEl)
+  return html.replace(H_TITLE_MATCH, (value, headerNumber) => {
+    const [ , id, title ] = value.match(P_ID_MATCH)!
+    const encoded = encodeURIComponent(id)
+
+    return oneLine(`
+      <h${headerNumber} class="anchored-heading">
+        <span class="anchor" id="${id}"></span>
+        <a href="#${encoded}" tabindex="-1" class="anchor-link" aria-label="Anchor" aria-hidden="true">#</a>
+        ${title}
+      </h${headerNumber}>
+    `)
   })
 }
 
@@ -37,8 +37,8 @@ const getFromTitle = (section: string) => {
 
   let match
   while (match = H_TITLE_MATCH.exec(section)) {
-    if (match && match[1] && match[1].startsWith('minecraft:'))
-      events.push(match[1])
+    if (match && match[2] && match[2].startsWith('minecraft:'))
+      events.push(match[2])
   }
   return events
 }

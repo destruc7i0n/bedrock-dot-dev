@@ -11,6 +11,9 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 }, {})
 
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
     darkSelector: '.dark-mode',

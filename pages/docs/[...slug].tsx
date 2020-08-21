@@ -148,9 +148,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  let html = null
-  let displayHtml = null
-  let parsedData = null
+  let html: string | null = null
+  let displayHtml: string | null = null
+  let parsedData: ParseHtmlResponse | null = null
 
   if (!params) return { props: { html } }
 
