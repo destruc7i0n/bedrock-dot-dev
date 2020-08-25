@@ -17,7 +17,11 @@ export const cleanHtmlForDisplay = (html: string, file: string, version: string)
 }
 
 // add <p> tags around elements
-const encloseDocumentationText = (html: string, file: string, _version: string) => {
+const encloseDocumentationText = (html: string, file: string, version: string) => {
+  // don't even bother with older files
+  const versionNumber = Number(version.split('.')[1])
+  if (versionNumber < 16) return html
+
   // debug helper [...document.getElementsByTagName('p')].forEach(e => e.style.background = 'red')
   // match stuff between headings
   html = html.replace(/<\/h[1-4]>([^]*?)(?:<h[1-4]|$)/g, (match: string, el: string) => {
