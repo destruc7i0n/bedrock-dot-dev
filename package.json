@@ -15,9 +15,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.5.0",
-    "@types/cheerio": "^0.22.21",
     "autoprefixer": "^9.8.6",
-    "cheerio": "^1.0.0-rc.3",
     "classnames": "^2.2.6",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
