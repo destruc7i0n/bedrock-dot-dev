@@ -190,7 +190,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     if (typeof html === 'string') {
       // the html to be presented on the site
-      displayHtml = cleanHtmlForDisplay(html)
+      displayHtml = cleanHtmlForDisplay(html, file, version[1])
       displayHtml = highlightHtml(displayHtml, file)
 
       Log.info(`Processing ${logLinkColor(path)}...`)
