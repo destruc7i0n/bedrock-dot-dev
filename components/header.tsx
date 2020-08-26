@@ -1,13 +1,16 @@
 import React, { FunctionComponent, memo, useContext } from 'react'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+
+import DocSearch from './docsearch'
 
 import { SidebarContext } from './sidebar/sidebar-context'
 
 const HeaderLink: FunctionComponent<{ link: string, title: string }> = ({ link, title }) => (
   <li className='text-lg'>
     <a
-      className='flex items-center p-2 rounded text-gray-500 hover:text-gray-900 dark-hover:text-gray-400 transition duration-150 ease-in-out'
+      className='flex items-center px-2 text-gray-500 hover:text-gray-900 dark-hover:text-gray-400 transition duration-150 ease-in-out'
       href={link}
       target='_blank' rel='noopener'
     >
@@ -37,28 +40,29 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='navbar sticky w-full top-0 left-0 h-12 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 px-4'>
-        <div className='flex items-center justify-between mx-auto text-gray-900 dark:text-gray-200'>
-          <div className='flex items-center'>
-            {isDocsPage && (
-              <div className='hidden lg:flex mr-2'>
-                {toggleButton}
-              </div>
-            )}
-            <h1 className='mr-6 text-2xl font-normal'>
-              <Link href='/'>
-                <a className='text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
-              </Link>
-            </h1>
-            <ul className='flex'>
-              <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
-              <HeaderLink link='https://guide.bedrock.dev' title='Guide' />
-            </ul>
-          </div>
+      <header className='navbar relative flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200'>
+        <div className='flex items-center'>
           {isDocsPage && (
-            <div className='flex lg:hidden'>
+            <div className='hidden lg:flex mr-2'>
               {toggleButton}
             </div>
+          )}
+          <h1 className='mr-3 text-2xl font-normal'>
+            <Link href='/'>
+              <a className='text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
+            </Link>
+          </h1>
+          <ul className='hidden lg:flex'>
+            <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
+            <HeaderLink link='https://guide.bedrock.dev' title='Guide' />
+          </ul>
+        </div>
+        <div className='flex flex-1 md:flex-initial'>
+          <DocSearch />
+          {isDocsPage && (
+            <span className='flex lg:hidden ml-3'>
+              {toggleButton}
+            </span>
           )}
         </div>
       </header>
