@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next'
 import Layout from 'components/layout'
 import VersionChooser from 'components/version-chooser'
 import ModeSelect from 'components/mode-select'
+import DocSearch from 'components/docsearch'
 
 import { getBedrockVersions} from 'lib/files'
 import { getTags, TagsResponse } from 'lib/tags'
@@ -52,7 +53,20 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
               </div>
             </div>
 
-            <VersionChooser versions={versions} tags={tags} />
+            <div className='flex flex-col xl:items-center text-xl font-normal p-3 border-b border-gray-200 dark:border-dark-gray-800'>
+              <DocSearch
+                placeHolder='Search'
+                staticPosition={false}
+                captureForwardSlash={false}
+                className='form-input dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full'
+              />
+            </div>
+            <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
+              <h2 className='w-full pb-3 text-xl font-bold'>
+                Version Selection
+              </h2>
+              <VersionChooser versions={versions} tags={tags} />
+            </div>
 
             <div className='py-2 px-3 border-t border-gray-200 dark:border-dark-gray-800 text-center'>
               <div className='w-full'>

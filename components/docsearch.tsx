@@ -1,8 +1,17 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, FunctionComponent } from 'react'
+
+import classNames from 'classnames'
 
 import { useIsMobile } from './media-query'
 
-const DocSearch = () => {
+type Props = {
+  captureForwardSlash?: boolean
+  className?: string
+  placeHolder?: string
+  staticPosition: boolean
+}
+
+const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder = 'Search', staticPosition, }) => {
   const input = useRef<HTMLInputElement | null>(null)
   const isMobile = useIsMobile()
 
@@ -25,9 +34,11 @@ const DocSearch = () => {
       }
     }
 
-    window.addEventListener('keydown', down)
-    return () => window.removeEventListener('keydown', down)
-  }, [])
+    if (captureForwardSlash) {
+      window.addEventListener('keydown', down)
+      return () => window.removeEventListener('keydown', down)
+    }
+  }, [ captureForwardSlash ])
 
   useEffect(() => {
     // @ts-ignore
@@ -40,15 +51,16 @@ const DocSearch = () => {
         debug: false,
       })
     }
-  }, [ ])
+  }, [ typeof window !== 'undefined' ? window.docsearch : false ])
 
   return (
-    <div className='w-full flex items-center docs-search'>
+    <div className={classNames('w-full flex items-center docs-search', { 'docs-static': staticPosition, })}>
+      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='algolia-doc-search'>Search</label>
       <input
         id='algolia-doc-search'
-        className='appearance-none border rounded py-1 px-3 text-gray-700 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-tight focus:outline-none focus:shadow-outline md:w-48 w-full md:mr-2 lg:mr-0'
+        className={className}
         type='search'
-        placeholder={`Search${!isMobile ? ' ("/" to focus)' : ''}`}
+        placeholder={`${placeHolder}${!isMobile && captureForwardSlash ? ' ("/" to focus)' : ''}`}
         ref={input}
       />
     </div>

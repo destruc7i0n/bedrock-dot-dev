@@ -75,44 +75,39 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
   return (
     <>
-      <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
-        <h2 className='w-full pb-3 text-xl font-bold'>
-          Version Selection
-        </h2>
-        <div className='w-full flex flex-col'>
-          <div className='w-full flex flex-row'>
-            <VersionChooserComponent
-              major={major}
-              minor={minor}
-              majorVersions={majorVersions}
-              minorVersions={minorVersions}
-              setMajor={setMajor}
-              setMinor={setMinor}
-              tags={tags}
-            />
-          </div>
-          <div className='w-full'>
-            <label className='flex items-center'>
-              <input
-                type='checkbox'
-                className='form-checkbox'
-                checked={!quickSelect}
-                onChange={({ target: { checked } }) => setQuickSelect(!checked)}
-              />
-              <span className='ml-2 text-sm select-none'>View all versions</span>
-            </label>
-          </div>
+      <div className='w-full flex flex-col'>
+        <div className='w-full flex flex-row'>
+          <VersionChooserComponent
+            major={major}
+            minor={minor}
+            majorVersions={majorVersions}
+            minorVersions={minorVersions}
+            setMajor={setMajor}
+            setMinor={setMinor}
+            tags={tags}
+          />
         </div>
-
-        <div className='w-full flex flex-col mt-2'>
-          <label className='block text-sm font-bold mb-2'>
-            File Selection
+        <div className='w-full'>
+          <label className='flex items-center'>
+            <input
+              type='checkbox'
+              className='form-checkbox'
+              checked={!quickSelect}
+              onChange={({ target: { checked } }) => setQuickSelect(!checked)}
+            />
+            <span className='ml-2 text-sm select-none'>View all versions</span>
           </label>
-          <div className='version-files-container overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
-            {files.map((file) => (
-              <VersionFile key={`file-${file}-${minor}`} title={file} link={getLink(major, minor, file, tags, quickSelect)} />
-            ))}
-          </div>
+        </div>
+      </div>
+
+      <div className='w-full flex flex-col mt-2'>
+        <label className='block text-sm font-bold mb-2'>
+          File Selection
+        </label>
+        <div className='version-files-container overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
+          {files.map((file) => (
+            <VersionFile key={`file-${file}-${minor}`} title={file} link={getLink(major, minor, file, tags, quickSelect)} />
+          ))}
         </div>
       </div>
     </>

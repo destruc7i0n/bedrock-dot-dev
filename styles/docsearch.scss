@@ -1,12 +1,22 @@
-@screen md-max {
+.docs-search {
+  &.docs-static {
+    .algolia-autocomplete {
+      @screen md-max {
+        position: static !important;
+      }
+    }
+  }
+
   .algolia-autocomplete {
-    position: static !important;
+    font-size: initial;
     width: 100% !important;
 
-    .ds-dropdown-menu {
-      width: 100%;
-      min-width: 300px;
-      max-width: calc(100vw - 20px);
+    @screen md-max {
+      .ds-dropdown-menu {
+        width: 100%;
+        min-width: 300px;
+        max-width: calc(100vw - 20px);
+      }
     }
   }
 }

@@ -52,13 +52,16 @@ const Header: FunctionComponent = () => {
               <a className='text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
             </Link>
           </h1>
-          <ul className='hidden lg:flex'>
+          <ul className='hidden md:flex'>
             <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
             <HeaderLink link='https://guide.bedrock.dev' title='Guide' />
           </ul>
         </div>
         <div className='flex flex-1 md:flex-initial'>
-          <DocSearch />
+          <DocSearch
+            staticPosition
+            className='appearance-none border rounded py-1 px-3 text-gray-700 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-tight focus:outline-none focus:shadow-outline md:w-48 w-full md:mr-2 lg:mr-0'
+          />
           {isDocsPage && (
             <span className='flex lg:hidden ml-3'>
               {toggleButton}
