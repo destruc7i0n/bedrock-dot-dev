@@ -51,6 +51,7 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
         debug: false,
       })
     }
+    // @ts-ignore
   }, [ typeof window !== 'undefined' ? window.docsearch : false ])
 
   return (
