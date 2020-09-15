@@ -43,6 +43,7 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
   useEffect(() => {
     // @ts-ignore
     if (window.docsearch) {
+      console.log('Loaded search')
       // @ts-ignore
       window.docsearch({
         apiKey: '6276b927975d54b2c2b16337054f38fb',
@@ -50,9 +51,11 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
         inputSelector: 'input#algolia-doc-search',
         debug: false,
       })
+    } else {
+      console.warn('Search did not load')
     }
     // @ts-ignore
-  }, [ typeof window !== 'undefined' ? !!window.docsearch : null ])
+  }, [ typeof window !== 'undefined' ? window.docsearch !== undefined : null ])
 
   return (
     <div className={classNames('w-full flex items-center docs-search', { 'docs-static': staticPosition, })}>
