@@ -17,6 +17,7 @@
     "@tailwindcss/ui": "^0.6.1",
     "autoprefixer": "^9.8.6",
     "classnames": "^2.2.6",
+    "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
     "next": "^9.5.3",
