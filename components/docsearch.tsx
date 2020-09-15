@@ -52,7 +52,7 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
       })
     }
     // @ts-ignore
-  }, [ ])
+  }, [ typeof window !== 'undefined' ? !!window.docsearch : null ])
 
   return (
     <div className={classNames('w-full flex items-center docs-search', { 'docs-static': staticPosition, })}>
