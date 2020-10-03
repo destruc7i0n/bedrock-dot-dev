@@ -27,7 +27,7 @@ import {
   transformInbound,
   transformOutbound
 } from 'lib/bedrock-versions-transformer'
-import { areVersionsEqual, getTagFromSlug } from 'lib/util'
+import { areVersionsEqual, getTagFromSlug, getVersionParts } from 'lib/util'
 
 // extract type from inside a promise
 type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
@@ -127,24 +127,34 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   let paths: PathsType = []
 
+  const majorVersionParts = getVersionParts(tags[Tags.Stable][1])
+
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
       const version = [ major, minor ]
 
+      const versionParts = getVersionParts(major)
+
+      let shouldPreload = versionParts[1] >= majorVersionParts[1]
+
       // handle stable and beta routes
       if (areVersionsEqual(version, tags[Tags.Stable])) {
         paths.push({ params: {slug: ['stable', file]} })
+        shouldPreload = true
       } else if (areVersionsEqual(version, tags[Tags.Beta])) {
         paths.push({ params: {slug: ['beta', file]} })
+        shouldPreload = true
       }
 
-      paths.push({params: {slug: [major, minor, file]}})
+      if (shouldPreload) {
+        paths.push({params: {slug: [major, minor, file]}})
+      }
     }
   }
 
   Log.info(`Generating ${paths.length} paths`)
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
