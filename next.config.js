@@ -35,7 +35,7 @@ module.exports = withBundleAnalyzer({
       },
       // redirect to latest stable
       {
-        source: '/(r|c|s)/:file',
+        source: `/(r|c|s)/:file`,
         destination: `/docs/stable/:file`,
         permanent: false,
       },
@@ -46,7 +46,7 @@ module.exports = withBundleAnalyzer({
       },
       // redirect to latest beta
       {
-        source: '/b/:file',
+        source: `/b/:file`,
         destination: `/docs/beta/:file`,
         permanent: false,
       },

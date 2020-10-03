@@ -2,11 +2,11 @@ import { BedrockVersions } from './versions'
 import { Tags, TagsResponse } from './tags'
 
 export function compareBedrockVersions (a: string, b: string) {
-  const sa = a.split('.')
-  const sb = b.split('.')
+  const sa = getVersionParts(a)
+  const sb = getVersionParts(b)
   for (let i = 0; i < 4; i++) {
-    const na = Number(sa[i])
-    const nb = Number(sb[i])
+    const na = sa[i]
+    const nb = sb[i]
     if (na > nb) return -1
     if (nb > na) return 1
   }
@@ -36,6 +36,8 @@ export const addHashIfNeeded = (s: string) => {
 export const removeHashIfNeeded = (s: string) => s.replace('#', '')
 
 export const areVersionsEqual = (a: string[], b: string[]) => a[0] === b[0] && a[1] === b[1]
+
+export const getVersionParts = (version: string): number[] => version.split('.').map(Number)
 
 export const getTagFromSlug = (slug: string | string[] | undefined) => {
   if (typeof slug === 'object' && slug.length === 2) {

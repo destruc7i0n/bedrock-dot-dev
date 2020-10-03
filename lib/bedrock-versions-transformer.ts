@@ -1,6 +1,6 @@
 import { BedrockVersions } from './versions'
 
-import { compareBedrockVersions } from './util'
+import { compareBedrockVersions, getVersionParts } from './util'
 
 export interface TransformedOutbound {
   key: string[]
@@ -44,7 +44,7 @@ const transformOutbound = (data: BedrockVersions) => {
   const out: TransformedOutbound = { key: [], versions: [] }
 
   for (let [ major, minor ] of bedrockVersionsInOrder(data)) {
-    const version = minor.split('.').map(Number)
+    const version = getVersionParts(minor)
 
     let map = []
     for (let file of data[major][minor]) {

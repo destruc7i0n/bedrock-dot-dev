@@ -4,24 +4,24 @@ import {
   TABLE_MATCH,
   ONLY_NEWLINES_AND_WHITESPACE,
 } from './regex'
-import { oneLine } from '../util'
+import { getVersionParts, oneLine } from '../util'
 
 import { addAnchors } from './scrape/sections'
 
 export const cleanHtmlForDisplay = (html: string, file: string, version: string) => {
+  const versionNumber = getVersionParts(version)[1]
+
   html = removeDisplayHtml(html)
-  html = encloseDocumentationText(html, file, version)
+  if (versionNumber >= 16) {
+    html = encloseDocumentationText(html, file)
+  }
   html = addAnchors(html)
 
   return html
 }
 
 // add <p> tags around elements
-const encloseDocumentationText = (html: string, file: string, version: string) => {
-  // don't even bother with older files
-  const versionNumber = Number(version.split('.')[1])
-  if (versionNumber < 16) return html
-
+const encloseDocumentationText = (html: string, file: string) => {
   // debug helper [...document.getElementsByTagName('p')].forEach(e => e.style.background = 'red')
   // match stuff between headings
   html = html.replace(/<\/h[1-4]>([^]*?)(?:<h[1-4]|$)/g, (match: string, el: string) => {

@@ -89,12 +89,12 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
       { open && mobile && <SidebarMask /> }
       <aside className={cn('sidebar', { open, mounted })}>
         <div className='w-full p-4 border-b border-gray-200 dark:border-dark-gray-800'>
-          {!!Object.keys(sidebar).length ? (
+          {loading || !Object.keys(sidebar).length ? loadingSelectors : (
             <>
               <Selectors />
               <SidebarFilter setValue={setFilter} value={filter} />
             </>
-          ) : loadingSelectors}
+          )}
         </div>
         { loading ? loadingContent : (
           <>

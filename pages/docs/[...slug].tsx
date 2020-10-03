@@ -44,7 +44,7 @@ type Props = {
 const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedData, version }) => {
   const { isFallback, query: { slug } } = useRouter()
 
-  let [ major, minor, file ] = version
+  let [ major, minor, file ] = (version || [ '', '', '' ])
 
   let versionTag: Tags | null = getTagFromSlug(slug)
 
@@ -63,7 +63,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = 'Loading...'
   let description = ''
-  if (!loading && parsedData.title) {
+  if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
     title = `${documentTitle} Documentation | ${version} | bedrock.dev`
     description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
@@ -126,23 +126,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const tags = await getTags()
 
   let paths: PathsType = []
-  let quick: PathsType = []
 
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
       const version = [ major, minor ]
+
       // handle stable and beta routes
       if (areVersionsEqual(version, tags[Tags.Stable])) {
-        quick.push({ params: {slug: ['stable', file]} })
+        paths.push({ params: {slug: ['stable', file]} })
       } else if (areVersionsEqual(version, tags[Tags.Beta])) {
-        quick.push({ params: {slug: ['beta', file]} })
+        paths.push({ params: {slug: ['beta', file]} })
       }
-      // add numeric route as well
+
       paths.push({params: {slug: [major, minor, file]}})
     }
   }
 
-  paths.push(...quick)
+  Log.info(`Generating ${paths.length} paths`)
 
   return { paths, fallback: false }
 }

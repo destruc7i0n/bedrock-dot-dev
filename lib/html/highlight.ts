@@ -5,9 +5,6 @@ import { TEXTAREA_MATCH, MARKDOWN_CODE_MATCH } from './regex'
 
 // use prism to highlightHtml the code blocks
 const highlightTextarea = (html: string, file: string) => {
-  // there are no textareas in the schemas page
-  if (file === 'Schemas') return html
-
   // highlightHtml JS pages accordingly
   const jsPages = [ 'Scripting', 'UI' ]
   const language = jsPages.includes(file) ? 'javascript' : 'json'
@@ -20,21 +17,15 @@ const highlightTextarea = (html: string, file: string) => {
 }
 
 const highlightSchemas = (html: string) => {
-  let schemaContent = html.match(MARKDOWN_CODE_MATCH)
-
-  if (schemaContent) {
-    let content = schemaContent[1]
-
+  return html.replace(MARKDOWN_CODE_MATCH, (_, content) => {
     content = content
       .replace(/<\/br>-+<\/br>/g, '\n') // remove the ----- lines
       .replace(/<\/?br ?\/?>/g, '\n') // remove br and replace with newlines
 
     content = Prism.highlight(content, Prism.languages.json, 'json')
 
-    html = html.replace(MARKDOWN_CODE_MATCH, '<pre class="language-json">' + content + '</pre>')
-  }
-
-  return html
+    return '<pre class="language-json">' + content + '</pre>'
+  })
 }
 
 export const highlightHtml = (html: string, file: string) => {
@@ -43,8 +34,10 @@ export const highlightHtml = (html: string, file: string) => {
       html = highlightSchemas(html)
       break
     }
-    default: break
+    default: {
+      html = highlightTextarea(html, file)
+      break
+    }
   }
-  html = highlightTextarea(html, file)
   return html
 }
