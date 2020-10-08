@@ -11,7 +11,7 @@
     "type-check": "tsc"
   },
   "resolutions": {
-    "webpack": "5.0.0-beta.29"
+    "webpack": "5.0.0-rc.4"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.6.2",
@@ -20,26 +20,25 @@
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
-    "next": "^9.5.3",
+    "next": "^9.5.4",
     "nprogress": "^0.2.0",
-    "prism-themes": "^1.4.0",
     "prismjs": "^1.21.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "sass": "^1.26.11",
+    "sass": "^1.27.0",
     "sitemap": "^6.3.2",
-    "tailwindcss": "^1.8.10",
+    "tailwindcss": "^1.8.12",
     "tailwindcss-dark-mode": "^1.1.6"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^9.5.3",
+    "@next/bundle-analyzer": "^9.5.4",
     "@types/classnames": "^2.2.10",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^14.11.2",
+    "@types/node": "^14.11.6",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.1",
-    "@types/react": "^16.9.50",
+    "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
     "@types/semver": "^7.3.4",
     "chalk": "^4.1.0",

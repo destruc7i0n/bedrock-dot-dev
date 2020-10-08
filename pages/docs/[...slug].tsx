@@ -152,8 +152,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  Log.info(`Generating ${paths.length} paths`)
-
   return { paths, fallback: true }
 }
 
