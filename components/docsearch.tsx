@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, FunctionComponent } from 'react'
 
-import { useRouter } from 'next/router'
-
 import classNames from 'classnames'
 import { useIsMobile } from './media-query'
 
@@ -15,8 +13,6 @@ type Props = {
 const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder = 'Search', staticPosition, }) => {
   const input = useRef<HTMLInputElement | null>(null)
   const isMobile = useIsMobile()
-
-  const router = useRouter()
 
   const triggerElement = () => {
     input.current?.focus()
