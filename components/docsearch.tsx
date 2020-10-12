@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, FunctionComponent } from 'react'
 
 import classNames from 'classnames'
-
 import { useIsMobile } from './media-query'
 
 type Props = {
@@ -51,8 +50,10 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
           transformData (hits: { url: string }[]) {
             // handle development environment
             hits.forEach(hit => {
-              hit.url = hit.url.replace('bedrock.dev', window.location.host)
-              hit.url = hit.url.replace('https:', window.location.protocol)
+              // make relative
+              const a = document.createElement('a')
+              a.href = hit.url
+              hit.url = `${a.pathname}${a.hash}`
             })
             return hits
           },
