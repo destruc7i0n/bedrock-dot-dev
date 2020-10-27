@@ -12,6 +12,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 
 module.exports = {
   future: {
+    standardFontWeights: true,
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },

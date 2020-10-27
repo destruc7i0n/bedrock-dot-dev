@@ -54,7 +54,6 @@ const Header: FunctionComponent = () => {
           </h1>
           <ul className='hidden md:flex'>
             <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
-            <HeaderLink link='https://guide.bedrock.dev' title='Guide' />
           </ul>
         </div>
         <div className='flex flex-1 md:flex-initial'>

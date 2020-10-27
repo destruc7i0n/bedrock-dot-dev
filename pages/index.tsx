@@ -72,7 +72,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
               <div className='w-full'>
                 <a href='https://wiki.bedrock.dev/' className='link' target='_blank' rel='noopener'>Wiki</a>
                 {' '} • {' '}
-                <a href='https://guide.bedrock.dev/' className='link' target='_blank' rel='noopener'>Guide</a>
+                <a href='https://wiki.bedrock.dev/guide' className='link' target='_blank' rel='noopener'>Guide</a>
                 {' '} • {' '}
                 <a href='https://github.com/destruc7i0n/bedrock-dot-dev/' className='link' target='_blank' rel='noopener'>GitHub</a>
                 {' '} • {' '}
