@@ -12,7 +12,7 @@ import { highlightHtml } from 'lib/html/highlight'
 import Layout from 'components/layout'
 import Sidebar, { SidebarStructure } from 'components/sidebar'
 import DocsContainer from 'components/docs-container'
-import VersionContext from 'components/version-context'
+import { VersionContextProvider } from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 import BackToTop from 'components/back-to-top'
@@ -106,7 +106,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
           }}
         />
       </Head>
-      <VersionContext.Provider value={{ major, minor, file, versions, tags }}>
+      <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
           <Layout title={title} description={description}>
             <div className='flex'>
@@ -116,7 +116,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
             <BackToTop />
           </Layout>
         </SidebarContextProvider>
-      </VersionContext.Provider>
+      </VersionContextProvider>
     </>
   )
 }

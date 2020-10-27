@@ -18,3 +18,4 @@ const VersionContext = createContext<ContextType>({
 })
 
 export default VersionContext
+export const VersionContextProvider = VersionContext.Provider
