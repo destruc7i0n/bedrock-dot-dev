@@ -2,22 +2,27 @@ import Log from '../../log'
 
 import { SidebarStructureElement } from '../../../components/sidebar'
 
-import { TABLE_MATCH, TD_MATCH } from '../regex'
+import { TABLE_MATCH, TD_COMPONENT_ID_MATCH } from '../regex'
+
+export const getTable = (html: string, id: string, tagNum: number) => {
+  const tableRegex =
+    `<h${tagNum}><p id="${id}">${id}<\/p><\/h${tagNum}>[^]*?` + TABLE_MATCH.source
+
+  const match = new RegExp(tableRegex)
+  const matchResult = html.match(match)
+  return matchResult && matchResult[0] ? matchResult[0] : null
+}
 
 const scrapeTable = (html: string, id: string) => {
   let elements: SidebarStructureElement[] = []
 
   // this needs to be this disgusting to work for the older pages
-  const tableRegex =
-    `<h2><p id="${id}">${id}<\/p><\/h2>[^]*?` + TABLE_MATCH.source
-
-  const matchComponents = new RegExp(tableRegex)
-  const table = html.match(matchComponents)
+  const table = getTable(html, id, 2)
 
   // match all the elements of the table
-  if (table && table[1]) {
+  if (table) {
     let match
-    while (match = TD_MATCH.exec(table[1]))
+    while (match = TD_COMPONENT_ID_MATCH.exec(table))
       elements.push({
         id: match[1],
         title: match[1],

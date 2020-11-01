@@ -23,15 +23,12 @@
     }
 
     .anchor-link {
-      position: absolute;
       opacity: 0;
-      width: 1.50rem;
-      padding-right: 0.50rem;
-      margin-left: -1.25rem;
+      margin-left: 0.1rem;
       user-select: none;
 
       @screen lg-max {
-        margin-left: -1.00rem;
+        margin-left: 0.25rem;
       }
 
       @apply text-blue-600;

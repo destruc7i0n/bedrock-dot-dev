@@ -7,6 +7,7 @@ import {
 import { getVersionParts, oneLine } from '../util'
 
 import { addAnchors } from './scrape/sections'
+import { addAnchorsToMoLangQueries } from './clean/molang'
 
 export const cleanHtmlForDisplay = (html: string, file: string, version: string) => {
   const versionNumber = getVersionParts(version)[1]
@@ -15,6 +16,15 @@ export const cleanHtmlForDisplay = (html: string, file: string, version: string)
   if (versionNumber >= 16) {
     html = encloseDocumentationText(html, file)
   }
+
+  switch (file) {
+    case 'MoLang': {
+      html = addAnchorsToMoLangQueries(html)
+      break
+    }
+    default: break
+  }
+
   html = addAnchors(html)
 
   return html

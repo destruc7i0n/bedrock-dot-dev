@@ -152,7 +152,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   }
 
-  return { paths, fallback: true }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -207,7 +207,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 
-  return { props: { html: displayHtml, bedrockVersions, tags, parsedData, version } }
+  return {
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version },
+    revalidate: 60 * 60, // every 1 hour
+  }
 }
 
 export default Docs
