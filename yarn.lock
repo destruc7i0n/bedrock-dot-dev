@@ -1274,10 +1274,10 @@
   resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.2.0.tgz#b597c83502e3c3c6641a8aaabda223cd494ab349"
   integrity sha512-aPgMH+CjQiScLZculoDNOQUrrK2ktkbl3D6uCLYp1jgYRlNDrMONu9nMu8LfwAeetYNpVNeIGx7WzHSu0kvECg==
 
-"@tailwindcss/ui@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/ui/-/ui-0.6.2.tgz#4144aba86543bf79fefe0ea14a78a12fb315810e"
-  integrity sha512-i0sWpAgnF4VitNqaf4JVDuiaQ3MmREwn7gmNYR6lvX29avYLLNOHf0DgzhVEfwfB+CJ6WjZvPoJuDYExZgWlwQ==
+"@tailwindcss/ui@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/ui/-/ui-0.7.2.tgz#1f0a5ddf47b75b6f892553e6741764d351782a12"
+  integrity sha512-7HuFoWUMfVdY8EWEIS2FSJBCj+iEWL4JfljVE6Wd5qLrQrCzH10tuE0S6697jPm7dt8ZUEslFWlJtAsU76A5Nw==
   dependencies:
     "@tailwindcss/custom-forms" "^0.2.1"
     "@tailwindcss/typography" "^0.2.0"
@@ -6031,10 +6031,10 @@ webpack-sources@^2.1.1:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack@4.44.1, webpack@^5.3.2:
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.3.2.tgz#f88f6f2c54eaa1f68c8f37d8984657eaf68b00f0"
-  integrity sha512-DXsfHoI6lQAR3KnQh7+FsRfs9fs+TEvzXCA35UbKv4kVuzslg7QCMAcpFRZNDMjdtm9N/PoO54XEzGN9TeacQg==
+webpack@4.44.1, webpack@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.4.0.tgz#4fdc6ec8a0ff9160701fb8f2eb8d06b33ecbae0f"
+  integrity sha512-udpYTyqz8toTTdaOsL2QKPLeZLt2IEm9qY7yTXuFEQhKu5bk0yQD9BtAdVQksmz4jFbbWOiWmm3NHarO0zr/ng==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.45"

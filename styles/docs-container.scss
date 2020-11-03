@@ -24,12 +24,8 @@
 
     .anchor-link {
       opacity: 0;
-      margin-left: 0.1rem;
+      margin-left: 0.25rem;
       user-select: none;
-
-      @screen lg-max {
-        margin-left: 0.25rem;
-      }
 
       @apply text-blue-600;
       @apply no-underline;
