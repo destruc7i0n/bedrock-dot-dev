@@ -12,7 +12,7 @@ const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.ca
 // store ratelimited call as a file and fetch when needed
 const checkCache = (): BedrockVersions | undefined => {
   // get from the hard file in production to not use the api during runtime
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'production') {
     // the file is in the public folder when building
     const docsPath = resolve('./public/static/docs.json')
     if (fs.existsSync(docsPath)) {
