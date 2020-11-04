@@ -3,7 +3,6 @@ import { join, resolve } from 'path'
 
 import * as flatCache from 'flat-cache'
 import { BedrockVersions } from './versions'
-import Log from './log'
 
 // use tmp on production
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
@@ -30,9 +29,6 @@ const checkCache = (): BedrockVersions | undefined => {
   if (process.env.NODE_ENV === 'production') {
     const hardFile = checkHardFile()
     if (hardFile) return hardFile
-    else {
-      Log.error('Could not get hard file!')
-    }
   }
 
   const cache = flatCache.create('versions', cacheDirectory)
