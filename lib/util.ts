@@ -14,6 +14,7 @@ export function compareBedrockVersions (a: string, b: string) {
 }
 
 export const getLink = (major: string, minor: string, file: string, tags: TagsResponse, replaceWithTagged: boolean = true) => {
+  file = encodeURI(file)
   if (replaceWithTagged) {
     let version = [major, minor]
     if (areVersionsEqual(version, tags[Tags.Stable])) return `/docs/stable/${file}`

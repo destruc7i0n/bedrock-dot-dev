@@ -20,7 +20,7 @@
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^2.0.1",
-    "next": "^10.0.0",
+    "next": "^10.0.1",
     "nprogress": "^0.2.0",
     "prismjs": "^1.22.0",
     "react": "^17.0.1",
@@ -31,7 +31,7 @@
     "tailwindcss-dark-mode": "^1.1.7"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^10.0.0",
+    "@next/bundle-analyzer": "^10.0.1",
     "@types/classnames": "^2.2.11",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",

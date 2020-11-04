@@ -131,6 +131,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
+      file = encodeURI(file)
       const version = [ major, minor ]
 
       const versionParts = getVersionParts(major)
@@ -160,7 +161,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let displayHtml: string | null = null
   let parsedData: ParseHtmlResponse | null = null
 
-  if (!params) return { props: { html } }
+  if (!params) return { notFound: true }
 
   const { slug } = params
   let version: string[] = []
@@ -194,17 +195,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       html = await getDocsFilesFromRepo(path)
     } catch (e) {
       Log.error('Could not get file!')
+      return { notFound: true }
     }
 
-    if (typeof html === 'string') {
-      // the html to be presented on the site
-      displayHtml = cleanHtmlForDisplay(html, file, version[1])
-      displayHtml = highlightHtml(displayHtml, file)
+    // the html to be presented on the site
+    displayHtml = cleanHtmlForDisplay(html, file, version[1])
+    displayHtml = highlightHtml(displayHtml, file)
 
-      Log.info(`Processing ${logLinkColor(path)}...`)
-      parsedData = extractDataFromHtml(html, file)
-      Log.info('Done processing ' + logLinkColor(path))
-    }
+    Log.info(`Processing ${logLinkColor(path)}...`)
+    parsedData = extractDataFromHtml(html, file)
+    Log.info('Done processing ' + logLinkColor(path))
   }
 
   return {
