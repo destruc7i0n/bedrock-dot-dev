@@ -17,7 +17,6 @@ import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
 import BackToTop from 'components/back-to-top'
 
-import { getBedrockVersions } from 'lib/files'
 import { getTags, Tags, TagsResponse } from 'lib/tags'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
@@ -28,6 +27,7 @@ import {
   transformOutbound
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug, getVersionParts } from 'lib/util'
+import { allFilesList } from '../../lib/versions';
 
 // extract type from inside a promise
 type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
@@ -167,7 +167,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let version: string[] = []
 
   // transform to "compressed" version
-  const bedrockVersions = transformOutbound(await getBedrockVersions())
+  const bedrockVersions = transformOutbound(await allFilesList())
   const tags = await getTags()
 
   // [ major, minor, file ]

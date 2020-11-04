@@ -60,11 +60,16 @@ const allFilesList = async () => {
   if (check) {
     // console.log('Using local cache for files list')
     return check
-  } else if (process.env.NODE_ENV !== 'production') {
-    // console.log('Fetching files list')
-    const files = await getFormattedFilesList()
-    setCache(files)
-    return files
+  } else {
+    if (process.env.NODE_ENV !== 'production') {
+      Log.error('Could not load the docs.json from cache!')
+      return {}
+    } else {
+      // console.log('Fetching files list')
+      const files = await getFormattedFilesList()
+      setCache(files)
+      return files
+    }
   }
 }
 
