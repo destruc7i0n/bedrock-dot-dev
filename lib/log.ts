@@ -7,7 +7,7 @@ const devOnly = (fn: (...args: string[]) => void) =>
 
 export default {
   info: devOnly(Log.info),
-  error: devOnly(Log.error),
+  error: Log.error,
   warn: devOnly(Log.warn),
 }
 

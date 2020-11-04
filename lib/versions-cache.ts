@@ -3,6 +3,7 @@ import { join, resolve } from 'path'
 
 import * as flatCache from 'flat-cache'
 import { BedrockVersions } from './versions'
+import Log from './log'
 
 // use tmp on production
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
@@ -10,7 +11,7 @@ const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.ca
 let docsContent: BedrockVersions
 
 const checkHardFile = (): BedrockVersions | undefined => {
-  const docsFile = resolve('public/docs.json')
+  const docsFile = resolve('static/docs.json')
 
   if (docsContent) return docsContent
 
@@ -25,10 +26,14 @@ const checkHardFile = (): BedrockVersions | undefined => {
 
 // store ratelimited call as a file and fetch when needed
 const checkCache = (): BedrockVersions | undefined => {
-  // get from the hard file in production to not use the api
+  // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === 'production') {
     const hardFile = checkHardFile()
     if (hardFile) return hardFile
+    else {
+      Log.error('Could not get hard file!')
+      return {}
+    }
   }
 
   const cache = flatCache.create('versions', cacheDirectory)

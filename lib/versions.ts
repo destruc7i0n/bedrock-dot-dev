@@ -1,5 +1,7 @@
 import { listAllFiles } from './github/api'
 
+import Log from './log'
+
 import { checkCache, setCache } from './versions-cache'
 
 interface GitHubTreeResponse {
@@ -53,7 +55,11 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
 
 const getFormattedFilesList = async () => {
   const response = await listAllFiles()
-  return formatTree(response)
+  if (response) return formatTree(response)
+  else {
+    Log.error('Could not list all files!', response)
+    return {}
+  }
 }
 
 const allFilesList = async () => {
