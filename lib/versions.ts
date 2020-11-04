@@ -57,10 +57,9 @@ const getFormattedFilesList = async () => {
 const allFilesList = async () => {
   // only use local cache in dev
   const check = checkCache()
-  if (check) {
-    // console.log('Using local cache for files list')
+  if (check)
     return check
-  } else {
+  else {
     if (process.env.NODE_ENV !== 'production') {
       Log.error('Could not load the docs.json from cache!')
       return {}

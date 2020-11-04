@@ -196,7 +196,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     try {
       html = await getDocsFilesFromRepo(path)
     } catch (e) {
-      Log.error('Could not get file!')
+      Log.error(`Could not get file for "${path}"!`)
       return { notFound: true }
     }
 
