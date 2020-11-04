@@ -29,5 +29,5 @@ export const getRawFileFromRepo = async (path: string) => {
 }
 
 export const getDocsFilesFromRepo = async (path: string) => {
-  return getRawFileFromRepo(path + '.html')
+  return getRawFileFromRepo(encodeURI(path) + '.html')
 }

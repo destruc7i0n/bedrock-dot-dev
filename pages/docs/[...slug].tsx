@@ -173,6 +173,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // [ major, minor, file ]
   if (typeof slug === 'object' && slug.length >= 2) {
     version = [ ...slug ]
+    // make sure to decode the file name
+    version[version.length - 1] = decodeURI(version[version.length - 1])
 
     // check if tagged version in slug
     const versionTag = getTagFromSlug(slug)
