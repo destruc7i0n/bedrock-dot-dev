@@ -211,7 +211,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version },
-    // revalidate: 60 * 60, // every 1 hour
+    revalidate: 60 * 60, // every 1 hour
   }
 }
 
