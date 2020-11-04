@@ -1,4 +1,4 @@
-import { GitHubTreeResponse, listAllFiles } from './github/api'
+import { GitHubTreeResponse, listAllFilesFromRepo } from './github/api'
 
 import Log from './log'
 
@@ -46,10 +46,10 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
 }
 
 const getFormattedFilesList = async () => {
-  const response = await listAllFiles()
-  if (!(response instanceof Error)) return formatTree(response)
+  const content = await listAllFilesFromRepo()
+  if (!(content instanceof Error)) return formatTree(content)
   else {
-    Log.error('Could not list all files!', response.toString())
+    Log.error('Could not list all files!', content.toString())
     return {}
   }
 }

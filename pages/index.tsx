@@ -6,8 +6,8 @@ import VersionChooser from 'components/version-chooser'
 import ModeSelect from 'components/mode-select'
 import DocSearch from 'components/docsearch'
 
-import { getBedrockVersions} from 'lib/files'
 import { getTags, TagsResponse } from 'lib/tags'
+import { allFilesList } from 'lib/versions'
 import { transformInbound, TransformedOutbound, transformOutbound } from 'lib/bedrock-versions-transformer'
 
 type Props = {
@@ -103,7 +103,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   // transform to "compressed" version
-  const bedrockVersions = transformOutbound(await getBedrockVersions())
+  const bedrockVersions = transformOutbound(await allFilesList())
   const tags = await getTags()
 
   return { props: { bedrockVersions, tags } }

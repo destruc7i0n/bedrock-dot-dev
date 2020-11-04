@@ -27,7 +27,7 @@ import {
   transformOutbound
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug, getVersionParts } from 'lib/util'
-import { allFilesList } from '../../lib/versions';
+import { allFilesList } from 'lib/versions'
 
 // extract type from inside a promise
 type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
@@ -122,7 +122,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const bedrockVersions = await getBedrockVersions()
+  const bedrockVersions = await allFilesList()
   const tags = await getTags()
 
   let paths: PathsType = []

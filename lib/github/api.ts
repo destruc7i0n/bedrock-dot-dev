@@ -16,7 +16,7 @@ async function getError(res: Response): Promise<Error> {
 }
 
 // use the recursive api to list all the files in the repo
-export async function listAllFiles (): Promise<GitHubTreeResponse | Error> {
+export async function listAllFilesFromRepo (): Promise<GitHubTreeResponse | Error> {
   // https://api.github.com/repos/bedrock-dot-dev/docs/git/trees/master?recursive=1
   const res = await fetch(GITHUB_API_URL + '/repos/' + REPO_NAME + '/git/trees/master?recursive=1')
 
