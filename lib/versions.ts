@@ -60,7 +60,7 @@ const allFilesList = async () => {
   if (check)
     return check
   else {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
       Log.error('Could not load the docs.json from cache!')
       return {}
     } else {

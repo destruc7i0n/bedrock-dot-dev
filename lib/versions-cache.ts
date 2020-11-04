@@ -1,5 +1,4 @@
-import fs from 'fs'
-import { join, resolve } from 'path'
+import { join } from 'path'
 
 import * as flatCache from 'flat-cache'
 import { BedrockVersions } from './versions'
@@ -9,20 +8,13 @@ import Log from './log'
 // use tmp on production
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
 
-const docsPath = resolve('./public/static/docs.json')
-
 // store ratelimited call as a file and fetch when needed
 const checkCache = (): BedrockVersions | undefined => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === 'production') {
-    // the file is in the public folder when building
-    if (fs.existsSync(docsPath)) {
-      const textContent = fs.readFileSync(docsPath).toString()
-      if (textContent) return JSON.parse(textContent)
-      else Log.error(`Could not read docs.json from "${docsPath}"`)
-    } else {
-      Log.error('Could not load docs.json')
-    }
+    const docsContent = require('../public/static/docs.json')
+    if (docsContent) return docsContent
+    else Log.error('Could not load docs content from cache!')
   } else {
     const cache = flatCache.create('versions', cacheDirectory)
     const timestamp = cache.getKey('timestamp')
