@@ -32,7 +32,6 @@ const checkCache = (): BedrockVersions | undefined => {
     if (hardFile) return hardFile
     else {
       Log.error('Could not get hard file!')
-      return {}
     }
   }
 
