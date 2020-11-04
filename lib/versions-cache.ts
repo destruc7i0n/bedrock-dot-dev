@@ -18,6 +18,7 @@ const checkCache = (): BedrockVersions | undefined => {
     if (fs.existsSync(docsPath)) {
       const textContent = fs.readFileSync(docsPath).toString()
       if (textContent) return JSON.parse(textContent)
+      else Log.error('Could not read docs.json from ' + docsPath)
     } else {
       Log.error('Could not load docs.json')
     }
