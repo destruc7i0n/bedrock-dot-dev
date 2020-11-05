@@ -16,7 +16,7 @@ const highlightTextarea = (html: string, file: string) => {
   })
 }
 
-const highlightSchemas = (html: string) => {
+const highlightMarkdownCode = (html: string) => {
   return html.replace(MARKDOWN_CODE_MATCH, (_, content) => {
     content = content
       .replace(/<\/br>-+<\/br>/g, '\n') // remove the ----- lines
@@ -30,8 +30,9 @@ const highlightSchemas = (html: string) => {
 
 export const highlightHtml = (html: string, file: string) => {
   switch (file) {
-    case 'Schemas': {
-      html = highlightSchemas(html)
+    case 'Schemas':
+    case 'Texture Sets': {
+      html = highlightMarkdownCode(html)
       break
     }
     default: {

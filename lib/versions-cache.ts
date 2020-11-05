@@ -12,6 +12,7 @@ const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.ca
 const checkCache = (): BedrockVersions | undefined => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === 'production') {
+    // @ts-ignore
     const docsContent = require('../public/static/docs.json')
     if (docsContent) return docsContent
     else Log.error('Could not load docs content from cache!')
