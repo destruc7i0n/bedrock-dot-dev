@@ -18,7 +18,7 @@ const getUrl = (folder: string, id: string) => {
 
 const PacksPage: FunctionComponent<Props> = ({ versions }) => {
   return (
-    <Layout title='Packs | bedrock.dev' description='Minecraft Bedrock Default Packs' header={false}>
+    <Layout title='Packs | bedrock.dev' description='Minecraft Bedrock Behavior and Resource Packs download' header={false}>
       <HomeCard>
         <div className='p-3'>
           <h2 className='w-full pb-3 text-xl font-bold'>
