@@ -30,17 +30,21 @@ const PacksPage: FunctionComponent<Props> = ({ versions }) => {
               <div className='w-1/2' key={`packs-versions-${i}`}>
                 <div className='m-1 text-center bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-md'>
                   <p className='text-lg'>{v}</p>
-                  <div className='flex flex-row'>
-                    {versions[v][0] && (
-                      <div className='w-1/2'>
-                        <a href={getUrl('behaviours', v)} className='link pr-2' target='_blank' download rel='noopener'>Behaviour</a>
-                      </div>
-                    )}
-                    {versions[v][1] && (
-                      <div className='w-1/2'>
-                        <a href={getUrl('behaviours', v)} className='link pl-2' target='_blank' download rel='noopener'>Resource</a>
-                      </div>
-                    )}
+                  <div className='flex flex-col md:flex-row'>
+                    <div className='w-full md:w-1/2'>
+                      {versions[v][0] ? (
+                        <a href={getUrl('behaviours', v)} className='link md:pr-2' download>Behaviours</a>
+                      ) : (
+                        <p className='md:pr-2 text-gray-500 dark:text-gray-400'>Behaviours</p>
+                      )}
+                    </div>
+                    <div className='w-full md:w-1/2'>
+                      {versions[v][1] ? (
+                        <a href={getUrl('resources', v)} className='link md:pl-2' target='_blank' download rel='noopener'>Resources</a>
+                      ) : (
+                        <p className='md:pl-2 text-gray-500 dark:text-gray-400'>Resources</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
