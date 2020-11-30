@@ -30,8 +30,13 @@ const highlightMarkdownCode = (html: string) => {
 
 export const highlightHtml = (html: string, file: string) => {
   switch (file) {
-    case 'Schemas':
     case 'Texture Sets': {
+      // has both
+      html = highlightMarkdownCode(html)
+      html = highlightTextarea(html, file)
+      break
+    }
+    case 'Schemas': {
       html = highlightMarkdownCode(html)
       break
     }

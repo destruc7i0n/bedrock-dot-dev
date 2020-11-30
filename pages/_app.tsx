@@ -6,6 +6,8 @@ import NProgress from 'nprogress'
 
 import * as analytics from 'lib/analytics'
 
+import 'styles/tailwind.scss'
+import 'styles/tailwind-utils.scss'
 import 'styles/app.scss'
 
 NProgress.configure({ showSpinner: false })
