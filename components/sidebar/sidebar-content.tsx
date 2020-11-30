@@ -61,7 +61,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
     // automatically scroll to the hash in the sidebar on page load
     if (hash) {
       const el: HTMLAnchorElement | null = document.querySelector(
-        `.sidebar .sidebar-id[href="${hash}"]`
+        `.sidebar .sidebar-id[href="#${encodeURIComponent(hash.replace('#', ''))}"]`
       )
       if (el) {
         if (sidebarRef.current) {

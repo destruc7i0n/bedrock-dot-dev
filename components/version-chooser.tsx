@@ -104,7 +104,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
         <label className='block text-sm font-bold mb-2'>
           File Selection
         </label>
-        <div className='version-files-container overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
+        <div className='home-container overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
           {files.map((file) => (
             <VersionFile key={`file-${file}-${minor}`} title={file} link={getLink(major, minor, file, tags, quickSelect)} />
           ))}
