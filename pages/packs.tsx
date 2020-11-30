@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next'
 import S3 from 'aws-sdk/clients/s3'
 
 import Log from '../lib/log'
+import { compareBedrockVersions } from '../lib/util'
 
 import Layout from 'components/layout'
 import HomeCard from 'components/home-card'
@@ -17,16 +18,18 @@ const getUrl = (folder: string, id: string) => {
 }
 
 const PacksPage: FunctionComponent<Props> = ({ versions }) => {
+  const ordered = Object.keys(versions).sort(compareBedrockVersions)
+
   return (
-    <Layout title='Packs | bedrock.dev' description='Minecraft Bedrock Behavior and Resource Packs download' header={false}>
+    <Layout title='Packs | bedrock.dev' description='Minecraft Bedrock Template Behavior and Resource Packs archive' header={false}>
       <HomeCard>
         <div className='p-3'>
           <h2 className='w-full pb-3 text-xl font-bold'>
-            Default Packs Archive
+            Template Packs Archive
           </h2>
 
           <div className='home-container max-h-96 overflow-y-auto flex flex-wrap xl:items-center font-normal'>
-            {Object.keys(versions).reverse().map((v, i) => (
+            {ordered.map((v, i) => (
               <div className='w-1/2' key={`packs-versions-${i}`}>
                 <div className='m-1 text-center bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-md'>
                   <p className='text-lg'>{v}</p>
