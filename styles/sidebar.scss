@@ -6,7 +6,7 @@
   height: calc(100vh - 3rem);
 
   @apply bg-white;
-  .dark-mode & {
+  [data-theme='dark'] & {
     @apply bg-dark-gray-950;
   }
 
@@ -15,7 +15,7 @@
   @apply border-r;
   @apply border-l;
   @apply border-gray-200;
-  .dark-mode & {
+  [data-theme='dark'] & {
     @apply border-dark-gray-800;
   }
 

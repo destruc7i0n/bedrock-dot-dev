@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import Router from 'next/router'
 
+import { ThemeProvider } from 'next-themes'
+
 import NProgress from 'nprogress'
 
 import * as analytics from 'lib/analytics'
@@ -25,7 +27,9 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <Component {...pageProps} />
+    <ThemeProvider defaultTheme='system'>
+      <Component {...pageProps} />
+    </ThemeProvider>
   )
 }
 

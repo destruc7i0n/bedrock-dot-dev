@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useCallback, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+
+import { useTheme } from 'next-themes'
 
 enum Theme {
   System = 'system',
@@ -52,61 +54,21 @@ const themes = {
 
 const ModeSelect: FunctionComponent = () => {
   const [mounted, setMounted] = useState(false)
-  const [theme, setTheme] = useState<Theme>(Theme.System)
-  const [themeName, setThemeName] = useState<Theme>(Theme.System)
+  const { theme, setTheme } = useTheme()
 
-  // refresh the theme from the localstorage
-  useEffect(() => {
-    try {
-      const pref = localStorage.getItem('theme') as Theme
-      if (pref) handleChange(pref)
-    } catch (e) {}
-    setMounted(true)
-  }, [])
+  useEffect(() => setMounted(true), [])
 
-  // update the theme of the page
-  useEffect(() => {
-    if (theme === Theme.Dark) {
-      document.documentElement.classList.add('dark-mode')
-    } else if (theme === Theme.Light) {
-      document.documentElement.classList.remove('dark-mode')
-    }
-  }, [ theme, themeName ])
-
-  // callback when the system theme changes
-  const listenerCallback = useCallback((e: MediaQueryList | MediaQueryListEvent) => {
-    setTheme(e.matches ? Theme.Dark : Theme.Light)
-  }, [])
-
-  // listener to the system theme change
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-color-scheme: dark)')
-    // only update based on system once the localstorage has been checked
-    if (themeName === Theme.System && mounted) {
-      query.addListener(listenerCallback)
-      listenerCallback(query)
-    }
-    return () => query.removeListener(listenerCallback)
-  }, [ theme, themeName, mounted ])
-
-  // update the preferred theme from the dropdown
-  const handleChange = useCallback((value: Theme) => {
-    setThemeName(value)
-    setTheme(value)
-    try {
-      window.localStorage.setItem('theme', value)
-    } catch (e) {}
-  }, [])
+  if (!mounted) return null
 
   return (
     <div className='relative dark:text-gray-200'>
       <label className='block text-sm font-bold mb-1 sr-only' htmlFor='mode'>Mode Select</label>
       <div className='absolute inset-y-0 left-0 pl-3 flex items-center'>
         <span className='leading-3'>
-          {themes[themeName].icon}
+          {themes[theme as Theme].icon}
         </span>
       </div>
-      <select value={themeName} onChange={({ target: { value } }) => handleChange(value as Theme)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
+      <select value={theme} onChange={({ target: { value } }) => setTheme(value as Theme)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
         <option value={Theme.System}>System</option>
         <option value={Theme.Dark}>Dark</option>
         <option value={Theme.Light}>Light</option>

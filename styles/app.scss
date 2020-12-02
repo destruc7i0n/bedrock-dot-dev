@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
 
   @apply bg-white;
-  .dark-mode & {
+  [data-theme='dark'] & {
     @apply bg-dark-gray-900;
   }
 }
@@ -26,14 +26,14 @@ h1, h2, h3, h4 {
   @apply duration-75;
   @apply ease-in-out;
 
-  .dark-mode & {
+  [data-theme='dark'] & {
     @apply text-blue-500;
   }
 
   &:hover {
     @apply text-blue-500;
 
-    .dark-mode & {
+    [data-theme='dark'] & {
       @apply text-blue-400;
     }
   }
@@ -102,7 +102,7 @@ body {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0;
 
-    .dark-mode & {
+    [data-theme='dark'] & {
       background: rgba(255,255,255,.1)
     }
   }
@@ -115,7 +115,7 @@ body {
     -webkit-transition: color 0.2s ease;
     transition: color 0.2s ease;
 
-    .dark-mode & {
+    [data-theme='dark'] & {
       background: rgba(255,255,255,.25)
     }
   }
@@ -124,7 +124,7 @@ body {
   &::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.15);
 
-    .dark-mode & {
+    [data-theme='dark'] & {
       background: rgba(255, 255, 255, 0.15);
     }
   }
@@ -133,7 +133,7 @@ body {
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.4);
 
-    .dark-mode & {
+    [data-theme='dark'] & {
       background: rgba(255, 255, 255, 0.35);
     }
   }

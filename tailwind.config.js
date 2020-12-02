@@ -18,7 +18,7 @@ module.exports = {
   },
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
-    darkSelector: '.dark-mode',
+    darkSelector: `[data-theme='dark']`,
     extend: {
       maxWidth: {
         '1/4': '25%',
