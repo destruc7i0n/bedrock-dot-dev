@@ -27,7 +27,7 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <ThemeProvider defaultTheme='system'>
+    <ThemeProvider defaultTheme='system' attribute='class'>
       <Component {...pageProps} />
     </ThemeProvider>
   )

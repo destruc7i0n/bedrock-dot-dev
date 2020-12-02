@@ -70,7 +70,7 @@
     background-color:#a5f1b2;
   }
 
-  [data-theme='dark'] & {
+  .dark & {
     td, th {
       @apply border-dark-gray-700;
     }
@@ -104,7 +104,7 @@
     @import 'code/light.scss';
   }
 
-  [data-theme='dark'] & {
+  .dark & {
     @import 'code/dark.scss';
   }
 
