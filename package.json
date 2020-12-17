@@ -11,12 +11,12 @@
     "type-check": "tsc"
   },
   "resolutions": {
-    "webpack": "^5.9.0"
+    "webpack": "^5.11.0"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
-    "autoprefixer": "^10.0.4",
-    "aws-sdk": "^2.802.0",
+    "autoprefixer": "^10.1.0",
+    "aws-sdk": "^2.812.0",
     "classnames": "^2.2.6",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
@@ -27,7 +27,7 @@
     "prismjs": "^1.22.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sass": "^1.29.0",
+    "sass": "^1.30.0",
     "sitemap": "^6.3.3",
     "tailwindcss": "^1.9.6",
     "tailwindcss-dark-mode": "^1.1.7"
@@ -37,7 +37,7 @@
     "@types/classnames": "^2.2.11",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^14.14.10",
+    "@types/node": "^14.14.14",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.2",
     "@types/react": "^17.0.0",
@@ -46,8 +46,8 @@
     "chalk": "^4.1.0",
     "isomorphic-unfetch": "^3.1.0",
     "postcss-preset-env": "^6.7.0",
-    "ts-node": "^9.0.0",
-    "typescript": "4.1.2"
+    "ts-node": "^9.1.1",
+    "typescript": "4.1.3"
   },
   "license": "MIT"
 }

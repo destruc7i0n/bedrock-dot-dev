@@ -36,7 +36,8 @@ export const highlightHtml = (html: string, file: string) => {
       html = highlightTextarea(html, file)
       break
     }
-    case 'Schemas': {
+    case 'Schemas':
+      case 'Fogs': {
       html = highlightMarkdownCode(html)
       break
     }
