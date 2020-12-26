@@ -11,7 +11,6 @@ import DocSearch from 'components/docsearch'
 import { getTags, TagsResponse } from 'lib/tags'
 import { allFilesList } from 'lib/versions'
 import { transformInbound, TransformedOutbound, transformOutbound } from 'lib/bedrock-versions-transformer'
-import { searchIcon } from 'components/sidebar/sidebar-filter'
 
 type Props = {
   bedrockVersions: TransformedOutbound
@@ -49,19 +48,12 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
               Minecraft Bedrock Edition Documentation
             </h2>
 
-            <div className='relative w-full rounded-full'>
-              <div className='z-50 absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-                <span className='text-gray-500 leading-4'>
-                  {searchIcon}
-                </span>
-              </div>
-              <DocSearch
-                placeHolder='Search the documentation'
-                staticPosition={false}
-                captureForwardSlash
-                className='w-full pl-8 xl:pl-7 px-4 mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
-              />
-            </div>
+            <DocSearch
+              placeHolder='Search the documentation'
+              staticPosition={false}
+              captureForwardSlash
+              className='w-full mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
+            />
           </div>
         </div>
 
