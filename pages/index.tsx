@@ -50,7 +50,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
             </h2>
 
             <div className='relative w-full rounded-full'>
-              <div className='z-10 absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+              <div className='z-50 absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
                 <span className='text-gray-500 leading-4'>
                   {searchIcon}
                 </span>
