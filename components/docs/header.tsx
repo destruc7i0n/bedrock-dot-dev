@@ -3,14 +3,14 @@ import React, { FunctionComponent, memo, useContext } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import DocSearch from './docsearch'
+import DocSearch from '../docsearch'
 
-import { SidebarContext } from './sidebar/sidebar-context'
+import { SidebarContext } from '../sidebar/sidebar-context'
 
 const HeaderLink: FunctionComponent<{ link: string, title: string }> = ({ link, title }) => (
-  <li className='text-lg'>
+  <li className='h-full'>
     <a
-      className='flex items-center px-2 text-gray-500 hover:text-gray-900 dark-hover:text-gray-400 transition duration-150 ease-in-out'
+      className='font-medium px-2 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark-hover:text-gray-100 transition duration-150 ease-in-out'
       href={link}
       target='_blank' rel='noopener'
     >
@@ -47,9 +47,9 @@ const Header: FunctionComponent = () => {
               {toggleButton}
             </div>
           )}
-          <h1 className='mr-3 text-2xl font-normal'>
+          <h1 className='mr-3 text-2xl'>
             <Link href='/'>
-              <a className='text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
+              <a className='font-normal text-black hover:text-gray-900 dark:text-white dark-hover:text-white'>bedrock.dev</a>
             </Link>
           </h1>
           <ul className='hidden md:flex'>

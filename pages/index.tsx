@@ -2,8 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { GetStaticProps } from 'next'
 
 import Layout from 'components/layout'
-import HomeCard from '../components/home-card'
-import VersionChooser from 'components/version-chooser'
+import Navbar from 'components/homepage/navbar'
+import Footer from 'components/homepage/footer'
+import HomeCard from 'components/homepage/home-card'
+import VersionChooser from 'components/version-chooser/version-chooser'
 import DocSearch from 'components/docsearch'
 
 import { getTags, TagsResponse } from 'lib/tags'
@@ -35,23 +37,41 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   const versions = transformInbound(bedrockVersions)
 
   return (
-    <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation' header={false}>
-      <HomeCard>
-        <div className='flex flex-col xl:items-center text-xl font-normal p-3 border-b border-gray-200 dark:border-dark-gray-800'>
-          <DocSearch
-            placeHolder='Search'
-            staticPosition={false}
-            captureForwardSlash={false}
-            className='form-input dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full'
-          />
+    <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation'>
+      <div>
+        <div className='bg-gray-50 dark:bg-dark-gray-950 border-b border-gray-200 dark:border-dark-gray-800'>
+          <Navbar />
+
+          <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-col items-center'>
+            <h1 className='font-extrabold text-5xl leading-10 text-gray-900 dark:text-white'>bedrock.dev</h1>
+            <h2 className='mt-4 mb-6 sm:mt-5 font-medium text-2xl text-center leading-tight text-gray-900 dark:text-gray-200'>
+              Minecraft Bedrock Edition Documentation
+            </h2>
+
+            <DocSearch
+              placeHolder='Search'
+              staticPosition={false}
+              captureForwardSlash={true}
+              className='w-full mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
+            />
+          </div>
         </div>
-        <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
-          <h2 className='w-full pb-3 text-xl font-bold'>
-            Version Selection
-          </h2>
-          <VersionChooser versions={versions} tags={tags} />
+
+        <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 mt-10'>
+          <HomeCard>
+            <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
+              <h2 className='w-full pb-3 text-xl font-bold'>
+                Version Selection
+              </h2>
+              <VersionChooser versions={versions} tags={tags} />
+            </div>
+          </HomeCard>
         </div>
-      </HomeCard>
+
+        <div className='mt-6'>
+          <Footer />
+        </div>
+      </div>
     </Layout>
   )
 }

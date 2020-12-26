@@ -4,13 +4,13 @@ import { unstable_batchedUpdates } from 'react-dom'
 
 import cn from 'classnames'
 
-import ModeSelect from './mode-select'
-import Selectors from './sidebar/sidebar-selectors'
-import { SidebarContext } from './sidebar/sidebar-context'
-import SidebarMask from './sidebar/sidebar-mask'
-import { useIsMobile } from './media-query'
-import SidebarContent from './sidebar/sidebar-content'
-import SidebarFilter from './sidebar/sidebar-filter'
+import ModeSelect from '../mode-select'
+import Selectors from './sidebar-selectors'
+import { SidebarContext } from './sidebar-context'
+import SidebarMask from './sidebar-mask'
+import { useIsMobile } from '../media-query'
+import SidebarContent from './sidebar-content'
+import SidebarFilter from './sidebar-filter'
 
 export interface SidebarStructureElement {
   title: string

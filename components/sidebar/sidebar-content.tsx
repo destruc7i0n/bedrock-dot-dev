@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo, useEffect, useRef, useState } from 'react'
 
-import { SidebarStructure } from '../sidebar'
+import { SidebarStructure } from './sidebar'
 import SidebarGroupTitle from './sidebar-group-title'
 import SidebarGroupItem from './sidebar-group-item'
 

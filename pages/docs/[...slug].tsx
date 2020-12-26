@@ -10,12 +10,13 @@ import { cleanHtmlForDisplay } from 'lib/html/clean'
 import { highlightHtml } from 'lib/html/highlight'
 
 import Layout from 'components/layout'
+import Header from 'components/docs/header'
 import Sidebar, { SidebarStructure } from 'components/sidebar'
-import DocsContainer from 'components/docs-container'
+import DocsContainer from 'components/docs/docs-container'
 import { VersionContextProvider } from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
 import useLoading from 'components/loading'
-import BackToTop from 'components/back-to-top'
+import BackToTop from 'components/docs/back-to-top'
 
 import { getTags, Tags, TagsResponse } from 'lib/tags'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
@@ -109,6 +110,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
           <Layout title={title} description={description}>
+            <Header />
             <div className='flex'>
               <Sidebar sidebar={sidebar} file={file} loading={loading} />
               <DocsContainer html={html} loading={loading} />
@@ -127,7 +129,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   let paths: PathsType = []
 
-  const majorVersionParts = getVersionParts(tags[Tags.Stable][1])
+  const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
 
   for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
     for (let file of files) {
@@ -136,7 +138,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
       const versionParts = getVersionParts(major)
 
-      let shouldPreload = versionParts[1] >= majorVersionParts[1]
+      let shouldPreload = versionParts[1] >= stableVersionParts[1]
 
       // handle stable and beta routes
       if (areVersionsEqual(version, tags[Tags.Stable])) {
