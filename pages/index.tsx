@@ -11,6 +11,7 @@ import DocSearch from 'components/docsearch'
 import { getTags, TagsResponse } from 'lib/tags'
 import { allFilesList } from 'lib/versions'
 import { transformInbound, TransformedOutbound, transformOutbound } from 'lib/bedrock-versions-transformer'
+import { searchIcon } from 'components/sidebar/sidebar-filter'
 
 type Props = {
   bedrockVersions: TransformedOutbound
@@ -43,17 +44,24 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
           <Navbar />
 
           <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-col items-center'>
-            <h1 className='font-extrabold text-5xl leading-10 text-gray-900 dark:text-white'>bedrock.dev</h1>
-            <h2 className='mt-4 mb-6 sm:mt-5 font-medium text-2xl text-center leading-tight text-gray-900 dark:text-gray-200'>
+            <h1 className='font-extrabold text-4xl md:text-5xl leading-10 text-gray-900 dark:text-white'>bedrock.dev</h1>
+            <h2 className='mt-4 mb-6 sm:mt-5 font-medium text-xl md:text-2xl text-center leading-tight text-gray-900 dark:text-gray-200'>
               Minecraft Bedrock Edition Documentation
             </h2>
 
-            <DocSearch
-              placeHolder='Search'
-              staticPosition={false}
-              captureForwardSlash={true}
-              className='w-full mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
-            />
+            <div className='relative w-full rounded-full'>
+              <div className='z-10 absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                <span className='text-gray-500 leading-4'>
+                  {searchIcon}
+                </span>
+              </div>
+              <DocSearch
+                placeHolder='Search the documentation'
+                staticPosition={false}
+                captureForwardSlash
+                className='w-full pl-8 xl:pl-7 px-4 mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
+              />
+            </div>
           </div>
         </div>
 
