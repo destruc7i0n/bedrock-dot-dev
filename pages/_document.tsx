@@ -30,6 +30,8 @@ class BedrockDevDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script data-skip-dnt="true" async defer src="https://sa.bedrock.dev/latest.js" />
+          <noscript><img src="https://sa.bedrock.dev/noscript.gif?ignore-dnt=true" alt="" referrerPolicy="no-referrer-when-downgrade" /></noscript>
         </body>
       </Html>
     )

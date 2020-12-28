@@ -11,7 +11,7 @@
     "type-check": "tsc"
   },
   "resolutions": {
-    "webpack": "^5.11.0"
+    "webpack": "^5.11.1"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
