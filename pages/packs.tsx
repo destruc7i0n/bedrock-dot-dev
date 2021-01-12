@@ -8,7 +8,7 @@ import { compareBedrockVersions } from '../lib/util'
 
 import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
-import Footer from 'components/homepage/footer'
+import Footer from 'components/footer'
 
 type Props = {
   versions: PackVersions

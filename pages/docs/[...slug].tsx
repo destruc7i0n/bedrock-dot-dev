@@ -11,12 +11,14 @@ import { highlightHtml } from 'lib/html/highlight'
 
 import Layout from 'components/layout'
 import Header from 'components/docs/header'
+import Footer from 'components/footer'
 import Sidebar, { SidebarStructure } from 'components/sidebar'
 import DocsContainer from 'components/docs/docs-container'
 import { VersionContextProvider } from 'components/version-context'
 import { SidebarContextProvider } from 'components/sidebar/sidebar-context'
-import useLoading from 'components/loading'
 import BackToTop from 'components/docs/back-to-top'
+
+import useLoading from 'hooks/loading'
 
 import { getTags, Tags, TagsResponse } from 'lib/tags'
 import { getDocsFilesFromRepo } from 'lib/github/raw'
@@ -116,6 +118,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
               <DocsContainer html={html} loading={loading} />
             </div>
             <BackToTop />
+            {!loading && <Footer dark darkClassName='bg-dark-gray-975' modeSelect={false} outline />}
           </Layout>
         </SidebarContextProvider>
       </VersionContextProvider>

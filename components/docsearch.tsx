@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, FunctionComponent } from 'react'
 
 import classNames from 'classnames'
-import { useIsMobile } from './media-query'
+import { useIsMobile } from 'hooks/media-query'
 
 type Props = {
   captureForwardSlash?: boolean

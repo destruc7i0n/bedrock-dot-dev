@@ -8,9 +8,10 @@ import ModeSelect from '../mode-select'
 import Selectors from './sidebar-selectors'
 import { SidebarContext } from './sidebar-context'
 import SidebarMask from './sidebar-mask'
-import { useIsMobile } from '../media-query'
 import SidebarContent from './sidebar-content'
 import SidebarFilter from './sidebar-filter'
+
+import { useIsMobile } from 'hooks/media-query'
 
 export interface SidebarStructureElement {
   title: string

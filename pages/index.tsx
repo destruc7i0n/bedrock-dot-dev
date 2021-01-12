@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next'
 
 import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
-import Footer from 'components/homepage/footer'
+import Footer from 'components/footer'
 import HomeCard from 'components/homepage/home-card'
 import VersionChooser from 'components/version-chooser/version-chooser'
 import DocSearch from 'components/docsearch'
@@ -69,7 +69,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
         </div>
 
         <div className='mt-6'>
-          <Footer />
+          <Footer outline={false} />
         </div>
       </div>
     </Layout>

@@ -11,33 +11,33 @@
     "type-check": "tsc"
   },
   "resolutions": {
-    "webpack": "^5.11.1"
+    "webpack": "^5.13.0"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
-    "autoprefixer": "^10.1.0",
-    "aws-sdk": "^2.817.0",
+    "autoprefixer": "^10.2.1",
+    "aws-sdk": "^2.826.0",
     "classnames": "^2.2.6",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^3.0.4",
-    "next": "^10.0.4",
+    "next": "^10.0.5",
     "next-themes": "^0.0.10",
     "nprogress": "^0.2.0",
-    "prismjs": "^1.22.0",
+    "prismjs": "^1.23.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sass": "^1.30.0",
+    "sass": "^1.32.4",
     "sitemap": "^6.3.5",
     "tailwindcss": "^1.9.6",
     "tailwindcss-dark-mode": "^1.1.7"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^10.0.4",
+    "@next/bundle-analyzer": "^10.0.5",
     "@types/classnames": "^2.2.11",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^14.14.16",
+    "@types/node": "^14.14.20",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.2",
     "@types/react": "^17.0.0",

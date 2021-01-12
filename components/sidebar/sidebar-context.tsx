@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, FunctionComponent } from 'react'
 
-import { isLg } from '../media-query'
+import { isLg } from 'hooks/media-query'
 
 type ContextType = {
   open: boolean
