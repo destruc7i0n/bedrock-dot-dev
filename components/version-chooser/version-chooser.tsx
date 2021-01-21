@@ -23,7 +23,7 @@ type VersionFileProps = {
 const VersionFile: FunctionComponent<VersionFileProps> = ({ title, link }) => {
   return (
     <Link href={`/docs/[...slug]`} as={link}>
-      <a className='link truncate w-1/2 px-2 py-1 text-lg'>{title}</a>
+      <a className='link truncate w-1/2 lg:w-1/3 px-2 py-1 text-lg'>{title}</a>
     </Link>
   )
 }
