@@ -29,7 +29,7 @@ import {
   transformInbound,
   transformOutbound
 } from 'lib/bedrock-versions-transformer'
-import { areVersionsEqual, getTagFromSlug, getVersionParts } from 'lib/util'
+import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
 
 // extract type from inside a promise
@@ -97,7 +97,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
     <>
       <Head>
         <script
-          dangerouslySetInnerHTML={{ __html: `
+          dangerouslySetInnerHTML={{ __html: oneLine(`
             try {
               var sidebar = window.localStorage.getItem('sidebar');
               if (sidebar) {
@@ -106,7 +106,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
               }
             } catch (e) {}
             `
-          }}
+          )}}
         />
       </Head>
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>

@@ -34,7 +34,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
   const isOpen = open || searching
 
   return (
-    <div className='position-relative'>
+    <div>
       <div className={cn(
         'flex flex-row py-2 px-4 text-gray-800 dark:text-gray-300 bg-white dark:bg-dark-gray-950 cursor-pointer',
         { 'sticky top-0': isOpen && hasChildren, 'select-none': hasChildren },
