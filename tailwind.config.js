@@ -16,7 +16,9 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
+  purge: {
+    content: ['./components/**/*.tsx', './pages/**/*.tsx'],
+  },
   theme: {
     darkSelector: '.dark',
     extend: {
