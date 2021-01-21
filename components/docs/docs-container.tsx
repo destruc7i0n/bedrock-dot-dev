@@ -5,7 +5,7 @@ type DocsContentProps = {
 }
 
 const docsContainerClass = 'flex-1 w-0 bg-white dark:bg-dark-gray-900'
-const docsContentClass = 'docs-content text-gray-900 dark:text-gray-200 pt-4 pr-5 pl-5 pb-5 max-w-9/10 mx-auto'
+const docsContentClass = 'docs-content text-gray-900 dark:text-gray-200 pt-4 pr-5 pl-5 pb-5 lg:max-w-9/10 mx-auto'
 
 const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html }) => {
   return (

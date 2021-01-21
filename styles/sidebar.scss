@@ -19,10 +19,11 @@
     @apply border-dark-gray-800;
   }
 
-  // lg screen
+  // lg screen and below
   @screen lg-max {
     position: fixed;
     transform: translateX(-100%);
+    // like silk
     will-change: transform;
 
     width: 80%;
