@@ -2,10 +2,6 @@
   font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   overflow-x: auto;
 
-  @screen lg {
-    @apply max-w-9/10;
-  }
-
   a {
     @apply underline;
   }
