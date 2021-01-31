@@ -11,17 +11,17 @@
     "type-check": "tsc"
   },
   "resolutions": {
-    "webpack": "^5.16.0"
+    "webpack": "^5.19.0"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
-    "autoprefixer": "^10.2.3",
-    "aws-sdk": "^2.829.0",
+    "autoprefixer": "^10.2.4",
+    "aws-sdk": "^2.834.0",
     "classnames": "^2.2.6",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^3.0.4",
-    "next": "^10.0.5",
+    "next": "^10.0.6",
     "next-themes": "^0.0.10",
     "nprogress": "^0.2.0",
     "prismjs": "^1.23.0",
@@ -33,7 +33,7 @@
     "tailwindcss-dark-mode": "^1.1.7"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^10.0.5",
+    "@next/bundle-analyzer": "^10.0.6",
     "@types/classnames": "^2.2.11",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
