@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { useTheme } from 'next-themes'
 
 enum Theme {
@@ -53,6 +55,8 @@ const themes = {
 }
 
 const ModeSelect: FunctionComponent = () => {
+  const { t } = useTranslation('common')
+
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -69,9 +73,9 @@ const ModeSelect: FunctionComponent = () => {
         </span>
       </div>
       <select value={theme} onChange={({ target: { value } }) => setTheme(value as Theme)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
-        <option value={Theme.System}>System</option>
-        <option value={Theme.Dark}>Dark</option>
-        <option value={Theme.Light}>Light</option>
+        <option value={Theme.System}>{t('component.color_theme_select.system')}</option>
+        <option value={Theme.Dark}>{t('component.color_theme_select.dark')}</option>
+        <option value={Theme.Light}>{t('component.color_theme_select.light')}</option>
       </select>
     </div>
   )

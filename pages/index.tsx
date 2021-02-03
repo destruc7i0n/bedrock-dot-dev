@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { GetStaticProps } from 'next'
 
+import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
 import Footer from 'components/footer'
@@ -33,6 +36,7 @@ type Props = {
 // )
 
 const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
+  const { t } = useTranslation('common')
   // transform to string representation
   const versions = transformInbound(bedrockVersions)
 
@@ -45,11 +49,11 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
           <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-col items-center'>
             <h1 className='font-extrabold text-4xl md:text-5xl leading-10 text-gray-900 dark:text-white'>bedrock.dev</h1>
             <h2 className='mt-4 mb-6 sm:mt-5 font-medium text-xl md:text-2xl text-center leading-tight text-gray-900 dark:text-gray-200'>
-              Minecraft Bedrock Edition Documentation
+              {t('page.home.subtitle')}
             </h2>
 
             <DocSearch
-              placeHolder='Search the documentation'
+              placeHolder={t('page.home.search_placeholder')}
               staticPosition={false}
               captureForwardSlash
               className='w-full mx-auto form-input rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5'
@@ -61,7 +65,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
           <HomeCard>
             <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
               <h2 className='w-full pb-3 text-xl font-bold'>
-                Version Selection
+                {t('component.version_chooser.title')}
               </h2>
               <VersionChooser versions={versions} tags={tags} />
             </div>
@@ -76,12 +80,12 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   // transform to "compressed" version
   const bedrockVersions = transformOutbound(await allFilesList())
   const tags = await getTags()
 
-  return { props: { bedrockVersions, tags } }
+  return { props: { bedrockVersions, tags, ...await serverSideTranslations(locale, ['common']), } }
 }
 
 export default IndexPage

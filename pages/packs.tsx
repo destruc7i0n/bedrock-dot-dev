@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from 'react'
 import { GetStaticProps } from 'next'
 
+import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import S3 from 'aws-sdk/clients/s3'
 
 import Log from '../lib/log'
@@ -19,17 +22,18 @@ const getUrl = (folder: string, id: string) => {
 }
 
 const PacksPage: FunctionComponent<Props> = ({ versions }) => {
+  const { t } = useTranslation('common')
   const ordered = Object.keys(versions).sort(compareBedrockVersions)
 
   return (
-    <Layout title='Packs | bedrock.dev' description='Minecraft Bedrock Template Behavior and Resource Packs archive'>
+    <Layout title={`${t('page.packs.website_title')} | bedrock.dev`} description={t('page.packs.website_description')}>
       <div className='h-screen'>
         <Navbar />
 
         <div className='max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 mt-8 mb-10'>
           <div className='max-w-screen-lg mx-auto'>
-            <h4 className='text-4xl font-bold text-black dark:text-gray-200'>Template Packs Archive</h4>
-            <p className='mt-4 text-lg text-black dark:text-gray-200'>This is an archive of the default template packs provided by Mojang.</p>
+            <h4 className='text-4xl font-bold text-black dark:text-gray-200'>{t('page.packs.title')}</h4>
+            <p className='mt-4 text-lg text-black dark:text-gray-200'>{t('page.packs.subtitle')}</p>
 
             <div className='-mx-4 mt-4 flex flex-wrap xl:items-center font-normal'>
               {ordered.map((v, i) => (
@@ -39,16 +43,16 @@ const PacksPage: FunctionComponent<Props> = ({ versions }) => {
                     <div className='flex flex-col md:flex-row'>
                       <div className='w-full md:w-1/2'>
                         {versions[v][0] ? (
-                          <a href={getUrl('behaviours', v)} className='link md:pr-2' download>Behaviours</a>
+                          <a href={getUrl('behaviours', v)} className='link md:pr-2' download>{t('component.packs_page.behaviours_link')}</a>
                         ) : (
-                          <p className='md:pr-2 text-gray-500 dark:text-gray-400'>Behaviours</p>
+                          <p className='md:pr-2 text-gray-500 dark:text-gray-400'>{t('component.packs_page.behaviours_link')}</p>
                         )}
                       </div>
                       <div className='w-full md:w-1/2'>
                         {versions[v][1] ? (
-                          <a href={getUrl('resources', v)} className='link md:pl-2' target='_blank' download rel='noopener'>Resources</a>
+                          <a href={getUrl('resources', v)} className='link md:pl-2' target='_blank' download rel='noopener'>{t('component.packs_page.resources_link')}</a>
                         ) : (
-                          <p className='md:pl-2 text-gray-500 dark:text-gray-400'>Resources</p>
+                          <p className='md:pl-2 text-gray-500 dark:text-gray-400'>{t('component.packs_page.resources_link')}</p>
                         )}
                       </div>
                     </div>
@@ -71,7 +75,7 @@ type PackVersions = {
   [key: string]: [boolean, boolean]
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const s3 = new S3({
     'accessKeyId': process.env.AWS_ACCESS_KEY_ID_BEDROCK,
     'secretAccessKey': process.env.AWS_SECRET_ACCESS_KEY_BEDROCK,
@@ -99,7 +103,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 
-  return { props: { versions } }
+  return { props: { versions, ...await serverSideTranslations(locale, ['common']) } }
 }
 
 export default PacksPage

@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Error from 'next/error'
 
+import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { extractDataFromHtml, ParseHtmlResponse } from 'lib/html'
 import { cleanHtmlForDisplay } from 'lib/html/clean'
 import { highlightHtml } from 'lib/html/highlight'
@@ -45,6 +48,8 @@ type Props = {
 }
 
 const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedData, version }) => {
+  const { t } = useTranslation('common')
+
   const { isFallback, query: { slug } } = useRouter()
 
   let [ major, minor, file ] = (version || [ '', '', '' ])
@@ -64,24 +69,24 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   }
 
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
-  let title = 'Loading...'
+  let title = t('page.docs.website_title_loading')
   let description = ''
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
-    title = `${documentTitle} Documentation | ${version} | bedrock.dev`
-    description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
+    title = t('page.docs.website_title_untagged', { title: documentTitle, version })
+    description = t('page.docs.website_description_untagged', { title: documentTitle, version })
 
     // custom titles for version tag
     if (versionTag) {
       switch (versionTag) {
         case Tags.Stable: {
-          title = `${documentTitle} Documentation | bedrock.dev`
-          description = `Minecraft Bedrock ${documentTitle} Documentation`
+          title = t('page.docs.website_title_tagged_stable', { title: documentTitle })
+          description = t('page.docs.website_description_tagged_stable', { title: documentTitle })
           break
         }
         case Tags.Beta: {
-          title = `Beta ${documentTitle} Documentation | bedrock.dev`
-          description = `Minecraft Bedrock Beta ${documentTitle} Documentation`
+          title = t('page.docs.website_title_tagged_beta', { title: documentTitle })
+          description = t('page.docs.website_description_tagged_beta', { title: documentTitle })
           break
         }
         default: break
@@ -161,7 +166,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: 'blocking' }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   let html: string | null = null
   let displayHtml: string | null = null
   let parsedData: ParseHtmlResponse | null = null
@@ -215,7 +220,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   return {
-    props: { html: displayHtml, bedrockVersions, tags, parsedData, version },
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']) },
     revalidate: 60 * 60, // every 1 hour
   }
 }

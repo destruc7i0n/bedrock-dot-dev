@@ -22,6 +22,7 @@
     "element-in-view": "^0.1.0",
     "flat-cache": "^3.0.4",
     "next": "^10.0.6",
+    "next-i18next": "^8.0.0-beta.4",
     "next-themes": "^0.0.10",
     "nprogress": "^0.2.0",
     "prismjs": "^1.23.0",

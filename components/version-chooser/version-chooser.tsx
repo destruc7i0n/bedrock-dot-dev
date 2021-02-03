@@ -3,6 +3,8 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
+import { useTranslation } from 'react-i18next'
+
 import SpecificVersionChooser from './specific-version-chooser'
 import TagVersionChooser from './tag-version-chooser'
 
@@ -34,6 +36,7 @@ type VersionChooserProps = {
 }
 
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags }) => {
+  const { t } = useTranslation('common')
   const [quickSelect, setQuickSelect] = useState(true)
 
   const router = useRouter()
@@ -95,14 +98,14 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
               checked={!quickSelect}
               onChange={({ target: { checked } }) => setQuickSelect(!checked)}
             />
-            <span className='ml-2 text-sm select-none'>View all versions</span>
+            <span className='ml-2 text-sm select-none'>{t('component.version_chooser.view_all')}</span>
           </label>
         </div>
       </div>
 
       <div className='w-full flex flex-col mt-2'>
         <label className='block text-sm font-bold mb-2'>
-          File Selection
+          {t('component.version_chooser.file_selection')}
         </label>
         <div className='overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
           {files.map((file) => (

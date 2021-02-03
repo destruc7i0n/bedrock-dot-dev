@@ -4,6 +4,8 @@ import Router from 'next/router'
 
 import { ThemeProvider } from 'next-themes'
 
+import { appWithTranslation } from 'next-i18next'
+
 import NProgress from 'nprogress'
 
 import * as analytics from 'lib/analytics'
@@ -33,4 +35,4 @@ function App({ Component, pageProps }: AppProps) {
   )
 }
 
-export default App
+export default appWithTranslation(App)

@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, FunctionComponent } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import classNames from 'classnames'
 import { useIsMobile } from 'hooks/media-query'
 
@@ -10,7 +12,10 @@ type Props = {
   staticPosition: boolean
 }
 
-const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder = 'Search', staticPosition, }) => {
+const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder, staticPosition, }) => {
+  const { t } = useTranslation('common')
+  if (!placeHolder) placeHolder = t('component.search.title')
+
   const input = useRef<HTMLInputElement | null>(null)
   const isMobile = useIsMobile()
 
@@ -65,12 +70,12 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
 
   return (
     <div className={classNames('w-full flex items-center docs-search', { 'docs-static': staticPosition, })}>
-      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='algolia-doc-search'>Search</label>
+      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='algolia-doc-search'>{t('component.search.title')}</label>
       <input
         id='algolia-doc-search'
         className={className}
         type='search'
-        placeholder={`${placeHolder}${!isMobile && captureForwardSlash ? ' ("/" to focus)' : ''}`}
+        placeholder={`${placeHolder}${!isMobile && captureForwardSlash ? ` ${t('component.search.focus_key')}` : ''}`}
         ref={input}
       />
     </div>

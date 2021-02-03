@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FunctionComponent, memo, useContext } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { useRouter } from 'next/router'
 
 import VersionContext from '../version-context'
@@ -7,6 +9,8 @@ import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
 import { getLink, getMinorVersionTitle } from 'lib/util'
 
 const SidebarSelectors: FunctionComponent = () => {
+  const { t } = useTranslation('common')
+
   // get from the context
   const { major, minor, file, versions, tags } = useContext(VersionContext)
 
@@ -26,7 +30,7 @@ const SidebarSelectors: FunctionComponent = () => {
     }
     let path = `${major}/${minor}`
 
-    const title = getMinorVersionTitle([ major, minor ], tags)
+    const title = getMinorVersionTitle([ major, minor ], tags, t)
     options.push(<option key={`version-${major}-${minor}`} value={path}>{title}</option>)
   }
 
@@ -53,13 +57,13 @@ const SidebarSelectors: FunctionComponent = () => {
   return (
     <div className='flex flex-row'>
       <div className='w-1/2'>
-        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='version'>Version</label>
+        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='version'>{t('component.sidebar.version_title')}</label>
         <select value={`${major}/${minor}`} id='version' onChange={onVersionChange} className='block w-full leading-4 form-select text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'>
           {options}
         </select>
       </div>
       <div className='w-1/2 ml-4'>
-        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='file'>File</label>
+        <label className='block text-sm font-bold mb-1 sr-only' htmlFor='file'>{t('component.sidebar.file_title')}</label>
         {files && (
           <select value={file} id='file' onChange={onFileChange} className='block w-full leading-4 form-select text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'>
             {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
