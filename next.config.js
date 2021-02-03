@@ -8,7 +8,7 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'zh'],
   },
   async redirects () {
     const { stable, beta } = await getTags()
