@@ -73,19 +73,19 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   let description = ''
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
-    title = t('page.docs.website_title_untagged', { title: documentTitle, version })
+    title = t('page.docs.website_title_untagged', { title: documentTitle, version }) + ' | bedrock.dev'
     description = t('page.docs.website_description_untagged', { title: documentTitle, version })
 
     // custom titles for version tag
     if (versionTag) {
       switch (versionTag) {
         case Tags.Stable: {
-          title = t('page.docs.website_title_tagged_stable', { title: documentTitle })
+          title = t('page.docs.website_title_tagged_stable', { title: documentTitle }) + ' | bedrock.dev'
           description = t('page.docs.website_description_tagged_stable', { title: documentTitle })
           break
         }
         case Tags.Beta: {
-          title = t('page.docs.website_title_tagged_beta', { title: documentTitle })
+          title = t('page.docs.website_title_tagged_beta', { title: documentTitle }) + ' | bedrock.dev'
           description = t('page.docs.website_description_tagged_beta', { title: documentTitle })
           break
         }

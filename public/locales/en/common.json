@@ -13,11 +13,11 @@
     },
     "docs": {
       "website_title_loading": "Loading...",
-      "website_title_untagged": "{{title}} Documentation | {{version}} | bedrock.dev",
+      "website_title_untagged": "{{title}} Documentation | {{version}}",
       "website_description_untagged": "Minecraft Bedrock {{title}} Documentation Version {{version}}",
-      "website_title_tagged_stable": "{{title}} Documentation | bedrock.dev",
+      "website_title_tagged_stable": "{{title}} Documentation",
       "website_description_tagged_stable": "Minecraft Bedrock {{title}} Documentation",
-      "website_title_tagged_beta": "Beta {{title}} Documentation | bedrock.dev",
+      "website_title_tagged_beta": "Beta {{title}} Documentation",
       "website_description_tagged_beta": "Minecraft Bedrock Beta {{title}} Documentation"
     }
   },
