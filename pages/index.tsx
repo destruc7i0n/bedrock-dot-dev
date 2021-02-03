@@ -41,7 +41,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   const versions = transformInbound(bedrockVersions)
 
   return (
-    <Layout title='bedrock.dev' description='Minecraft Bedrock Documentation'>
+    <Layout title='bedrock.dev' description={t('page.home.website_description')}>
       <div>
         <div className='bg-gray-50 dark:bg-dark-gray-950 border-b border-gray-200 dark:border-dark-gray-800'>
           <Navbar />
