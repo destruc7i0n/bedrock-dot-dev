@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
+import path from 'path'
+
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -219,6 +221,8 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     Log.info('Done processing ' + logLinkColor(path))
   }
 
+  // ensure the path exists
+  path.resolve('./public/locales')
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']) },
     revalidate: 60 * 60, // every 1 hour
