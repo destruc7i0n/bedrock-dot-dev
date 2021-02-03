@@ -4,11 +4,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const getTags = require('./scripts/lib/tags')
 
+const locales = ['en', 'zh']
+
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh'],
+    locales,
   },
   async redirects () {
     const { stable, beta } = await getTags()
