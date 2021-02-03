@@ -12,7 +12,7 @@ class BedrockDevDocument extends Document {
 
   render() {
     return (
-      <Html lang='en'>
+      <Html>
         <Head>
           <meta charSet='utf-8' />
           <link rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png' />
