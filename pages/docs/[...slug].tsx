@@ -146,14 +146,28 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
     const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
 
+    const [ , stableMajor, stableMinor ] = stableVersionParts
+
     for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
       for (let file of files) {
         file = encodeURI(file)
         const version = [ major, minor ]
 
-        const versionParts = getVersionParts(major)
+        const versionParts = getVersionParts(minor)
 
-        let shouldPreload = versionParts[1] >= stableVersionParts[1]
+        const [ , verMajor, verMinor ] = versionParts
+
+        let shouldPreload = false
+        if (verMajor >= stableMajor) {
+          if (verMajor === stableMajor) {
+            // generate if the minor is more than that of the stable
+            shouldPreload = verMinor >= stableMinor
+          } else {
+            // generate if of a greater version than stable (ex. 1.17 and stable is 1.16)
+            shouldPreload = true
+          }
+        }
+        if (shouldPreload) console.log('pre-loading', version)
 
         // handle stable and beta routes
         if (areVersionsEqual(version, tags[Tags.Stable])) {
@@ -233,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
   path.resolve('./public/locales')
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(localeVal, ['common']), },
-    revalidate: 60 * 60, // every 1 hour
+    revalidate: 60 * 10, // every 10 minutes
   }
 }
 
