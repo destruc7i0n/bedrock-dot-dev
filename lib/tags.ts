@@ -1,4 +1,6 @@
-import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './github/constants'
+import { RAW_GITHUB_URL } from './github/constants'
+
+import { getRepository, Locale } from './i18n'
 
 export enum Tags {
   Stable = 'stable',
@@ -9,8 +11,9 @@ export type TagsResponse = {
   [tag in Tags]: string[]
 }
 // fetch the tags file from the repository
-export const getTags = async (locale: string): Promise<TagsResponse> => {
+export const getTags = async (locale: Locale): Promise<TagsResponse> => {
   // fetch the tags from the server
-  const tags = await fetch(`${RAW_GITHUB_URL}/${REPO_NAME}/${REPO_TAG}/tags.json`)
+  const repo = getRepository(locale)
+  const tags = await fetch(`${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`)
   return await tags.json()
 }

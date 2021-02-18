@@ -36,6 +36,7 @@ import {
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
+import { getLocale, Locale } from 'lib/i18n'
 
 // extract type from inside a promise
 type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
@@ -135,7 +136,11 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: PathsType = []
-  for (let locale of locales || []) {
+  for (let localeVal of locales || []) {
+    const locale = getLocale(localeVal)
+
+    const nextLocaleParam = locale !== Locale.English ? { locale } : {}
+
     const bedrockVersions = await allFilesList(locale)
     const tags = await getTags(locale)
 
@@ -152,15 +157,15 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
         // handle stable and beta routes
         if (areVersionsEqual(version, tags[Tags.Stable])) {
-          paths.push({ params: {slug: ['stable', file]} })
+          paths.push({ params: {slug: ['stable', file]}, ...nextLocaleParam })
           shouldPreload = true
         } else if (areVersionsEqual(version, tags[Tags.Beta])) {
-          paths.push({ params: {slug: ['beta', file]} })
+          paths.push({ params: {slug: ['beta', file]}, ...nextLocaleParam })
           shouldPreload = true
         }
 
         if (shouldPreload) {
-          paths.push({params: {slug: [major, minor, file]}})
+          paths.push({ params: {slug: [major, minor, file]}, ...nextLocaleParam })
         }
       }
     }
@@ -169,8 +174,8 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   return { paths, fallback: 'blocking' }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
-  if (!locale) locale = 'en'
+export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal }) => {
+  const locale = getLocale(localeVal)
 
   let html: string | null = null
   let displayHtml: string | null = null
@@ -227,7 +232,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   // ensure the path exists
   path.resolve('./public/locales')
   return {
-    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']) },
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(localeVal, ['common']), },
     revalidate: 60 * 60, // every 1 hour
   }
 }

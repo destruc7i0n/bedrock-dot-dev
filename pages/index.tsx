@@ -14,6 +14,7 @@ import DocSearch from 'components/docsearch'
 import { getTags, TagsResponse } from 'lib/tags'
 import { allFilesList } from 'lib/versions'
 import { transformInbound, TransformedOutbound, transformOutbound } from 'lib/bedrock-versions-transformer'
+import { getLocale } from '../lib/i18n'
 
 type Props = {
   bedrockVersions: TransformedOutbound
@@ -80,12 +81,13 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   // transform to "compressed" version
-  const bedrockVersions = transformOutbound(await allFilesList())
-  const tags = await getTags()
+  const locale = getLocale(localeVal)
+  const bedrockVersions = transformOutbound(await allFilesList(locale))
+  const tags = await getTags(locale)
 
-  return { props: { bedrockVersions, tags, ...await serverSideTranslations(locale, ['common']), } }
+  return { props: { bedrockVersions, tags, ...await serverSideTranslations(localeVal, ['common']), } }
 }
 
 export default IndexPage

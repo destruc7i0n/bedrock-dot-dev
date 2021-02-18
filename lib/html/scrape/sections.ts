@@ -51,7 +51,10 @@ const getSections = (html: string, sections: string[]) => {
     if (sectionContent) {
       const content = getFromTitle(sectionContent)
       // make into the format for the sidebar
-      resp[section] = content.map((c) => ({ title: c, id: c }))
+      resp[section] = {
+        header: { title: section, id: section },
+        elements: content.map((c) => ({title: c, id: c}))
+      }
     }
   }
 

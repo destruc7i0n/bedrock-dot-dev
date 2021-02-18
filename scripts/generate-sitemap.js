@@ -22,7 +22,7 @@ const main = async () => {
   })
 
   const staticFilePath = path.resolve('public/static/docs.json')
-  const versions = JSON.parse(fs.readFileSync(staticFilePath).toString())
+  const versions = JSON.parse(fs.readFileSync(staticFilePath).toString())['en']
   const tags = await getTags()
 
   for (let tag of Object.keys(tags)) {

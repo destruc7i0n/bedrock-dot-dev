@@ -3,11 +3,16 @@ import { GitHubTreeResponse, listAllFilesFromRepo } from './github/api'
 import Log from './log'
 
 import { checkCache, setCache } from './versions-cache'
+import { Locale } from './i18n'
 
 export interface BedrockVersions {
   [key: string]: {
     [key: string]: string[]
   }
+}
+
+export type BedrockVersionsFile = {
+  [key in Locale]?: BedrockVersions
 }
 
 function formatTree (resp: GitHubTreeResponse): BedrockVersions {
@@ -45,8 +50,8 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
   return versions
 }
 
-const getFormattedFilesList = async () => {
-  const content = await listAllFilesFromRepo()
+const getFormattedFilesList = async (locale: Locale) => {
+  const content = await listAllFilesFromRepo(locale)
   if (!(content instanceof Error)) return formatTree(content)
   else {
     Log.error('Could not list all files!', content.toString())
@@ -54,20 +59,23 @@ const getFormattedFilesList = async () => {
   }
 }
 
-const allFilesList = async (locale: string) => {
+const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
   // only use local cache in dev
   const check = checkCache()
   if (check)
-    return check
+    return check[locale] ?? {}
   else {
     if (process.env.NODE_ENV === 'production') {
       Log.error('Could not load the docs.json from cache!')
       return {}
     } else {
+      let file: BedrockVersionsFile = {}
       // console.log('Fetching files list')
-      const files = await getFormattedFilesList()
-      setCache(files)
-      return files
+      for (const locale of Object.values(Locale)) {
+        file[locale] = await getFormattedFilesList(locale)
+      }
+      setCache(file)
+      return file[locale] ?? {}
     }
   }
 }
