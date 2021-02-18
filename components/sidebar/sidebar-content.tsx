@@ -42,7 +42,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
       // if there is a hash open the heading which contains the hash on load
       const heading = Object.keys(sidebar)
         .find((h) =>
-          sidebar[h].find((el) => el.id === hash.substring(1))
+          sidebar[h].elements.find((el) => el.id === hash.substring(1))
         )
       if (heading && !open[heading]) setHeadingOpen(heading, true)
     }
@@ -79,16 +79,17 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
 
     const keys = Object.keys(sidebar)
     for (let key of keys) {
+      const el = sidebar[key]
       // check if the key includes the search term by chance
       if (key.toLowerCase().includes(search)) {
-        if (!filteredSidebar[key]) filteredSidebar[key] = []
+        if (!filteredSidebar[key]) filteredSidebar[key] = { header: el.header, elements: [] }
       }
 
-      for (let id of sidebar[key]) {
+      for (let id of el.elements) {
         if (id.title.toLowerCase().includes(search) || id.id.includes(search)) {
-          if (!filteredSidebar[key]) filteredSidebar[key] = []
+          if (!filteredSidebar[key]) filteredSidebar[key] = { header: el.header, elements: [] }
 
-          filteredSidebar[key].push(id)
+          filteredSidebar[key].elements.push(id)
         }
       }
     }
@@ -107,25 +108,26 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
 
   return (
     <div className='flex-1 flex flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8 h-0' ref={sidebarRef}>
-      {Object.keys(sidebar).map((header, index) => {
+      {Object.keys(sidebar).map((id, index) => {
+        const { header, elements } = sidebar[id]
         return (
           <SidebarGroupTitle
             searching={!!search}
             key={`${file}-title-${index}`}
-            open={open[header]}
-            setOpen={(open) => setHeadingOpen(header, open)}
-            title={header}
-            id={header}
+            open={open[header.id]}
+            setOpen={(open) => setHeadingOpen(header.id, open)}
+            title={header.title}
+            id={header.id}
             hash={hash}
           >
-            {sidebar[header].map((item, index) =>
+            {elements.map((item, index) =>
               <SidebarGroupItem
                 key={`${file}-item-${index}-${item.id}`}
                 id={item.id}
                 title={item.title}
                 hash={hash}
                 // keep the header containing this one open on click (while searching)
-                onClick={() => setHeadingOpen(header, true)}
+                onClick={() => setHeadingOpen(header.id, true)}
               />
             )}
           </SidebarGroupTitle>

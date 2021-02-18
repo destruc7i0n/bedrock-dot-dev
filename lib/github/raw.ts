@@ -15,7 +15,7 @@ async function getError(res: Response): Promise<Error> {
   return new Error(`GitHub raw download error (${res.status}): ${errorText}`)
 }
 
-export const getRawFileFromGitHub = async (path: string): Promise<string> => {
+export const getRawFileFromGitHub = async (path: string, locale: string): Promise<string> => {
   const url = RAW_GITHUB_URL + path
   Log.info(`Fetching ${logLinkColor(path)}`)
   const res = await fetch(url)
@@ -24,10 +24,10 @@ export const getRawFileFromGitHub = async (path: string): Promise<string> => {
   throw await getError(res)
 }
 
-export const getRawFileFromRepo = async (path: string) => {
-  return getRawFileFromGitHub(`/${REPO_NAME}/${REPO_TAG}/${path}`)
+export const getRawFileFromRepo = async (path: string, locale: string) => {
+  return getRawFileFromGitHub(`/${REPO_NAME}/${REPO_TAG}/${path}`, locale)
 }
 
-export const getDocsFilesFromRepo = async (path: string) => {
-  return getRawFileFromRepo(path + '.html')
+export const getDocsFilesFromRepo = async (path: string, locale: string) => {
+  return getRawFileFromRepo(path + '.html', locale)
 }

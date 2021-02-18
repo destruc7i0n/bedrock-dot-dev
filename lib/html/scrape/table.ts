@@ -3,21 +3,25 @@ import Log from '../../log'
 import { SidebarStructureElement } from '../../../components/sidebar'
 
 import { TABLE_MATCH, TD_COMPONENT_ID_MATCH } from '../regex'
+import { SidebarStructureGroup } from '../../../components/sidebar/sidebar';
 
 export const getTable = (html: string, id: string, tagNum: number) => {
   const tableRegex =
-    `<h${tagNum}><p id="${id}">${id}<\/p><\/h${tagNum}>[^]*?` + TABLE_MATCH.source
+    `<h${tagNum}><p id="${id}">(.*?)<\/p><\/h${tagNum}>[^]*?` + TABLE_MATCH.source
 
   const match = new RegExp(tableRegex)
   const matchResult = html.match(match)
-  return matchResult && matchResult[0] ? matchResult[0] : null
+  return {
+    title: matchResult?.[1],
+    table: matchResult?.[2],
+  }
 }
 
 const scrapeTable = (html: string, id: string) => {
   let elements: SidebarStructureElement[] = []
 
   // this needs to be this disgusting to work for the older pages
-  const table = getTable(html, id, 2)
+  const { title, table } = getTable(html, id, 2)
 
   // match all the elements of the table
   if (table) {
@@ -29,25 +33,32 @@ const scrapeTable = (html: string, id: string) => {
       })
   }
 
-  return elements
+  return { title, elements }
 }
 
-export const getComponentsList = (html: string): SidebarStructureElement[] => {
+export const getComponentsList = (html: string): SidebarStructureGroup => {
   Log.info('Generating components list...')
+
+  const componentsScrape = scrapeTable(html, 'Components')
   const components = [
-    ...scrapeTable(html, 'Components'),
-    ...scrapeTable(html, 'Attributes'),
-    ...scrapeTable(html, 'Properties')
+    ...componentsScrape.elements,
+    ...scrapeTable(html, 'Attributes').elements,
+    ...scrapeTable(html, 'Properties').elements,
   ]
   Log.info(`Found ${components.length} components`)
-  return components
+
+  return {
+    header: { id: 'Components', title: componentsScrape.title ?? '' },
+    elements: components,
+  }
 }
 
-export const getAIGoals = (html: string): SidebarStructureElement[] => {
+export const getAIGoals = (html: string): SidebarStructureGroup => {
   Log.info('Generating AI Goals list...')
-  const goals = [
-    ...scrapeTable(html, 'AI Goals')
-  ]
-  Log.info(`Found ${goals.length} AI goals`)
-  return goals
+  const scrape = scrapeTable(html, 'AI Goals')
+  Log.info(`Found ${scrape.elements.length} AI goals`)
+  return {
+    header: { id: 'AI Goals', title: scrape.title ?? '' },
+    elements: scrape.elements,
+  }
 }

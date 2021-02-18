@@ -54,7 +54,7 @@ const getFormattedFilesList = async () => {
   }
 }
 
-const allFilesList = async () => {
+const allFilesList = async (locale: string) => {
   // only use local cache in dev
   const check = checkCache()
   if (check)

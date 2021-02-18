@@ -133,34 +133,35 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const bedrockVersions = await allFilesList()
-  const tags = await getTags()
-
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: PathsType = []
+  for (let locale of locales || []) {
+    const bedrockVersions = await allFilesList(locale)
+    const tags = await getTags(locale)
 
-  const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
+    const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
 
-  for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
-    for (let file of files) {
-      file = encodeURI(file)
-      const version = [ major, minor ]
+    for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
+      for (let file of files) {
+        file = encodeURI(file)
+        const version = [ major, minor ]
 
-      const versionParts = getVersionParts(major)
+        const versionParts = getVersionParts(major)
 
-      let shouldPreload = versionParts[1] >= stableVersionParts[1]
+        let shouldPreload = versionParts[1] >= stableVersionParts[1]
 
-      // handle stable and beta routes
-      if (areVersionsEqual(version, tags[Tags.Stable])) {
-        paths.push({ params: {slug: ['stable', file]} })
-        shouldPreload = true
-      } else if (areVersionsEqual(version, tags[Tags.Beta])) {
-        paths.push({ params: {slug: ['beta', file]} })
-        shouldPreload = true
-      }
+        // handle stable and beta routes
+        if (areVersionsEqual(version, tags[Tags.Stable])) {
+          paths.push({ params: {slug: ['stable', file]} })
+          shouldPreload = true
+        } else if (areVersionsEqual(version, tags[Tags.Beta])) {
+          paths.push({ params: {slug: ['beta', file]} })
+          shouldPreload = true
+        }
 
-      if (shouldPreload) {
-        paths.push({params: {slug: [major, minor, file]}})
+        if (shouldPreload) {
+          paths.push({params: {slug: [major, minor, file]}})
+        }
       }
     }
   }
@@ -169,6 +170,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  if (!locale) locale = 'en'
+
   let html: string | null = null
   let displayHtml: string | null = null
   let parsedData: ParseHtmlResponse | null = null
@@ -179,8 +182,8 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   let version: string[] = []
 
   // transform to "compressed" version
-  const bedrockVersions = transformOutbound(await allFilesList())
-  const tags = await getTags()
+  const bedrockVersions = transformOutbound(await allFilesList(locale))
+  const tags = await getTags(locale)
 
   // [ major, minor, file ]
   if (typeof slug === 'object' && slug.length >= 2) {
@@ -206,7 +209,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     const path = version.join('/')
 
     try {
-      html = await getDocsFilesFromRepo(path)
+      html = await getDocsFilesFromRepo(path, locale)
     } catch (e) {
       Log.error(`Could not get file for "${path}"!`)
       return { notFound: true }

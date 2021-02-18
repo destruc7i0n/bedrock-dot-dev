@@ -37,7 +37,7 @@ export const highlightHtml = (html: string, file: string) => {
       break
     }
     case 'Schemas':
-      case 'Fogs': {
+    case 'Fogs': {
       html = highlightMarkdownCode(html)
       break
     }

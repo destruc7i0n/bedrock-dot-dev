@@ -1,6 +1,6 @@
 import Log from './log'
 
-import { SidebarStructure } from '../components/sidebar'
+import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
 import { getTitle, TitleResponse } from './html/scrape/title'
 import { getAIGoals, getComponentsList }  from './html/scrape/table'
 import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from './html/regex'
@@ -16,8 +16,8 @@ const getSidebarContent = (html: string): SidebarStructure => {
     const inner = table[1]
     const lines = inner.split('\n')
 
-    // the current title of the group
-    let currentTitle = ''
+    // the current id of the group
+    let currentId = ''
     for (let line of lines) {
       // get the data from the link on the line
       const link = line.match(LINK_MATCH)
@@ -28,19 +28,21 @@ const getSidebarContent = (html: string): SidebarStructure => {
         // if this is a title, then update the current title
         let isTitle = false
         if (TH_MATCH.test(line)) {
-          currentTitle = title
+          currentId = id
           isTitle = true
         }
 
-        // initialize title object
-        if (!format[currentTitle]) format[currentTitle] = []
+        const el: SidebarStructureElement = {
+          id: removeHashIfNeeded(id),
+          title: removeHashIfNeeded(title),
+        }
 
-        // add the link to the current title
+        // get the current title
+        if (!format[currentId]) format[currentId] = { header: el, elements: [] }
+
+        // add the link to the current id
         if (!isTitle && title && title.length && id && id.length) {
-          format[currentTitle].push({
-            id: removeHashIfNeeded(id),
-            title: removeHashIfNeeded(title)
-          })
+          format[currentId].elements.push(el)
         }
       }
     }
@@ -63,9 +65,11 @@ export const extractDataFromHtml = (html: string, file: string): ParseHtmlRespon
   if (file && file === 'Entities') {
     const componentsList = getComponentsList(html)
     // only add the sidebar components entry if there are any found
-    if (componentsList.length) {
-      sidebarContent['Components'] =
-        componentsList.sort((a, b) => a.title.localeCompare(b.title))
+    if (componentsList.elements.length) {
+      sidebarContent['Components'] = {
+        ...componentsList,
+        elements: componentsList.elements.sort((a, b) => a.title.localeCompare(b.title))
+      }
       // order the object and bring the components list to the top
       sidebarContent = {
         'Components': sidebarContent['Components'],

@@ -18,8 +18,13 @@ export interface SidebarStructureElement {
   id: string
 }
 
-export interface SidebarStructure {
-  [key: string]: SidebarStructureElement[]
+export interface SidebarStructureGroup {
+  header: SidebarStructureElement
+  elements: SidebarStructureElement[]
+}
+
+export type SidebarStructure = {
+  [key: string]: SidebarStructureGroup
 }
 
 type Props = {
