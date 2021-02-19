@@ -16,7 +16,7 @@ const HomepageNavbar = () => {
             </div>
           </a>
         </Link>
-        <div className='flex items-end'>
+        <div className='flex items-center'>
           <a className='ml-6 lg:ml-10 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark-hover:text-gray-100 transition duration-150 ease-in-out' href='https://wiki.bedrock.dev' target='_blank' rel='noopener'>{t('component.header.wiki_link')}</a>
           <Link href='/packs'>
             <a className='ml-6 lg:ml-10 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark-hover:text-gray-100 transition duration-150 ease-in-out'>{t('component.header.packs_link')}</a>
