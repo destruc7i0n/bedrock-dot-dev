@@ -167,7 +167,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
             shouldPreload = true
           }
         }
-        if (shouldPreload) console.log('pre-loading', version)
 
         // handle stable and beta routes
         if (areVersionsEqual(version, tags[Tags.Stable])) {

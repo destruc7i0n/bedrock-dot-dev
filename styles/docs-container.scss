@@ -48,9 +48,8 @@
         overflow-x: visible;
     }
 
-    tbody {
-      @screen lg-max {
-        display: table;
+    @screen lg-max {
+      tbody {
         width: 100%;
         @apply border;
       }
@@ -59,19 +58,21 @@
 
   /* Thanks, Jannis! */
   td, th {
-    border:none;
-    border-width:1px;
-    padding:6px;
-    border-color:#656e73;
-    background-color:#ddfbdd;
+    border: none;
+    border-width: 1px;
+    padding: 6px;
+    border-color: #656e73;
+    background-color: #ddfbdd;
   }
 
   th {
-    background-color:#a5f1b2;
+    background-color: #a5f1b2;
   }
 
   .dark & {
-    td, th {
+    td, th, tbody {
+      border-style: solid;
+      @apply border;
       @apply border-dark-gray-700;
     }
 
