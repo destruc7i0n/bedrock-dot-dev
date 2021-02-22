@@ -8,7 +8,7 @@
     "start": "next start",
     "sitemap": "node scripts/generate-sitemap.js",
     "generate-docs-file": "ts-node -P scripts/tsconfig.json scripts/generate-docs-manifest.ts",
-    "type-check": "tsc"
+    "type-check": "tsc --noEmit"
   },
   "resolutions": {
     "webpack": "^5.23.0"

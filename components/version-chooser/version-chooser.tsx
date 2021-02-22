@@ -67,7 +67,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   }
 
   let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
-  let minorVersions = Object.keys(versions?.[major]).sort(compareBedrockVersions)
+  let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
 
   // if the major version changes, set the minor to the latest minor from that major version
   useEffect(() => {
