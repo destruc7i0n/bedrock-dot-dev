@@ -7,6 +7,8 @@ export enum Tags {
   Beta = 'beta'
 }
 
+export const TagsValues: string[] = Object.keys(Tags).map(k => Tags[k as keyof typeof Tags])
+
 export type TagsResponse = {
   [tag in Tags]: string[]
 }

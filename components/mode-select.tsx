@@ -2,6 +2,8 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
+import cn from 'classnames'
+
 import { useTheme } from 'next-themes'
 
 enum Theme {
@@ -54,18 +56,22 @@ const themes = {
   },
 }
 
-const ModeSelect: FunctionComponent = () => {
+type Props = {
+  className?: string
+}
+
+const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   const { t } = useTranslation('common')
 
   const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { theme: hookTheme, setTheme } = useTheme()
 
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return null
+  let theme = !mounted ? Theme.System : hookTheme
 
   return (
-    <div className='relative dark:text-gray-200'>
+    <div className={cn('relative dark:text-gray-200', className)}>
       <label className='block text-sm font-bold mb-1 sr-only' htmlFor='mode'>Mode Select</label>
       <div className='absolute inset-y-0 left-0 pl-3 flex items-center'>
         <span className='leading-3'>

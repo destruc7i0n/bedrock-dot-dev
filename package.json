@@ -11,19 +11,19 @@
     "type-check": "tsc --noEmit"
   },
   "resolutions": {
-    "webpack": "^5.23.0"
+    "webpack": "^5.26.0"
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.7.2",
-    "autoprefixer": "^10.2.4",
-    "aws-sdk": "^2.847.0",
+    "autoprefixer": "^10.2.5",
+    "aws-sdk": "^2.863.0",
     "classnames": "^2.2.6",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
     "flat-cache": "^3.0.4",
-    "next": "^10.0.7",
-    "next-i18next": "^8.0.0-beta.4",
-    "next-themes": "^0.0.10",
+    "next": "^10.0.8",
+    "next-i18next": "^8.1.1",
+    "next-themes": "^0.0.12",
     "nprogress": "^0.2.0",
     "prismjs": "^1.23.0",
     "react": "^17.0.1",
@@ -34,21 +34,21 @@
     "tailwindcss-dark-mode": "^1.1.7"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^10.0.7",
+    "@next/bundle-analyzer": "^10.0.8",
     "@types/classnames": "^2.2.11",
     "@types/debounce": "^1.2.0",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^14.14.30",
+    "@types/node": "^14.14.34",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.3",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
     "@types/semver": "^7.3.4",
     "chalk": "^4.1.0",
     "isomorphic-unfetch": "^3.1.0",
     "postcss-preset-env": "^6.7.0",
     "ts-node": "^9.1.1",
-    "typescript": "4.1.5"
+    "typescript": "4.2.3"
   },
   "license": "MIT"
 }

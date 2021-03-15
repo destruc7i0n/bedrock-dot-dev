@@ -17,7 +17,9 @@
 
     .anchor {
       margin-top: -4rem;
-      display: inline-block;
+      padding-top: 4rem;
+      display: block;
+      visibility: hidden;
       position: absolute;
       width: 1px;
     }

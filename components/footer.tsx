@@ -5,15 +5,16 @@ import { useTranslation } from 'react-i18next'
 import cn from 'classnames'
 
 import ModeSelect from './mode-select'
+import LanguageSelect from './language-select'
 
 type Props = {
   darkClassName?: string
   dark?: boolean,
   outline?: boolean
-  modeSelect?: boolean
+  showToggles?: boolean
 }
 
-const Footer: FunctionComponent<Props> = ({ darkClassName = 'bg-dark-gray-950', dark = false, outline = true, modeSelect = true }) => {
+const Footer: FunctionComponent<Props> = ({ darkClassName = 'bg-dark-gray-950', dark = false, outline = true, showToggles = true }) => {
   const { t } = useTranslation('common')
   const darkClass = 'bg-gray-50 dark:' + darkClassName
 
@@ -42,8 +43,9 @@ const Footer: FunctionComponent<Props> = ({ darkClassName = 'bg-dark-gray-950', 
           </div>
         </div>
 
-        {modeSelect && <div className='mt-6 flex justify-center'>
+        {showToggles && <div className='mt-6 flex flex-col justify-center items-center'>
           <ModeSelect />
+          <LanguageSelect className='mt-2' />
         </div>}
       </div>
     </div>

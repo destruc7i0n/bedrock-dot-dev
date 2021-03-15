@@ -126,7 +126,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
               <DocsContainer html={html} loading={loading} />
             </div>
             <BackToTop />
-            {!loading && <Footer dark darkClassName='bg-dark-gray-975' modeSelect={false} outline />}
+            {!loading && <Footer dark darkClassName='bg-dark-gray-975' showToggles={false} outline />}
           </Layout>
         </SidebarContextProvider>
       </VersionContextProvider>
@@ -242,10 +242,10 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
     Log.info('Done processing ' + logLinkColor(path))
   }
 
-  // ensure the path exists
+  // ensure the path exists in serverless
   path.resolve('./public/locales')
   return {
-    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(localeVal, ['common']), },
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
     revalidate: 60 * 10, // every 10 minutes
   }
 }

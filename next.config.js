@@ -2,16 +2,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const getTags = require('./scripts/lib/tags')
+const { i18n } = require('./next-i18next.config')
 
-const locales = ['en', 'zh']
+const getTags = require('./scripts/lib/tags')
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  i18n: {
-    defaultLocale: 'en',
-    locales,
-  },
+  i18n,
   async redirects () {
     const { stable, beta } = await getTags()
 
