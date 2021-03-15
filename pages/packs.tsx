@@ -8,6 +8,7 @@ import S3 from 'aws-sdk/clients/s3'
 
 import Log from '../lib/log'
 import { compareBedrockVersions } from '../lib/util'
+import { getLocale } from '../lib/i18n'
 
 import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
@@ -75,7 +76,9 @@ type PackVersions = {
   [key: string]: [boolean, boolean]
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
+  const locale = getLocale(localeVal)
+
   const s3 = new S3({
     'accessKeyId': process.env.AWS_ACCESS_KEY_ID_BEDROCK,
     'secretAccessKey': process.env.AWS_SECRET_ACCESS_KEY_BEDROCK,
