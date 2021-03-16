@@ -64,7 +64,7 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
   return (
     <div className={cn('relative dark:text-gray-200', className)}>
       <label className='block text-sm font-bold mb-1 sr-only' htmlFor='mode'>Mode Select</label>
-      <select value={localeValue} onChange={({ target: { value } }) => setLocaleValue(value as Locale)} id='mode' className='leading-3 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-2 block'>
+      <select value={localeValue} onChange={({ target: { value } }) => setLocaleValue(value as Locale)} id='mode' className='leading-4 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-2 block'>
         <option value={Locale.English}>EN</option>
         <option value={Locale.Chinese}>中文</option>
       </select>
