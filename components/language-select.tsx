@@ -45,6 +45,7 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
 
   const [localeValue, setLocaleValue] = useState(router.locale ?? Locale.English)
 
+  // check for the same file in the other language and redirect if available
   useEffect(() => {
     (async () => {
       if (localeValue !== router.locale) {

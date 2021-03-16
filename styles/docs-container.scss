@@ -15,13 +15,12 @@
       }
     }
 
-    .anchor {
+    > span[id] {
       margin-top: -4rem;
       padding-top: 4rem;
       display: block;
-      visibility: hidden;
       position: absolute;
-      width: 1px;
+      visibility: hidden;
     }
 
     .anchor-link {

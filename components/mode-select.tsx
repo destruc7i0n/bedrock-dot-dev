@@ -68,7 +68,7 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
 
   useEffect(() => setMounted(true), [])
 
-  let theme = !mounted ? Theme.System : hookTheme
+  const theme = !mounted ? Theme.System : hookTheme
 
   return (
     <div className={cn('relative dark:text-gray-200', className)}>
