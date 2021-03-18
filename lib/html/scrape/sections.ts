@@ -13,7 +13,7 @@ const addAnchors = (html: string) => {
     return oneLine(`
       <h${headerNumber} class="anchored-heading">
         <span id="${id}"></span>
-        ${title}
+        <span>${title}</span>
         <a href="#${encoded}" tabindex="-1" class="anchor-link" aria-label="Anchor" aria-hidden="true">#</a>
       </h${headerNumber}>
     `)

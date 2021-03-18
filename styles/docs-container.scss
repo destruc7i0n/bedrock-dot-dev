@@ -11,7 +11,7 @@
 
     &:hover {
       .anchor-link {
-        opacity: 1;
+        visibility: visible;
       }
     }
 
@@ -24,7 +24,7 @@
     }
 
     .anchor-link {
-      opacity: 0;
+      visibility: hidden;
       margin-left: 0.25rem;
       user-select: none;
 
