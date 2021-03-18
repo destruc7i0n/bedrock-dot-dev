@@ -4,12 +4,13 @@ import Router from 'next/router'
 
 import { ThemeProvider } from 'next-themes'
 
+import { appWithTranslation } from 'next-i18next'
+
 import NProgress from 'nprogress'
 
 import * as analytics from 'lib/analytics'
 
 import 'styles/tailwind.scss'
-import 'styles/tailwind-utils.scss'
 import 'styles/app.scss'
 
 NProgress.configure({ showSpinner: false })
@@ -33,4 +34,4 @@ function App({ Component, pageProps }: AppProps) {
   )
 }
 
-export default App
+export default appWithTranslation(App)

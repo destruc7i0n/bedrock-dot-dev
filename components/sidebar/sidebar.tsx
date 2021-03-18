@@ -4,12 +4,14 @@ import { unstable_batchedUpdates } from 'react-dom'
 
 import cn from 'classnames'
 
-import ModeSelect from '../mode-select'
 import Selectors from './sidebar-selectors'
 import { SidebarContext } from './sidebar-context'
 import SidebarMask from './sidebar-mask'
 import SidebarContent from './sidebar-content'
 import SidebarFilter from './sidebar-filter'
+
+import ModeSelect from '../mode-select'
+import LanguageSelect from '../language-select'
 
 import { useIsMobile } from 'hooks/media-query'
 
@@ -18,8 +20,13 @@ export interface SidebarStructureElement {
   id: string
 }
 
-export interface SidebarStructure {
-  [key: string]: SidebarStructureElement[]
+export interface SidebarStructureGroup {
+  header: SidebarStructureElement
+  elements: SidebarStructureElement[]
+}
+
+export type SidebarStructure = {
+  [key: string]: SidebarStructureGroup
 }
 
 type Props = {
@@ -100,8 +107,9 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
         { loading ? loadingContent : (
           <>
             <SidebarContent search={filter} sidebar={sidebar} file={file} />
-            <div className='flex justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2'>
-              <ModeSelect />
+            <div className='flex flex-row justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2'>
+              <LanguageSelect />
+              <ModeSelect className='ml-2' />
             </div>
           </>
         ) }

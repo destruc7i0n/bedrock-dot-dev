@@ -45,7 +45,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
           { 'text-blue-600 hover:text-blue-500 dark:text-blue-500 dark-hover:text-blue-400': active,
             'hover:text-gray-900 dark-hover:text-gray-200': !active },
           'transition-all duration-75 ease-in-out'
-        )} href={`#${id}`}>{title}</a>
+        )} href={`#${encodeURIComponent(id)}`}>{title}</a>
         {hasChildren && (
           <div className={cn(
             'flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out',

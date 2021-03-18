@@ -3,7 +3,7 @@ import { getTable } from '../scrape/table'
 import { TD_MOLANG_QUERY_MATCH } from '../regex'
 
 export const addAnchorsToMoLangQueries = (html: string) => {
-  const table = getTable(html, 'List of Entity Queries', 1)
+  const { table } = getTable(html, 'List of Entity Queries', 1)
   let updatedTable = `${table}`
   if (table) {
     const rows = table.matchAll(TD_MOLANG_QUERY_MATCH)

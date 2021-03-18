@@ -3,11 +3,19 @@ import { GitHubTreeResponse, listAllFilesFromRepo } from './github/api'
 import Log from './log'
 
 import { checkCache, setCache } from './versions-cache'
+import { BedrockVersionsByLocale, groupVersionsByLocale, Locale } from './i18n'
 
 export interface BedrockVersions {
   [key: string]: {
     [key: string]: string[]
   }
+}
+
+export type BedrockVersionsFile = {
+  versions: {
+    [key in Locale]?: BedrockVersions
+  },
+  byLocale: BedrockVersionsByLocale
 }
 
 function formatTree (resp: GitHubTreeResponse): BedrockVersions {
@@ -45,8 +53,8 @@ function formatTree (resp: GitHubTreeResponse): BedrockVersions {
   return versions
 }
 
-const getFormattedFilesList = async () => {
-  const content = await listAllFilesFromRepo()
+const getFormattedFilesList = async (locale: Locale) => {
+  const content = await listAllFilesFromRepo(locale)
   if (!(content instanceof Error)) return formatTree(content)
   else {
     Log.error('Could not list all files!', content.toString())
@@ -54,20 +62,32 @@ const getFormattedFilesList = async () => {
   }
 }
 
-const allFilesList = async () => {
+export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
+  let file: BedrockVersionsFile = {
+    versions: {},
+    byLocale: {}
+  }
+  // console.log('Fetching files list')
+  for (const locale of Object.values(Locale)) {
+    file.versions[locale] = await getFormattedFilesList(locale)
+  }
+  file.byLocale = groupVersionsByLocale(file)
+  return file
+}
+
+const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
   // only use local cache in dev
   const check = checkCache()
   if (check)
-    return check
+    return check.versions[locale] ?? {}
   else {
     if (process.env.NODE_ENV === 'production') {
       Log.error('Could not load the docs.json from cache!')
       return {}
     } else {
-      // console.log('Fetching files list')
-      const files = await getFormattedFilesList()
-      setCache(files)
-      return files
+      const file = await getVersionsFile()
+      setCache(file)
+      return file.versions[locale] ?? {}
     }
   }
 }

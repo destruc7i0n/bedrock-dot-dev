@@ -1,7 +1,7 @@
 import { join } from 'path'
 
 import * as flatCache from 'flat-cache'
-import { BedrockVersions } from './versions'
+import { BedrockVersionsFile } from './versions'
 
 import Log from './log'
 
@@ -9,7 +9,7 @@ import Log from './log'
 const cacheDirectory = process.env.NODE_ENV === 'production' ? join('/tmp', '.cache') : ''
 
 // store ratelimited call as a file and fetch when needed
-const checkCache = (): BedrockVersions | undefined => {
+const checkCache = (): BedrockVersionsFile | undefined => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === 'production') {
     // @ts-ignore
@@ -27,14 +27,14 @@ const checkCache = (): BedrockVersions | undefined => {
       // difference in mins
       const difference = Math.round((currentTime.getTime() - cachedTime.getTime()) / 60000)
 
-      const files: BedrockVersions = cache.getKey('files')
+      const files: BedrockVersionsFile = cache.getKey('files')
       // update every 10 min
       if (difference < 10 && files) return files
     }
   }
 }
 
-const setCache = (files: BedrockVersions) => {
+const setCache = (files: BedrockVersionsFile) => {
   const cache = flatCache.create('versions', cacheDirectory)
   cache.setKey('timestamp', new Date().getTime())
   cache.setKey('files', files)

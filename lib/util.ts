@@ -23,10 +23,10 @@ export const getLink = (major: string, minor: string, file: string, tags: TagsRe
   return `/docs/${major}/${minor}/${file}`
 }
 
-export const getMinorVersionTitle = (version: string[], tags: TagsResponse) => {
+export const getMinorVersionTitle = (version: string[], tags: TagsResponse, t: (a: string) => string) => {
   let title = version[1]
-  if (areVersionsEqual(version, tags[Tags.Beta])) title += ' (Beta)'
-  if (areVersionsEqual(version, tags[Tags.Stable])) title += ' (Stable)'
+  if (areVersionsEqual(version, tags[Tags.Beta])) title += ` (${t('component.version_chooser.beta_string')})`
+  if (areVersionsEqual(version, tags[Tags.Stable])) title += ` (${t('component.version_chooser.stable_string')})`
   return title
 }
 

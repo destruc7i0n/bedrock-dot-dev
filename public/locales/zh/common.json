@@ -1,0 +1,65 @@
+{
+    "page": {
+        "home": {
+            "website_description": "Minecraft基岩版文档",
+            "subtitle": "Minecraft基岩版文档",
+            "search_placeholder": "搜索文档"
+        },
+        "packs": {
+            "website_title": "官方包",
+            "website_description": "Minecraft基岩版行为包和资源包模板存档",
+            "title": "模板包存档",
+            "subtitle": "这里是Mojang提供的默认模板包的存档。"
+        },
+        "docs": {
+            "website_title_loading": "加载中……",
+            "website_title_untagged": "{{title}}文档 | {{version}}",
+            "website_description_untagged": "Minecraft基岩版{{title}}文档 版本：{{version}}",
+            "website_title_tagged_stable": "{{title}}文档",
+            "website_description_tagged_stable": "Minecraft基岩版{{title}}文档",
+            "website_title_tagged_beta": "测试版{{title}}文档",
+            "website_description_tagged_beta": "Minecraft基岩版测试版{{title}}文档"
+        }
+    },
+    "component": {
+        "packs_page": {
+            "behaviours_link": "行为包",
+            "resources_link": "资源包"
+        },
+        "header": {
+            "wiki_link": "Wiki",
+            "packs_link": "官方包",
+            "discord_link": "Discord"
+        },
+        "search": {
+            "title": "搜索",
+            "focus_key": "(\"/\"键快速定位)"
+        },
+        "footer": {
+            "credits_prefix": "网站作者：",
+            "github": "GitHub",
+            "donate": "捐助",
+            "legal_mojang": "本网站不隶属于Mojang Studios"
+        },
+        "color_theme_select": {
+            "system": "跟随系统",
+            "dark": "暗色调",
+            "light": "亮色调"
+        },
+        "version_chooser": {
+            "title": "选择版本",
+            "major": "主版本号",
+            "minor": "子版本号",
+            "stable_string": "稳定版本",
+            "beta_string": "测试版本",
+            "tagged_version_title": "版本",
+            "view_all": "浏览所有版本",
+            "file_selection": "选择文件"
+        },
+        "sidebar": {
+            "filter_title": "过滤器",
+            "version_title": "版本",
+            "file_title": "文件"
+        }
+    }
+}

@@ -4,7 +4,7 @@ const getValidFiles = () => {
   let files = []
   let versions = {}
   try {
-    versions = JSON.parse(fs.readFileSync('./public/static/docs.json').toString())
+    versions = JSON.parse(fs.readFileSync('./public/static/docs.json').toString())['en']
   } catch (e) {
     return  files
   }

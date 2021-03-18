@@ -1,9 +1,14 @@
 import React, { FunctionComponent } from 'react'
 
+import path from 'path'
+
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Error from 'next/error'
+
+import { useTranslation } from 'react-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { extractDataFromHtml, ParseHtmlResponse } from 'lib/html'
 import { cleanHtmlForDisplay } from 'lib/html/clean'
@@ -31,6 +36,7 @@ import {
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
+import { getLocale, Locale } from 'lib/i18n'
 
 // extract type from inside a promise
 type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
@@ -45,6 +51,8 @@ type Props = {
 }
 
 const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedData, version }) => {
+  const { t } = useTranslation('common')
+
   const { isFallback, query: { slug } } = useRouter()
 
   let [ major, minor, file ] = (version || [ '', '', '' ])
@@ -64,24 +72,24 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   }
 
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
-  let title = 'Loading...'
+  let title = t('page.docs.website_title_loading')
   let description = ''
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
-    title = `${documentTitle} Documentation | ${version} | bedrock.dev`
-    description = `Minecraft Bedrock ${documentTitle} Documentation Version ${version}`
+    title = t('page.docs.website_title_untagged', { title: documentTitle, version }) + ' | bedrock.dev'
+    description = t('page.docs.website_description_untagged', { title: documentTitle, version })
 
     // custom titles for version tag
     if (versionTag) {
       switch (versionTag) {
         case Tags.Stable: {
-          title = `${documentTitle} Documentation | bedrock.dev`
-          description = `Minecraft Bedrock ${documentTitle} Documentation`
+          title = t('page.docs.website_title_tagged_stable', { title: documentTitle }) + ' | bedrock.dev'
+          description = t('page.docs.website_description_tagged_stable', { title: documentTitle })
           break
         }
         case Tags.Beta: {
-          title = `Beta ${documentTitle} Documentation | bedrock.dev`
-          description = `Minecraft Bedrock Beta ${documentTitle} Documentation`
+          title = t('page.docs.website_title_tagged_beta', { title: documentTitle }) + ' | bedrock.dev'
+          description = t('page.docs.website_description_tagged_beta', { title: documentTitle })
           break
         }
         default: break
@@ -118,7 +126,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
               <DocsContainer html={html} loading={loading} />
             </div>
             <BackToTop />
-            {!loading && <Footer dark darkClassName='bg-dark-gray-975' modeSelect={false} outline />}
+            {!loading && <Footer dark darkClassName='bg-dark-gray-975' showToggles={false} outline />}
           </Layout>
         </SidebarContextProvider>
       </VersionContextProvider>
@@ -126,34 +134,52 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const bedrockVersions = await allFilesList()
-  const tags = await getTags()
-
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: PathsType = []
+  for (let localeVal of locales || []) {
+    const locale = getLocale(localeVal)
 
-  const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
+    const nextLocaleParam = locale !== Locale.English ? { locale } : {}
 
-  for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
-    for (let file of files) {
-      file = encodeURI(file)
-      const version = [ major, minor ]
+    const bedrockVersions = await allFilesList(locale)
+    const tags = await getTags(locale)
 
-      const versionParts = getVersionParts(major)
+    const stableVersionParts = getVersionParts(tags[Tags.Stable][1])
 
-      let shouldPreload = versionParts[1] >= stableVersionParts[1]
+    const [ , stableMajor, stableMinor ] = stableVersionParts
 
-      // handle stable and beta routes
-      if (areVersionsEqual(version, tags[Tags.Stable])) {
-        paths.push({ params: {slug: ['stable', file]} })
-        shouldPreload = true
-      } else if (areVersionsEqual(version, tags[Tags.Beta])) {
-        paths.push({ params: {slug: ['beta', file]} })
-        shouldPreload = true
-      }
+    for (let [ major, minor, files ] of bedrockVersionsInOrder(bedrockVersions)) {
+      for (let file of files) {
+        file = encodeURI(file)
+        const version = [ major, minor ]
 
-      if (shouldPreload) {
-        paths.push({params: {slug: [major, minor, file]}})
+        const versionParts = getVersionParts(minor)
+
+        const [ , verMajor, verMinor ] = versionParts
+
+        let shouldPreload = false
+        if (verMajor >= stableMajor) {
+          if (verMajor === stableMajor) {
+            // generate if the minor is more than that of the stable
+            shouldPreload = verMinor >= stableMinor
+          } else {
+            // generate if of a greater version than stable (ex. 1.17 and stable is 1.16)
+            shouldPreload = true
+          }
+        }
+
+        // handle stable and beta routes
+        if (areVersionsEqual(version, tags[Tags.Stable])) {
+          paths.push({ params: {slug: ['stable', file]}, ...nextLocaleParam })
+          shouldPreload = true
+        } else if (areVersionsEqual(version, tags[Tags.Beta])) {
+          paths.push({ params: {slug: ['beta', file]}, ...nextLocaleParam })
+          shouldPreload = true
+        }
+
+        if (shouldPreload) {
+          paths.push({ params: {slug: [major, minor, file]}, ...nextLocaleParam })
+        }
       }
     }
   }
@@ -161,7 +187,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: 'blocking' }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal }) => {
+  const locale = getLocale(localeVal)
+
   let html: string | null = null
   let displayHtml: string | null = null
   let parsedData: ParseHtmlResponse | null = null
@@ -172,8 +200,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   let version: string[] = []
 
   // transform to "compressed" version
-  const bedrockVersions = transformOutbound(await allFilesList())
-  const tags = await getTags()
+  const bedrockVersions = transformOutbound(await allFilesList(locale))
+  const tags = await getTags(locale)
 
   // [ major, minor, file ]
   if (typeof slug === 'object' && slug.length >= 2) {
@@ -199,7 +227,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const path = version.join('/')
 
     try {
-      html = await getDocsFilesFromRepo(path)
+      html = await getDocsFilesFromRepo(path, locale)
     } catch (e) {
       Log.error(`Could not get file for "${path}"!`)
       return { notFound: true }
@@ -214,9 +242,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     Log.info('Done processing ' + logLinkColor(path))
   }
 
+  // ensure the path exists in serverless
+  path.resolve('./public/locales')
   return {
-    props: { html: displayHtml, bedrockVersions, tags, parsedData, version },
-    revalidate: 60 * 60, // every 1 hour
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
+    revalidate: 60 * 10, // every 10 minutes
   }
 }
 

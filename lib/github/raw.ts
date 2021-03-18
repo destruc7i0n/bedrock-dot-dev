@@ -1,6 +1,8 @@
 import Log, { logLinkColor } from '../log'
 
-import { RAW_GITHUB_URL, REPO_NAME, REPO_TAG } from './constants'
+import { RAW_GITHUB_URL } from './constants'
+
+import { getRepository, Locale } from '../i18n'
 
 export function getErrorText(res: Response) {
   try {
@@ -24,10 +26,11 @@ export const getRawFileFromGitHub = async (path: string): Promise<string> => {
   throw await getError(res)
 }
 
-export const getRawFileFromRepo = async (path: string) => {
-  return getRawFileFromGitHub(`/${REPO_NAME}/${REPO_TAG}/${path}`)
+export const getRawFileFromRepo = async (path: string, locale: Locale) => {
+  const repo = getRepository(locale)
+  return getRawFileFromGitHub(`/${repo.name}/${repo.tag}/${path}`)
 }
 
-export const getDocsFilesFromRepo = async (path: string) => {
-  return getRawFileFromRepo(path + '.html')
+export const getDocsFilesFromRepo = async (path: string, locale: Locale) => {
+  return getRawFileFromRepo(path + '.html', locale)
 }

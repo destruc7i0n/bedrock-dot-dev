@@ -1,0 +1,70 @@
+{
+  "page": {
+    "home": {
+      "website_description": "Minecraft Bedrock Documentation",
+      "subtitle": "Minecraft Bedrock Edition Documentation",
+      "search_placeholder": "Search the documentation"
+    },
+    "packs": {
+      "website_title": "Packs",
+      "website_description": "Minecraft Bedrock Template Behavior and Resource Packs archive",
+      "title": "Template Packs Archive",
+      "subtitle": "This is an archive of the default template packs provided by Mojang."
+    },
+    "docs": {
+      "website_title_loading": "Loading...",
+      "website_title_untagged": "{{title}} Documentation | {{version}}",
+      "website_description_untagged": "Minecraft Bedrock {{title}} Documentation Version {{version}}",
+      "website_title_tagged_stable": "{{title}} Documentation",
+      "website_description_tagged_stable": "Minecraft Bedrock {{title}} Documentation",
+      "website_title_tagged_beta": "Beta {{title}} Documentation",
+      "website_description_tagged_beta": "Minecraft Bedrock Beta {{title}} Documentation"
+    }
+  },
+  "component": {
+    "packs_page": {
+      "behaviours_link": "Behaviours",
+      "resources_link": "Resources"
+    },
+    "header": {
+      "wiki_link": "Wiki",
+      "packs_link": "Packs",
+      "discord_link": "Discord"
+    },
+
+    "search": {
+      "title": "Search",
+      "focus_key": "(\"/\" to focus)"
+    },
+
+    "footer": {
+      "credits_prefix": "Website by",
+      "github": "GitHub",
+      "donate": "Donate",
+      "legal_mojang": "This website is not affiliated with Mojang Studios"
+    },
+
+    "color_theme_select": {
+      "system": "System",
+      "dark": "Dark",
+      "light": "Light"
+    },
+
+    "version_chooser": {
+      "title": "Version Selection",
+      "major": "Major",
+      "minor": "Minor",
+      "stable_string": "Stable",
+      "beta_string": "Beta",
+      "tagged_version_title": "Version",
+      "view_all": "View all versions",
+      "file_selection": "File Selection"
+    },
+
+    "sidebar": {
+      "filter_title": "Filter",
+      "version_title": "Version",
+      "file_title": "File"
+    }
+  }
+}

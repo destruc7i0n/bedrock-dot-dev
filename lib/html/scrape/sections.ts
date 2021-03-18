@@ -12,7 +12,7 @@ const addAnchors = (html: string) => {
 
     return oneLine(`
       <h${headerNumber} class="anchored-heading">
-        <span class="anchor" id="${id}"></span>
+        <span id="${id}"></span>
         ${title}
         <a href="#${encoded}" tabindex="-1" class="anchor-link" aria-label="Anchor" aria-hidden="true">#</a>
       </h${headerNumber}>
@@ -51,7 +51,10 @@ const getSections = (html: string, sections: string[]) => {
     if (sectionContent) {
       const content = getFromTitle(sectionContent)
       // make into the format for the sidebar
-      resp[section] = content.map((c) => ({ title: c, id: c }))
+      resp[section] = {
+        header: { title: section, id: section },
+        elements: content.map((c) => ({title: c, id: c}))
+      }
     }
   }
 
