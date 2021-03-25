@@ -28,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <ThemeProvider defaultTheme='system' attribute='class'>
+    <ThemeProvider defaultTheme='system' attribute='class' disableTransitionOnChange>
       <Component {...pageProps} />
     </ThemeProvider>
   )
