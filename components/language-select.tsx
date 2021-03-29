@@ -57,15 +57,19 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
           await router.push('/', '/', {locale: localeValue, scroll: false})
         }
         // otherwise navigate to same path in another langauge
-        else await router.push(router.route, router.asPath, { locale: localeValue, scroll: false })
+        else await router.push({
+          pathname: router.pathname,
+          query: router.query,
+          // hash: window.location.hash,
+        }, undefined, { locale: localeValue, scroll: false })
       }
     })()
   }, [localeValue])
 
   return (
     <div className={cn('relative dark:text-gray-200', className)}>
-      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='mode'>Mode Select</label>
-      <select value={localeValue} onChange={({ target: { value } }) => setLocaleValue(value as Locale)} id='mode' className='leading-4 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-2 block'>
+      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='locale'>Language Select</label>
+      <select value={localeValue} onChange={({ target: { value } }) => setLocaleValue(value as Locale)} id='locale' className='leading-4 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-2 block'>
         <option value={Locale.English}>EN</option>
         <option value={Locale.Chinese}>中文</option>
       </select>

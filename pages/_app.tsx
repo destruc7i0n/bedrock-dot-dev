@@ -22,6 +22,9 @@ Router.events.on('routeChangeComplete', (url: string) => {
   analytics.pageview(url)
 })
 
+// Router.events.on('hashChangeStart', () => console.log('hashChangeStart'))
+// Router.events.on('hashChangeComplete', () => console.log('hashChangeComplete'))
+
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     console.log('Hey there!')

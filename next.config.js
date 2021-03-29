@@ -7,6 +7,10 @@ const { i18n } = require('./next-i18next.config')
 const getTags = require('./scripts/lib/tags')
 
 module.exports = withBundleAnalyzer({
+  future: {
+    webpack5: true,
+    strictPostcssConfiguration: true
+  },
   reactStrictMode: true,
   i18n,
   async redirects () {
