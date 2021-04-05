@@ -1,5 +1,7 @@
 import React, { Children, FunctionComponent, MouseEvent } from 'react'
 
+import { ChevronLeftIcon } from '@heroicons/react/outline'
+
 import cn from 'classnames'
 
 import { removeHashIfNeeded } from 'lib/util'
@@ -12,12 +14,6 @@ type Props = {
   setOpen: (open: boolean) => void
   searching: boolean
 }
-
-const DownArrow = (
-  <svg viewBox='0 0 24 24' width='16' height='16' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' fill='none' shapeRendering='geometricPrecision'>
-    <path d='M15 18l-6-6 6-6' />
-  </svg>
-)
 
 const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash, open, setOpen, searching }) => {
   const hasChildren = !!Children.count(children)
@@ -42,8 +38,8 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
       )} onClick={handleClick}>
         <a className={cn(
           'font-bold',
-          { 'text-blue-600 hover:text-blue-500 dark:text-blue-500 dark-hover:text-blue-400': active,
-            'hover:text-gray-900 dark-hover:text-gray-200': !active },
+          { 'text-blue-600 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400': active,
+            'hover:text-gray-900 dark:hover:text-gray-200': !active },
           'transition-all duration-75 ease-in-out'
         )} href={`#${encodeURIComponent(id)}`}>{title}</a>
         {hasChildren && (
@@ -51,7 +47,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
             'flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out',
             { '-rotate-90': isOpen }
           )}>
-            {DownArrow}
+            <ChevronLeftIcon className='w-4 h-4' />
           </div>
         )}
       </div>

@@ -94,7 +94,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
           <label className='flex items-center'>
             <input
               type='checkbox'
-              className='form-checkbox'
+              className='text-blue-500 rounded border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
               checked={!quickSelect}
               onChange={({ target: { checked } }) => setQuickSelect(!checked)}
             />

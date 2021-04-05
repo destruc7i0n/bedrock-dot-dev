@@ -5,22 +5,19 @@ const screens = {
   'xl': '1280px',
   '2xl': '1536px',
 }
+
 const maxScreens = Object.keys(screens).reduce((acc, key) => {
   acc[`${key}-max`] = { max: screens[key] }
   return acc
 }, {})
 
 module.exports = {
-  future: {
-    standardFontWeights: true,
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
+  mode: 'jit',
   purge: {
     content: ['./components/**/*.tsx', './pages/**/*.tsx'],
   },
+  darkMode: 'class',
   theme: {
-    darkSelector: '.dark',
     extend: {
       maxWidth: {
         '1/4': '25%',
@@ -60,13 +57,9 @@ module.exports = {
     },
   },
   variants: {
-    backgroundColor: ['dark', 'dark-hover', 'hover', 'responsive'],
-    textColor: ['dark', 'dark-hover', 'hover', 'responsive'],
-    borderColor: ['dark', 'responsive', 'hover'],
-    opacity: ['hover', 'dark-hover', 'responsive'],
+    opacity: ['hover', 'responsive'],
   },
   plugins: [
-    require('@tailwindcss/ui'),
-    require('tailwindcss-dark-mode')(),
+    require('@tailwindcss/forms'),
   ],
 }

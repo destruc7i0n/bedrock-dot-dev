@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
+import { SunIcon, MoonIcon, DesktopComputerIcon } from '@heroicons/react/outline'
+
 import { useTranslation } from 'react-i18next'
 
 import cn from 'classnames'
@@ -12,47 +14,15 @@ enum Theme {
   Dark = 'dark',
 }
 
-const svgClass = 'pointer-events-none w-4 h-4'
-const icons = {
-  system: (
-    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
-         strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className={svgClass}>
-      <rect x='2' y='3' width='20' height='14' rx='2' ry='2' />
-      <line x1='8' y1='21' x2='16' y2='21' />
-      <line x1='12' y1='17' x2='12' y2='21' />
-    </svg>
-  ),
-  moon: (
-    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
-         strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className={svgClass}>
-      <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' />
-    </svg>
-  ),
-  sun: (
-    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
-         strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className={svgClass}>
-      <circle cx='12' cy='12' r='5' />
-      <line x1='12' y1='1' x2='12' y2='3' />
-      <line x1='12' y1='21' x2='12' y2='23' />
-      <line x1='4.22' y1='4.22' x2='5.64' y2='5.64' />
-      <line x1='18.36' y1='18.36' x2='19.78' y2='19.78' />
-      <line x1='1' y1='12' x2='3' y2='12' />
-      <line x1='21' y1='12' x2='23' y2='12' />
-      <line x1='4.22' y1='19.78' x2='5.64' y2='18.36' />
-      <line x1='18.36' y1='5.64' x2='19.78' y2='4.22' />
-    </svg>
-  ),
-}
-
 const themes = {
   [Theme.System]: {
-    icon: icons.system
+    icon: DesktopComputerIcon,
   },
   [Theme.Light]: {
-    icon: icons.sun
+    icon: SunIcon,
   },
   [Theme.Dark]: {
-    icon: icons.moon
+    icon: MoonIcon,
   },
 }
 
@@ -70,15 +40,17 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
 
   const theme = !mounted ? Theme.System : hookTheme
 
+  const Icon = themes[theme as Theme].icon
+
   return (
     <div className={cn('relative dark:text-gray-200', className)}>
       <label className='block text-sm font-bold mb-1 sr-only' htmlFor='mode'>Mode Select</label>
       <div className='absolute inset-y-0 left-0 pl-3 flex items-center'>
         <span className='leading-4'>
-          {themes[theme as Theme].icon}
+          <Icon className='pointer-events-none w-4 h-4' />
         </span>
       </div>
-      <select value={theme} onChange={({ target: { value } }) => setTheme(value as Theme)} id='mode' className='leading-4 form-select dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
+      <select value={theme} onChange={({ target: { value } }) => setTheme(value as Theme)} id='mode' className='leading-4 rounded border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block'>
         <option value={Theme.System}>{t('component.color_theme_select.system')}</option>
         <option value={Theme.Dark}>{t('component.color_theme_select.dark')}</option>
         <option value={Theme.Light}>{t('component.color_theme_select.light')}</option>

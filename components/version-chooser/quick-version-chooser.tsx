@@ -32,7 +32,7 @@ const QuickVersionChooser: FunctionComponent<Props> = ({ title, id, directory, c
       <div className='flex w-full xl:w-auto xl:flex-1 flex-row items-center justify-between'>
         <div className='flex flex-1 flex-row items-center text-lg font-semibold'>
           <label htmlFor={id} className='flex flex-row select-none mr-1'><span className='hidden xl:block'>bedrock.dev</span>/{directory}/</label>
-          <select id={id} className='form-select leading-4 bg-white my-2 md:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
+          <select id={id} className='rounded border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 leading-4 bg-white my-2 md:my-0 w-full' value={file} onChange={({ target: { value } }) => setFile(value)}>
             {files.map((file) => <option key={`${id}-file-${file}`} value={file}>{file}</option>)}
           </select>
         </div>

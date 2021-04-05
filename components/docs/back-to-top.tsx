@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const icon = (
-  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor'
-       strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' className='w-100'>
-    <polyline points='18 15 12 9 6 15' />
-  </svg>
-)
+import { ChevronUpIcon } from '@heroicons/react/outline'
 
 const BackToTop = () => {
   const [showScroll, setShowScroll] = useState(false)
@@ -29,7 +24,9 @@ const BackToTop = () => {
   return showScroll ? (
     <button
       className='scroll-button flex items-center justify-center bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-1.5 px-1.5 rounded-lg'
-      onClick={scrollTop}>{icon}</button>
+      onClick={scrollTop}>
+      <ChevronUpIcon className='w-6 h-6' />
+    </button>
   ) : null
 }
 
