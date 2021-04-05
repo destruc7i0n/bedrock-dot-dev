@@ -6,24 +6,19 @@ import { ThemeProvider } from 'next-themes'
 
 import { appWithTranslation } from 'next-i18next'
 
-import ProgressBar from '@badrap/bar-of-progress'
+import NProgress from 'nprogress'
 
 import * as analytics from 'lib/analytics'
 
 import 'styles/tailwind.scss'
 import 'styles/app.scss'
 
-const progress = new ProgressBar({
-  size: 2,
-  color: '#29e',
-  className: 'bar-of-progress',
-  delay: 80,
-})
+NProgress.configure({ showSpinner: false })
 
-Router.events.on('routeChangeStart', progress.start)
-Router.events.on('routeChangeError', progress.finish)
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeError', () => NProgress.done())
 Router.events.on('routeChangeComplete', (url: string) => {
-  progress.finish()
+  NProgress.done()
   analytics.pageview(url)
 })
 
