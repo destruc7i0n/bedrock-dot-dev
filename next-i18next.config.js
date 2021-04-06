@@ -1,3 +1,5 @@
+const path = require('path')
+
 const locales = ['en', 'zh']
 
 module.exports = {
@@ -6,4 +8,5 @@ module.exports = {
     defaultLocale: 'en',
     locales,
   },
+  localePath: path.resolve('./public/locales'),
 }

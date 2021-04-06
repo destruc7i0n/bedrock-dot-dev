@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react'
 
-import path from 'path'
-
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -184,7 +182,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
     }
   }
 
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal }) => {
@@ -242,8 +240,6 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
     Log.info('Done processing ' + logLinkColor(path))
   }
 
-  // ensure the path exists in serverless
-  path.resolve('./public/locales')
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
     revalidate: 60 * 10, // every 10 minutes
