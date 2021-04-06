@@ -30,13 +30,23 @@ type Props = {
   className?: string
 }
 
+const updateThemeColour = (theme: Theme) => {
+  const themeColour = theme === Theme.Light ? '#f9fafb' : '#18191a'
+  const el = document.querySelector(`meta[name='theme-color']`)
+  if (!!el) el!.setAttribute('content', themeColour)
+}
+
 const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   const { t } = useTranslation('common')
 
   const [mounted, setMounted] = useState(false)
-  const { theme: hookTheme, setTheme } = useTheme()
+  const { theme: hookTheme, resolvedTheme, setTheme } = useTheme()
 
   useEffect(() => setMounted(true), [])
+
+  useEffect(() => {
+    updateThemeColour(resolvedTheme as Theme)
+  }, [ resolvedTheme ])
 
   const theme = !mounted ? Theme.System : hookTheme
 
