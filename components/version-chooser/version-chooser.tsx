@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import SpecificVersionChooser from './specific-version-chooser'
 import TagVersionChooser from './tag-version-chooser'

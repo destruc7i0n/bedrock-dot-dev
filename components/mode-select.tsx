@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { SunIcon, MoonIcon, DesktopComputerIcon } from '@heroicons/react/outline'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import cn from 'classnames'
 

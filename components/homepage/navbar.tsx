@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const HomepageNavbar = () => {
   const { t } = useTranslation('common')

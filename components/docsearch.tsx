@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, FunctionComponent } from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import classNames from 'classnames'
 import { useIsMobile } from 'hooks/media-query'

@@ -2,7 +2,7 @@ import React, { FunctionComponent, memo } from 'react'
 
 import { SearchIcon } from '@heroicons/react/outline'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 type Props = {
   value: string

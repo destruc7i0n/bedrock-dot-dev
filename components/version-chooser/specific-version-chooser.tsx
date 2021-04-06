@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import { getMinorVersionTitle } from 'lib/util'
 import { TagsResponse } from 'lib/tags'
