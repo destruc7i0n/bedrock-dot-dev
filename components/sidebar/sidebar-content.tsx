@@ -17,8 +17,9 @@ type SidebarContentState = {
 // initially open or closed state for the sidebar
 const getInitialOpen = (sidebar: SidebarStructure, file: string) => {
   let state: SidebarContentState = {}
-  for (let heading of Object.keys(sidebar)) {
-    state[heading] = file !== 'Entities'
+  for (let { header } of Object.values(sidebar)) {
+    // be default open on all pages other than the entities page
+    state[header.id] = file !== 'Entities'
   }
   return state
 }
