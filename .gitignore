@@ -8,3 +8,5 @@ public/sitemap.xml
 public/static/docs.json
 
 .env*
+
+.DS_Store

@@ -1,6 +1,6 @@
 // simple regex for matching tags in the html
 
-const getTDMatch = (prefix: string) => new RegExp(`<td style=".*">(${prefix}.*)<\\/td>`, 'g')
+const getTDMatch = (prefix: string) => new RegExp(`<tr>[^<]<td style=".*">(${prefix}.*)<\\/td>`, 'g')
 
 export const H1_MATCH = /<h1>(.*)<\/h1>/
 export const TABLE_MATCH = /<table.*>([^]*?)<\/table>/

@@ -86,7 +86,8 @@ export const extractDataFromHtml = (html: string, file: string): ParseHtmlRespon
     }
   }
 
-  Log.info(`Found ${Object.keys(sidebarContent).length} sidebar headings`)
+  const total = Object.keys(sidebarContent).reduce((acc, key) => acc + sidebarContent[key].elements.length + 1, 0)
+  Log.info(`Found ${Object.keys(sidebarContent).length} sidebar headings, ${total} total elements`)
 
   return {
     sidebar: sidebarContent,
