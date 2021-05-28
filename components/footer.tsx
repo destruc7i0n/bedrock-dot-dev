@@ -25,7 +25,7 @@ const Footer: FunctionComponent<Props> = ({ darkClassName = 'bg-dark-gray-950', 
           <div className='px-2 pb-3 text-gray-500 dark:text-gray-300'>
             {t('component.footer.credits_prefix')} {' '}
             <a className='link' href='https://thedestruc7i0n.ca' target='_blank' rel='noopener'>
-              TheDestruc7i0n
+              destruc7i0n
             </a>
           </div>
           <div className='px-2 pb-3'>
