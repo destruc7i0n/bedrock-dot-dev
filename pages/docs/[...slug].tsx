@@ -182,7 +182,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
     }
   }
 
-  return { paths, fallback: true }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal }) => {
@@ -242,7 +242,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
 
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
-    revalidate: 60 * 10, // every 10 minutes
+    revalidate: 60 * 60 * 1, // every hour
   }
 }
 

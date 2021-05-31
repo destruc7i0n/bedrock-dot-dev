@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.1",
-    "aws-sdk": "^2.917.0",
+    "aws-sdk": "^2.918.0",
     "classnames": "^2.3.1",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
