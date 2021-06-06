@@ -12,6 +12,12 @@ type Props = {
   staticPosition: boolean
 }
 
+export const algolia = {
+  apiKey: '6276b927975d54b2c2b16337054f38fb',
+  indexName: 'bedrock',
+  appId: 'BH4D9OD16A',
+}
+
 const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder, staticPosition, }) => {
   const { t } = useTranslation('common')
   if (!placeHolder) placeHolder = t('component.search.title')
@@ -49,8 +55,7 @@ const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, class
     if (typeof window !== 'undefined') {
       import('docsearch.js').then(({ default: docsearch }) => {
         docsearch({
-          apiKey: '6276b927975d54b2c2b16337054f38fb',
-          indexName: 'bedrock',
+          ...algolia,
           inputSelector: 'input#algolia-doc-search',
           transformData (hits: { url: string }[]) {
             // handle development environment
