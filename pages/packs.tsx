@@ -32,31 +32,26 @@ const PacksPage: FunctionComponent<Props> = ({ versions }) => {
         <Navbar />
 
         <div className='max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 mt-8 mb-10'>
-          <div className='max-w-screen-lg mx-auto'>
+          <div className='max-w-screen-lg mx-auto space-y-4'>
             <h4 className='text-4xl font-bold text-black dark:text-gray-200'>{t('page.packs.title')}</h4>
-            <p className='mt-4 text-lg text-black dark:text-gray-200'>{t('page.packs.subtitle')}</p>
+            <p className='text-lg text-black dark:text-gray-200'>{t('page.packs.subtitle')}</p>
 
-            <div className='-mx-4 mt-4 flex flex-wrap xl:items-center font-normal'>
+            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal'>
               {ordered.map((v, i) => (
-                <div className='w-1/2 md:w-1/3 lg:w-1/4' key={`packs-versions-${i}`}>
-                  <div className='m-4 text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
-                    <p className='text-lg dark:text-gray-200'>{v}</p>
-                    <div className='flex flex-col md:flex-row'>
-                      <div className='w-full md:w-1/2'>
-                        {versions[v][0] ? (
-                          <a href={getUrl('behaviours', v)} className='link md:pr-2' download>{t('component.packs_page.behaviours_link')}</a>
-                        ) : (
-                          <p className='md:pr-2 text-gray-500 dark:text-gray-400'>{t('component.packs_page.behaviours_link')}</p>
-                        )}
-                      </div>
-                      <div className='w-full md:w-1/2'>
-                        {versions[v][1] ? (
-                          <a href={getUrl('resources', v)} className='link md:pl-2' target='_blank' download rel='noopener'>{t('component.packs_page.resources_link')}</a>
-                        ) : (
-                          <p className='md:pl-2 text-gray-500 dark:text-gray-400'>{t('component.packs_page.resources_link')}</p>
-                        )}
-                      </div>
-                    </div>
+                <div key={`packs-versions-${i}`} className='text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
+                  <p className='text-lg dark:text-gray-200'>{v}</p>
+                  <div className='flex flex-col md:flex-row justify-around'>
+                    {versions[v][0] ? (
+                      <a href={getUrl('behaviours', v)} className='link' download>{t('component.packs_page.behaviours_link')}</a>
+                    ) : (
+                      <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.behaviours_link')}</p>
+                    )}
+
+                    {versions[v][1] ? (
+                      <a href={getUrl('resources', v)} className='link' target='_blank' download rel='noopener'>{t('component.packs_page.resources_link')}</a>
+                    ) : (
+                      <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.resources_link')}</p>
+                    )}
                   </div>
                 </div>
               ))}
