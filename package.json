@@ -11,6 +11,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@docsearch/css": "^3.0.0-alpha.36",
+    "@docsearch/react": "^3.0.0-alpha.36",
     "@heroicons/react": "^1.0.1",
     "aws-sdk": "^2.927.0",
     "classnames": "^2.3.1",

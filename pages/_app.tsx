@@ -20,6 +20,11 @@ Router.events.on('routeChangeError', () => NProgress.done())
 Router.events.on('routeChangeComplete', (url: string) => {
   NProgress.done()
   analytics.pageview(url)
+
+  // why is this needed?
+  setTimeout(() => {
+    if (location.hash) location = location
+  }, 0)
 })
 
 // Router.events.on('hashChangeStart', () => console.log('hashChangeStart'))

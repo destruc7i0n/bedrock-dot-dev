@@ -1,24 +1,9 @@
-@import '~docsearch.js/dist/cdn/docsearch.min.css';
+.DocSearch.DocSearch-Button {
+  // height: 32px !important;
 
-.docs-search {
-  &.docs-static {
-    .algolia-autocomplete {
-      @screen md-max {
-        position: static !important;
-      }
-    }
-  }
-
-  .algolia-autocomplete {
-    font-size: initial;
-    width: 100% !important;
-
-    @screen md-max {
-      .ds-dropdown-menu {
-        width: 100%;
-        min-width: 300px;
-        max-width: calc(100vw - 20px);
-      }
+  &.keep-placeholder {
+    .DocSearch-Button-Placeholder {
+      display: block !important;
     }
   }
 }
