@@ -25,7 +25,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({ tags, setM
       <label className='block text-sm font-bold mb-2' htmlFor='tag'>
         {t('component.version_chooser.tagged_version_title')}
       </label>
-      <select id='tag' className='rounded border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full ' value={version} onChange={({ target: { value } }) => setVersion(value as Tags)}>
+      <select id='tag' className='border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full ' value={version} onChange={({ target: { value } }) => setVersion(value as Tags)}>
         <option value={Tags.Stable}>{tags.stable[1]} ({t('component.version_chooser.stable_string')})</option>
         <option value={Tags.Beta}>{tags.beta[1]} ({t('component.version_chooser.beta_string')})</option>
       </select>

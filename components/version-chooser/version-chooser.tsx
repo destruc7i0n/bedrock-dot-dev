@@ -25,7 +25,7 @@ type VersionFileProps = {
 const VersionFile: FunctionComponent<VersionFileProps> = ({ title, link }) => {
   return (
     <Link href={`/docs/[...slug]`} as={link}>
-      <a className='link truncate w-1/2 lg:w-1/3 px-2 py-1 text-lg'>{title}</a>
+      <a className='link px-2 truncate text-lg'>{title}</a>
     </Link>
   )
 }
@@ -94,7 +94,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
           <label className='flex items-center'>
             <input
               type='checkbox'
-              className='text-blue-500 rounded border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
+              className='text-blue-500 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
               checked={!quickSelect}
               onChange={({ target: { checked } }) => setQuickSelect(!checked)}
             />
@@ -107,7 +107,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
         <label className='block text-sm font-bold mb-2'>
           {t('component.version_chooser.file_selection')}
         </label>
-        <div className='overflow-y-auto w-full flex flex-wrap bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
+        <div className='overflow-y-auto w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
           {files.map((file) => (
             <VersionFile key={`file-${file}-${minor}`} title={file} link={getLink(major, minor, file, tags, quickSelect)} />
           ))}

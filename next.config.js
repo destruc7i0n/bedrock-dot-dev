@@ -8,7 +8,6 @@ const getTags = require('./scripts/lib/tags')
 
 module.exports = withBundleAnalyzer({
   future: {
-    webpack5: true,
     strictPostcssConfiguration: true
   },
   reactStrictMode: true,

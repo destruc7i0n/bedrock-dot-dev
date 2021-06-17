@@ -29,6 +29,7 @@
     width: 80%;
     @screen md {
       width: auto;
+      min-width: 50%;
     }
 
     transition: transform ease-in-out 150ms;

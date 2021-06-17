@@ -7,7 +7,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
 import Footer from 'components/footer'
-import HomeCard from 'components/homepage/home-card'
 import VersionChooser from 'components/version-chooser/version-chooser'
 import DocSearch from 'components/docsearch'
 
@@ -63,14 +62,14 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
         </div>
 
         <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 mt-10'>
-          <HomeCard>
+          <div className='flex flex-col w-full bg-white dark:bg-dark-gray-950 text-black dark:text-gray-200 rounded-lg outline-none appearance-none transition duration-150 ease-in-out'>
             <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
               <h2 className='w-full pb-3 text-xl font-bold'>
                 {t('component.version_chooser.title')}
               </h2>
               <VersionChooser versions={versions} tags={tags} />
             </div>
-          </HomeCard>
+          </div>
         </div>
 
         <div className='mt-6'>
