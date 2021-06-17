@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticPathsResult, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Error from 'next/error'
@@ -35,10 +35,6 @@ import {
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
 import { getLocale, Locale } from 'lib/i18n'
-
-// extract type from inside a promise
-type ReturnTypePromise<T extends (...args: any) => Promise<any>> = T extends (...args: any) => Promise<infer R> ? R : any
-type PathsType = ReturnTypePromise<GetStaticPaths>['paths']
 
 type Props = {
   html: string
@@ -133,7 +129,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  let paths: PathsType = []
+  let paths: GetStaticPathsResult['paths'] = []
   for (let localeVal of locales || []) {
     const locale = getLocale(localeVal)
 
