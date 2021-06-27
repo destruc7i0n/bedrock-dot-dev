@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import VersionContext from '../version-context'
 import { bedrockVersionsInOrder } from 'lib/bedrock-versions-transformer'
 import { getLink, getMinorVersionTitle } from 'lib/util'
+import { translateFileNames } from 'lib/i18n'
 
 const SidebarSelectors: FunctionComponent = () => {
   const { t } = useTranslation('common')
@@ -35,6 +36,7 @@ const SidebarSelectors: FunctionComponent = () => {
   }
 
   const files = versions[major] && versions[major][minor]
+  const fileNameTranslations: {[k: string]: string} = t('files', { returnObjects: true })
 
   const onVersionChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
     const parts = value.split('/')
@@ -66,7 +68,7 @@ const SidebarSelectors: FunctionComponent = () => {
         <label className='block text-sm font-bold mb-1 sr-only' htmlFor='file'>{t('component.sidebar.file_title')}</label>
         {files && (
           <select value={file} id='file' onChange={onFileChange} className='block w-full leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800'>
-            {files.map((file) => <option key={`file-${file}`} value={file}>{file}</option>)}
+            {files.map((file) => <option key={`file-${file}`} value={file}>{translateFileNames(fileNameTranslations, file)}</option>)}
           </select>
         )}
       </div>

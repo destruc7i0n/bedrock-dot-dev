@@ -31,25 +31,21 @@
       "packs_link": "Packs",
       "discord_link": "Discord"
     },
-
     "search": {
       "title": "Search",
       "focus_key": "(\"/\" to focus)"
     },
-
     "footer": {
       "credits_prefix": "Website by",
       "github": "GitHub",
       "donate": "Donate",
       "legal_mojang": "This website is not affiliated with Mojang Studios"
     },
-
     "color_theme_select": {
       "system": "System",
       "dark": "Dark",
       "light": "Light"
     },
-
     "version_chooser": {
       "title": "Version Selection",
       "major": "Major",
@@ -60,11 +56,29 @@
       "view_all": "View all versions",
       "file_selection": "File Selection"
     },
-
     "sidebar": {
       "filter_title": "Filter",
       "version_title": "Version",
       "file_title": "File"
     }
+  },
+  "files": {
+    "addons": "Addons",
+    "blocks": "Blocks",
+    "features": "Features",
+    "molang": "MoLang",
+    "schemas": "Schemas",
+    "ui": "UI",
+    "animations": "Animations",
+    "entities": "Entities",
+    "fogs": "Fogs",
+    "particles": "Particles",
+    "scripting": "Scripting",
+    "volumes": "Volumes",
+    "biomes": "Biomes",
+    "entity_events": "Entity Events",
+    "item": "Item",
+    "recipes": "Recipes",
+    "texture_sets": "Texture Sets"
   }
 }

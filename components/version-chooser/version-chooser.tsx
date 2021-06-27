@@ -16,6 +16,7 @@ import {
 } from 'lib/util'
 import { BedrockVersions } from 'lib/versions'
 import { Tags, TagsResponse } from 'lib/tags'
+import { translateFileNames } from 'lib/i18n'
 
 type VersionFileProps = {
   title: string
@@ -61,6 +62,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   const [ major, setMajor ] = useState(stableMajor)
   const [ minor, setMinor ] = useState(stableMinor)
 
+  const fileNameTranslations: {[k: string]: string} = t('files', { returnObjects: true })
   let files: string[] = []
   if (versions[major] && versions[major][minor]) {
     files = versions[major][minor]
@@ -109,7 +111,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
         </label>
         <div className='overflow-y-auto w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
           {files.map((file) => (
-            <VersionFile key={`file-${file}-${minor}`} title={file} link={getLink(major, minor, file, tags, quickSelect)} />
+            <VersionFile key={`file-${file}-${minor}`} title={translateFileNames(fileNameTranslations, file)} link={getLink(major, minor, file, tags, quickSelect)} />
           ))}
         </div>
       </div>
