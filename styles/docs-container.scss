@@ -40,13 +40,9 @@
     max-width: 100%;
     overflow-x: auto;
 
-    /* just my device doesn't like it for some reason */
-    @media only screen
-      and (device-width: 414px)
-      and (device-height: 896px)
-      and (-webkit-device-pixel-ratio: 3)
-    {
-        overflow-x: visible;
+    /* On iOS devices just allow it to scroll */
+    @supports (-webkit-touch-callout: none) {
+      overflow-x: visible;
     }
 
     @screen lg-max {
