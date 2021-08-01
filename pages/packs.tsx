@@ -1,8 +1,10 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { GetStaticProps } from 'next'
 
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import { SaveIcon } from '@heroicons/react/outline'
 
 import S3 from 'aws-sdk/clients/s3'
 
@@ -14,15 +16,51 @@ import Layout from 'components/layout'
 import Navbar from 'components/homepage/navbar'
 import Footer from 'components/footer'
 
-type Props = {
-  versions: PackVersions
-}
-
 const getUrl = (folder: string, id: string) => {
   return ['https://void.bedrock.dev', folder, `${id}.zip`].join('/')
 }
 
-const PacksPage: FunctionComponent<Props> = ({ versions }) => {
+type PackCardProps = {
+  version: string
+  versions: PackVersions
+}
+
+const PackCard: FunctionComponent<PackCardProps> = ({ version, versions }) => {
+  const { t } = useTranslation('common')
+
+  const [open, setOpen] = useState(false)
+
+  const links = (
+    <>
+      {versions[version][0] ? (
+        <a href={getUrl('behaviours', version)} className='link' download>{t('component.packs_page.behaviours_link')}</a>
+      ) : (
+        <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.behaviours_link')}</p>
+      )}
+
+      {versions[version][1] ? (
+        <a href={getUrl('resources', version)} className='link' target='_blank' download rel='noopener'>{t('component.packs_page.resources_link')}</a>
+      ) : (
+        <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.resources_link')}</p>
+      )}
+    </>
+  )
+
+  return (
+    <div className='flex flex-col text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
+      <p className='text-lg dark:text-gray-200'>{version}</p>
+      <div className='flex flex-1 flex-col md:flex-row md:justify-around items-center justify-center'>
+        {open ? links : <span className='link cursor-pointer' onClick={() => setOpen(!open)}><SaveIcon className='pointer-events-none w-6 h-6' /></span>}
+      </div>
+    </div>
+  )
+}
+
+type PacksPageProps = {
+  versions: PackVersions
+}
+
+const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
   const { t } = useTranslation('common')
   const ordered = Object.keys(versions).sort(compareBedrockVersions)
 
@@ -37,24 +75,7 @@ const PacksPage: FunctionComponent<Props> = ({ versions }) => {
             <p className='text-lg text-black dark:text-gray-200'>{t('page.packs.subtitle')}</p>
 
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal'>
-              {ordered.map((v, i) => (
-                <div key={`packs-versions-${i}`} className='text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
-                  <p className='text-lg dark:text-gray-200'>{v}</p>
-                  <div className='flex flex-col md:flex-row justify-around'>
-                    {versions[v][0] ? (
-                      <a href={getUrl('behaviours', v)} className='link' download>{t('component.packs_page.behaviours_link')}</a>
-                    ) : (
-                      <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.behaviours_link')}</p>
-                    )}
-
-                    {versions[v][1] ? (
-                      <a href={getUrl('resources', v)} className='link' target='_blank' download rel='noopener'>{t('component.packs_page.resources_link')}</a>
-                    ) : (
-                      <p className='text-gray-500 dark:text-gray-400'>{t('component.packs_page.resources_link')}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {ordered.map((v, i) => <PackCard key={`packs-versions-${i}`} version={v} versions={versions} />)}
             </div>
           </div>
         </div>

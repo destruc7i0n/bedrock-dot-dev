@@ -11,8 +11,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@heroicons/react": "^1.0.2",
-    "aws-sdk": "^2.947.0",
+    "@heroicons/react": "^1.0.3",
+    "aws-sdk": "^2.958.0",
     "classnames": "^2.3.1",
     "docsearch.js": "^2.6.3",
     "element-in-view": "^0.1.0",
@@ -24,7 +24,7 @@
     "prismjs": "^1.24.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "sass": "^1.35.2",
+    "sass": "^1.37.0",
     "sitemap": "^7.0.0"
   },
   "devDependencies": {
@@ -32,17 +32,17 @@
     "@tailwindcss/forms": "^0.3.3",
     "@types/classnames": "^2.3.1",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^16.3.2",
+    "@types/node": "^16.4.10",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.6",
-    "@types/react": "^17.0.14",
+    "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.3.1",
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "isomorphic-unfetch": "^3.1.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-import": "^14.0.2",
-    "tailwindcss": "^2.2.4",
+    "tailwindcss": "^2.2.7",
     "ts-node": "^10.1.0",
     "typescript": "4.3.5"
   },
