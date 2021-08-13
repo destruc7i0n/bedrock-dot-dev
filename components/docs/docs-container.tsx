@@ -15,6 +15,7 @@ const DocsContent: FunctionComponent<DocsContentProps> = memo(({ html }) => {
     />
   )
 })
+DocsContent.displayName = 'DocsContent'
 
 type DocsContainerProps = {
   html: string

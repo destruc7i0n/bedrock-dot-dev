@@ -60,7 +60,7 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
         else await router.push({
           pathname: router.pathname,
           query: router.query,
-          // hash: window.location.hash,
+          hash: window.location.hash,
         }, undefined, { locale: localeValue, scroll: false })
       }
     })()
