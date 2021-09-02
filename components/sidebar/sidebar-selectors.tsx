@@ -46,7 +46,13 @@ const SidebarSelectors: FunctionComponent = () => {
     let newFile = file
     // if the file isn't available go to the first one
     if (!files.includes(file)) {
-      newFile = files[0]
+      // check without case
+      const caseCheck = files.find(f => f.toLowerCase() === file.toLowerCase())
+      if (!!caseCheck) {
+        newFile = caseCheck
+      } else {
+        newFile = files[0]
+      }
     }
 
     router.push('/docs/[...slug]', getLink(major, minor, newFile, tags, true))

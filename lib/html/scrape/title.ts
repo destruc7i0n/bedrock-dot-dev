@@ -12,7 +12,7 @@ const toTitleCase = (s: string) =>
         ? p
         : p[0].toUpperCase() + p.slice(1).toLowerCase())
     .join(' ')
-    .replace('Molang', 'MoLang') // custom name
+    // .replace('Molang', 'MoLang') // custom name
 
 export const getTitle = (html: string): TitleResponse => {
   let title = ''

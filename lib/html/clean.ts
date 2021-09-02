@@ -17,8 +17,8 @@ export const cleanHtmlForDisplay = (html: string, file: string, version: string)
     html = encloseDocumentationText(html, file)
   }
 
-  switch (file) {
-    case 'MoLang': {
+  switch (file.toLowerCase()) {
+    case 'molang': {
       html = addAnchorsToMoLangQueries(html)
       break
     }
@@ -52,7 +52,7 @@ const encloseDocumentationText = (html: string, file: string) => {
       if (file === 'Schemas' && MARKDOWN_CODE_MATCH.test(match)) continue
 
       let content = match
-      if (file === 'MoLang') {
+      if (file.toLowerCase() === 'molang') {
         // replace any elements mistaken for html tags in ``
         content = content.replace(/`(.*?)`/g, (_, group: string) => {
           // remove the <> around them
