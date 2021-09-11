@@ -45,6 +45,11 @@ module.exports = withBundleAnalyzer({
         destination: `/docs/stable/:file`,
         permanent: false,
       },
+      // {
+      //   source: `/(r|c|s)/MoLang`,
+      //   destination: `/docs/stable/Molang`,
+      //   permanent: false,
+      // },
       {
         source: '/(r|c|s){/}?',
         destination: `/?r=${stable.join('/')}`,
@@ -54,6 +59,11 @@ module.exports = withBundleAnalyzer({
       {
         source: `/b/:file`,
         destination: `/docs/beta/:file`,
+        permanent: false,
+      },
+      {
+        source: `/b/MoLang`,
+        destination: `/docs/beta/Molang`,
         permanent: false,
       },
       {

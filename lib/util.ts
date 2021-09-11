@@ -71,4 +71,16 @@ export const parseUrlQuery = (query: string, versions: BedrockVersions): ParsedU
   return parsed
 }
 
+export const updateFileNames = (fileName: string): string => {
+  switch (fileName) {
+    case 'MoLang': return 'Molang'
+    default: return fileName
+  }
+}
+
+export const isNewMolangFilename = (version: string): boolean => {
+  // check if version is newer than the one Mojang changed the MoLang to Molang
+  return compareBedrockVersions('1.17.30.24', version) === -1
+}
+
 export const oneLine = (str: string) => str.split(/\r?\n/).map(e => e.trim()).join('')
