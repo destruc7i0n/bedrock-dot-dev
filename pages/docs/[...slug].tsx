@@ -8,9 +8,7 @@ import Error from 'next/error'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { extractDataFromHtml, ParseHtmlResponse } from 'lib/html'
-import { cleanHtmlForDisplay } from 'lib/html/clean'
-import { highlightHtml } from 'lib/html/highlight'
+import { extractDataFromHtml, ParseHtmlResponse, fetchHtml } from 'lib/html'
 
 import Layout from 'components/layout'
 import Header from 'components/docs/header'
@@ -24,7 +22,6 @@ import BackToTop from 'components/docs/back-to-top'
 import useLoading from 'hooks/loading'
 
 import { getTags, Tags, TagsResponse } from 'lib/tags'
-import { getDocsFilesFromRepo } from 'lib/github/raw'
 import Log, { logLinkColor } from 'lib/log'
 import {
   bedrockVersionsInOrder,
@@ -220,16 +217,10 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
     const file = version[2]
     const path = version.join('/')
 
-    try {
-      html = await getDocsFilesFromRepo(path, locale)
-    } catch (e) {
-      Log.error(`Could not get file for "${path}"!`)
-      return { notFound: true }
-    }
+    const htmlData = await fetchHtml(version, locale)
+    if (!htmlData) return { notFound: true }
 
-    // the html to be presented on the site
-    displayHtml = cleanHtmlForDisplay(html, file, version[1])
-    displayHtml = highlightHtml(displayHtml, file)
+    ;({ html, displayHtml } = htmlData)
 
     Log.info(`Processing ${logLinkColor(path)}...`)
     parsedData = extractDataFromHtml(html, file)

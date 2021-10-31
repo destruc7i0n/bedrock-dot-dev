@@ -1,10 +1,12 @@
-import Log from './log'
+import Log from '../log'
 
-import { SidebarStructure, SidebarStructureElement } from '../components/sidebar'
-import { getTitle, TitleResponse } from './html/scrape/title'
-import { getAIGoals, getComponentsList }  from './html/scrape/table'
-import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from './html/regex'
-import { removeHashIfNeeded } from './util'
+import { SidebarStructure, SidebarStructureElement } from '../../components/sidebar'
+import { getTitle, TitleResponse } from './scrape/title'
+import { getAIGoals, getComponentsList }  from './scrape/table'
+import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from './regex'
+import { removeHashIfNeeded } from '../util'
+
+export { default as fetchHtml } from './fetch'
 
 const getSidebarContent = (html: string): SidebarStructure => {
   let format: SidebarStructure = {}

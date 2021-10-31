@@ -7,6 +7,10 @@ const { i18n } = require('./next-i18next.config')
 const getTags = require('./scripts/lib/tags')
 
 module.exports = withBundleAnalyzer({
+  experimental: {
+    // concurrentFeatures: true,
+    // serverComponents: true,
+  },
   future: {
     strictPostcssConfiguration: true
   },
