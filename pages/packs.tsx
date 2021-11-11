@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react'
 import { GetStaticProps } from 'next'
 
-import { useTranslation } from 'next-i18next'
+import { useTranslation, Trans } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { DownloadIcon } from '@heroicons/react/outline'
@@ -72,7 +72,9 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
         <div className='max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 mt-8 mb-10'>
           <div className='max-w-screen-lg mx-auto space-y-4'>
             <h4 className='text-4xl font-bold text-black dark:text-gray-200'>{t('page.packs.title')}</h4>
-            <p className='text-lg text-black dark:text-gray-200'>{t('page.packs.subtitle')}</p>
+            <p className='text-lg text-black dark:text-gray-200'>
+              <Trans i18nKey='page.packs.subtitle' t={t} components={[<a className='link' href='https://github.com/bedrock-dot-dev/packs' target='_blank' />]} />
+            </p>
 
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal'>
               {ordered.map((v, i) => <PackCard key={`packs-versions-${i}`} version={v} versions={versions} />)}
