@@ -36,6 +36,10 @@ const updateThemeColour = (theme: Theme) => {
   if (!!el) el!.setAttribute('content', themeColour)
 }
 
+const onResolvedThemeChange = (theme: Theme) => {
+  updateThemeColour(theme)
+}
+
 const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   const { t } = useTranslation('common')
 
@@ -45,7 +49,7 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   useEffect(() => setMounted(true), [])
 
   useEffect(() => {
-    updateThemeColour(resolvedTheme as Theme)
+    onResolvedThemeChange(resolvedTheme as Theme)
   }, [ resolvedTheme ])
 
   const theme = !mounted ? Theme.System : hookTheme

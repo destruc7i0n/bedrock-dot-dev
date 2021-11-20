@@ -54,9 +54,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
 
             <DocSearch
               placeHolder={t('page.home.search_placeholder')}
-              staticPosition={false}
-              captureForwardSlash
-              className='w-full mx-auto border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-full dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 dark:placeholder-gray-400 leading-5'
+              fullWidth
             />
           </div>
         </div>
