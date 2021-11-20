@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import Link from 'next/link'
+import Head from 'next/head'
 
 import { useTranslation } from 'next-i18next'
 
@@ -44,28 +45,33 @@ const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, s
   if (!placeHolder) placeHolder = t('component.search.title')
 
   return (
-    <div className={cn('docsearch-wrapper', { 'full-width w-full': fullWidth, 'slim': slim })}>
-      <DocSearchComponent
-        {...algolia}
-        placeholder={placeHolder}
-        hitComponent={Hit}
-        transformItems={(items) => {
-          return items.map((item) => {
-            // We transform the absolute URL into a relative URL to
-            // leverage Next's preloading.
-            const a = document.createElement('a')
-            a.href = item.url
+    <>
+      <Head>
+        <link rel='preconnect' href={`https://${algolia.appId}-dsn.algolia.net`} crossOrigin='true' />
+      </Head>
+      <div className={cn('docsearch-wrapper', { 'full-width w-full': fullWidth, 'slim': slim })}>
+        <DocSearchComponent
+          {...algolia}
+          placeholder={placeHolder}
+          hitComponent={Hit}
+          transformItems={(items) => {
+            return items.map((item) => {
+              // We transform the absolute URL into a relative URL to
+              // leverage Next's preloading.
+              const a = document.createElement('a')
+              a.href = item.url
 
-            const hash = a.hash
+              const hash = a.hash
 
-            return {
-              ...item,
-              url: `${a.pathname}${hash}`,
-            }
-          })
-        }}
-      />
-    </div>
+              return {
+                ...item,
+                url: `${a.pathname}${hash}`,
+              }
+            })
+          }}
+        />
+      </div>
+    </>
   )
 }
 
