@@ -32,7 +32,7 @@ const Header: FunctionComponent = () => {
 
   return (
     <>
-      <header className='navbar relative flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200'>
+      <header className='navbar flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200'>
         <div className='flex items-center'>
           {isDocsPage && (
             <div className='flex mr-2'>
@@ -50,12 +50,7 @@ const Header: FunctionComponent = () => {
             <HeaderLink link='https://wiki.bedrock.dev' title='Wiki' />
           </ul>
         </div>
-        <div className='flex flex-1 md:flex-initial'>
-          <DocSearch
-            staticPosition
-            className='appearance-none border border-gray-300 rounded py-1 px-3 text-gray-700 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 dark:placeholder-gray-400 leading-tight focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 md:w-48 w-full md:mr-2 lg:mr-0'
-          />
-        </div>
+        <DocSearch slim />
       </header>
     </>
   )

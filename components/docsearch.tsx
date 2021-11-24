@@ -1,16 +1,25 @@
-import React, { useRef, useEffect, FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
+
+import Link from 'next/link'
+import Head from 'next/head'
 
 import { useTranslation } from 'next-i18next'
 
-import classNames from 'classnames'
-import { useIsMobile } from 'hooks/media-query'
+import { DocSearch as DocSearchComponent } from '@docsearch/react'
+
+import cn from 'classnames'
 
 type Props = {
-  captureForwardSlash?: boolean
-  className?: string
   placeHolder?: string
-  staticPosition: boolean
+  fullWidth?: boolean
+  slim?: boolean
 }
+
+// export const algolia = {
+//   apiKey: 'd9a94568558345411f141246260ec0a4',
+//   indexName: 'bedrock',
+//   appId: 'QLWYANMOJF',
+// }
 
 export const algolia = {
   apiKey: '6276b927975d54b2c2b16337054f38fb',
@@ -18,72 +27,51 @@ export const algolia = {
   appId: 'BH4D9OD16A',
 }
 
-const DocSearch: FunctionComponent<Props> = ({ captureForwardSlash = true, className, placeHolder, staticPosition, }) => {
+type HitComponentProps = {
+  hit: { url: string }
+  children: any
+}
+
+const Hit = ({ hit, children }: HitComponentProps) => {
+  return (
+    <Link href={hit.url}>
+      <a>{children}</a>
+    </Link>
+  )
+}
+
+const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, slim = false }) => {
   const { t } = useTranslation('common')
   if (!placeHolder) placeHolder = t('component.search.title')
 
-  const input = useRef<HTMLInputElement | null>(null)
-  const isMobile = useIsMobile()
-
-  const triggerElement = () => {
-    input.current?.focus()
-  }
-
-  useEffect(() => {
-    const inputs = ['input', 'select', 'button', 'textarea']
-
-    const down = (e: KeyboardEvent) => {
-      if (
-        document.activeElement &&
-        !inputs.includes(document.activeElement!.tagName.toLowerCase())
-      ) {
-        if (e.key === '/') {
-          e.preventDefault()
-          triggerElement()
-        }
-      }
-    }
-
-    if (captureForwardSlash) {
-      window.addEventListener('keydown', down)
-      return () => window.removeEventListener('keydown', down)
-    }
-  }, [ captureForwardSlash ])
-
-  useEffect(() => {
-    // @ts-ignore
-    if (typeof window !== 'undefined') {
-      import('docsearch.js').then(({ default: docsearch }) => {
-        docsearch({
-          ...algolia,
-          inputSelector: 'input#algolia-doc-search',
-          transformData (hits: { url: string }[]) {
-            // handle development environment
-            hits.forEach(hit => {
-              // make relative
-              const a = document.createElement('a')
-              a.href = hit.url
-              hit.url = `${a.pathname}${a.hash}`
-            })
-            return hits
-          },
-          debug: false,
-        })
-      })
-    }
-  }, [])
-
   return (
-    <div className={classNames('w-full flex items-center docs-search', { 'docs-static': staticPosition, })}>
-      <label className='block text-sm font-bold mb-1 sr-only' htmlFor='algolia-doc-search'>{t('component.search.title')}</label>
-      <input
-        id='algolia-doc-search'
-        className={className}
-        type='search'
-        placeholder={`${placeHolder}${!isMobile && captureForwardSlash ? ` ${t('component.search.focus_key')}` : ''}`}
-        ref={input}
-      />
-    </div>
+    <>
+      <Head>
+        <link rel='preconnect' href={`https://${algolia.appId}-dsn.algolia.net`} crossOrigin='true' />
+      </Head>
+      <div className={cn('docsearch-wrapper', { 'full-width w-full': fullWidth, 'slim': slim })}>
+        <DocSearchComponent
+          {...algolia}
+          placeholder={placeHolder}
+          hitComponent={Hit}
+          transformItems={(items) => {
+            return items.map((item) => {
+              // We transform the absolute URL into a relative URL to
+              // leverage Next's preloading.
+              const a = document.createElement('a')
+              a.href = item.url
+
+              const hash = a.hash
+
+              return {
+                ...item,
+                url: `${a.pathname}${hash}`,
+              }
+            })
+          }}
+        />
+      </div>
+    </>
   )
 }
 
