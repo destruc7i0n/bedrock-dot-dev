@@ -24,6 +24,10 @@
   }
 }
 
+.DocSearch-Input:focus {
+  @apply ring-0 ring-transparent;
+}
+
 // https://github.com/algolia/docsearch/blob/next/packages/docsearch-css/src/_variables.css
 
 :root {
