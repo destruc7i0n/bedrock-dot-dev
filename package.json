@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@docsearch/react": "^3.0.0-alpha.41",
+    "@docsearch/react": "^3.0.0-alpha.42",
     "@heroicons/react": "^1.0.5",
     "aws-sdk": "^2.1023.0",
     "classnames": "^2.3.1",
@@ -24,7 +24,7 @@
     "prismjs": "^1.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "sass": "^1.43.5",
+    "sass": "^1.44.0",
     "sitemap": "^7.0.0"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "@tailwindcss/forms": "^0.3.4",
     "@types/classnames": "^2.3.1",
     "@types/flat-cache": "^2.0.0",
-    "@types/node": "^16.11.10",
+    "@types/node": "^16.11.11",
     "@types/nprogress": "^0.2.0",
     "@types/prismjs": "^1.16.6",
     "@types/react": "^17.0.37",
@@ -40,7 +40,7 @@
     "autoprefixer": "^10.4.0",
     "chalk": "^4.1.2",
     "isomorphic-unfetch": "^3.1.0",
-    "postcss": "^8.4.1",
+    "postcss": "^8.4.4",
     "postcss-import": "^14.0.2",
     "tailwindcss": "^2.2.19",
     "ts-node": "^10.4.0",
