@@ -10,7 +10,7 @@
     position: relative;
 
     &:hover {
-      .anchor-link {
+      .anchor {
         visibility: visible;
       }
     }
@@ -23,7 +23,7 @@
       visibility: hidden;
     }
 
-    .anchor-link {
+    .anchor {
       visibility: hidden;
       margin-left: 0.25rem;
       user-select: none;
