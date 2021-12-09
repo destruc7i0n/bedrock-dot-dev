@@ -13,9 +13,10 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 
 module.exports = {
   mode: 'jit',
-  purge: {
-    content: ['./components/**/*.tsx', './pages/**/*.tsx'],
-  },
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
