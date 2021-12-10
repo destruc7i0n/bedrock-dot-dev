@@ -10,12 +10,12 @@
     position: relative;
 
     &:hover {
-      .anchor {
+      .hash-link {
         visibility: visible;
       }
     }
 
-    > span[id] {
+    > a.anchor[id] {
       margin-top: -4rem;
       padding-top: 4rem;
       display: block;
@@ -23,7 +23,7 @@
       visibility: hidden;
     }
 
-    .anchor {
+    .hash-link {
       visibility: hidden;
       margin-left: 0.25rem;
       user-select: none;
