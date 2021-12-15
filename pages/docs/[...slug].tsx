@@ -31,7 +31,7 @@ import {
 } from 'lib/bedrock-versions-transformer'
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
-import { getLocale, Locale } from 'lib/i18n'
+import { getLocale, Locale, useLocale } from 'lib/i18n'
 
 type Props = {
   html: string
@@ -45,6 +45,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const { t } = useTranslation('common')
 
   const { isFallback, query: { slug } } = useRouter()
+  const locale = useLocale()
 
   let [ major, minor, file ] = (version || [ '', '', '' ])
 
@@ -107,6 +108,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
             `
           )}}
         />
+        <meta name='docsearch:language' content={locale} />
       </Head>
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
