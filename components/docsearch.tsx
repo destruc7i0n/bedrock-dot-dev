@@ -5,9 +5,11 @@ import Head from 'next/head'
 
 import { useTranslation } from 'next-i18next'
 
-import { DocSearch as DocSearchComponent } from '@docsearch/react'
+import { DocSearch as DocSearchComponent, DocSearchProps } from '@docsearch/react'
 
 import cn from 'classnames'
+
+// import { useLocale } from 'lib/i18n'
 
 type Props = {
   placeHolder?: string
@@ -15,13 +17,13 @@ type Props = {
   slim?: boolean
 }
 
-// export const algolia = {
+// export const algolia: DocSearchProps = {
 //   apiKey: 'd9a94568558345411f141246260ec0a4',
 //   indexName: 'bedrock',
 //   appId: 'QLWYANMOJF',
 // }
 
-export const algolia = {
+export const algolia: DocSearchProps = {
   apiKey: '6276b927975d54b2c2b16337054f38fb',
   indexName: 'bedrock',
   appId: 'BH4D9OD16A',
@@ -29,20 +31,23 @@ export const algolia = {
 
 type HitComponentProps = {
   hit: { url: string }
-  children: any
+  children: React.ReactNode
 }
 
-const Hit = ({ hit, children }: HitComponentProps) => {
-  return (
-    <Link href={hit.url}>
-      <a>{children}</a>
-    </Link>
-  )
-}
+const Hit = ({ hit, children }: HitComponentProps) => (
+  <Link href={hit.url}>
+    <a>{children}</a>
+  </Link>
+)
 
 const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, slim = false }) => {
   const { t } = useTranslation('common')
+  // const locale = useLocale()
   if (!placeHolder) placeHolder = t('component.search.title')
+
+  // const searchParameters: DocSearchProps['searchParameters'] = {
+  //   facetFilters: [`lang:${locale}`]
+  // }
 
   return (
     <>
@@ -69,6 +74,7 @@ const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, s
               }
             })
           }}
+          // searchParameters={searchParameters}
         />
       </div>
     </>
