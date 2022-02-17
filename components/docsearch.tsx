@@ -9,7 +9,7 @@ import { DocSearch as DocSearchComponent, DocSearchProps } from '@docsearch/reac
 
 import cn from 'classnames'
 
-// import { useLocale } from 'lib/i18n'
+import { useLocale } from 'lib/i18n'
 
 type Props = {
   placeHolder?: string
@@ -17,17 +17,17 @@ type Props = {
   slim?: boolean
 }
 
-// export const algolia: DocSearchProps = {
-//   apiKey: 'd9a94568558345411f141246260ec0a4',
-//   indexName: 'bedrock',
-//   appId: 'QLWYANMOJF',
-// }
-
 export const algolia: DocSearchProps = {
-  apiKey: '6276b927975d54b2c2b16337054f38fb',
+  apiKey: 'd9a94568558345411f141246260ec0a4',
   indexName: 'bedrock',
-  appId: 'BH4D9OD16A',
+  appId: 'QLWYANMOJF',
 }
+
+// export const algolia: DocSearchProps = {
+//   apiKey: '6276b927975d54b2c2b16337054f38fb',
+//   indexName: 'bedrock',
+//   appId: 'BH4D9OD16A',
+// }
 
 type HitComponentProps = {
   hit: { url: string }
@@ -42,12 +42,12 @@ const Hit = ({ hit, children }: HitComponentProps) => (
 
 const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, slim = false }) => {
   const { t } = useTranslation('common')
-  // const locale = useLocale()
+  const locale = useLocale()
   if (!placeHolder) placeHolder = t('component.search.title')
 
-  // const searchParameters: DocSearchProps['searchParameters'] = {
-  //   facetFilters: [`lang:${locale}`]
-  // }
+  const searchParameters: DocSearchProps['searchParameters'] = {
+    facetFilters: [`lang:${locale}`]
+  }
 
   return (
     <>
@@ -74,7 +74,7 @@ const DocSearch: FunctionComponent<Props> = ({ placeHolder, fullWidth = false, s
               }
             })
           }}
-          // searchParameters={searchParameters}
+          searchParameters={searchParameters}
         />
       </div>
     </>
