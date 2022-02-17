@@ -14,6 +14,7 @@ module.exports = withBundleAnalyzer({
   future: {
     strictPostcssConfiguration: true
   },
+  swcMinify: true,
   reactStrictMode: true,
   i18n,
   async redirects () {
