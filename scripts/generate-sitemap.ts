@@ -5,7 +5,7 @@ import fs from 'fs'
 
 import { SitemapStream, streamToPromise } from 'sitemap'
 
-import { getTags } from '../lib/tags'
+import { getTags, Tags } from '../lib/tags'
 import { Locale, getLocale } from '../lib/i18n'
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== 'darwin') {
@@ -34,7 +34,7 @@ const main = async () => {
     const langVersions = versions[lang]
   
     for (let tag of Object.keys(tags)) {
-      const [ major, minor ] = tags[tag]
+      const [ major, minor ] = tags[tag as Tags]
       const files = langVersions[major][minor]
       for (let file of files) {
         const prefix = locale === Locale.English ? '' : `/${locale}`
