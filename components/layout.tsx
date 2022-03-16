@@ -11,7 +11,7 @@ const Layout: FunctionComponent<Props> = ({
   title = 'bedrock.dev',
   description= '',
 }) => (
-  <div>
+  <>
     <Head>
       <title>{title}</title>
       {description && (
@@ -22,10 +22,8 @@ const Layout: FunctionComponent<Props> = ({
       )}
       <meta property='og:title' content={title} />
     </Head>
-    <div>
-      {children}
-    </div>
-  </div>
+    {children}
+  </>
 )
 
 export default Layout
