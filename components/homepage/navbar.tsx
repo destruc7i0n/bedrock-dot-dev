@@ -11,9 +11,7 @@ const HomepageNavbar = () => {
       <nav className='mx-auto flex items-center justify-between px-4 sm:px-6 md:px-8 max-w-screen-lg lg:p-0'>
         <Link href='/'>
           <a className='flex items-center'>
-            <div className='flex flex-col justify-center'>
-              <div className='font-normal text-gray-900 dark:text-white leading-tight text-2xl tracking-tight'>bedrock.dev</div>
-            </div>
+            <div className='font-normal text-gray-900 dark:text-white leading-tight text-2xl tracking-tight'>bedrock.dev</div>
           </a>
         </Link>
         <div className='flex items-center'>

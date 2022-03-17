@@ -44,9 +44,9 @@ const Footer: FunctionComponent<Props> = ({ darkClassName = 'bg-dark-gray-950', 
         </div>
 
         {showToggles && (
-          <div className='!mt-9 flex flex-col justify-center items-center'>
+          <div className='!mt-9 flex justify-center'>
             <LanguageSelect />
-            <ModeSelect className='mt-2' />
+            <ModeSelect className='ml-2' />
           </div>
         )}
       </div>

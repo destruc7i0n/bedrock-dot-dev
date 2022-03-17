@@ -45,7 +45,7 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
       <div className='bg-gray-50 dark:bg-dark-gray-950 border-b border-gray-200 dark:border-dark-gray-800'>
         <Navbar />
 
-        <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-col items-center'>
+        <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-wrap justify-center'>
           <h1 className='font-extrabold text-4xl md:text-5xl leading-10 text-gray-900 dark:text-white'>bedrock.dev</h1>
           <h2 className='mt-4 mb-6 sm:mt-5 font-medium text-xl md:text-2xl text-center leading-tight text-gray-900 dark:text-gray-200'>
             {t('page.home.subtitle')}
@@ -59,8 +59,8 @@ const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
       </div>
 
       <div className='max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 mt-10'>
-        <div className='flex flex-col w-full bg-white dark:bg-dark-gray-950 text-black dark:text-gray-200 rounded-lg outline-none appearance-none transition duration-150 ease-in-out'>
-          <div className='flex flex-col xl:items-center text-xl font-normal p-3'>
+        <div className='w-full bg-white dark:bg-dark-gray-950 text-black dark:text-gray-200 rounded-lg outline-none appearance-none transition duration-150 ease-in-out'>
+          <div className='flex flex-wrap xl:items-center text-xl font-normal p-3'>
             <h2 className='w-full pb-3 text-xl font-bold'>
               {t('component.version_chooser.title')}
             </h2>

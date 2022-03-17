@@ -80,38 +80,40 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
 
   return (
     <>
-      <div className='w-full flex flex-col'>
-        <div className='w-full flex flex-row'>
-          <VersionChooserComponent
-            major={major}
-            minor={minor}
-            majorVersions={majorVersions}
-            minorVersions={minorVersions}
-            setMajor={setMajor}
-            setMinor={setMinor}
-            tags={tags}
+      <div className='w-full flex flex-row'>
+        <VersionChooserComponent
+          major={major}
+          minor={minor}
+          majorVersions={majorVersions}
+          minorVersions={minorVersions}
+          setMajor={setMajor}
+          setMinor={setMinor}
+          tags={tags}
+        />
+      </div>
+      <div className='w-full'>
+        <label className='flex items-center'>
+          <input
+            type='checkbox'
+            className='text-blue-500 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
+            checked={!quickSelect}
+            onChange={({ target: { checked } }) => setQuickSelect(!checked)}
           />
-        </div>
-        <div className='w-full'>
-          <label className='flex items-center'>
-            <input
-              type='checkbox'
-              className='text-blue-500 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50'
-              checked={!quickSelect}
-              onChange={({ target: { checked } }) => setQuickSelect(!checked)}
-            />
-            <span className='ml-2 text-sm select-none'>{t('component.version_chooser.view_all')}</span>
-          </label>
-        </div>
+          <span className='ml-2 text-sm select-none'>{t('component.version_chooser.view_all')}</span>
+        </label>
       </div>
 
-      <div className='w-full flex flex-col mt-2'>
+      <div className='w-full mt-2'>
         <label className='block text-sm font-bold mb-2'>
           {t('component.version_chooser.file_selection')}
         </label>
-        <div className='overflow-y-auto w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
+        <div className='w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg'>
           {files.map((file) => (
-            <VersionFile key={`file-${file}-${minor}`} title={translateFileNames(fileNameTranslations, file)} link={getLink(major, minor, file, tags, quickSelect)} />
+            <VersionFile 
+              key={`file-${file}-${minor}`}
+              title={translateFileNames(fileNameTranslations, file)}
+              link={getLink(major, minor, file, tags, quickSelect)} 
+            />
           ))}
         </div>
       </div>
