@@ -49,7 +49,7 @@ const PackCard: FunctionComponent<PackCardProps> = ({ version, versions }) => {
   return (
     <div className='text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
       <p className='text-lg dark:text-gray-200'>{version}</p>
-      <div className='flex w-full md:flex-row md:justify-around items-center justify-center'>
+      <div className='flex flex-col w-full md:flex-row md:justify-around items-center justify-center'>
         {open ? links : <span className='link cursor-pointer' onClick={() => setOpen(!open)}><DownloadIcon className='pointer-events-none w-6 h-6' /></span>}
       </div>
     </div>
