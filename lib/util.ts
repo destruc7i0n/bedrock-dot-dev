@@ -78,9 +78,17 @@ export const updateFileNames = (fileName: string): string => {
   }
 }
 
+export const isVersionSince = (version: string, since: string) => {
+  return compareBedrockVersions(since, version) >= 0
+}
+
+export const isVersionBefore = (version: string, before: string) => {
+  return compareBedrockVersions(before, version) < 0
+}
+
 export const isNewMolangFilename = (version: string): boolean => {
   // check if version is newer than the one Mojang changed the MoLang to Molang
-  return compareBedrockVersions('1.17.30.24', version) === -1
+  return isVersionSince(version, '1.17.30.24')
 }
 
 export const oneLine = (str: string) => str.split(/\r?\n/).map(e => e.trim()).join('')
