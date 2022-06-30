@@ -63,8 +63,8 @@ const DocsContainer: FunctionComponent<DocsContainerProps> = ({ html, loading })
   return (
     <div className='flex-1 w-0 bg-white dark:bg-dark-gray-900'>
       <div className='pt-4 pr-5 pl-5 pb-5 lg:max-w-9/10 mx-auto'>
-        {!!alerts.length && !loading && alerts.map((alert, index) => <DocsAlert key={`alert-${index}`} {...alert} />)}
-        {loading ? loadingContent: <DocsContent html={html} />}
+        {!loading && alerts.map((alert, index) => <DocsAlert key={`alert-${index}`} {...alert} />)}
+        {loading ? loadingContent : <DocsContent html={html} />}
       </div>
     </div>
   )
