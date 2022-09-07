@@ -12,24 +12,29 @@ export const SidebarContext = createContext<ContextType>({
   setOpen: () => null
 })
 
+let count = -1
+let lastClick: number = 0
+
 export const SidebarContextProvider: FunctionComponent = ({ children }) => {
   const [open, setOpen] = useState<boolean>(true)
 
   // rehyrate the open state from the localstorage
   useEffect(() => {
     // attempt to get from localstorage
-    let open = true
+    let newOpen = true
     try {
       const localStorageItem = localStorage.getItem('sidebar')
       if (typeof localStorageItem === 'string') {
-        ({ open } = JSON.parse(localStorageItem))
+        ({ open: newOpen } = JSON.parse(localStorageItem))
       }
     } catch (e) {}
 
     // not open if on small screen
-    if (!isLg()) open = false
+    if (!isLg()) newOpen = false
 
-    setOpen(open)
+    if (open !== newOpen) {
+      setOpen(newOpen)
+    }
     // remove the class from the preflight if it's there
     if (document.documentElement.classList.contains('sidebar-closed'))
       document.documentElement.classList.remove('sidebar-closed')
@@ -42,6 +47,15 @@ export const SidebarContextProvider: FunctionComponent = ({ children }) => {
       try {
         localStorage.setItem('sidebar', JSON.stringify({open}))
       } catch (e) {}
+    }
+
+    if (Date.now() - lastClick > 750) count = 0
+    lastClick = Date.now()
+    count += 1
+
+    if (count >= 7) {
+      count = 0
+      document.documentElement.classList.toggle('monocraft')
     }
   }, [ open ])
 

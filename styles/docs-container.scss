@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Monocraft';
+  src: url('/fonts/Monocraft.otf');
+}
+
 .docs-content {
   font-family: -apple-system, BlinkMacSystemFont, "Raleway", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   overflow-x: auto;
@@ -106,6 +111,9 @@
     @import 'code/dark.scss';
   }
 
+  .monocraft & {
+    @import 'code/monocraft.scss';
+  }
 
   /* headings */
   h1, h2 {
