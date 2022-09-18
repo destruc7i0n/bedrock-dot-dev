@@ -10,7 +10,7 @@ module.exports = withBundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
-    largePageDataBytes: 1000 * 1000,
+    largePageDataBytes: (5 * 1000) * 1000, // 5 MB
   },
   future: {},
   swcMinify: true,
