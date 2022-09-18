@@ -10,10 +10,9 @@ module.exports = withBundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
+    largePageDataBytes: 1000 * 1000,
   },
-  future: {
-    strictPostcssConfiguration: true
-  },
+  future: {},
   swcMinify: true,
   reactStrictMode: true,
   i18n,

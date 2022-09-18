@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo } from 'react'
 
-import { SearchIcon } from '@heroicons/react/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 import { useTranslation } from 'next-i18next'
 
@@ -17,7 +17,7 @@ const SidebarFilter: FunctionComponent<Props> = ({ value, setValue }) => {
       <div className='relative w-full rounded-lg'>
         <div className='absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none'>
           <span className='text-gray-500 leading-4'>
-            <SearchIcon className='pointer-events-none w-4 h-4' />
+            <MagnifyingGlassIcon className='pointer-events-none w-4 h-4' />
           </span>
         </div>
         <input

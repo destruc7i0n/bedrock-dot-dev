@@ -4,6 +4,7 @@ import Head from 'next/head'
 type Props = {
   title?: string
   description?: string
+  children?: React.ReactNode
 }
 
 const Layout: FunctionComponent<Props> = ({

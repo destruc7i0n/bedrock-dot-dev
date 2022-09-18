@@ -1,6 +1,6 @@
 import React, { Children, FunctionComponent, MouseEvent } from 'react'
 
-import { ChevronLeftIcon } from '@heroicons/react/outline'
+import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 
 import cn from 'classnames'
 
@@ -13,6 +13,7 @@ type Props = {
   open: boolean
   setOpen: (open: boolean) => void
   searching: boolean
+  children?: React.ReactNode
 }
 
 const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash, open, setOpen, searching }) => {
@@ -47,7 +48,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({ title, id, children, hash
             'flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out',
             { '-rotate-90': isOpen }
           )}>
-            <ChevronLeftIcon className='w-4 h-4' />
+            <ChevronLeftIcon className='w-5 h-5' />
           </div>
         )}
       </div>

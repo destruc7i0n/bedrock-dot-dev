@@ -4,7 +4,7 @@ import { GetStaticProps } from 'next'
 import { useTranslation, Trans } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { DownloadIcon } from '@heroicons/react/outline'
+import { ArrowDownTrayIcon } from '@heroicons/react/20/solid'
 
 import S3 from 'aws-sdk/clients/s3'
 
@@ -50,7 +50,7 @@ const PackCard: FunctionComponent<PackCardProps> = ({ version, versions }) => {
     <div className='text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md'>
       <p className='text-lg dark:text-gray-200'>{version}</p>
       <div className='flex flex-col w-full md:flex-row md:justify-around items-center justify-center'>
-        {open ? links : <span className='link cursor-pointer' onClick={() => setOpen(!open)}><DownloadIcon className='pointer-events-none w-6 h-6' /></span>}
+        {open ? links : <span className='link cursor-pointer' onClick={() => setOpen(!open)}><ArrowDownTrayIcon className='pointer-events-none w-6 h-6' /></span>}
       </div>
     </div>
   )

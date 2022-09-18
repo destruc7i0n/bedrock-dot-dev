@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { ChevronUpIcon } from '@heroicons/react/outline'
+import { ChevronUpIcon } from '@heroicons/react/20/solid'
 
 const BackToTop = () => {
   const [showScroll, setShowScroll] = useState(false)

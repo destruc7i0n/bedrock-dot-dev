@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 
-import { SunIcon, MoonIcon, DesktopComputerIcon } from '@heroicons/react/outline'
+import { SunIcon, MoonIcon, ComputerDesktopIcon } from '@heroicons/react/20/solid'
 
 import { useTranslation } from 'next-i18next'
 
@@ -16,7 +16,7 @@ enum Theme {
 
 const themes = {
   [Theme.System]: {
-    icon: DesktopComputerIcon,
+    icon: ComputerDesktopIcon,
   },
   [Theme.Light]: {
     icon: SunIcon,

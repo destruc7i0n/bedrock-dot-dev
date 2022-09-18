@@ -3,7 +3,7 @@ import React, { FunctionComponent, memo, useContext } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { MenuIcon, MenuAlt1Icon } from '@heroicons/react/outline'
+import { Bars3Icon, Bars3CenterLeftIcon } from '@heroicons/react/20/solid'
 
 import DocSearch from '../docsearch'
 
@@ -28,7 +28,7 @@ const Header: FunctionComponent = () => {
 
   const isDocsPage = router.pathname.startsWith('/docs')
 
-  const IconClass = open ? MenuAlt1Icon : MenuIcon
+  const IconClass = open ? Bars3CenterLeftIcon : Bars3Icon
 
   return (
     <>
