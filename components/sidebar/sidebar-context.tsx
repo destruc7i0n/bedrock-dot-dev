@@ -15,7 +15,7 @@ export const SidebarContext = createContext<ContextType>({
 let count = -1
 let lastClick: number = 0
 
-export const SidebarContextProvider: FunctionComponent = ({ children }) => {
+export const SidebarContextProvider: FunctionComponent<{ children?: React.ReactNode }> = ({ children }) => {
   const [open, setOpen] = useState<boolean>(true)
 
   // rehyrate the open state from the localstorage

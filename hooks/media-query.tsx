@@ -11,7 +11,7 @@ const isLg = () => !getMediaQuery(1024).matches
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false)
 
-  const updateTarget = useCallback(e => {
+  const updateTarget = useCallback((e: MediaQueryListEvent) => {
     if (e.matches) {
       setTargetReached(true)
     } else {
