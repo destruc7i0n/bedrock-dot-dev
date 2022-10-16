@@ -231,7 +231,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
 
   return {
     props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
-    revalidate: 60 * 60 * 12, // every 12 hours
+    // revalidate: 60 * 60 * 12, // every 12 hours
   }
 }
 
