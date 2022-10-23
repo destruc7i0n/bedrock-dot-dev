@@ -66,7 +66,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = t('page.docs.website_title_loading')
   let description = ''
-  let ogImageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL ?? ''}/api/og?file=${encodeURIComponent(file)}`
+  let ogImageUrl = `${!!process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : ''}/api/og?file=${encodeURIComponent(file)}`
 
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
