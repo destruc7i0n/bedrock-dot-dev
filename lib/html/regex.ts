@@ -16,3 +16,4 @@ export const P_ID_MATCH = /<p id="(.*)">(.*)<\/p>/
 export const H_TITLE_MATCH = new RegExp(`<h(\\d)>${P_ID_MATCH.source}<\\/h\\d>`, 'g')
 export const ONLY_NEWLINES_AND_WHITESPACE = /^(?:\s*<\/?\s*br\s*\/?\s*>\s*)*$/
 export const MARKDOWN_CODE_MATCH = /```([^]+)```/
+export const VERSION = /(\d+\.\d+\.\d+\.\d+)/

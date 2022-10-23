@@ -13,6 +13,7 @@
   "dependencies": {
     "@docsearch/react": "^3.2.1",
     "@heroicons/react": "^2.0.12",
+    "@vercel/og": "^0.0.20",
     "aws-sdk": "^2.1023.0",
     "classnames": "^2.3.2",
     "element-in-view": "^0.1.0",

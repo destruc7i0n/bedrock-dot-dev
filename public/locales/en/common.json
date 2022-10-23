@@ -51,7 +51,7 @@
       "major": "Major",
       "minor": "Minor",
       "stable_string": "Stable",
-      "beta_string": "Beta",
+      "beta_string": "Preview",
       "tagged_version_title": "Version",
       "view_all": "View all versions",
       "file_selection": "File Selection"

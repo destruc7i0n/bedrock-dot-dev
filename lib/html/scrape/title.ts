@@ -1,4 +1,4 @@
-import { H1_MATCH } from '../regex'
+import { H1_MATCH, VERSION } from '../regex'
 
 export type TitleResponse = {
   version: string,
@@ -26,7 +26,7 @@ export const getTitle = (html: string): TitleResponse => {
   title = toTitleCase(title)
 
   let resp: TitleResponse = { version: '', title: '' }
-  const titleRe = /(.*) Documentation Version: (\d+\.\d+\.\d+\.\d+)/
+  const titleRe = new RegExp(`(.*) Documentation Version: ${VERSION.source}`)
 
   const titleMatch = title.match(titleRe)
   if (titleMatch) {

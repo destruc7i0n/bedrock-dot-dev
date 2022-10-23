@@ -66,6 +66,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = t('page.docs.website_title_loading')
   let description = ''
+  let ogImageUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL ?? ''}/api/og?file=${encodeURIComponent(file)}`
+
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
     title = t('page.docs.website_title_untagged', { title: documentTitle, version }) + ' | bedrock.dev'
@@ -73,6 +75,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
 
     // custom titles for version tag
     if (versionTag) {
+      ogImageUrl += `&version=${encodeURIComponent(versionTag)}`
+
       switch (versionTag) {
         case Tags.Stable: {
           title = t('page.docs.website_title_tagged_stable', { title: documentTitle }) + ' | bedrock.dev'
@@ -86,6 +90,8 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
         }
         default: break
       }
+    } else {
+      ogImageUrl += `&version=${encodeURIComponent(version)}`
     }
   }
 
@@ -109,6 +115,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
           )}}
         />
         <meta name='docsearch:language' content={locale} />
+        <meta name='og:image' content={ogImageUrl} />
       </Head>
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
