@@ -21,10 +21,9 @@ class BedrockDevDocument extends Document {
           <link rel='manifest' href='/favicon/site.webmanifest' />
           <link rel='shortcut icon' href='/favicon/favicon.ico' />
           <meta name='theme-color' content='#ffffff' />
-          <meta name='twitter:card' content='summary' />
+          <meta name='twitter:card' content='summary_large_image' />
           <meta name='twitter:creator' content='@TheDestruc7i0n' />
-          {/* <meta name='twitter:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' /> */}
-          {/* <meta name='og:image' content='https://bedrock.dev/favicon/android-chrome-512x512.png' /> */}
+
           <AnalyticsHeadTags />
         </Head>
         <body>

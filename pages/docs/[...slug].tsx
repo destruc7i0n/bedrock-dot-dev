@@ -32,6 +32,7 @@ import {
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
 import { getLocale, Locale, useLocale } from 'lib/i18n'
+import { VERCEL_URL_PREFIX } from 'lib/constants'
 
 type Props = {
   html: string
@@ -66,7 +67,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = t('page.docs.website_title_loading')
   let description = ''
-  let ogImageUrl = `${!!process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : ''}/api/og?file=${encodeURIComponent(file)}`
+  let ogImageUrl = `${VERCEL_URL_PREFIX}/api/og?file=${encodeURIComponent(file)}`
 
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
@@ -100,7 +101,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   if (bedrockVersions) versions = transformInbound(bedrockVersions)
 
   return (
-    <>
+    <Layout title={title} description={description}>
       <Head>
         <script
           dangerouslySetInnerHTML={{ __html: oneLine(`
@@ -115,22 +116,21 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
           )}}
         />
         <meta name='docsearch:language' content={locale} />
-        <meta name='og:image' content={ogImageUrl} />
+        <meta key='meta-image' name='og:image' content={ogImageUrl} />
       </Head>
+
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
-          <Layout title={title} description={description}>
-            <Header />
-            <div className='flex'>
-              <Sidebar sidebar={sidebar} file={file} loading={loading} />
-              <DocsContainer html={html} loading={loading} />
-            </div>
-            <BackToTop />
-            {!loading && <Footer dark darkClassName='bg-dark-gray-975' showToggles={false} outline />}
-          </Layout>
+          <Header />
+          <div className='flex'>
+            <Sidebar sidebar={sidebar} file={file} loading={loading} />
+            <DocsContainer html={html} loading={loading} />
+          </div>
+          <BackToTop />
+          {!loading && <Footer dark darkClassName='bg-dark-gray-975' showToggles={false} outline />}
         </SidebarContextProvider>
       </VersionContextProvider>
-    </>
+    </Layout>
   )
 }
 
