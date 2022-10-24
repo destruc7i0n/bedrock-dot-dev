@@ -4,6 +4,9 @@ import { NextRequest } from 'next/server'
 import { Tags } from 'lib/tags'
 import { VERSION } from 'lib/html/regex'
 
+// i18next does not work as well on the server, so we have to use a different method to get the strings
+import trans from 'public/locales/en/common.json'
+
 export const config = {
   runtime: 'experimental-edge',
 }
@@ -35,7 +38,7 @@ export default async function (req: NextRequest) {
         break
       }
       case Tags.Beta: {
-        version = 'Preview'
+        version = trans['component']['version_chooser']['beta_string']
         break
       }
       default: {
@@ -62,7 +65,11 @@ export default async function (req: NextRequest) {
         >
           <div tw='bg-gray-50 w-full h-full flex flex-col items-center justify-center'>
             <h1 tw='font-extrabold text-8xl font-bold mb-4'>bedrock.dev</h1>
-            <h2 tw='font-medium text-4xl mb-2'>{!!file ? `${file} Documentation` : 'Minecraft Bedrock Edition Documentation'}</h2>
+            <h2 tw='font-medium text-4xl mb-2'>
+              {!!file
+                ? trans['page']['docs']['website_title_tagged_stable'].replace('{{title}}', file)
+                : trans['page']['home']['subtitle']}
+            </h2>
             {(file && version) && <h3 tw='text-3xl font-bold p-3 bg-blue-600 rounded-xl text-white'>{version}</h3>}
           </div>
         </div>
