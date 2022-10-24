@@ -61,9 +61,9 @@ export default async function (req: NextRequest) {
           }}
         >
           <div tw='bg-gray-50 w-full h-full flex flex-col items-center justify-center'>
-            <h1 tw='font-extrabold text-8xl font-bold mb-8'>bedrock.dev</h1>
+            <h1 tw='font-extrabold text-8xl font-bold mb-4'>bedrock.dev</h1>
             <h2 tw='font-medium text-4xl mb-2'>{!!file ? `${file} Documentation` : 'Minecraft Bedrock Edition Documentation'}</h2>
-            {(file && version) && <h3 tw='text-3xl font-bold'>{version}</h3>}
+            {(file && version) && <h3 tw='text-3xl font-bold p-3 bg-blue-600 rounded-xl text-white'>{version}</h3>}
           </div>
         </div>
       ),
