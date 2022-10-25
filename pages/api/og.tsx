@@ -35,18 +35,18 @@ export default async function (req: NextRequest) {
     const versionParam = searchParams.get('version')
 
     let file = fileParam
-    let version = null
     let taggedVersion = null
+    let version = null
 
     switch (versionParam) {
       case Tags.Stable: {
-        version = trans['component']['version_chooser']['stable_string']
-        taggedVersion = tags.stable[1]
+        taggedVersion = Tags.Stable
+        version = tags.stable[1]
         break
       }
       case Tags.Beta: {
-        version = trans['component']['version_chooser']['beta_string']
-        taggedVersion = tags.beta[1]
+        taggedVersion = Tags.Beta
+        version = tags.beta[1]
         break
       }
       default: {
@@ -69,12 +69,13 @@ export default async function (req: NextRequest) {
           {trans['page']['docs']['website_title_tagged_stable'].replace('{{title}} ', '')}
         </h2>
         <div tw='flex flex-row'>
-          {(file && version) && (
+          {taggedVersion && (
             <h3 tw={cn(
-              'text-4xl p-2 rounded-xl text-white',
-              { 'bg-yellow-500': versionParam === Tags.Beta, 'bg-blue-600': versionParam !== Tags.Beta }
-            )}>{version}</h3>)}
-          {taggedVersion && <h3 tw='ml-4 text-4xl p-2 bg-gray-200 rounded-xl'>{taggedVersion}</h3>}
+              'text-4xl p-2 px-4 mr-4 rounded-xl text-white',
+              { 'bg-yellow-500': taggedVersion === Tags.Beta, 'bg-blue-600': versionParam !== Tags.Beta }
+            )}>{trans['component']['version_chooser'][`${taggedVersion}_string`]}</h3>)}
+
+          {version && <h3 tw='text-4xl p-2 px-4 bg-gray-200 rounded-xl'>{version}</h3>}
         </div>
       </div>
     )
