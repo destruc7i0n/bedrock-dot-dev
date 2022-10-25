@@ -15,7 +15,7 @@ export type TagsResponse = {
 // fetch the tags file from the repository
 export const getTags = async (locale: Locale): Promise<TagsResponse> => {
   // fetch the tags from the server
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_CI !== 'true') {
     // fetch from cached file
     const tags = require('../public/static/tags.json')
     return tags
