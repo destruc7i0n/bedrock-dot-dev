@@ -4,10 +4,13 @@ require('isomorphic-unfetch')
 const path = require('path')
 const fs = require('fs')
 
+import { Locale } from '../lib/i18n'
+import { getTags } from '../lib/tags'
 import { getVersionsFile } from '../lib/versions'
 
 const main = async () => {
   const file = await getVersionsFile()
+  const tags = await getTags(Locale.English)
 
   // count the number of documentation files per locale
   for (let [locale, versions] of Object.entries(file['versions'])) {
@@ -21,9 +24,11 @@ const main = async () => {
 
   if (!fs.existsSync('public/static')) fs.mkdirSync('public/static')
 
-  const dir = path.resolve('public/static/docs.json')
+  const docsFile = path.resolve('public/static/docs.json')
+  const tagsFile = path.resolve('public/static/tags.json')
 
-  fs.writeFileSync(dir, JSON.stringify(file))
+  fs.writeFileSync(docsFile, JSON.stringify(file))
+  fs.writeFileSync(tagsFile, JSON.stringify(tags))
   console.log('static docs file generated!')
 }
 

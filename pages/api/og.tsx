@@ -1,6 +1,8 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 
+import cn from 'classnames'
+
 import { Tags } from 'lib/tags'
 import { VERSION } from 'lib/html/regex'
 
@@ -24,21 +26,26 @@ export default async function (req: NextRequest) {
     ),
   ])
 
+  const tags = await fetch(new URL('../../public/static/tags.json', import.meta.url)).then((res) => res.json())
+
   try {
     const { searchParams } = new URL(req.url)
-    const fileParam = searchParams.get('file')?.slice(0, 100)
+    const fileParam = searchParams.get('file')?.slice(0, 100) ?? ''
     const versionParam = searchParams.get('version')
 
     let file = fileParam
     let version = null
+    let taggedVersion = null
 
-    switch (versionParam?.toLowerCase()) {
+    switch (versionParam) {
       case Tags.Stable: {
-        // don't show "Stable" when stable
+        version = trans['component']['version_chooser']['stable_string']
+        taggedVersion = tags.stable[1]
         break
       }
       case Tags.Beta: {
         version = trans['component']['version_chooser']['beta_string']
+        taggedVersion = tags.beta[1]
         break
       }
       default: {
@@ -53,6 +60,33 @@ export default async function (req: NextRequest) {
       }
     }
 
+    const docsPageLayout = (
+      <div tw='bg-gray-50 w-full h-full flex flex-col justify-center pl-16'>
+        <h2 tw='font-bold text-4xl font-bold text-gray-500 mb-0'>bedrock.dev</h2>
+        <h1 tw='font-extrabold mb-0 text-9xl ml-0'>{file}</h1>
+        <h2 tw='text-5xl font-medium mt-2'>
+          {trans['page']['docs']['website_title_tagged_stable'].replace('{{title}} ', '')}
+        </h2>
+        <div tw='flex flex-row'>
+          {(file && version) && (
+            <h3 tw={cn(
+              'text-4xl p-2 rounded-xl text-white',
+              { 'bg-orange-600': versionParam === Tags.Beta, 'bg-blue-600': versionParam !== Tags.Beta }
+            )}>{version}</h3>)}
+          {taggedVersion && <h3 tw='ml-4 text-4xl p-2 bg-gray-200 rounded-xl text-black'>{taggedVersion}</h3>}
+        </div>
+      </div>
+    )
+
+    const defaultLayout = (
+      <div tw='bg-gray-50 w-full h-full flex flex-col justify-center pl-16'>
+        <h1 tw='font-extrabold text-9xl'>
+          bedrock.dev
+        </h1>
+        <h2 tw='font-medium text-4xl'>{trans['page']['home']['subtitle']}</h2>
+      </div>
+    )
+
     return new ImageResponse(
       (
         <div
@@ -61,17 +95,10 @@ export default async function (req: NextRequest) {
             width: '100%',
             display: 'flex',
             fontFamily: '"Inter"',
+            backgroundColor: 'white',
           }}
         >
-          <div tw='bg-gray-50 w-full h-full flex flex-col items-center justify-center'>
-            <h1 tw='font-extrabold text-8xl font-bold mb-4'>bedrock.dev</h1>
-            <h2 tw='font-medium text-4xl mb-2'>
-              {!!file
-                ? trans['page']['docs']['website_title_tagged_stable'].replace('{{title}}', file)
-                : trans['page']['home']['subtitle']}
-            </h2>
-            {(file && version) && <h3 tw='text-3xl font-bold p-3 bg-blue-600 rounded-xl text-white'>{version}</h3>}
-          </div>
+          {file ? docsPageLayout : defaultLayout}
         </div>
       ),
       {
