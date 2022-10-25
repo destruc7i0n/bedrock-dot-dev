@@ -6,6 +6,7 @@ old-css.css
 
 public/sitemap.xml
 public/static/docs.json
+public/static/tags.json
 
 .env*
 

@@ -11,6 +11,7 @@ import NProgress from 'nprogress'
 import * as analytics from 'lib/analytics'
 
 import 'styles/tailwind.scss'
+import 'styles/fonts.scss'
 import 'styles/app.scss'
 
 NProgress.configure({ showSpinner: false })

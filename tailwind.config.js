@@ -1,3 +1,6 @@
+
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 const screens = {
   'sm': '640px',
   'md': '768px',
@@ -50,6 +53,10 @@ module.exports = {
           '800': '#3e4042', // accent
           '700': '#4b4c4e', // table border
         }
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        mono: ['Fira Code VF', ...defaultTheme.fontFamily.mono],
       },
     },
     screens: {
