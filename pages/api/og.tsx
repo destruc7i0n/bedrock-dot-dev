@@ -71,8 +71,8 @@ export default async function (req: NextRequest) {
         <div tw='flex flex-row'>
           {(file && version) && (
             <h3 tw={cn(
-              'text-4xl p-2 rounded-xl',
-              { 'bg-yellow-400 text-black': versionParam === Tags.Beta, 'bg-blue-600 text-white': versionParam !== Tags.Beta }
+              'text-4xl p-2 rounded-xl text-white',
+              { 'bg-yellow-500': versionParam === Tags.Beta, 'bg-blue-600': versionParam !== Tags.Beta }
             )}>{version}</h3>)}
           {taggedVersion && <h3 tw='ml-4 text-4xl p-2 bg-gray-200 rounded-xl'>{taggedVersion}</h3>}
         </div>
