@@ -5,12 +5,16 @@ const path = require('path')
 const fs = require('fs')
 
 import { Locale } from '../lib/i18n'
-import { getTags } from '../lib/tags'
+import { getTags, TagsResponse } from '../lib/tags'
 import { getVersionsFile } from '../lib/versions'
 
 const main = async () => {
   const file = await getVersionsFile()
-  const tags = await getTags(Locale.English, true)
+
+  const tags: { [key in Locale]?: TagsResponse } = {}
+  for (const language of Object.values(Locale)) {
+    tags[language] = await getTags(language, true)
+  }
 
   // count the number of documentation files per locale
   for (let [locale, versions] of Object.entries(file['versions'])) {
