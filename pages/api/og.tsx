@@ -72,7 +72,7 @@ export default async function (req: NextRequest) {
           {(file && version) && (
             <h3 tw={cn(
               'text-4xl p-2 rounded-xl',
-              { 'bg-yellow-400': versionParam === Tags.Beta, 'bg-blue-600': versionParam !== Tags.Beta }
+              { 'bg-yellow-400 text-black': versionParam === Tags.Beta, 'bg-blue-600 text-white': versionParam !== Tags.Beta }
             )}>{version}</h3>)}
           {taggedVersion && <h3 tw='ml-4 text-4xl p-2 bg-gray-200 rounded-xl'>{taggedVersion}</h3>}
         </div>
