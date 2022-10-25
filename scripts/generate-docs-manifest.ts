@@ -10,7 +10,7 @@ import { getVersionsFile } from '../lib/versions'
 
 const main = async () => {
   const file = await getVersionsFile()
-  const tags = await getTags(Locale.English)
+  const tags = await getTags(Locale.English, true)
 
   // count the number of documentation files per locale
   for (let [locale, versions] of Object.entries(file['versions'])) {
