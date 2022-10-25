@@ -3,8 +3,9 @@ import { NextRequest } from 'next/server'
 
 import cn from 'classnames'
 
-import { Tags } from 'lib/tags'
+import { getTags, Tags } from 'lib/tags'
 import { VERSION } from 'lib/html/regex'
+import { Locale } from 'lib/i18n'
 
 // i18next does not work as well on the server, so we have to use a different method to get the strings
 import trans from 'public/locales/en/common.json'
@@ -26,7 +27,7 @@ export default async function (req: NextRequest) {
     ),
   ])
 
-  const tags = await fetch(new URL('../../public/static/tags.json', import.meta.url)).then((res) => res.json())
+  const tags = await getTags(Locale.English)
 
   try {
     const { searchParams } = new URL(req.url)

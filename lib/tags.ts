@@ -17,7 +17,7 @@ export const getTags = async (locale: Locale): Promise<TagsResponse> => {
   // fetch the tags from the server
   if (process.env.NODE_ENV === 'production') {
     // fetch from cached file
-    return await (await fetch('/static/tags.json')).json()
+    return await (await fetch(new URL('../public/static/tags.json', import.meta.url))).json()
   } else {
     const repo = getRepository(locale)
     const tags = await fetch(`${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`)
