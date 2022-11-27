@@ -17,47 +17,47 @@ export const config = {
 // yes, all these need to be inlined
 const ASSETS = {
   'addons': [
-    new URL('../../public/og/addons/addons_1.png', import.meta.url),
+    new URL('assets/og/addons/addons_1.png', import.meta.url),
   ],
   'animations': [
-    new URL('../../public/og/animations/animations_1.png', import.meta.url),
+    new URL('assets/og/animations/animations_1.png', import.meta.url),
   ],
   'biomes': [
-    new URL('../../public/og/biomes/biomes_1.png', import.meta.url),
+    new URL('assets/og/biomes/biomes_1.png', import.meta.url),
   ],
   'blocks': [
-    new URL('../../public/og/blocks/blocks_1.png', import.meta.url),
+    new URL('assets/og/blocks/blocks_1.png', import.meta.url),
   ],
   'entities': [
-    new URL('../../public/og/entities/entities_1.png', import.meta.url),
-    new URL('../../public/og/entities/entities_2.png', import.meta.url),
-    new URL('../../public/og/entities/entities_3.png', import.meta.url),
+    new URL('assets/og/entities/entities_1.png', import.meta.url),
+    new URL('assets/og/entities/entities_2.png', import.meta.url),
+    new URL('assets/og/entities/entities_3.png', import.meta.url),
   ],
   'entity_events': [
-    new URL('../../public/og/entity_events/entity_events_1.png', import.meta.url),
+    new URL('assets/og/entity_events/entity_events_1.png', import.meta.url),
   ],
   'entity_timeline_events': [
-    new URL('../../public/og/entity_timeline_events/entity_timeline_events_1.png', import.meta.url),
+    new URL('assets/og/entity_timeline_events/entity_timeline_events_1.png', import.meta.url),
   ],
   'features': [
-    new URL('../../public/og/features/features_1.png', import.meta.url),
+    new URL('assets/og/features/features_1.png', import.meta.url),
   ],
   'item': [
-    new URL('../../public/og/item/item_1.png', import.meta.url),
-    new URL('../../public/og/item/item_2.png', import.meta.url),
-    new URL('../../public/og/item/item_3.png', import.meta.url),
+    new URL('assets/og/item/item_1.png', import.meta.url),
+    new URL('assets/og/item/item_2.png', import.meta.url),
+    new URL('assets/og/item/item_3.png', import.meta.url),
   ],
   'molang': [
-    new URL('../../public/og/molang/molang_1.png', import.meta.url),
+    new URL('assets/og/molang/molang_1.png', import.meta.url),
   ],
   'particles': [
-    new URL('../../public/og/particles/particles_1.png', import.meta.url),
+    new URL('assets/og/particles/particles_1.png', import.meta.url),
   ],
   'recipes': [
-    new URL('../../public/og/recipes/recipes_1.png', import.meta.url),
+    new URL('assets/og/recipes/recipes_1.png', import.meta.url),
   ],
   'schemas': [
-    new URL('../../public/og/schemas/schemas_1.png', import.meta.url),
+    new URL('assets/og/schemas/schemas_1.png', import.meta.url),
   ],
 }
 
@@ -76,13 +76,13 @@ const getAsset = async (file: string): Promise<string | null> => {
 
 export default async function (req: NextRequest) {
   const [fontData, fontMediumData, fontBoldData] = await Promise.all([
-    fetch(new URL('../../styles/fonts/Inter/inter-latin-ext-400-normal.woff', import.meta.url)).then(
+    fetch(new URL('styles/fonts/Inter/inter-latin-ext-400-normal.woff', import.meta.url)).then(
       (res) => res.arrayBuffer(),
     ),
-    fetch(new URL('../../styles/fonts/Inter/inter-latin-ext-500-normal.woff', import.meta.url)).then(
+    fetch(new URL('styles/fonts/Inter/inter-latin-ext-500-normal.woff', import.meta.url)).then(
       (res) => res.arrayBuffer(),
     ),
-    fetch(new URL('../../styles/fonts/Inter/inter-latin-ext-700-normal.woff', import.meta.url)).then(
+    fetch(new URL('styles/fonts/Inter/inter-latin-ext-700-normal.woff', import.meta.url)).then(
       (res) => res.arrayBuffer(),
     ),
   ])
