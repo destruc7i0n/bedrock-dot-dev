@@ -128,7 +128,7 @@ export default async function (req: NextRequest) {
     const docsPageLayout = (
       <div tw='bg-gray-50 flex flex-row w-full h-full pl-16'>
         <div tw={cn('absolute bottom-0 left-0 min-w-screen h-1', bgColorMap)} style={{
-          boxShadow: '0 0 35px 5px ' + (taggedVersion === Tags.Beta ? 'rgba(234, 179, 8, 0.6)' : 'rgba(37, 99, 235, 0.6)'),
+          boxShadow: `0 0 35px 5px ${taggedVersion === Tags.Beta ? 'rgba(234, 179, 8, 0.6)' : 'rgba(37, 99, 235, 0.6)'}`,
         }} />
         <div tw='flex flex-col justify-center h-full w-[70%]'>
           <h2 tw='font-bold text-4xl font-bold text-gray-500 mb-0'>bedrock.dev</h2>
@@ -147,8 +147,8 @@ export default async function (req: NextRequest) {
           </div>
         </div>
         {asset && (
-          <div tw='flex flex-1 h-full'>
-            <img tw='my-auto' src={asset} width={256} height={256} />
+          <div tw='flex flex-1 h-full items-center'>
+            <img src={asset} width={256} height={256} />
           </div>
         )}
       </div>
@@ -178,6 +178,7 @@ export default async function (req: NextRequest) {
         </div>
       ),
       {
+        debug: false,
         width: 1200,
         height: 630,
         fonts: [
