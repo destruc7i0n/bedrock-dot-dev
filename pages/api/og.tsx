@@ -21,8 +21,6 @@ const ASSETS = {
   ],
   'animations': [
     new URL('../../public/og/animations/animations_1.png', import.meta.url),
-    new URL('../../public/og/animations/animations_2.png', import.meta.url),
-    // new URL('../../public/og/animations/animations_3.png', import.meta.url),
   ],
   'biomes': [
     new URL('../../public/og/biomes/biomes_1.png', import.meta.url),
@@ -32,12 +30,8 @@ const ASSETS = {
   ],
   'entities': [
     new URL('../../public/og/entities/entities_1.png', import.meta.url),
-    // new URL('../../public/og/entities/entities_2.png', import.meta.url),
-    // new URL('../../public/og/entities/entities_3.png', import.meta.url),
-    // new URL('../../public/og/entities/entities_4.png', import.meta.url),
-    new URL('../../public/og/entities/entities_5.png', import.meta.url),
-    new URL('../../public/og/entities/entities_6.png', import.meta.url),
-    new URL('../../public/og/entities/entities_7.png', import.meta.url),
+    new URL('../../public/og/entities/entities_2.png', import.meta.url),
+    new URL('../../public/og/entities/entities_3.png', import.meta.url),
   ],
   'entity_events': [
     new URL('../../public/og/entity_events/entity_events_1.png', import.meta.url),
@@ -52,8 +46,6 @@ const ASSETS = {
     new URL('../../public/og/item/item_1.png', import.meta.url),
     new URL('../../public/og/item/item_2.png', import.meta.url),
     new URL('../../public/og/item/item_3.png', import.meta.url),
-    new URL('../../public/og/item/item_4.png', import.meta.url),
-    // new URL('../../public/og/item/item_5.png', import.meta.url),
   ],
   'molang': [
     new URL('../../public/og/molang/molang_1.png', import.meta.url),
@@ -63,7 +55,6 @@ const ASSETS = {
   ],
   'recipes': [
     new URL('../../public/og/recipes/recipes_1.png', import.meta.url),
-    new URL('../../public/og/recipes/recipes_2.png', import.meta.url),
   ],
   'schemas': [
     new URL('../../public/og/schemas/schemas_1.png', import.meta.url),
