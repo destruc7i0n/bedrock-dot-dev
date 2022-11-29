@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import Head from 'next/head'
 
-import { VERCEL_URL_PREFIX } from 'lib/constants'
+import { VERCEL_URL } from 'lib/constants'
 
 type Props = {
   title?: string
@@ -24,7 +24,7 @@ const Layout: FunctionComponent<Props> = ({
         </>
       )}
       <meta property='og:title' content={title} />
-      <meta key='meta-image' name='og:image' content={`${VERCEL_URL_PREFIX}/api/og`} />
+      <meta key='meta-image' name='og:image' content={`${VERCEL_URL}/api/og`} />
     </Head>
     {children}
   </>
