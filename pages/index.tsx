@@ -82,7 +82,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const bedrockVersions = transformOutbound(await allFilesList(locale))
   const tags = await getTags(locale)
 
-  return { props: { bedrockVersions, tags, ...await serverSideTranslations(locale, ['common']), } }
+  return { props: { bedrockVersions, tags, ...(await serverSideTranslations(locale, ['common'])), } }
 }
 
 export default IndexPage

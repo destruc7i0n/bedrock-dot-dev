@@ -12,7 +12,6 @@ module.exports = withBundleAnalyzer({
     // serverComponents: true,
     largePageDataBytes: (5 * 1000) * 1000, // 5 MB
   },
-  future: {},
   swcMinify: true,
   reactStrictMode: true,
   i18n,

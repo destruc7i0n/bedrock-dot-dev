@@ -28,7 +28,7 @@ const Custom404Page: FunctionComponent = () => {
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal)
 
-  return { props: { ...await serverSideTranslations(locale, ['common']) } }
+  return { props: { ...(await serverSideTranslations(locale, ['common'])) } }
 }
 
 export default Custom404Page

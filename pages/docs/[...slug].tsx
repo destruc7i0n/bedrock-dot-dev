@@ -32,7 +32,7 @@ import {
 import { areVersionsEqual, getTagFromSlug, getVersionParts, oneLine } from 'lib/util'
 import { allFilesList } from 'lib/versions'
 import { getLocale, Locale, useLocale } from 'lib/i18n'
-import { VERCEL_URL_PREFIX } from 'lib/constants'
+import { VERCEL_URL } from 'lib/constants'
 
 type Props = {
   html: string
@@ -67,7 +67,7 @@ const Docs: FunctionComponent<Props> = ({ html, bedrockVersions, tags, parsedDat
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {}
   let title = t('page.docs.website_title_loading')
   let description = ''
-  let ogImageUrl = `${VERCEL_URL_PREFIX}/api/og?file=${encodeURIComponent(file)}`
+  let ogImageUrl = `${VERCEL_URL}/api/og?file=${encodeURIComponent(file)}`
 
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title
@@ -237,7 +237,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale: localeVal
   }
 
   return {
-    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...await serverSideTranslations(locale, ['common']), },
+    props: { html: displayHtml, bedrockVersions, tags, parsedData, version, ...(await serverSideTranslations(locale, ['common'])), },
     // revalidate: 60 * 60 * 12, // every 12 hours
   }
 }

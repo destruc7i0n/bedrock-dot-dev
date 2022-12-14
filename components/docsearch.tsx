@@ -36,7 +36,7 @@ type HitComponentProps = {
 
 const Hit = ({ hit, children }: HitComponentProps) => (
   <Link href={hit.url}>
-    <a>{children}</a>
+    {children}
   </Link>
 )
 

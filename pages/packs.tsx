@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     }
   }
 
-  return { props: { versions, ...await serverSideTranslations(locale, ['common']) } }
+  return { props: { versions, ...(await serverSideTranslations(locale, ['common'])) } }
 }
 
 export default PacksPage
