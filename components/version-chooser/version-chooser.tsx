@@ -41,7 +41,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   const [quickSelect, setQuickSelect] = useState(true)
 
   const router = useRouter()
-  const { query } = router
+  const { query, locale } = router
 
   // set from query string if possible
   useEffect(() => {
@@ -62,6 +62,15 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   const [ major, setMajor ] = useState(stableMajor)
   const [ minor, setMinor ] = useState(stableMinor)
 
+  // handle locale change and reset to the latest stable version
+  useEffect(() => {
+    if (!versions[major]) {
+      setMajor(stableMajor)
+      setMinor(stableMinor)
+      setQuickSelect(false)
+    }
+  }, [locale])
+
   const fileNameTranslations: {[k: string]: string} = t('files', { returnObjects: true })
   let files: string[] = []
   if (versions[major] && versions[major][minor]) {
@@ -69,7 +78,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({ versions, tags
   }
 
   let majorVersions = Object.keys(versions).sort(compareBedrockVersions)
-  let minorVersions = Object.keys(versions[major]).sort(compareBedrockVersions)
+  let minorVersions = Object.keys(versions?.[major] ?? {}).sort(compareBedrockVersions)
 
   // if the major version changes, set the minor to the latest minor from that major version
   useEffect(() => {
