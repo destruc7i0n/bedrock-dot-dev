@@ -11,7 +11,7 @@ import { Locale } from 'lib/i18n'
 import trans from 'public/locales/en/common.json'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 // yes, all these need to be inlined
