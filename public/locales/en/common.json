@@ -9,7 +9,7 @@
       "website_title": "Packs",
       "website_description": "Minecraft Bedrock Template Behavior and Resource Packs archive",
       "title": "Template Packs Archive",
-      "subtitle": "This is an archive of the <0>default template packs</0> provided by Mojang."
+      "subtitle": "This is an archive of the default template packs provided by Mojang. The latest packs are available in Mojang's <1>bedrock-samples</1> GitHub repository. Older ones can be found in the <0>bedrock-dot-dev/packs</0> repository."
     },
     "docs": {
       "website_title_loading": "Loading...",
