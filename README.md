@@ -12,14 +12,15 @@ Written in TypeScript using the Next.js framework.
 
 ## Features
 
-* Sidebar for faster navigation
-* Speedy page transitions
-* Redirects to help navigate to the latest docs
-  * `bedrock.dev/r/Entities` for the latest release entities file
-  * `bedrock.dev/b/Entities` for the latest beta entities file
-* Updated design 
+- Sidebar for faster navigation
+- Speedy page transitions
+- Redirects to help navigate to the latest docs
+  - `bedrock.dev/r/Entities` for the latest release entities file
+  - `bedrock.dev/b/Entities` for the latest beta entities file
+- Updated design
 
 ## Screenshots
+
 ![Documentation Page](https://github.com/destruc7i0n/bedrock-dot-dev/raw/master/images/screenshot_1.png)
 
 ## Contributing

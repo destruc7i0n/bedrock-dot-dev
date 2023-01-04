@@ -1,60 +1,71 @@
-import React, { FunctionComponent, memo, useEffect, useRef, useState } from 'react'
+import React, {
+  FunctionComponent,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { SidebarStructure } from './sidebar'
-import SidebarGroupTitle from './sidebar-group-title'
-import SidebarGroupItem from './sidebar-group-item'
+import { SidebarStructure } from "./sidebar";
+import SidebarGroupTitle from "./sidebar-group-title";
+import SidebarGroupItem from "./sidebar-group-item";
 
 type Props = {
-  sidebar: SidebarStructure
-  file: string
-  search?: string
-}
+  sidebar: SidebarStructure;
+  file: string;
+  search?: string;
+};
 
 type SidebarContentState = {
-  [key: string]: boolean
-}
+  [key: string]: boolean;
+};
 
 // initially open or closed state for the sidebar
 const getInitialOpen = (sidebar: SidebarStructure, file: string) => {
-  let state: SidebarContentState = {}
+  let state: SidebarContentState = {};
   for (let { header } of Object.values(sidebar)) {
     // be default open on all pages other than the entities page
-    state[header.id] = file !== 'Entities'
+    state[header.id] = file !== "Entities";
   }
-  return state
-}
+  return state;
+};
 
-const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => {
-  const [mounted, setMounted] = useState(false)
-  const [hash, setHash] = useState('')
-  const [open, setOpen] = useState<SidebarContentState>(getInitialOpen(sidebar, file))
-  const sidebarRef = useRef<HTMLDivElement | null>(null)
+const SidebarContent: FunctionComponent<Props> = ({
+  sidebar,
+  file,
+  search,
+}) => {
+  const [mounted, setMounted] = useState(false);
+  const [hash, setHash] = useState("");
+  const [open, setOpen] = useState<SidebarContentState>(
+    getInitialOpen(sidebar, file)
+  );
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   // reset hash on page change
   useEffect(() => {
-    setHash('')
-  }, [ file ])
+    setHash("");
+  }, [file]);
 
   // open on page load if the heading is closed for the item in the hash
   useEffect(() => {
     if (location.hash) {
-      const hash = decodeURIComponent(location.hash)
-      setHash(hash)
+      const hash = decodeURIComponent(location.hash);
+      setHash(hash);
       // if there is a hash open the heading which contains the hash on load
-      const heading = Object.keys(sidebar)
-        .find((h) =>
-          sidebar[h].elements.find((el) => el.id === hash.substring(1))
-        )
-      if (heading && !open[heading]) setHeadingOpen(heading, true)
+      const heading = Object.keys(sidebar).find((h) =>
+        sidebar[h].elements.find((el) => el.id === hash.substring(1))
+      );
+      if (heading && !open[heading]) setHeadingOpen(heading, true);
     }
-    setMounted(true)
+    setMounted(true);
 
     // store the hash for re-render
-    const onHashChange = () => setHash(decodeURIComponent(location.hash))
+    const onHashChange = () => setHash(decodeURIComponent(location.hash));
 
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
-  }, [])
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   // run after mount to scroll to the hash
   // since the group might be closed
@@ -62,55 +73,62 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
     // automatically scroll to the hash in the sidebar on page load
     if (hash) {
       const el: HTMLAnchorElement | null = document.querySelector(
-        `.sidebar .sidebar-id[href="#${encodeURIComponent(hash.replace('#', ''))}"]`
-      )
+        `.sidebar .sidebar-id[href="#${encodeURIComponent(
+          hash.replace("#", "")
+        )}"]`
+      );
       if (el) {
         if (sidebarRef.current) {
-          sidebarRef.current.scrollTop = el.offsetTop - 164
+          sidebarRef.current.scrollTop = el.offsetTop - 164;
         }
       }
     }
-  }, [ mounted ])
+  }, [mounted]);
 
   // filter if filtering
   if (search) {
-    let filteredSidebar: SidebarStructure = {}
+    let filteredSidebar: SidebarStructure = {};
 
-    search = search.toLowerCase()
+    search = search.toLowerCase();
 
-    const keys = Object.keys(sidebar)
+    const keys = Object.keys(sidebar);
     for (let key of keys) {
-      const el = sidebar[key]
+      const el = sidebar[key];
       // check if the key includes the search term by chance
       if (key.toLowerCase().includes(search)) {
-        if (!filteredSidebar[key]) filteredSidebar[key] = { header: el.header, elements: [] }
+        if (!filteredSidebar[key])
+          filteredSidebar[key] = { header: el.header, elements: [] };
       }
 
       for (let id of el.elements) {
         if (id.title.toLowerCase().includes(search) || id.id.includes(search)) {
-          if (!filteredSidebar[key]) filteredSidebar[key] = { header: el.header, elements: [] }
+          if (!filteredSidebar[key])
+            filteredSidebar[key] = { header: el.header, elements: [] };
 
-          filteredSidebar[key].elements.push(id)
+          filteredSidebar[key].elements.push(id);
         }
       }
     }
 
-    sidebar = filteredSidebar
+    sidebar = filteredSidebar;
   }
 
   // helper method to update the state
   const setHeadingOpen = (heading: string, value: boolean) => {
-    if (open[heading] === value) return // don't update if already value
+    if (open[heading] === value) return; // don't update if already value
     setOpen({
       ...open,
-      [heading]: value
-    })
-  }
+      [heading]: value,
+    });
+  };
 
   return (
-    <div className='flex-1 flex flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8 h-0' ref={sidebarRef}>
+    <div
+      className="flex-1 flex flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8 h-0"
+      ref={sidebarRef}
+    >
       {Object.keys(sidebar).map((id, index) => {
-        const { header, elements } = sidebar[id]
+        const { header, elements } = sidebar[id];
         return (
           <SidebarGroupTitle
             searching={!!search}
@@ -121,7 +139,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
             id={header.id}
             hash={hash}
           >
-            {elements.map((item, index) =>
+            {elements.map((item, index) => (
               <SidebarGroupItem
                 key={`${file}-item-${index}-${item.id}`}
                 id={item.id}
@@ -130,12 +148,12 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file, search }) => 
                 // keep the header containing this one open on click (while searching)
                 onClick={() => setHeadingOpen(header.id, true)}
               />
-            )}
+            ))}
           </SidebarGroupTitle>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default memo(SidebarContent)
+export default memo(SidebarContent);

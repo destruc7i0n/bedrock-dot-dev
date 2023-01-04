@@ -1,1 +1,1 @@
-declare module 'docsearch.js'
+declare module "docsearch.js";

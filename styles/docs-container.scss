@@ -53,7 +53,8 @@
   }
 
   /* Thanks, Jannis! */
-  td, th {
+  td,
+  th {
     border: none;
     border-width: 1px;
     padding: 6px;
@@ -66,7 +67,9 @@
   }
 
   .dark & {
-    td, th, tbody {
+    td,
+    th,
+    tbody {
       border-style: solid;
       @apply border;
       @apply border-dark-gray-700;
@@ -80,7 +83,7 @@
       @apply bg-dark-gray-900;
     }
 
-    tr:nth-child(2n+3) td {
+    tr:nth-child(2n + 3) td {
       @apply bg-dark-gray-850 #{!important};
 
       table td {
@@ -90,29 +93,30 @@
   }
 
   a {
-    color:inherit
+    color: inherit;
   }
 
   code[class*="language-"],
-  pre[class*=language-] {
+  pre[class*="language-"] {
     @apply rounded;
     @apply font-mono;
   }
 
   :not(.dark-mode) & {
-    @import 'code/light.scss';
+    @import "code/light.scss";
   }
 
   .dark & {
-    @import 'code/dark.scss';
+    @import "code/dark.scss";
   }
 
   .monocraft & {
-    @import 'code/monocraft.scss';
+    @import "code/monocraft.scss";
   }
 
   /* headings */
-  h1, h2 {
+  h1,
+  h2 {
     overflow-wrap: break-word;
   }
 
@@ -149,7 +153,8 @@
     @apply mb-2;
   }
 
-  h5, h6 {
+  h5,
+  h6 {
     @apply leading-tight;
     @apply text-sm;
     @apply font-semibold;

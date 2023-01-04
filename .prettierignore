@@ -1,0 +1,7 @@
+# Ignore
+.next
+.idea
+
+public/sitemap.xml
+public/static/docs.json
+public/static/tags.json

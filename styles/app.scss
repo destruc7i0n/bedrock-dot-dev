@@ -1,6 +1,6 @@
-@import '~nprogress/nprogress.css';
+@import "~nprogress/nprogress.css";
 
-@import 'docsearch';
+@import "docsearch";
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -23,10 +23,12 @@ body {
   }
 
   .peg {
-    box-shadow: 0 0 10px theme('colors.blue.600'), 0 0 5px theme('colors.blue.600');
+    box-shadow: 0 0 10px theme("colors.blue.600"),
+      0 0 5px theme("colors.blue.600");
 
     .dark & {
-      box-shadow: 0 0 10px theme('colors.blue.500'), 0 0 5px theme('colors.blue.500');
+      box-shadow: 0 0 10px theme("colors.blue.500"),
+        0 0 5px theme("colors.blue.500");
     }
   }
 }
@@ -35,7 +37,10 @@ hr {
   border-width: 1px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   text-transform: none;
   @apply font-bold;
 }
@@ -94,7 +99,7 @@ h1, h2, h3, h4 {
 }
 
 /* sidebar */
-@import './sidebar.scss';
+@import "./sidebar.scss";
 
 /* docs */
 .docs-alert a {
@@ -103,7 +108,7 @@ h1, h2, h3, h4 {
 }
 
 /* docs container */
-@import './docs-container.scss';
+@import "./docs-container.scss";
 
 /* scroll to top */
 
@@ -129,7 +134,7 @@ body {
     border-radius: 0;
 
     .dark & {
-      background: rgba(255,255,255,.1)
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
@@ -142,7 +147,7 @@ body {
     transition: color 0.2s ease;
 
     .dark & {
-      background: rgba(255,255,255,.25)
+      background: rgba(255, 255, 255, 0.25);
     }
   }
 
@@ -164,4 +169,3 @@ body {
     }
   }
 }
-

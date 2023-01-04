@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
-import { GA_TRACKING_ID } from '../lib/analytics'
-import { oneLine } from '../lib/util'
+import { GA_TRACKING_ID } from "../lib/analytics";
+import { oneLine } from "../lib/util";
 
 const AnalyticsHeadTags = () => {
-  return process.env.NODE_ENV !== 'development' ? (
+  return process.env.NODE_ENV !== "development" ? (
     <>
       <script
         async
@@ -17,11 +17,11 @@ const AnalyticsHeadTags = () => {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_TRACKING_ID}');
-          `)
+          `),
         }}
       />
     </>
-  ) : null
-}
+  ) : null;
+};
 
-export default AnalyticsHeadTags
+export default AnalyticsHeadTags;

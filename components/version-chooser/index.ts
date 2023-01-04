@@ -1,1 +1,1 @@
-export { default } from './version-chooser'
+export { default } from "./version-chooser";

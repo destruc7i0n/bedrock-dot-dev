@@ -1,46 +1,46 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-const { i18n } = require('./next-i18next.config')
+const { i18n } = require("./next-i18next.config");
 
-const getTags = require('./scripts/lib/tags')
+const getTags = require("./scripts/lib/tags");
 
 module.exports = withBundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
-    largePageDataBytes: (5 * 1000) * 1000, // 5 MB
+    largePageDataBytes: 5 * 1000 * 1000, // 5 MB
   },
   swcMinify: true,
   reactStrictMode: true,
   i18n,
-  async redirects () {
-    const { stable, beta } = await getTags()
+  async redirects() {
+    const { stable, beta } = await getTags();
 
-    const version = '\\d+\\.\\d+\\.\\d+\\.\\d+'
+    const version = "\\d+\\.\\d+\\.\\d+\\.\\d+";
 
     return [
       {
-        source: '/docs{/}?',
-        destination: '/',
+        source: "/docs{/}?",
+        destination: "/",
         permanent: false,
       },
       {
         source: `/{docs/}?:path((?:${version})\\/?(?:(?:${version})\\/?)?)`,
-        destination: '/?r=:path',
-        permanent: false
+        destination: "/?r=:path",
+        permanent: false,
       },
       // redirect long fast root links
       {
-        source: '/docs/stable{/}?',
-        destination: `/?r=${stable.join('/')}`,
-        permanent: false
+        source: "/docs/stable{/}?",
+        destination: `/?r=${stable.join("/")}`,
+        permanent: false,
       },
       {
-        source: '/docs/beta{/}?',
-        destination: `/?r=${beta.join('/')}`,
-        permanent: false
+        source: "/docs/beta{/}?",
+        destination: `/?r=${beta.join("/")}`,
+        permanent: false,
       },
       // redirect to latest stable
       {
@@ -54,8 +54,8 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: '/(r|c|s){/}?',
-        destination: `/?r=${stable.join('/')}`,
+        source: "/(r|c|s){/}?",
+        destination: `/?r=${stable.join("/")}`,
         permanent: false,
       },
       // redirect to latest beta
@@ -70,8 +70,8 @@ module.exports = withBundleAnalyzer({
         permanent: false,
       },
       {
-        source: '/b{/}?',
-        destination: `/?r=${beta.join('/')}`,
+        source: "/b{/}?",
+        destination: `/?r=${beta.join("/")}`,
         permanent: false,
       },
       {
@@ -80,6 +80,6 @@ module.exports = withBundleAnalyzer({
         destination: `/docs/:major/:minor/:file`,
         permanent: true,
       },
-    ]
+    ];
   },
-})
+});

@@ -1,41 +1,45 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from "react";
 
 // from https://github.com/zeit/next-site/blob/master/components/media-query.js
 
 const getMediaQuery = (width: number) => {
-  return (window.matchMedia && window.matchMedia(`(max-width: ${width}px)`)) || { matches: false }
-}
+  return (
+    (window.matchMedia && window.matchMedia(`(max-width: ${width}px)`)) || {
+      matches: false,
+    }
+  );
+};
 
-const isLg = () => !getMediaQuery(1024).matches
+const isLg = () => !getMediaQuery(1024).matches;
 
 const useMediaQuery = (width: number) => {
-  const [targetReached, setTargetReached] = useState(false)
+  const [targetReached, setTargetReached] = useState(false);
 
   const updateTarget = useCallback((e: MediaQueryListEvent) => {
     if (e.matches) {
-      setTargetReached(true)
+      setTargetReached(true);
     } else {
-      setTargetReached(false)
+      setTargetReached(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const media = getMediaQuery(width)
-    media.addListener(updateTarget)
+    const media = getMediaQuery(width);
+    media.addListener(updateTarget);
 
     // Check on mount (callback is not called until a change occurs)
     if (media.matches) {
-      setTargetReached(true)
+      setTargetReached(true);
     }
 
-    return () => media.removeListener(updateTarget)
-  }, [])
+    return () => media.removeListener(updateTarget);
+  }, []);
 
-  return targetReached
-}
+  return targetReached;
+};
 
 const useIsMobile = () => {
-  return useMediaQuery(1024)
-}
+  return useMediaQuery(1024);
+};
 
-export { useMediaQuery, getMediaQuery, useIsMobile, isLg }
+export { useMediaQuery, getMediaQuery, useIsMobile, isLg };
