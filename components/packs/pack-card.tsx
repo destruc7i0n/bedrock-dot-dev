@@ -5,6 +5,7 @@ import { useTranslation } from "next-i18next";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 
 import type { PackVersions } from "pages/packs";
+import { Tags } from "lib/tags";
 
 type PackCardProps = {
   versionName: string;
@@ -71,9 +72,33 @@ const PackCard: FunctionComponent<PackCardProps> = ({
     </span>
   );
 
+  let title = versionName;
+  let border = "border-gray-200 dark:border-transparent";
+  if (versionData.t) {
+    let translationString = null;
+    switch (versionData.t) {
+      case Tags.Beta:
+        border =
+          "border-2 border-yellow-500 bg-yellow-50 dark:border-yellow-600 dark:bg-yellow-600/10";
+        translationString = "component.version_chooser.beta_string";
+        break;
+      case Tags.Stable:
+        border =
+          "border-2 border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-600/10";
+        translationString = "component.version_chooser.stable_string";
+        break;
+      default:
+        break;
+    }
+    if (translationString) title = `${title} (${t(translationString)})`;
+  }
+
   return (
-    <div className="text-center bg-gray-50 dark:bg-dark-gray-950 border border-gray-200 dark:border-transparent p-2 rounded-md">
-      <p className="text-lg dark:text-gray-200">{versionName}</p>
+    <div
+      className={`text-center bg-gray-50 dark:bg-dark-gray-950 border ${border} p-2 rounded-md`}
+    >
+      <p className="text-lg dark:text-gray-200">{title}</p>
+
       <div className="flex flex-col w-full md:flex-row md:justify-around items-center justify-center">
         {content}
       </div>

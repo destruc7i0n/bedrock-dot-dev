@@ -9,10 +9,10 @@ import DocSearch from "../docsearch";
 
 import { SidebarContext } from "../sidebar/sidebar-context";
 
-const HeaderLink: FunctionComponent<{ link: string; title: string }> = ({
-  link,
-  title,
-}) => (
+const HeaderLink: FunctionComponent<{
+  link: string;
+  title: string;
+}> = ({ link, title }) => (
   <li className="h-full">
     <a
       className="font-medium px-2 text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition duration-150 ease-in-out"

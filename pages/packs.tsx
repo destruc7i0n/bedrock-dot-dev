@@ -8,7 +8,8 @@ import S3 from "aws-sdk/clients/s3";
 
 import Log from "lib/log";
 import { compareBedrockVersions } from "lib/util";
-import { getLocale } from "lib/i18n";
+import { getLocale, Locale } from "lib/i18n";
+import { getTags, Tags, TagsResponse } from "lib/tags";
 import { listReleases } from "lib/github/api";
 import { VERSION } from "lib/html/regex";
 
@@ -18,14 +19,15 @@ import Footer from "components/footer";
 import PackCard from "components/packs/pack-card";
 
 export type PackVersions = {
-  [key: string]: Partial<{ b: boolean; r: boolean; git: string }>;
+  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tags; git: string }>;
 };
 
 type PacksPageProps = {
   versions: PackVersions;
+  tags: TagsResponse;
 };
 
-const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
+const PacksPage: FunctionComponent<PacksPageProps> = ({ versions, tags }) => {
   const { t } = useTranslation("common");
   const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
 
@@ -83,6 +85,10 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal);
+  const tags = await getTags(Locale.English); // only english since chinese has not been updated
+
+  const stableTag = tags[Tags.Stable].at(-1)!;
+  const betaTag = tags[Tags.Beta].at(-1)!;
 
   const s3 = new S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID_BEDROCK,
@@ -123,8 +129,16 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
       versions[version] = { git: release.html_url };
   }
 
+  // add the tags to the versions
+  if (versions[stableTag]) versions[stableTag].t = Tags.Stable;
+  if (versions[betaTag]) versions[betaTag].t = Tags.Beta;
+
   return {
-    props: { versions, ...(await serverSideTranslations(locale, ["common"])) },
+    props: {
+      versions,
+      tags,
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
   };
 };
 
