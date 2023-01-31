@@ -9,7 +9,7 @@ import S3 from "aws-sdk/clients/s3";
 import Log from "lib/log";
 import { compareBedrockVersions } from "lib/util";
 import { getLocale, Locale } from "lib/i18n";
-import { getTags, Tags, TagsResponse } from "lib/tags";
+import { getTags, Tags } from "lib/tags";
 import { listReleases } from "lib/github/api";
 import { VERSION } from "lib/html/regex";
 
@@ -24,10 +24,9 @@ export type PackVersions = {
 
 type PacksPageProps = {
   versions: PackVersions;
-  tags: TagsResponse;
 };
 
-const PacksPage: FunctionComponent<PacksPageProps> = ({ versions, tags }) => {
+const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
   const { t } = useTranslation("common");
   const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
 
@@ -136,7 +135,6 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   return {
     props: {
       versions,
-      tags,
       ...(await serverSideTranslations(locale, ["common"])),
     },
   };

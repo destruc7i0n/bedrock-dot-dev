@@ -60,7 +60,7 @@ const DocSearch: FunctionComponent<Props> = ({
         <link
           rel="preconnect"
           href={`https://${algolia.appId}-dsn.algolia.net`}
-          crossOrigin="true"
+          crossOrigin=""
         />
       </Head>
       <div
