@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import Router from "next/router";
+import { Inter, Fira_Code as FiraCode } from "@next/font/google";
 
 import { ThemeProvider } from "next-themes";
 
@@ -31,19 +32,30 @@ Router.events.on("routeChangeComplete", (url: string) => {
 // Router.events.on('hashChangeStart', () => console.log('hashChangeStart'))
 // Router.events.on('hashChangeComplete', () => console.log('hashChangeComplete'))
 
+const inter = Inter({ subsets: ["latin"] });
+const firaCode = FiraCode({ subsets: ["latin"] });
+
 function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     console.log("Hey there!");
   }, []);
 
   return (
-    <ThemeProvider
-      defaultTheme="system"
-      attribute="class"
-      disableTransitionOnChange
-    >
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <>
+      <style jsx global>{`
+        :root {
+          --font-inter: ${inter.style.fontFamily};
+          --font-fira-code: ${firaCode.style.fontFamily};
+        }
+      `}</style>
+      <ThemeProvider
+        defaultTheme="system"
+        attribute="class"
+        disableTransitionOnChange
+      >
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const screens = {
   sm: "640px",
@@ -54,8 +54,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-        mono: ["Fira Code VF", ...defaultTheme.fontFamily.mono],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        mono: ["var(--font-fira-code)", ...fontFamily.mono],
       },
     },
     screens: {
