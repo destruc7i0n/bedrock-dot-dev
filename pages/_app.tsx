@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import Router from "next/router";
-import { Inter, Fira_Code as FiraCode } from "@next/font/google";
+import { Inter, Fira_Code as FiraCode } from "next/font/google";
 
 import { ThemeProvider } from "next-themes";
 
