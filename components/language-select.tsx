@@ -75,6 +75,7 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
             { locale: localeValue, scroll: false }
           );
       }
+      document.cookie = `NEXT_LOCALE=${localeValue};max-age=2147483647`;
     })();
   }, [localeValue]);
 
