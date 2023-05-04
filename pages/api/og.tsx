@@ -22,15 +22,6 @@ const ASSETS = {
   biomes: [new URL("assets/og/biomes/biomes_1.png", import.meta.url)],
   blocks: [new URL("assets/og/blocks/blocks_1.png", import.meta.url)],
   entities: [new URL("assets/og/entities/entities_1.png", import.meta.url)],
-  entity_events: [
-    new URL("assets/og/entity_events/entity_events_1.png", import.meta.url),
-  ],
-  entity_timeline_events: [
-    new URL(
-      "assets/og/entity_timeline_events/entity_timeline_events_1.png",
-      import.meta.url
-    ),
-  ],
   features: [new URL("assets/og/features/features_1.png", import.meta.url)],
   item: [
     new URL("assets/og/item/item_1.png", import.meta.url),
@@ -39,7 +30,6 @@ const ASSETS = {
   molang: [new URL("assets/og/molang/molang_1.png", import.meta.url)],
   particles: [new URL("assets/og/particles/particles_1.png", import.meta.url)],
   recipes: [new URL("assets/og/recipes/recipes_1.png", import.meta.url)],
-  schemas: [new URL("assets/og/schemas/schemas_1.png", import.meta.url)],
 };
 
 const getAsset = async (file: string): Promise<string | null> => {
