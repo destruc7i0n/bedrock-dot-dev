@@ -22,11 +22,7 @@ const ASSETS = {
   biomes: [new URL("assets/og/biomes/biomes_1.png", import.meta.url)],
   blocks: [new URL("assets/og/blocks/blocks_1.png", import.meta.url)],
   entities: [new URL("assets/og/entities/entities_1.png", import.meta.url)],
-  features: [new URL("assets/og/features/features_1.png", import.meta.url)],
-  item: [
-    new URL("assets/og/item/item_1.png", import.meta.url),
-    new URL("assets/og/item/item_2.png", import.meta.url),
-  ],
+  item: [new URL("assets/og/item/item_1.png", import.meta.url)],
   molang: [new URL("assets/og/molang/molang_1.png", import.meta.url)],
   particles: [new URL("assets/og/particles/particles_1.png", import.meta.url)],
   recipes: [new URL("assets/og/recipes/recipes_1.png", import.meta.url)],
