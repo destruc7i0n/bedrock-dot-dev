@@ -1,4 +1,4 @@
-@import "~nprogress/nprogress.css";
+@import "nprogress/nprogress.css";
 
 @import "docsearch";
 
@@ -19,7 +19,9 @@ body {
       @apply bg-blue-500;
     }
 
-    height: 3px;
+    & {
+      height: 3px;
+    }
   }
 
   .peg {

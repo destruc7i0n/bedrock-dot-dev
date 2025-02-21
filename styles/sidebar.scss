@@ -32,7 +32,9 @@
       min-width: 50%;
     }
 
-    transition: transform ease-in-out 150ms;
+    & {
+      transition: transform ease-in-out 150ms;
+    }
 
     &.open {
       transform: translateX(0);

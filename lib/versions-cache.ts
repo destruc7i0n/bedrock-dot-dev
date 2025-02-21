@@ -18,8 +18,11 @@ const checkCache = (): BedrockVersionsFile | undefined => {
     if (docsContent) return docsContent;
     else Log.error("Could not load docs content from cache!");
   } else {
-    const cache = flatCache.create("versions", cacheDirectory);
-    const timestamp = cache.getKey("timestamp");
+    const cache = flatCache.create({
+      cacheId: "versions",
+      cacheDir: cacheDirectory,
+    });
+    const timestamp: string = cache.getKey("timestamp");
     if (!timestamp) {
       return;
     } else {
@@ -27,7 +30,7 @@ const checkCache = (): BedrockVersionsFile | undefined => {
       const currentTime = new Date();
       // difference in mins
       const difference = Math.round(
-        (currentTime.getTime() - cachedTime.getTime()) / 60000
+        (currentTime.getTime() - cachedTime.getTime()) / 60000,
       );
 
       const files: BedrockVersionsFile = cache.getKey("files");
@@ -38,7 +41,10 @@ const checkCache = (): BedrockVersionsFile | undefined => {
 };
 
 const setCache = (files: BedrockVersionsFile) => {
-  const cache = flatCache.create("versions", cacheDirectory);
+  const cache = flatCache.create({
+    cacheId: "versions",
+    cacheDir: cacheDirectory,
+  });
   cache.setKey("timestamp", new Date().getTime());
   cache.setKey("files", files);
   cache.save();
