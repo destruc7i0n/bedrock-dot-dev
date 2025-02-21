@@ -43,6 +43,7 @@ const docAlerts: DocAlerts = {
       title: "Info",
       versions: {
         since: "1.16.100.4",
+        until: "1.20.0.0",
       },
       message:
         "Items are <strong>experimental</strong> and may change in the future.",
