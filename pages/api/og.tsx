@@ -14,35 +14,31 @@ export const config = {
   runtime: "edge",
 };
 
+const GITHUB_URL_PREFIX =
+  "https://raw.githubusercontent.com/destruc7i0n/bedrock-dot-dev/master";
+
+const GITHUB_URL_PREFIX_ASSETS = `${GITHUB_URL_PREFIX}/assets/og`;
+
 // yes, all these need to be inlined
 const ASSETS = {
-  addons: [new URL("../../assets/og/addons/addons_1.png", import.meta.url)],
-  animations: [
-    new URL("../../assets/og/animations/animations_1.png", import.meta.url),
-  ],
-  biomes: [new URL("../../assets/og/biomes/biomes_1.png", import.meta.url)],
-  blocks: [new URL("../../assets/og/blocks/blocks_1.png", import.meta.url)],
-  entities: [
-    new URL("../../assets/og/entities/entities_1.png", import.meta.url),
-  ],
-  item: [new URL("../../assets/og/item/item_1.png", import.meta.url)],
-  molang: [new URL("../../assets/og/molang/molang_1.png", import.meta.url)],
-  particles: [
-    new URL("../../assets/og/particles/particles_1.png", import.meta.url),
-  ],
-  recipes: [new URL("../../assets/og/recipes/recipes_1.png", import.meta.url)],
+  addons: `${GITHUB_URL_PREFIX_ASSETS}/addons/addons_1.png`,
+  animations: `${GITHUB_URL_PREFIX_ASSETS}/animations/animations_1.png`,
+  biomes: `${GITHUB_URL_PREFIX_ASSETS}/biomes/biomes_1.png`,
+  blocks: `${GITHUB_URL_PREFIX_ASSETS}/blocks/blocks_1.png`,
+  entities: `${GITHUB_URL_PREFIX_ASSETS}/entities/entities_1.png`,
+  item: `${GITHUB_URL_PREFIX_ASSETS}/item/item_1.png`,
+  molang: `${GITHUB_URL_PREFIX_ASSETS}/molang/molang_1.png`,
+  particles: `${GITHUB_URL_PREFIX_ASSETS}/particles/particles_1.png`,
+  recipes: `${GITHUB_URL_PREFIX_ASSETS}/recipes/recipes_1.png`,
 };
 
 const getAsset = async (file: string): Promise<string | null> => {
   const name = file.toLowerCase().replace(/ /g, "_") as keyof typeof ASSETS;
   if (!ASSETS.hasOwnProperty(name)) return null;
 
-  const assets = ASSETS[name];
-  const index = Math.floor(Math.random() * assets.length);
+  const asset = ASSETS[name];
 
-  const arrayBuffer = await fetch(assets[index]).then((res) =>
-    res.arrayBuffer(),
-  );
+  const arrayBuffer = await fetch(asset).then((res) => res.arrayBuffer());
   return (
     "data:image/png;base64," +
     btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
@@ -219,7 +215,7 @@ export default async function (req: NextRequest) {
       },
     );
   } catch (e: any) {
-    console.log(`${e.message}`);
+    console.log(`error: ${e.message}`);
     return new Response(`Failed to generate the image`, {
       status: 500,
     });
