@@ -19,7 +19,6 @@ const GITHUB_URL_PREFIX =
 
 const GITHUB_URL_PREFIX_ASSETS = `${GITHUB_URL_PREFIX}/assets/og`;
 
-// yes, all these need to be inlined
 const ASSETS = {
   addons: `${GITHUB_URL_PREFIX_ASSETS}/addons/addons_1.png`,
   animations: `${GITHUB_URL_PREFIX_ASSETS}/animations/animations_1.png`,
