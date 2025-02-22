@@ -5,6 +5,7 @@ import fs from "fs";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
+import { LIVE_URL } from "../lib/constants";
 import { getTags, Tags } from "../lib/tags";
 import { Locale, getLocale } from "../lib/i18n";
 
@@ -14,7 +15,7 @@ if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
 }
 
 const main = async () => {
-  const stream = new SitemapStream({ hostname: "https://bedrock.dev" });
+  const stream = new SitemapStream({ hostname: LIVE_URL });
 
   stream.write({
     url: "/",
@@ -24,7 +25,7 @@ const main = async () => {
 
   const staticFilePath = path.resolve("public/static/docs.json");
   const staticFileContents = JSON.parse(
-    fs.readFileSync(staticFilePath).toString()
+    fs.readFileSync(staticFilePath).toString(),
   );
   const versions = staticFileContents["versions"];
 

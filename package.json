@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "pnpm run generate-docs-file && next build && pnpm run sitemap",
+    "build": "pnpm run generate-docs-file && next build && pnpm run generate-sitemap",
     "build-analyze": "ANALYZE=true pnpm run build",
     "start": "next start",
-    "sitemap": "ts-node -P scripts/tsconfig.json scripts/generate-sitemap.ts",
+    "generate-sitemap": "ts-node -P scripts/tsconfig.json scripts/generate-sitemap.ts",
     "generate-docs-file": "ts-node -P scripts/tsconfig.json scripts/generate-docs-manifest.ts",
     "type-check": "tsc --noEmit"
   },
