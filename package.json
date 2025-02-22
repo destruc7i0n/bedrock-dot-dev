@@ -41,7 +41,7 @@
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "autoprefixer": "^10.4.20",
-    "chalk": "^5.4.1",
+    "chalk": "^4.1.2",
     "isomorphic-unfetch": "^4.0.2",
     "postcss": "^8.5.3",
     "postcss-import": "^16.1.0",
