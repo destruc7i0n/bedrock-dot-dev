@@ -48,22 +48,13 @@ const getAsset = async (file: string): Promise<string | null> => {
 export default async function (req: NextRequest) {
   const [fontData, fontMediumData, fontBoldData] = await Promise.all([
     fetch(
-      new URL(
-        "../../styles/fonts/Inter/inter-latin-ext-400-normal.woff",
-        import.meta.url,
-      ),
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-400-normal.woff",
     ).then((res) => res.arrayBuffer()),
     fetch(
-      new URL(
-        "../../styles/fonts/Inter/inter-latin-ext-500-normal.woff",
-        import.meta.url,
-      ),
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-500-normal.woff",
     ).then((res) => res.arrayBuffer()),
     fetch(
-      new URL(
-        "../../styles/fonts/Inter/inter-latin-ext-700-normal.woff",
-        import.meta.url,
-      ),
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-700-normal.woff",
     ).then((res) => res.arrayBuffer()),
   ]);
 
