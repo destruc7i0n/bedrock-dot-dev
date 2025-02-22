@@ -16,17 +16,21 @@ export const config = {
 
 // yes, all these need to be inlined
 const ASSETS = {
-  addons: [new URL("assets/og/addons/addons_1.png", import.meta.url)],
+  addons: [new URL("../../assets/og/addons/addons_1.png", import.meta.url)],
   animations: [
-    new URL("assets/og/animations/animations_1.png", import.meta.url),
+    new URL("../../assets/og/animations/animations_1.png", import.meta.url),
   ],
-  biomes: [new URL("assets/og/biomes/biomes_1.png", import.meta.url)],
-  blocks: [new URL("assets/og/blocks/blocks_1.png", import.meta.url)],
-  entities: [new URL("assets/og/entities/entities_1.png", import.meta.url)],
-  item: [new URL("assets/og/item/item_1.png", import.meta.url)],
-  molang: [new URL("assets/og/molang/molang_1.png", import.meta.url)],
-  particles: [new URL("assets/og/particles/particles_1.png", import.meta.url)],
-  recipes: [new URL("assets/og/recipes/recipes_1.png", import.meta.url)],
+  biomes: [new URL("../../assets/og/biomes/biomes_1.png", import.meta.url)],
+  blocks: [new URL("../../assets/og/blocks/blocks_1.png", import.meta.url)],
+  entities: [
+    new URL("../../assets/og/entities/entities_1.png", import.meta.url),
+  ],
+  item: [new URL("../../assets/og/item/item_1.png", import.meta.url)],
+  molang: [new URL("../../assets/og/molang/molang_1.png", import.meta.url)],
+  particles: [
+    new URL("../../assets/og/particles/particles_1.png", import.meta.url),
+  ],
+  recipes: [new URL("../../assets/og/recipes/recipes_1.png", import.meta.url)],
 };
 
 const getAsset = async (file: string): Promise<string | null> => {
@@ -49,19 +53,19 @@ export default async function (req: NextRequest) {
   const [fontData, fontMediumData, fontBoldData] = await Promise.all([
     fetch(
       new URL(
-        "styles/fonts/Inter/inter-latin-ext-400-normal.woff",
+        "../../styles/fonts/Inter/inter-latin-ext-400-normal.woff",
         import.meta.url,
       ),
     ).then((res) => res.arrayBuffer()),
     fetch(
       new URL(
-        "styles/fonts/Inter/inter-latin-ext-500-normal.woff",
+        "../../styles/fonts/Inter/inter-latin-ext-500-normal.woff",
         import.meta.url,
       ),
     ).then((res) => res.arrayBuffer()),
     fetch(
       new URL(
-        "styles/fonts/Inter/inter-latin-ext-700-normal.woff",
+        "../../styles/fonts/Inter/inter-latin-ext-700-normal.woff",
         import.meta.url,
       ),
     ).then((res) => res.arrayBuffer()),
