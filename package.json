@@ -11,10 +11,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.750.0",
     "@docsearch/css": "^3.9.0",
     "@docsearch/react": "^3.9.0",
     "@heroicons/react": "^2.2.0",
-    "aws-sdk": "^2.1692.0",
     "classnames": "^2.5.1",
     "element-in-view": "^0.1.0",
     "flat-cache": "^6.1.6",

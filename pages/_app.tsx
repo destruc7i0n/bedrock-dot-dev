@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import type { AppProps, AppType } from "next/app";
+import type { AppType } from "next/app";
 import Router from "next/router";
 
 import { Inter, Fira_Code as FiraCode } from "next/font/google";

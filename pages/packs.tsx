@@ -4,7 +4,7 @@ import { GetStaticProps } from "next";
 import { useTranslation, Trans } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import S3 from "aws-sdk/clients/s3";
+import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 
 import Log from "lib/log";
 import { compareBedrockVersions } from "lib/util";
@@ -84,27 +84,45 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal);
+  const translations = await serverSideTranslations(locale, ["common"]);
+
   const tags = await getTags(Locale.English); // only english since chinese has not been updated
 
   const stableTag = tags[Tags.Stable].at(-1)!;
   const betaTag = tags[Tags.Beta].at(-1)!;
 
-  const s3 = new S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID_BEDROCK,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_BEDROCK,
+  if (
+    !process.env.AWS_ACCESS_KEY_ID_BEDROCK ||
+    !process.env.AWS_SECRET_ACCESS_KEY_BEDROCK ||
+    !process.env.AWS_BUCKET_NAME_BEDROCK
+  ) {
+    return {
+      props: {
+        versions: {},
+        ...translations,
+      },
+    };
+  }
+
+  const s3 = new S3Client({
     region: "us-east-1",
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID_BEDROCK,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_BEDROCK,
+    },
   });
 
   let versions: PackVersions = {};
   let paths: string[] = [];
 
   try {
-    const objects = await s3
-      .listObjectsV2({ Bucket: process.env.AWS_BUCKET_NAME_BEDROCK || "" })
-      .promise();
+    const command = new ListObjectsV2Command({
+      Bucket: process.env.AWS_BUCKET_NAME_BEDROCK || "",
+    });
+    const objects = await s3.send(command);
     if (objects.Contents)
       paths = objects.Contents.filter(
-        (c) => c.Key && c.Key?.endsWith(".zip")
+        (c) => c.Key && c.Key?.endsWith(".zip"),
       ).map((c) => c.Key!);
   } catch (e) {
     Log.error("Could not list items from bucket!");
@@ -135,7 +153,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   return {
     props: {
       versions,
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...translations,
     },
   };
 };

@@ -1,4 +1,5 @@
-import { ImageResponse, NextRequest } from "next/server";
+import { NextRequest } from "next/server";
+import { ImageResponse } from "next/og";
 
 import cn from "classnames";
 
@@ -36,7 +37,7 @@ const getAsset = async (file: string): Promise<string | null> => {
   const index = Math.floor(Math.random() * assets.length);
 
   const arrayBuffer = await fetch(assets[index]).then((res) =>
-    res.arrayBuffer()
+    res.arrayBuffer(),
   );
   return (
     "data:image/png;base64," +
@@ -49,20 +50,20 @@ export default async function (req: NextRequest) {
     fetch(
       new URL(
         "styles/fonts/Inter/inter-latin-ext-400-normal.woff",
-        import.meta.url
-      )
+        import.meta.url,
+      ),
     ).then((res) => res.arrayBuffer()),
     fetch(
       new URL(
         "styles/fonts/Inter/inter-latin-ext-500-normal.woff",
-        import.meta.url
-      )
+        import.meta.url,
+      ),
     ).then((res) => res.arrayBuffer()),
     fetch(
       new URL(
         "styles/fonts/Inter/inter-latin-ext-700-normal.woff",
-        import.meta.url
-      )
+        import.meta.url,
+      ),
     ).then((res) => res.arrayBuffer()),
   ]);
 
@@ -134,7 +135,7 @@ export default async function (req: NextRequest) {
           <h2 tw="text-5xl font-medium mt-2">
             {trans["page"]["docs"]["website_title_tagged_stable"].replace(
               "{{title}} ",
-              ""
+              "",
             )}
           </h2>
           <div tw="flex flex-row">
@@ -142,7 +143,7 @@ export default async function (req: NextRequest) {
               <h3
                 tw={cn(
                   "text-4xl p-2 px-4 mr-4 rounded-xl text-white",
-                  bgColorMap
+                  bgColorMap,
                 )}
               >
                 {
@@ -211,7 +212,7 @@ export default async function (req: NextRequest) {
             style: "normal",
           },
         ],
-      }
+      },
     );
   } catch (e: any) {
     console.log(`${e.message}`);
