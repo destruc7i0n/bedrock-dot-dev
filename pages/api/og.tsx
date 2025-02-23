@@ -1,4 +1,5 @@
-import { ImageResponse, NextRequest } from "next/server";
+import { NextRequest } from "next/server";
+import { ImageResponse } from "next/og";
 
 import cn from "classnames";
 
@@ -13,31 +14,30 @@ export const config = {
   runtime: "edge",
 };
 
-// yes, all these need to be inlined
+const GITHUB_URL_PREFIX =
+  "https://raw.githubusercontent.com/destruc7i0n/bedrock-dot-dev/master";
+
+const GITHUB_URL_PREFIX_ASSETS = `${GITHUB_URL_PREFIX}/assets/og`;
+
 const ASSETS = {
-  addons: [new URL("assets/og/addons/addons_1.png", import.meta.url)],
-  animations: [
-    new URL("assets/og/animations/animations_1.png", import.meta.url),
-  ],
-  biomes: [new URL("assets/og/biomes/biomes_1.png", import.meta.url)],
-  blocks: [new URL("assets/og/blocks/blocks_1.png", import.meta.url)],
-  entities: [new URL("assets/og/entities/entities_1.png", import.meta.url)],
-  item: [new URL("assets/og/item/item_1.png", import.meta.url)],
-  molang: [new URL("assets/og/molang/molang_1.png", import.meta.url)],
-  particles: [new URL("assets/og/particles/particles_1.png", import.meta.url)],
-  recipes: [new URL("assets/og/recipes/recipes_1.png", import.meta.url)],
+  addons: `${GITHUB_URL_PREFIX_ASSETS}/addons.png`,
+  animations: `${GITHUB_URL_PREFIX_ASSETS}/animations.png`,
+  biomes: `${GITHUB_URL_PREFIX_ASSETS}/biomes.png`,
+  blocks: `${GITHUB_URL_PREFIX_ASSETS}/blocks.png`,
+  entities: `${GITHUB_URL_PREFIX_ASSETS}/entities.png`,
+  item: `${GITHUB_URL_PREFIX_ASSETS}/item.png`,
+  molang: `${GITHUB_URL_PREFIX_ASSETS}/molang.png`,
+  particles: `${GITHUB_URL_PREFIX_ASSETS}/particles.png`,
+  recipes: `${GITHUB_URL_PREFIX_ASSETS}/recipes.png`,
 };
 
 const getAsset = async (file: string): Promise<string | null> => {
   const name = file.toLowerCase().replace(/ /g, "_") as keyof typeof ASSETS;
   if (!ASSETS.hasOwnProperty(name)) return null;
 
-  const assets = ASSETS[name];
-  const index = Math.floor(Math.random() * assets.length);
+  const asset = ASSETS[name];
 
-  const arrayBuffer = await fetch(assets[index]).then((res) =>
-    res.arrayBuffer()
-  );
+  const arrayBuffer = await fetch(asset).then((res) => res.arrayBuffer());
   return (
     "data:image/png;base64," +
     btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
@@ -47,22 +47,13 @@ const getAsset = async (file: string): Promise<string | null> => {
 export default async function (req: NextRequest) {
   const [fontData, fontMediumData, fontBoldData] = await Promise.all([
     fetch(
-      new URL(
-        "styles/fonts/Inter/inter-latin-ext-400-normal.woff",
-        import.meta.url
-      )
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-400-normal.woff",
     ).then((res) => res.arrayBuffer()),
     fetch(
-      new URL(
-        "styles/fonts/Inter/inter-latin-ext-500-normal.woff",
-        import.meta.url
-      )
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-500-normal.woff",
     ).then((res) => res.arrayBuffer()),
     fetch(
-      new URL(
-        "styles/fonts/Inter/inter-latin-ext-700-normal.woff",
-        import.meta.url
-      )
+      "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-700-normal.woff",
     ).then((res) => res.arrayBuffer()),
   ]);
 
@@ -134,7 +125,7 @@ export default async function (req: NextRequest) {
           <h2 tw="text-5xl font-medium mt-2">
             {trans["page"]["docs"]["website_title_tagged_stable"].replace(
               "{{title}} ",
-              ""
+              "",
             )}
           </h2>
           <div tw="flex flex-row">
@@ -142,7 +133,7 @@ export default async function (req: NextRequest) {
               <h3
                 tw={cn(
                   "text-4xl p-2 px-4 mr-4 rounded-xl text-white",
-                  bgColorMap
+                  bgColorMap,
                 )}
               >
                 {
@@ -211,10 +202,10 @@ export default async function (req: NextRequest) {
             style: "normal",
           },
         ],
-      }
+      },
     );
   } catch (e: any) {
-    console.log(`${e.message}`);
+    console.log(`error: ${e.message}`);
     return new Response(`Failed to generate the image`, {
       status: 500,
     });

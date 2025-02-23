@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { AppProps } from "next/app";
+import type { AppType } from "next/app";
 import Router from "next/router";
+
 import { Inter, Fira_Code as FiraCode } from "next/font/google";
 
 import { ThemeProvider } from "next-themes";
@@ -35,7 +36,7 @@ Router.events.on("routeChangeComplete", (url: string) => {
 const inter = Inter({ subsets: ["latin"] });
 const firaCode = FiraCode({ subsets: ["latin"] });
 
-function App({ Component, pageProps }: AppProps) {
+const App: AppType = ({ Component, pageProps }) => {
   useEffect(() => {
     console.log("Hey there!");
   }, []);
@@ -57,6 +58,6 @@ function App({ Component, pageProps }: AppProps) {
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default appWithTranslation(App);
