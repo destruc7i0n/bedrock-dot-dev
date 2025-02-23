@@ -9,5 +9,4 @@ export default {
   warn: devOnly(Log.warn),
 };
 
-import chalk from "chalk";
-export const logLinkColor = chalk.green;
+export { green as logLinkColor } from "chalk";

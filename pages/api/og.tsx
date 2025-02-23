@@ -20,15 +20,15 @@ const GITHUB_URL_PREFIX =
 const GITHUB_URL_PREFIX_ASSETS = `${GITHUB_URL_PREFIX}/assets/og`;
 
 const ASSETS = {
-  addons: `${GITHUB_URL_PREFIX_ASSETS}/addons/addons_1.png`,
-  animations: `${GITHUB_URL_PREFIX_ASSETS}/animations/animations_1.png`,
-  biomes: `${GITHUB_URL_PREFIX_ASSETS}/biomes/biomes_1.png`,
-  blocks: `${GITHUB_URL_PREFIX_ASSETS}/blocks/blocks_1.png`,
-  entities: `${GITHUB_URL_PREFIX_ASSETS}/entities/entities_1.png`,
-  item: `${GITHUB_URL_PREFIX_ASSETS}/item/item_1.png`,
-  molang: `${GITHUB_URL_PREFIX_ASSETS}/molang/molang_1.png`,
-  particles: `${GITHUB_URL_PREFIX_ASSETS}/particles/particles_1.png`,
-  recipes: `${GITHUB_URL_PREFIX_ASSETS}/recipes/recipes_1.png`,
+  addons: `${GITHUB_URL_PREFIX_ASSETS}/addons.png`,
+  animations: `${GITHUB_URL_PREFIX_ASSETS}/animations.png`,
+  biomes: `${GITHUB_URL_PREFIX_ASSETS}/biomes.png`,
+  blocks: `${GITHUB_URL_PREFIX_ASSETS}/blocks.png`,
+  entities: `${GITHUB_URL_PREFIX_ASSETS}/entities.png`,
+  item: `${GITHUB_URL_PREFIX_ASSETS}/item.png`,
+  molang: `${GITHUB_URL_PREFIX_ASSETS}/molang.png`,
+  particles: `${GITHUB_URL_PREFIX_ASSETS}/particles.png`,
+  recipes: `${GITHUB_URL_PREFIX_ASSETS}/recipes.png`,
 };
 
 const getAsset = async (file: string): Promise<string | null> => {
