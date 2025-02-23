@@ -54,7 +54,8 @@
   "pnpm": {
     "overrides": {
       "@types/react": "19.0.10",
-      "@types/react-dom": "19.0.4"
+      "@types/react-dom": "19.0.4",
+      "ws@>=7.0.0 <7.5.10": ">=7.5.10"
     }
   }
 }
