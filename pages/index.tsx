@@ -1,8 +1,7 @@
 import { FunctionComponent } from "react";
 import { GetStaticProps } from "next";
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslations } from "next-intl";
 
 import Layout from "components/layout";
 import Navbar from "components/homepage/navbar";
@@ -40,7 +39,7 @@ type Props = {
 // )
 
 const IndexPage: FunctionComponent<Props> = ({ bedrockVersions, tags }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   // transform to string representation
   const versions = transformInbound(bedrockVersions);
 
@@ -95,7 +94,8 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     props: {
       bedrockVersions,
       tags,
-      ...(await serverSideTranslations(locale, ["common"])),
+      translations: (await import(`../public/locales/${locale}/common.json`))
+        .default,
     },
   };
 };

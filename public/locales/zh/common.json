@@ -13,12 +13,12 @@
     },
     "docs": {
       "website_title_loading": "加载中……",
-      "website_title_untagged": "{{title}}文档 | {{version}}",
-      "website_description_untagged": "Minecraft基岩版{{title}}文档 版本：{{version}}",
-      "website_title_tagged_stable": "{{title}}文档",
-      "website_description_tagged_stable": "Minecraft基岩版{{title}}文档",
-      "website_title_tagged_beta": "测试版{{title}}文档",
-      "website_description_tagged_beta": "Minecraft基岩版测试版{{title}}文档"
+      "website_title_untagged": "{title}文档 | {version}",
+      "website_description_untagged": "Minecraft基岩版{title}文档 版本：{version}",
+      "website_title_tagged_stable": "{title}文档",
+      "website_description_tagged_stable": "Minecraft基岩版{title}文档",
+      "website_title_tagged_beta": "测试版{title}文档",
+      "website_description_tagged_beta": "Minecraft基岩版测试版{title}文档"
     }
   },
   "component": {

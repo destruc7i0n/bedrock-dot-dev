@@ -1,16 +1,21 @@
-import { ChangeEvent, FunctionComponent, memo, useContext, useMemo } from "react";
+import {
+  ChangeEvent,
+  FunctionComponent,
+  memo,
+  useContext,
+  useMemo,
+} from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import { useRouter } from "next/router";
 
 import VersionContext from "../version-context";
 import { bedrockVersionsInOrder } from "lib/bedrock-versions-transformer";
 import { getLink, getMinorVersionTitle } from "lib/util";
-import { translateFileNames } from "lib/i18n";
 
 const SidebarSelectors: FunctionComponent = () => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   // get from the context
   const { major, minor, file, versions, tags } = useContext(VersionContext);
@@ -19,7 +24,6 @@ const SidebarSelectors: FunctionComponent = () => {
 
   const options = useMemo(() => {
     if (!major || !versions) return [];
-
 
     const result = [];
     const majorVersions: string[] = [];
@@ -31,7 +35,7 @@ const SidebarSelectors: FunctionComponent = () => {
         result.push(
           <option key={`version-${major}`} disabled>
             {major}
-          </option>
+          </option>,
         );
         majorVersions.push(major);
       }
@@ -41,7 +45,7 @@ const SidebarSelectors: FunctionComponent = () => {
       result.push(
         <option key={`version-${major}-${minor}`} value={path}>
           {title}
-        </option>
+        </option>,
       );
     }
     return result;
@@ -50,9 +54,6 @@ const SidebarSelectors: FunctionComponent = () => {
   if (!major || !versions) return null;
 
   const files = versions[major] && versions[major][minor];
-  const fileNameTranslations: { [k: string]: string } = t("files", {
-    returnObjects: true,
-  });
 
   const onVersionChange = ({
     target: { value },
@@ -66,7 +67,7 @@ const SidebarSelectors: FunctionComponent = () => {
     if (!files.includes(file)) {
       // check without case
       const caseCheck = files.find(
-        (f) => f.toLowerCase() === file.toLowerCase()
+        (f) => f.toLowerCase() === file.toLowerCase(),
       );
       if (caseCheck) {
         newFile = caseCheck;
@@ -115,7 +116,7 @@ const SidebarSelectors: FunctionComponent = () => {
           >
             {files.map((file) => (
               <option key={`file-${file}`} value={file}>
-                {translateFileNames(fileNameTranslations, file)}
+                {file}
               </option>
             ))}
           </select>

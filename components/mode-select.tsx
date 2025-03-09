@@ -6,7 +6,7 @@ import {
   ComputerDesktopIcon,
 } from "@heroicons/react/20/solid";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import cn from "classnames";
 
@@ -45,7 +45,7 @@ const onResolvedThemeChange = (theme: Theme) => {
 };
 
 const ModeSelect: FunctionComponent<Props> = ({ className }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("component.color_theme_select");
 
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -78,15 +78,9 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
         id="mode"
         className="leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block"
       >
-        <option value={Theme.System}>
-          {t("component.color_theme_select.system")}
-        </option>
-        <option value={Theme.Dark}>
-          {t("component.color_theme_select.dark")}
-        </option>
-        <option value={Theme.Light}>
-          {t("component.color_theme_select.light")}
-        </option>
+        <option value={Theme.System}>{t("system")}</option>
+        <option value={Theme.Dark}>{t("dark")}</option>
+        <option value={Theme.Light}>{t("light")}</option>
       </select>
     </div>
   );

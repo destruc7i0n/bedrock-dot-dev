@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import type { AppType } from "next/app";
-import Router from "next/router";
+import type { AppType, AppProps } from "next/app";
+import Router, { useRouter } from "next/router";
 
 import { Inter, Fira_Code as FiraCode } from "next/font/google";
 
 import { ThemeProvider } from "next-themes";
 
-import { appWithTranslation } from "next-i18next";
+import { NextIntlClientProvider } from "next-intl";
 
 import NProgress from "nprogress";
 
@@ -36,7 +36,9 @@ Router.events.on("routeChangeComplete", (url: string) => {
 const inter = Inter({ subsets: ["latin"] });
 const firaCode = FiraCode({ subsets: ["latin"] });
 
-const App: AppType = ({ Component, pageProps }) => {
+const App: AppType = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
   useEffect(() => {
     console.log("Hey there!");
   }, []);
@@ -54,10 +56,16 @@ const App: AppType = ({ Component, pageProps }) => {
         attribute="class"
         disableTransitionOnChange
       >
-        <Component {...pageProps} />
+        <NextIntlClientProvider
+          locale={router.locale}
+          timeZone="America/New_York"
+          messages={pageProps.translations}
+        >
+          <Component {...pageProps} />
+        </NextIntlClientProvider>
       </ThemeProvider>
     </>
   );
 };
 
-export default appWithTranslation(App);
+export default App;
