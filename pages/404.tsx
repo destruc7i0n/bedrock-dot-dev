@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { GetStaticProps } from "next";
 
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
 import { getLocale } from "../lib/i18n";
 
 import Layout from "components/layout";
@@ -30,7 +28,12 @@ const Custom404Page: FunctionComponent = () => {
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal);
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])) } };
+  return {
+    props: {
+      translations: (await import(`../public/locales/${locale}/common.json`))
+        .default,
+    },
+  };
 };
 
 export default Custom404Page;

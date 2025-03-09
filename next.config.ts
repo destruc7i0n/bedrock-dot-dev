@@ -1,21 +1,31 @@
+import type { NextConfig } from "next";
+import path from "path";
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
-const { i18n } = require("./next-i18next.config");
+const locales = ["en", "zh"];
+// tell the bundler that these files should be bundled
+path.resolve("./public/locales");
 
-const getTags = require("./scripts/lib/tags");
-
-module.exports = withBundleAnalyzer({
+const nextConfig: NextConfig = withBundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
     largePageDataBytes: 5 * 1000 * 1000, // 5 MB
   },
   reactStrictMode: true,
-  i18n,
+  i18n: {
+    defaultLocale: "en",
+    locales,
+  },
   async redirects() {
-    const { stable, beta } = await getTags();
+    const { stable, beta } = await (
+      await fetch(
+        "https://raw.githubusercontent.com/bedrock-dot-dev/docs/master/tags.json",
+      )
+    ).json();
 
     const version = "\\d+\\.\\d+\\.\\d+\\.\\d+";
 
@@ -82,3 +92,5 @@ module.exports = withBundleAnalyzer({
     ];
   },
 });
+
+export default nextConfig;

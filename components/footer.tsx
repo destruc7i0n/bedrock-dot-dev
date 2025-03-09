@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import cn from "classnames";
 
@@ -20,7 +20,7 @@ const Footer: FunctionComponent<Props> = ({
   outline = true,
   showToggles = true,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("component.footer");
   const darkClass = "bg-gray-50 dark:" + darkClassName;
 
   return (
@@ -28,13 +28,13 @@ const Footer: FunctionComponent<Props> = ({
       className={cn(
         "w-full py-12 px-4 overflow-hidden sm:px-6 lg:px-8",
         { [darkClass]: dark },
-        { "border-t border-gray-200 dark:border-dark-gray-800": outline }
+        { "border-t border-gray-200 dark:border-dark-gray-800": outline },
       )}
     >
       <div className="max-w-screen-lg mx-auto space-y-3">
         <div className="flex flex-wrap justify-center font-medium">
           <div className="px-2 text-gray-500 dark:text-gray-300">
-            {t("component.footer.credits_prefix")}{" "}
+            {t("credits_prefix")}{" "}
             <a
               className="link"
               href="https://thedestruc7i0n.ca"
@@ -51,7 +51,7 @@ const Footer: FunctionComponent<Props> = ({
               target="_blank"
               rel="noopener"
             >
-              {t("component.footer.donate")}
+              {t("donate")}
             </a>
           </div>
         </div>
@@ -63,13 +63,13 @@ const Footer: FunctionComponent<Props> = ({
               target="_blank"
               rel="noopener"
             >
-              {t("component.footer.github")}
+              {t("github")}
             </a>
           </div>
         </div>
         <div className="flex flex-wrap justify-center text-gray-500 dark:text-gray-400 font-medium">
           <div className="px-2">
-            <p>{t("component.footer.legal_mojang")}</p>
+            <p>{t("legal_mojang")}</p>
           </div>
         </div>
 

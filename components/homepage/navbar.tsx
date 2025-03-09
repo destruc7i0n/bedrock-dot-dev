@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 const HomepageNavbar = () => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("component.header");
 
   return (
     <div className="py-6">
@@ -21,13 +21,13 @@ const HomepageNavbar = () => {
             target="_blank"
             rel="noopener"
           >
-            {t("component.header.wiki_link")}
+            {t("wiki_link")}
           </a>
           <Link
             href="/packs"
             className="ml-6 lg:ml-10 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition duration-150 ease-in-out"
           >
-            {t("component.header.packs_link")}
+            {t("packs_link")}
           </Link>
           <a
             className="ml-6 lg:ml-10 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition duration-150 ease-in-out"
@@ -35,7 +35,7 @@ const HomepageNavbar = () => {
             target="_blank"
             rel="noopener"
           >
-            {t("component.header.discord_link")}
+            {t("discord_link")}
           </a>
         </div>
       </nav>

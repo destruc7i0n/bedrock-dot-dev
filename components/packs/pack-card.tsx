@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 
@@ -20,7 +20,7 @@ const PackCard: FunctionComponent<PackCardProps> = ({
   versionName,
   versionData,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const [open, setOpen] = useState(false);
 
