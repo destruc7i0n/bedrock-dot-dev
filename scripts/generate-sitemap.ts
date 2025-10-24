@@ -38,6 +38,12 @@ const main = async () => {
 
     for (const tag of Object.keys(tags)) {
       const [major, minor] = tags[tag as Tags];
+      if (!langVersions[major] || !langVersions[major][minor]) {
+        console.warn(
+          `Warning: Version ${major}.${minor} not found in docs.json for language ${lang}, skipping`,
+        );
+        continue;
+      }
       const files = langVersions[major][minor];
       for (const file of files) {
         const prefix = locale === Locale.English ? "" : `/${locale}`;
