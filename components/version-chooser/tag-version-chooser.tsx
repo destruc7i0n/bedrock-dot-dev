@@ -1,5 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { unstable_batchedUpdates } from "react-dom";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { useTranslation } from "next-i18next";
 
@@ -16,13 +15,11 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
 
   const updateVersion = () => {
     const [major, minor] = tags[version];
-    unstable_batchedUpdates(() => {
-      setMajor(major);
-      setMinor(minor);
-    });
+    setMajor(major);
+    setMinor(minor);
   };
 
-  useEffect(updateVersion, [version]);
+  useEffect(updateVersion, [version, tags, setMajor, setMinor]);
 
   return (
     <div className="w-full mb-2">

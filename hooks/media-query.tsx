@@ -10,10 +10,16 @@ const getMediaQuery = (width: number) => {
   );
 };
 
-const isLg = () => !getMediaQuery(1024).matches;
+const isLg = () => {
+  if (typeof window === 'undefined') return true;
+  return !getMediaQuery(1024).matches;
+};
 
 const useMediaQuery = (width: number) => {
-  const [targetReached, setTargetReached] = useState(false);
+  const [targetReached, setTargetReached] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return getMediaQuery(width).matches;
+  });
 
   const updateTarget = useCallback((e: MediaQueryListEvent) => {
     if (e.matches) {
@@ -25,15 +31,10 @@ const useMediaQuery = (width: number) => {
 
   useEffect(() => {
     const media = getMediaQuery(width);
-    media.addListener(updateTarget);
+    media.addEventListener('change', updateTarget);
 
-    // Check on mount (callback is not called until a change occurs)
-    if (media.matches) {
-      setTargetReached(true);
-    }
-
-    return () => media.removeListener(updateTarget);
-  }, []);
+    return () => media.removeEventListener('change', updateTarget);
+  }, [updateTarget, width]);
 
   return targetReached;
 };

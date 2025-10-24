@@ -19,10 +19,10 @@ export type BedrockVersionsFile = {
 };
 
 function formatTree(resp: GitHubTreeResponse): BedrockVersions {
-  let versions: BedrockVersions = {};
+  const versions: BedrockVersions = {};
 
   // convert the recursive output to one that follows `BedrockVersions` format
-  for (let treeItem of resp.tree) {
+  for (const treeItem of resp.tree) {
     if (treeItem.type === "blob") {
       // ignore any non html files
       if (!treeItem.path.endsWith(".html")) continue;
@@ -44,7 +44,7 @@ function formatTree(resp: GitHubTreeResponse): BedrockVersions {
         if (!versions[major]) versions[major] = {};
         if (!versions[major][minor]) versions[major][minor] = [];
 
-        let docName = file.replace(".html", "");
+        const docName = file.replace(".html", "");
 
         versions[major][minor].push(docName);
       }
@@ -64,7 +64,7 @@ const getFormattedFilesList = async (locale: Locale) => {
 };
 
 export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
-  let file: BedrockVersionsFile = {
+  const file: BedrockVersionsFile = {
     versions: {},
     byLocale: {},
   };
@@ -78,7 +78,7 @@ export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
 
 const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
   // only use local cache in dev
-  const check = checkCache();
+  const check = await checkCache();
   if (check) return check.versions[locale] ?? {};
   else {
     if (process.env.NODE_ENV === "production") {

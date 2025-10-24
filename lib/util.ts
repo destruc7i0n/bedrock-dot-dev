@@ -1,6 +1,12 @@
 import { BedrockVersions } from "./versions";
 import { Tags, TagsResponse } from "./tags";
 
+export const PACK_BASE_URL = "https://void.bedrock.dev";
+
+export const getPackUrl = (folder: 'behaviours' | 'resources', version: string): string => {
+  return `${PACK_BASE_URL}/${folder}/${version}.zip`;
+};
+
 export function compareBedrockVersions(a: string, b: string) {
   const sa = getVersionParts(a);
   const sb = getVersionParts(b);
@@ -22,7 +28,7 @@ export const getLink = (
 ) => {
   file = encodeURI(file);
   if (replaceWithTagged) {
-    let version = [major, minor];
+    const version = [major, minor];
     if (areVersionsEqual(version, tags[Tags.Stable]))
       return `/docs/stable/${file}`;
     if (areVersionsEqual(version, tags[Tags.Beta])) return `/docs/beta/${file}`;
@@ -76,7 +82,7 @@ export const parseUrlQuery = (
 ): ParsedUrlResponse => {
   const parts = query.split("/");
 
-  let parsed: ParsedUrlResponse = { major: "", minor: "" };
+  const parsed: ParsedUrlResponse = { major: "", minor: "" };
   const [major, minor] = parts;
 
   if (major && versions[major]) {

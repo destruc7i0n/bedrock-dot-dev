@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useSyncExternalStore } from "react";
 
 import {
   SunIcon,
@@ -47,10 +47,12 @@ const onResolvedThemeChange = (theme: Theme) => {
 const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   const { t } = useTranslation("common");
 
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
   const { theme: hookTheme, resolvedTheme, setTheme } = useTheme();
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     onResolvedThemeChange(resolvedTheme as Theme);

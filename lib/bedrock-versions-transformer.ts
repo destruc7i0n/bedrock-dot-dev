@@ -6,20 +6,20 @@ export interface TransformedOutbound {
   key: string[];
   versions: [
     number[], // the minecraft version
-    number[] // the files
+    number[], // the files
   ][];
 }
 
 // helper generator to sort and loop through all bedrock versions
 function* bedrockVersionsInOrder(
-  versions: BedrockVersions
+  versions: BedrockVersions,
 ): IterableIterator<[string, string, string[]]> {
   const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
-  for (let major of majorVersions) {
+  for (const major of majorVersions) {
     const minorVersions = Object.keys(versions[major]).sort(
-      compareBedrockVersions
+      compareBedrockVersions,
     );
-    for (let minor of minorVersions) {
+    for (const minor of minorVersions) {
       const files = versions[major][minor];
       yield [major, minor, files];
     }
@@ -27,9 +27,9 @@ function* bedrockVersionsInOrder(
 }
 
 const transformInbound = (data: TransformedOutbound) => {
-  let versions: BedrockVersions = {};
+  const versions: BedrockVersions = {};
 
-  for (let version of data.versions) {
+  for (const version of data.versions) {
     const major = [version[0][0], version[0][1], 0, 0].join(".");
     const minor = version[0].join(".");
 
@@ -46,14 +46,20 @@ const transformInbound = (data: TransformedOutbound) => {
 // [ [ ...minecraft version... ], [ ...file indices... ] ]
 const transformOutbound = (data: BedrockVersions) => {
   const out: TransformedOutbound = { key: [], versions: [] };
+  const fileIndexMap = new Map<string, number>();
 
-  for (let [major, minor] of bedrockVersionsInOrder(data)) {
+  for (const [major, minor] of bedrockVersionsInOrder(data)) {
     const version = getVersionParts(minor);
 
-    let map = [];
-    for (let file of data[major][minor]) {
-      if (!out.key.includes(file)) out.key.push(file);
-      map.push(out.key.indexOf(file));
+    const map = [];
+    for (const file of data[major][minor]) {
+      let fileIndex = fileIndexMap.get(file);
+      if (fileIndex === undefined) {
+        fileIndex = out.key.length;
+        out.key.push(file);
+        fileIndexMap.set(file, fileIndex);
+      }
+      map.push(fileIndex);
     }
 
     out.versions.push([version, map]);

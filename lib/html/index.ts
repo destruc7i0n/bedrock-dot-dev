@@ -12,7 +12,7 @@ import { removeHashIfNeeded } from "../util";
 export { default as fetchHtml } from "./fetch";
 
 const getSidebarContent = (html: string): SidebarStructure => {
-  let format: SidebarStructure = {};
+  const format: SidebarStructure = {};
 
   // get the first table on the page
   const table = html.match(TABLE_MATCH);
@@ -23,7 +23,7 @@ const getSidebarContent = (html: string): SidebarStructure => {
 
     // the current id of the group
     let currentId = "";
-    for (let line of lines) {
+    for (const line of lines) {
       // get the data from the link on the line
       const link = line.match(LINK_MATCH);
       if (link) {

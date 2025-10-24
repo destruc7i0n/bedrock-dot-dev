@@ -46,7 +46,7 @@ const getFromTitle = (section: string) => {
 const getSections = (html: string, sections: string[]) => {
   const resp: SidebarStructure = {};
 
-  for (let section of sections) {
+  for (const section of sections) {
     const sectionContent = getSection(html, section);
     if (sectionContent) {
       const content = getFromTitle(sectionContent);

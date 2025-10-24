@@ -1,4 +1,4 @@
-require("isomorphic-unfetch");
+import "isomorphic-unfetch";
 
 import path from "path";
 import fs from "fs";
@@ -36,10 +36,10 @@ const main = async () => {
     const tags = await getTags(locale, true);
     const langVersions = versions[lang];
 
-    for (let tag of Object.keys(tags)) {
+    for (const tag of Object.keys(tags)) {
       const [major, minor] = tags[tag as Tags];
       const files = langVersions[major][minor];
-      for (let file of files) {
+      for (const file of files) {
         const prefix = locale === Locale.English ? "" : `/${locale}`;
         stream.write({
           url: `${prefix}/docs/${tag}/${file}`,

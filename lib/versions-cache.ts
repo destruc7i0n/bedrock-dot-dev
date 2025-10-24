@@ -10,12 +10,11 @@ const cacheDirectory =
   process.env.NODE_ENV === "production" ? join("/tmp", ".cache") : "";
 
 // store ratelimited call as a file and fetch when needed
-const checkCache = (): BedrockVersionsFile | undefined => {
+const checkCache = async (): Promise<BedrockVersionsFile | undefined> => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === "production") {
-    // @ts-ignore
-    const docsContent = require("../public/static/docs.json");
-    if (docsContent) return docsContent;
+    const docsContent = (await import("../public/static/docs.json")).default;
+    if (docsContent) return docsContent as BedrockVersionsFile;
     else Log.error("Could not load docs content from cache!");
   } else {
     const cache = flatCache.create({

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -50,6 +50,12 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   const router = useRouter();
   const { query, locale } = router;
 
+  const [stableMajor, stableMinor] = tags[Tags.Stable];
+
+  // initialize to the current stable version
+  const [major, setMajor] = useState(stableMajor);
+  const [minor, setMinor] = useState(stableMinor);
+
   // set from query string if possible
   useEffect(() => {
     let parsedUrlQuery: ParsedUrlResponse = { major: "", minor: "" };
@@ -57,26 +63,28 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
     if (query?.r && typeof query.r === "string") {
       parsedUrlQuery = parseUrlQuery(query.r, versions);
 
+      // Intentionally setting state in effect to sync with URL query params
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuickSelect(false);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (parsedUrlQuery.major) setMajor(parsedUrlQuery.major);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (parsedUrlQuery.minor) setMinor(parsedUrlQuery.minor);
     }
-  }, [query]);
-
-  const [stableMajor, stableMinor] = tags[Tags.Stable];
-
-  // initialize to the current stable version
-  const [major, setMajor] = useState(stableMajor);
-  const [minor, setMinor] = useState(stableMinor);
+  }, [query, versions]);
 
   // handle locale change and reset to the latest stable version
   useEffect(() => {
     if (!versions[major]) {
+      // Intentionally setting state in effect to sync with locale changes
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMajor(stableMajor);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMinor(stableMinor);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuickSelect(false);
     }
-  }, [locale]);
+  }, [locale, major, stableMajor, stableMinor, versions]);
 
   const fileNameTranslations: { [k: string]: string } = t("files", {
     returnObjects: true,
@@ -86,15 +94,19 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
     files = versions[major][minor];
   }
 
-  let majorVersions = Object.keys(versions).sort(compareBedrockVersions);
-  let minorVersions = Object.keys(versions?.[major] ?? {}).sort(
+  const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
+  const minorVersions = Object.keys(versions?.[major] ?? {}).sort(
     compareBedrockVersions
   );
 
   // if the major version changes, set the minor to the latest minor from that major version
   useEffect(() => {
-    if (!minorVersions.includes(minor)) setMinor(minorVersions[0]);
-  }, [major]);
+    if (!minorVersions.includes(minor)) {
+      // Intentionally setting state in effect to ensure valid minor version
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMinor(minorVersions[0]);
+    }
+  }, [major, minor, minorVersions]);
 
   const VersionChooserComponent = quickSelect
     ? TagVersionChooser

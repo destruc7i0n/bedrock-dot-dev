@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState,
   FunctionComponent,
+  useSyncExternalStore,
 } from "react";
 
 import { isLg } from "hooks/media-query";
@@ -23,29 +24,43 @@ let lastClick: number = 0;
 export const SidebarContextProvider: FunctionComponent<{
   children?: React.ReactNode;
 }> = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const getInitialOpen = () => {
+    if (typeof window === "undefined") return true;
 
-  // rehyrate the open state from the localstorage
-  useEffect(() => {
-    // attempt to get from localstorage
     let newOpen = true;
     try {
       const localStorageItem = localStorage.getItem("sidebar");
       if (typeof localStorageItem === "string") {
         ({ open: newOpen } = JSON.parse(localStorageItem));
       }
-    } catch (e) {}
+    } catch {
+      // ignore errors
+    }
 
     // not open if on small screen
     if (!isLg()) newOpen = false;
 
-    if (open !== newOpen) {
-      setOpen(newOpen);
-    }
-    // remove the class from the preflight if it's there
-    if (document.documentElement.classList.contains("sidebar-closed"))
+    return newOpen;
+  };
+
+  const [open, setOpen] = useState<boolean>(getInitialOpen);
+
+  // Check if we're mounted (client-side)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+
+  // Remove preflight class on mount
+  useEffect(() => {
+    if (
+      mounted &&
+      document.documentElement.classList.contains("sidebar-closed")
+    ) {
       document.documentElement.classList.remove("sidebar-closed");
-  }, []);
+    }
+  }, [mounted]);
 
   // update localstorage on sidebar change
   useEffect(() => {
@@ -53,7 +68,9 @@ export const SidebarContextProvider: FunctionComponent<{
     if (isLg()) {
       try {
         localStorage.setItem("sidebar", JSON.stringify({ open }));
-      } catch (e) {}
+      } catch {
+        // ignore storage errors
+      }
     }
 
     if (Date.now() - lastClick > 750) count = 0;

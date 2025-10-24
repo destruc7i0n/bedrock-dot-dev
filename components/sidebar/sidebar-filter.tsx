@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from "react";
+import { FunctionComponent, memo } from "react";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 

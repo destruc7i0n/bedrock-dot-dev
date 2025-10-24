@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
 import { GetStaticPaths, GetStaticPathsResult, GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -62,9 +62,9 @@ const Docs: FunctionComponent<Props> = ({
   } = useRouter();
   const locale = useLocale();
 
-  let [major, minor, file] = version || ["", "", ""];
+  const [major, minor, file] = version || ["", "", ""];
 
-  let versionTag: Tags | null = getTagFromSlug(slug);
+  const versionTag: Tags | null = getTagFromSlug(slug);
 
   // when the page is transitioning, in a loading state
   let loading = useLoading();
@@ -172,8 +172,8 @@ const Docs: FunctionComponent<Props> = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  let paths: GetStaticPathsResult["paths"] = [];
-  for (let localeVal of locales || []) {
+  const paths: GetStaticPathsResult["paths"] = [];
+  for (const localeVal of locales || []) {
     const locale = getLocale(localeVal);
 
     const nextLocaleParam = locale !== Locale.English ? { locale } : {};
@@ -185,7 +185,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
     const [, stableMajor, stableMinor] = stableVersionParts;
 
-    for (let [major, minor, files] of bedrockVersionsInOrder(bedrockVersions)) {
+    for (const [major, minor, files] of bedrockVersionsInOrder(bedrockVersions)) {
       for (let file of files) {
         file = encodeURI(file);
         const version = [major, minor];

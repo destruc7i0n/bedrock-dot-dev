@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo, useContext } from "react";
+import { FunctionComponent, memo, useContext } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";

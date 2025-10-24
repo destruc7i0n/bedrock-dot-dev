@@ -19,7 +19,7 @@ export const getTable = (html: string, id: string, tagNum: number) => {
 };
 
 const scrapeTable = (html: string, id: string) => {
-  let elements: SidebarStructureElement[] = [];
+  const elements: SidebarStructureElement[] = [];
 
   // this needs to be this disgusting to work for the older pages
   const { title, table } = getTable(html, id, 2);

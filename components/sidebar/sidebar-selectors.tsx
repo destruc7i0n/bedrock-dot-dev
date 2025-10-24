@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, memo, useContext } from "react";
+import { ChangeEvent, FunctionComponent, memo, useContext, useMemo } from "react";
 
 import { useTranslation } from "next-i18next";
 
@@ -17,31 +17,37 @@ const SidebarSelectors: FunctionComponent = () => {
 
   const router = useRouter();
 
-  if (!major || !versions) return null;
+  const options = useMemo(() => {
+    if (!major || !versions) return [];
 
-  let options = [];
 
-  // generate the dropdown
-  let majorVersions: string[] = [];
-  for (let [major, minor] of bedrockVersionsInOrder(versions)) {
-    // only add the major version once
-    if (!majorVersions.includes(major)) {
-      options.push(
-        <option key={`version-${major}`} disabled>
-          {major}
+    const result = [];
+    const majorVersions: string[] = [];
+
+    // generate the dropdown
+    for (const [major, minor] of bedrockVersionsInOrder(versions)) {
+      // only add the major version once
+      if (!majorVersions.includes(major)) {
+        result.push(
+          <option key={`version-${major}`} disabled>
+            {major}
+          </option>
+        );
+        majorVersions.push(major);
+      }
+      const path = `${major}/${minor}`;
+
+      const title = getMinorVersionTitle([major, minor], tags, t);
+      result.push(
+        <option key={`version-${major}-${minor}`} value={path}>
+          {title}
         </option>
       );
-      majorVersions.push(major);
     }
-    let path = `${major}/${minor}`;
+    return result;
+  }, [major, versions, tags, t]);
 
-    const title = getMinorVersionTitle([major, minor], tags, t);
-    options.push(
-      <option key={`version-${major}-${minor}`} value={path}>
-        {title}
-      </option>
-    );
-  }
+  if (!major || !versions) return null;
 
   const files = versions[major] && versions[major][minor];
   const fileNameTranslations: { [k: string]: string } = t("files", {
@@ -62,7 +68,7 @@ const SidebarSelectors: FunctionComponent = () => {
       const caseCheck = files.find(
         (f) => f.toLowerCase() === file.toLowerCase()
       );
-      if (!!caseCheck) {
+      if (caseCheck) {
         newFile = caseCheck;
       } else {
         newFile = files[0];

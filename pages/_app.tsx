@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import type { AppType } from "next/app";
 import Router from "next/router";
 

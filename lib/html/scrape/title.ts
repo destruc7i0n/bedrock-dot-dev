@@ -27,7 +27,7 @@ export const getTitle = (html: string): TitleResponse => {
   // convert to title case
   title = toTitleCase(title);
 
-  let resp: TitleResponse = { version: "", title: "" };
+  const resp: TitleResponse = { version: "", title: "" };
   const titleRe = new RegExp(`(.*) Documentation Version: ${VERSION.source}`);
 
   const titleMatch = title.match(titleRe);
