@@ -18,6 +18,9 @@ export default bundleAnalyzer({
   },
   reactStrictMode: true,
   i18n,
+  outputFileTracingIncludes: {
+    "/*": ["next-i18next.config.js", "public/locales/**/*.json"],
+  },
   async redirects() {
     const { stable, beta } = await getTags(Locale.English);
 
