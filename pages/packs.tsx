@@ -44,6 +44,7 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
               {t("page.packs.title")}
             </h4>
             <p className="text-lg text-black dark:text-gray-200">
+              {/* @ts-expect-error - Trans component type error with react-jsx compiler option */}
               <Trans
                 i18nKey="page.packs.subtitle"
                 t={t}

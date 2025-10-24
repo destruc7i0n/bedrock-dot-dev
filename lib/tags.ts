@@ -21,8 +21,11 @@ export const getTags = async (
 ): Promise<TagsResponse> => {
   if (process.env.NODE_ENV === "production" && !forceFetch) {
     // fetch from cached file if on server
-    const tagsFile = (await import("../public/static/tags.json")).default;
-    return tagsFile[locale];
+    // Use require() instead of import() to avoid TypeScript trying to resolve the module at compile time
+    // This file is generated during the build process and may not exist during TypeScript compilation
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const tags = require("../public/static/tags.json")[locale];
+    return tags;
   } else {
     // fetch the tags from the server
     const repo = getRepository(locale);
