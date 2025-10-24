@@ -10,10 +10,13 @@ const cacheDirectory =
   process.env.NODE_ENV === "production" ? join("/tmp", ".cache") : "";
 
 // store ratelimited call as a file and fetch when needed
-const checkCache = async (): Promise<BedrockVersionsFile | undefined> => {
+const checkCache = (): BedrockVersionsFile | undefined => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === "production") {
-    const docsContent = (await import("../public/static/docs.json")).default;
+    // The docs.json file is generated at build time before Next.js compilation
+    // Use require for vercel to include it in the build
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const docsContent = require("../public/static/docs.json");
     if (docsContent) return docsContent as BedrockVersionsFile;
     else Log.error("Could not load docs content from cache!");
   } else {
