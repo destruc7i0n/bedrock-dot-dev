@@ -64,11 +64,11 @@ export type ParseHtmlResponse = {
 
 export const extractDataFromHtml = (
   html: string,
-  file: string
+  file: string,
 ): ParseHtmlResponse => {
   const title = getTitle(html);
 
-  Log.info(`Title data: "${title.title} ${title.version}"`);
+  Log.info(`Title data: ${JSON.stringify(title)}`);
 
   let sidebarContent = getSidebarContent(html);
   if (file && file === "Entities") {
@@ -78,7 +78,7 @@ export const extractDataFromHtml = (
       sidebarContent["Components"] = {
         ...componentsList,
         elements: componentsList.elements.sort((a, b) =>
-          a.title.localeCompare(b.title)
+          a.title.localeCompare(b.title),
         ),
       };
       // order the object and bring the components list to the top
@@ -99,12 +99,12 @@ export const extractDataFromHtml = (
 
   const total = Object.keys(sidebarContent).reduce(
     (acc, key) => acc + sidebarContent[key].elements.length + 1,
-    0
+    0,
   );
   Log.info(
     `Found ${
       Object.keys(sidebarContent).length
-    } sidebar headings, ${total} total elements`
+    } sidebar headings, ${total} total elements`,
   );
 
   return {

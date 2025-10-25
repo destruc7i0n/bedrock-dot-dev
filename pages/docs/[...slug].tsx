@@ -84,13 +84,18 @@ const Docs: FunctionComponent<Props> = ({
   let ogImageUrl = `${VERCEL_URL}/api/og?file=${encodeURIComponent(file)}`;
 
   if (parsedData?.title) {
-    const { title: documentTitle, version } = parsedData.title;
+    const { title: documentTitle, version: htmlVersion } = parsedData.title;
+    // fallback to URL version if HTML doesn't contain version
+    const pageVersion = htmlVersion || minor;
+
     title =
-      t("website_title_untagged", { title: documentTitle, version }) +
-      " | bedrock.dev";
+      t("website_title_untagged", {
+        title: documentTitle,
+        version: pageVersion,
+      }) + " | bedrock.dev";
     description = t("website_description_untagged", {
       title: documentTitle,
-      version,
+      version: pageVersion,
     });
 
     // custom titles for version tag
@@ -121,7 +126,7 @@ const Docs: FunctionComponent<Props> = ({
           break;
       }
     } else {
-      ogImageUrl += `&version=${encodeURIComponent(version)}`;
+      ogImageUrl += `&version=${encodeURIComponent(pageVersion)}`;
     }
   }
 
@@ -184,7 +189,9 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
     const [, stableMajor, stableMinor] = stableVersionParts;
 
-    for (const [major, minor, files] of bedrockVersionsInOrder(bedrockVersions)) {
+    for (const [major, minor, files] of bedrockVersionsInOrder(
+      bedrockVersions,
+    )) {
       for (let file of files) {
         file = encodeURI(file);
         const version = [major, minor];

@@ -17,24 +17,27 @@ const toTitleCase = (s: string) =>
 // .replace('Molang', 'MoLang') // custom name
 
 export const getTitle = (html: string): TitleResponse => {
-  let title = "";
+  const resp: TitleResponse = { version: "", title: "" };
 
   const h1 = html.match(H1_MATCH);
-  if (h1) {
-    // remove the line break
-    title = h1[1].replace(/<\/?br>/, "");
-  }
-  // convert to title case
-  title = toTitleCase(title);
+  if (!h1) return resp;
 
-  const resp: TitleResponse = { version: "", title: "" };
-  const titleRe = new RegExp(`(.*) Documentation Version: ${VERSION.source}`);
+  // Clean and normalize the title
+  const title = toTitleCase(h1[1].replace(/<\/?br>/g, "").trim());
 
-  const titleMatch = title.match(titleRe);
-  if (titleMatch) {
-    resp.title = titleMatch[1];
-    resp.version = titleMatch[2];
+  // Try old format: "TITLE Documentation Version: X.X.X.X"
+  const withVersion = title.match(
+    new RegExp(`(.*) Documentation Version: ${VERSION.source}`)
+  );
+  if (withVersion) {
+    resp.title = withVersion[1];
+    resp.version = withVersion[2];
+    return resp;
   }
+
+  // Try new format: "TITLE Documentation" (no version)
+  const withoutVersion = title.match(/(.*) Documentation/);
+  resp.title = withoutVersion ? withoutVersion[1] : title.replace(/ Documentation/i, "");
 
   return resp;
 };
