@@ -1,7 +1,12 @@
+import type { NextConfig } from "next";
+
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import createNextIntlPlugin from "next-intl/plugin";
 
 import { getTags } from "lib/tags";
 import { Locale } from "lib/i18n";
+
+const withNextIntl = createNextIntlPlugin();
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -9,7 +14,9 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 const locales = ["en", "zh"];
 
-export default bundleAnalyzer({
+const composeConfig = (config: NextConfig) => bundleAnalyzer(withNextIntl(config));
+
+export default composeConfig({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
