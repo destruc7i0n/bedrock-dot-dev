@@ -2,7 +2,6 @@ import { join } from "path";
 
 import * as flatCache from "flat-cache";
 import { BedrockVersionsFile } from "./versions";
-
 import Log from "./log";
 
 // use tmp on production
@@ -11,23 +10,22 @@ const cacheDirectory =
 
 // store ratelimited call as a file and fetch when needed
 const checkCache = (): BedrockVersionsFile | undefined => {
-  // get from the hard file in production to not use the api during runtime
-  if (process.env.NODE_ENV === "production") {
-    // The docs.json file is generated at build time before Next.js compilation
-    // Use require for vercel to include it in the build
+  // try to use the static docs.json file first (built at build time)
+  try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const docsContent = require("../public/static/docs.json");
     if (docsContent) return docsContent as BedrockVersionsFile;
-    else Log.error("Could not load docs content from cache!");
-  } else {
+  } catch (error) {
+    Log.error("Could not load docs content from cache!", error);
+  }
+
+  if (process.env.NODE_ENV !== "production") {
     const cache = flatCache.create({
       cacheId: "versions",
       cacheDir: cacheDirectory,
     });
     const timestamp: string = cache.getKey("timestamp");
-    if (!timestamp) {
-      return;
-    } else {
+    if (timestamp) {
       const cachedTime = new Date(timestamp);
       const currentTime = new Date();
       // difference in mins

@@ -11,30 +11,37 @@ const toTitleCase = (s: string) =>
     .map((p) =>
       p === p.toUpperCase() && p.length < 4
         ? p
-        : p[0].toUpperCase() + p.slice(1).toLowerCase()
+        : p[0].toUpperCase() + p.slice(1).toLowerCase(),
     )
     .join(" ");
 // .replace('Molang', 'MoLang') // custom name
 
 export const getTitle = (html: string): TitleResponse => {
-  let title = "";
+  const resp: TitleResponse = { version: "", title: "" };
 
   const h1 = html.match(H1_MATCH);
-  if (h1) {
-    // remove the line break
-    title = h1[1].replace(/<\/?br>/, "");
-  }
-  // convert to title case
-  title = toTitleCase(title);
+  if (!h1) return resp;
 
-  const resp: TitleResponse = { version: "", title: "" };
-  const titleRe = new RegExp(`(.*) Documentation Version: ${VERSION.source}`);
+  const title = toTitleCase(h1[1].replace(/<\/?br>/g, "").trim());
 
-  const titleMatch = title.match(titleRe);
-  if (titleMatch) {
-    resp.title = titleMatch[1];
-    resp.version = titleMatch[2];
+  // try old format: "TITLE Documentation Version: X.X.X.X"
+  const withVersion = title.match(
+    new RegExp(`(.*) Documentation Version: ${VERSION.source}`),
+  );
+  if (withVersion) {
+    resp.title = withVersion[1];
+    resp.version = withVersion[2];
+    return resp;
   }
 
+  // try "TITLE Documentation" (no version)
+  const withoutVersion = title.match(/(.*) Documentation/);
+  if (withoutVersion) {
+    resp.title = withoutVersion[1];
+    return resp;
+  }
+
+  // fallback: remove " Documentation" if present, otherwise use title as-is
+  resp.title = title.replace(/ Documentation/i, "");
   return resp;
 };

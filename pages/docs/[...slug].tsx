@@ -84,13 +84,19 @@ const Docs: FunctionComponent<Props> = ({
   let ogImageUrl = `${VERCEL_URL}/api/og?file=${encodeURIComponent(file)}`;
 
   if (parsedData?.title) {
-    const { title: documentTitle, version } = parsedData.title;
+    const { title: documentTitle, version: htmlVersion } = parsedData.title;
+    // fallback to URL version if HTML doesn't contain version
+    const pageVersion = htmlVersion || minor;
+    const pageTitle = documentTitle || file || "Documentation";
+
     title =
-      t("website_title_untagged", { title: documentTitle, version }) +
-      " | bedrock.dev";
+      t("website_title_untagged", {
+        title: pageTitle,
+        version: pageVersion,
+      }) + " | bedrock.dev";
     description = t("website_description_untagged", {
-      title: documentTitle,
-      version,
+      title: pageTitle,
+      version: pageVersion,
     });
 
     // custom titles for version tag
@@ -101,19 +107,19 @@ const Docs: FunctionComponent<Props> = ({
         case Tags.Stable: {
           title =
             t("website_title_tagged_stable", {
-              title: documentTitle,
+              title: pageTitle,
             }) + " | bedrock.dev";
           description = t("website_description_tagged_stable", {
-            title: documentTitle,
+            title: pageTitle,
           });
           break;
         }
         case Tags.Beta: {
           title =
-            t("website_title_tagged_beta", { title: documentTitle }) +
+            t("website_title_tagged_beta", { title: pageTitle }) +
             " | bedrock.dev";
           description = t("website_description_tagged_beta", {
-            title: documentTitle,
+            title: pageTitle,
           });
           break;
         }
@@ -121,7 +127,7 @@ const Docs: FunctionComponent<Props> = ({
           break;
       }
     } else {
-      ogImageUrl += `&version=${encodeURIComponent(version)}`;
+      ogImageUrl += `&version=${encodeURIComponent(pageVersion)}`;
     }
   }
 
@@ -184,7 +190,9 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
     const [, stableMajor, stableMinor] = stableVersionParts;
 
-    for (const [major, minor, files] of bedrockVersionsInOrder(bedrockVersions)) {
+    for (const [major, minor, files] of bedrockVersionsInOrder(
+      bedrockVersions,
+    )) {
       for (let file of files) {
         file = encodeURI(file);
         const version = [major, minor];
