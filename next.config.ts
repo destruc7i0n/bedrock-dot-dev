@@ -1,12 +1,16 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+import { getTags } from "lib/tags";
+import { Locale } from "lib/i18n";
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { i18n } = require("./next-i18next.config.js");
+
+const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-const { i18n } = require("./next-i18next.config");
-
-const getTags = require("./scripts/lib/tags");
-
-module.exports = withBundleAnalyzer({
+export default bundleAnalyzer({
   experimental: {
     // concurrentFeatures: true,
     // serverComponents: true,
@@ -14,8 +18,11 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: true,
   i18n,
+  outputFileTracingIncludes: {
+    "/*": ["next-i18next.config.js", "public/locales/**/*.json"],
+  },
   async redirects() {
-    const { stable, beta } = await getTags();
+    const { stable, beta } = await getTags(Locale.English);
 
     const version = "\\d+\\.\\d+\\.\\d+\\.\\d+";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { GA_TRACKING_ID } from "../lib/analytics";
 import { oneLine } from "../lib/util";
 

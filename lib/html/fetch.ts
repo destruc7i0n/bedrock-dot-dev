@@ -13,7 +13,7 @@ const fetchHtml = async (version: string[], locale: Locale) => {
 
   try {
     html = await getDocsFilesFromRepo(path, locale);
-  } catch (e) {
+  } catch {
     Log.error(`Could not get file for "${path}"!`);
     return null;
   }

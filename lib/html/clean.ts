@@ -55,7 +55,7 @@ const encloseDocumentationText = (html: string, file: string) => {
 
       let newEl = el;
 
-      for (let match of trimmed.split(bothMatches)) {
+      for (const match of trimmed.split(bothMatches)) {
         const single = oneLine(match);
         if (ONLY_NEWLINES_AND_WHITESPACE.test(single) || !match.trim().length)
           continue;

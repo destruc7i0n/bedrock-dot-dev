@@ -1,4 +1,4 @@
-import React, {
+import {
   FunctionComponent,
   memo,
   useEffect,
@@ -22,8 +22,8 @@ type SidebarContentState = {
 
 // initially open or closed state for the sidebar
 const getInitialOpen = (sidebar: SidebarStructure, file: string) => {
-  let state: SidebarContentState = {};
-  for (let { header } of Object.values(sidebar)) {
+  const state: SidebarContentState = {};
+  for (const { header } of Object.values(sidebar)) {
     // be default open on all pages other than the entities page
     state[header.id] = file !== "Entities";
   }
@@ -65,7 +65,8 @@ const SidebarContent: FunctionComponent<Props> = ({
 
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Intentionally empty - only run on mount for hash initialization
 
   // run after mount to scroll to the hash
   // since the group might be closed
@@ -83,16 +84,16 @@ const SidebarContent: FunctionComponent<Props> = ({
         }
       }
     }
-  }, [mounted]);
+  }, [hash, mounted]);
 
   // filter if filtering
   if (search) {
-    let filteredSidebar: SidebarStructure = {};
+    const filteredSidebar: SidebarStructure = {};
 
     search = search.toLowerCase();
 
     const keys = Object.keys(sidebar);
-    for (let key of keys) {
+    for (const key of keys) {
       const el = sidebar[key];
       // check if the key includes the search term by chance
       if (key.toLowerCase().includes(search)) {
@@ -100,7 +101,7 @@ const SidebarContent: FunctionComponent<Props> = ({
           filteredSidebar[key] = { header: el.header, elements: [] };
       }
 
-      for (let id of el.elements) {
+      for (const id of el.elements) {
         if (id.title.toLowerCase().includes(search) || id.id.includes(search)) {
           if (!filteredSidebar[key])
             filteredSidebar[key] = { header: el.header, elements: [] };

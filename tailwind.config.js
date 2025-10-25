@@ -1,4 +1,5 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import { fontFamily } from "tailwindcss/defaultTheme";
+import tailwindForms from "@tailwindcss/forms";
 
 const screens = {
   sm: "640px",
@@ -13,7 +14,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
   return acc;
 }, {});
 
-module.exports = {
+const config = {
   mode: "jit",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -66,5 +67,7 @@ module.exports = {
   variants: {
     opacity: ["hover", "responsive"],
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [tailwindForms],
 };
+
+export default config;

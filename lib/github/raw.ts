@@ -7,7 +7,7 @@ import { getRepository, Locale } from "../i18n";
 export function getErrorText(res: Response) {
   try {
     return res.text();
-  } catch (err) {
+  } catch {
     return res.statusText;
   }
 }

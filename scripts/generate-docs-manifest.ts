@@ -1,8 +1,8 @@
 // fetch polyfill
-require("isomorphic-unfetch");
+import "isomorphic-unfetch";
 
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
 
 import { Locale } from "../lib/i18n";
 import { getTags, TagsResponse } from "../lib/tags";
@@ -17,9 +17,9 @@ const main = async () => {
   }
 
   // count the number of documentation files per locale
-  for (let [locale, versions] of Object.entries(file["versions"])) {
+  for (const [locale, versions] of Object.entries(file["versions"])) {
     let count = 0;
-    for (let [, minorVersions] of Object.entries(versions)) {
+    for (const [, minorVersions] of Object.entries(versions)) {
       // sum the number of files per version
       count += Object.values(minorVersions).reduce(
         (acc, files) => acc + files.length,

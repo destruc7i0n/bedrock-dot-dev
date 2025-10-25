@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { GetStaticProps } from "next";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";

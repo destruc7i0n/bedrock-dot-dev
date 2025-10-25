@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo, useContext } from "react";
+import { FunctionComponent, memo, useContext } from "react";
 
 import { SidebarContext } from "./sidebar-context";
 

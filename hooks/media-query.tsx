@@ -2,18 +2,19 @@ import { useState, useCallback, useEffect } from "react";
 
 // from https://github.com/zeit/next-site/blob/master/components/media-query.js
 
-const getMediaQuery = (width: number) => {
-  return (
-    (window.matchMedia && window.matchMedia(`(max-width: ${width}px)`)) || {
-      matches: false,
-    }
-  );
+const getMediaQuery = (width: number): MediaQueryList | undefined => {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+  return window.matchMedia && window.matchMedia(`(max-width: ${width}px)`);
 };
 
-const isLg = () => !getMediaQuery(1024).matches;
+const isLg = () => getMediaQuery(1024)?.matches ?? false;
 
 const useMediaQuery = (width: number) => {
-  const [targetReached, setTargetReached] = useState(false);
+  const [targetReached, setTargetReached] = useState(
+    () => getMediaQuery(width)?.matches ?? false,
+  );
 
   const updateTarget = useCallback((e: MediaQueryListEvent) => {
     if (e.matches) {
@@ -25,15 +26,12 @@ const useMediaQuery = (width: number) => {
 
   useEffect(() => {
     const media = getMediaQuery(width);
-    media.addListener(updateTarget);
+    if (!media) return;
 
-    // Check on mount (callback is not called until a change occurs)
-    if (media.matches) {
-      setTargetReached(true);
-    }
+    media.addEventListener("change", updateTarget);
 
-    return () => media.removeListener(updateTarget);
-  }, []);
+    return () => media.removeEventListener("change", updateTarget);
+  }, [updateTarget, width]);
 
   return targetReached;
 };

@@ -8,7 +8,7 @@ export enum Tags {
 }
 
 export const TagsValues: string[] = Object.keys(Tags).map(
-  (k) => Tags[k as keyof typeof Tags]
+  (k) => Tags[k as keyof typeof Tags],
 );
 
 export type TagsResponse = {
@@ -17,17 +17,20 @@ export type TagsResponse = {
 // fetch the tags file from the repository
 export const getTags = async (
   locale: Locale,
-  forceFetch = false
+  forceFetch = false,
 ): Promise<TagsResponse> => {
   if (process.env.NODE_ENV === "production" && !forceFetch) {
     // fetch from cached file if on server
+    // Use require() instead of import() to avoid TypeScript trying to resolve the module at compile time
+    // This file is generated during the build process and may not exist during TypeScript compilation
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const tags = require("../public/static/tags.json")[locale];
     return tags;
   } else {
     // fetch the tags from the server
     const repo = getRepository(locale);
     const tags = await fetch(
-      `${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`
+      `${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`,
     );
     return await tags.json();
   }

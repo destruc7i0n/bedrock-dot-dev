@@ -13,9 +13,11 @@ const cacheDirectory =
 const checkCache = (): BedrockVersionsFile | undefined => {
   // get from the hard file in production to not use the api during runtime
   if (process.env.NODE_ENV === "production") {
-    // @ts-ignore
+    // The docs.json file is generated at build time before Next.js compilation
+    // Use require for vercel to include it in the build
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const docsContent = require("../public/static/docs.json");
-    if (docsContent) return docsContent;
+    if (docsContent) return docsContent as BedrockVersionsFile;
     else Log.error("Could not load docs content from cache!");
   } else {
     const cache = flatCache.create({

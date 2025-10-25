@@ -1,4 +1,4 @@
-import React, { useContext, FunctionComponent, memo } from "react";
+import { useContext, FunctionComponent, memo } from "react";
 
 import { getDocAlerts } from "lib/docs-alerts";
 

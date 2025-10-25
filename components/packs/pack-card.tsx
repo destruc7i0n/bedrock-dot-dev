@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 
 import { useTranslation } from "next-i18next";
 
@@ -6,14 +6,22 @@ import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 
 import type { PackVersions } from "pages/packs";
 import { Tags } from "lib/tags";
+import { getPackUrl } from "lib/util";
+
+const TAG_STYLES = {
+  [Tags.Beta]: {
+    border: "border-2 border-yellow-500 bg-yellow-50 dark:border-yellow-600 dark:bg-yellow-600/10",
+    translationKey: "component.version_chooser.beta_string",
+  },
+  [Tags.Stable]: {
+    border: "border-2 border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-600/10",
+    translationKey: "component.version_chooser.stable_string",
+  },
+} as const;
 
 type PackCardProps = {
   versionName: string;
   versionData: PackVersions[string];
-};
-
-const getUrl = (folder: string, id: string) => {
-  return ["https://void.bedrock.dev", folder, `${id}.zip`].join("/");
 };
 
 const PackCard: FunctionComponent<PackCardProps> = ({
@@ -29,7 +37,7 @@ const PackCard: FunctionComponent<PackCardProps> = ({
   const s3Links = (
     <>
       {versionData.b ? (
-        <a href={getUrl("behaviours", versionName)} className="link" download>
+        <a href={getPackUrl("behaviours", versionName)} className="link" download>
           {t("component.packs_page.behaviours_link")}
         </a>
       ) : (
@@ -40,7 +48,7 @@ const PackCard: FunctionComponent<PackCardProps> = ({
 
       {versionData.r ? (
         <a
-          href={getUrl("resources", versionName)}
+          href={getPackUrl("resources", versionName)}
           className="link"
           target="_blank"
           download
@@ -67,30 +75,21 @@ const PackCard: FunctionComponent<PackCardProps> = ({
   ) : open ? (
     s3Links
   ) : (
-    <span className="link cursor-pointer" onClick={() => setOpen(!open)}>
+    <button
+      className="link cursor-pointer border-none bg-transparent p-0"
+      onClick={() => setOpen(!open)}
+      aria-label="Show download options"
+    >
       <ArrowDownTrayIcon className="pointer-events-none w-6 h-6" />
-    </span>
+    </button>
   );
 
   let title = versionName;
   let border = "border-gray-200 dark:border-transparent";
-  if (versionData.t) {
-    let translationString = null;
-    switch (versionData.t) {
-      case Tags.Beta:
-        border =
-          "border-2 border-yellow-500 bg-yellow-50 dark:border-yellow-600 dark:bg-yellow-600/10";
-        translationString = "component.version_chooser.beta_string";
-        break;
-      case Tags.Stable:
-        border =
-          "border-2 border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-600/10";
-        translationString = "component.version_chooser.stable_string";
-        break;
-      default:
-        break;
-    }
-    if (translationString) title = `${title} (${t(translationString)})`;
+  if (versionData.t && TAG_STYLES[versionData.t]) {
+    const tagStyle = TAG_STYLES[versionData.t];
+    border = tagStyle.border;
+    title = `${title} (${t(tagStyle.translationKey)})`;
   }
 
   return (

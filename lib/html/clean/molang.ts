@@ -13,7 +13,7 @@ export const addAnchorsToMoLangQueries = (html: string) => {
     let updatedTable = `${table}`;
     if (table) {
       const rows = table.matchAll(TD_MOLANG_QUERY_MATCH);
-      for (let row of rows) {
+      for (const row of rows) {
         const rowQueryTD = row[0];
         const rowQuery = row[1];
         // replicate the h5 element mojang uses some places

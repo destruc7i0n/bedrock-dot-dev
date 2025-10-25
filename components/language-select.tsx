@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import { NextRouter, useRouter } from "next/router";
 
@@ -31,7 +31,7 @@ const checkRoute = async (
       try {
         const response = await fetch("/static/docs.json");
         docsManifest = (await response.json()) as BedrockVersionsFile;
-      } catch (e) {
+      } catch {
         console.error("Could not get docs manifest!");
       }
     }
@@ -62,22 +62,24 @@ const LanguageSelect: FunctionComponent<Props> = ({ className }) => {
             `Could not find path "${router.asPath}" in locale "${localeValue}"`
           );
           await router.push("/", "/", { locale: localeValue, scroll: false });
+          document.cookie = `NEXT_LOCALE=${localeValue};max-age=2147483647`;
+          return;
         }
-        // otherwise navigate to same path in another langauge
-        else
-          await router.push(
-            {
-              pathname: router.pathname,
-              query: router.query,
-              hash: window.location.hash,
-            },
-            undefined,
-            { locale: localeValue, scroll: false }
-          );
+
+        // otherwise navigate to same path in another language
+        await router.push(
+          {
+            pathname: router.pathname,
+            query: router.query,
+            hash: window.location.hash,
+          },
+          undefined,
+          { locale: localeValue, scroll: false }
+        );
       }
       document.cookie = `NEXT_LOCALE=${localeValue};max-age=2147483647`;
     })();
-  }, [localeValue]);
+  }, [localeValue, router]);
 
   return (
     <div className={cn("relative dark:text-gray-200", className)}>

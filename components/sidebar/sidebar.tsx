@@ -1,11 +1,4 @@
-import React, {
-  FunctionComponent,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-
-import { unstable_batchedUpdates } from "react-dom";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 
 import cn from "classnames";
 
@@ -41,8 +34,6 @@ type Props = {
 };
 
 const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
-  if (!sidebar) return null;
-
   const [filter, setFilter] = useState("");
   const [mounted, setMounted] = useState(false);
 
@@ -52,15 +43,16 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
 
   // reset when the page changes
   useEffect(() => {
-    unstable_batchedUpdates(() => {
-      setFilter("");
-      setMounted(true);
-    });
+    // Intentionally setting state in effect to sync with route changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFilter("");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, [file]);
 
   useEffect(() => {
     if (mobile) document.body.style.overflow = open ? "hidden" : "initial";
-  }, [open]);
+  }, [open, mobile]);
 
   // on unmount ensure scrolling
   useEffect(() => {
@@ -68,6 +60,8 @@ const Sidebar: FunctionComponent<Props> = ({ sidebar, file, loading }) => {
       document.body.style.overflow = "initial";
     };
   }, []);
+
+  if (!sidebar) return null;
 
   const loadingContent = (
     <div className="flex-1 flex px-4 py-4">

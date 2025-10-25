@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { GetStaticProps } from "next";
 
 import { useTranslation, Trans } from "next-i18next";
@@ -44,16 +44,19 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
               {t("page.packs.title")}
             </h4>
             <p className="text-lg text-black dark:text-gray-200">
+              {/* @ts-expect-error - Trans component type error with react-jsx compiler option */}
               <Trans
                 i18nKey="page.packs.subtitle"
                 t={t}
                 components={[
                   <a
+                    key="packs-link"
                     className="link"
                     href="https://github.com/bedrock-dot-dev/packs"
                     target="_blank"
                   />,
                   <a
+                    key="bedrock-samples-link"
                     className="link"
                     href="https://github.com/Mojang/bedrock-samples?ref=bedrock.dev"
                     target="_blank"
@@ -88,8 +91,8 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
 
   const tags = await getTags(Locale.English); // only english since chinese has not been updated
 
-  const stableTag = tags[Tags.Stable].at(-1)!;
-  const betaTag = tags[Tags.Beta].at(-1)!;
+  const stableTag = tags[Tags.Stable]?.at(-1) ?? "";
+  const betaTag = tags[Tags.Beta]?.at(-1) ?? "";
 
   if (
     !process.env.AWS_ACCESS_KEY_ID_BEDROCK ||
@@ -112,7 +115,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     },
   });
 
-  let versions: PackVersions = {};
+  const versions: PackVersions = {};
   let paths: string[] = [];
 
   try {
@@ -124,11 +127,11 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
       paths = objects.Contents.filter(
         (c) => c.Key && c.Key?.endsWith(".zip"),
       ).map((c) => c.Key!);
-  } catch (e) {
+  } catch {
     Log.error("Could not list items from bucket!");
   }
 
-  for (let path of paths) {
+  for (const path of paths) {
     const [folder, name] = path.split("/");
     if (folder && name) {
       const version = name.replace(".zip", "");

@@ -49,10 +49,10 @@ export const getRepository = (locale: Locale) => {
 };
 
 export const groupVersionsByLocale = ({ versions }: BedrockVersionsFile) => {
-  let byLocale: BedrockVersionsByLocale = {};
-  for (let locale of Object.keys(versions) as Locale[]) {
-    for (let major of Object.keys(versions[locale] ?? {})) {
-      for (let minor of Object.keys(versions[locale]?.[major] ?? {})) {
+  const byLocale: BedrockVersionsByLocale = {};
+  for (const locale of Object.keys(versions) as Locale[]) {
+    for (const major of Object.keys(versions[locale] ?? {})) {
+      for (const minor of Object.keys(versions[locale]?.[major] ?? {})) {
         if (!byLocale[minor]) byLocale[minor] = [];
         byLocale[minor].push(locale);
       }

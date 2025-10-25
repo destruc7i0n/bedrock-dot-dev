@@ -44,7 +44,7 @@ const getAsset = async (file: string): Promise<string | null> => {
   );
 };
 
-export default async function (req: NextRequest) {
+export default async function handler(req: NextRequest) {
   const [fontData, fontMediumData, fontBoldData] = await Promise.all([
     fetch(
       "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext-400-normal.woff",
@@ -64,7 +64,7 @@ export default async function (req: NextRequest) {
     const fileParam = searchParams.get("file")?.slice(0, 100) ?? "";
     const versionParam = searchParams.get("version");
 
-    let file = fileParam;
+    const file = fileParam;
     let taggedVersion = null;
     let version = null;
 
@@ -151,7 +151,7 @@ export default async function (req: NextRequest) {
         </div>
         {asset && (
           <div tw="flex flex-1 h-full items-center">
-            <img src={asset} width={256} height={256} />
+            <img src={asset} width={256} height={256} alt="" />
           </div>
         )}
       </div>
@@ -204,8 +204,9 @@ export default async function (req: NextRequest) {
         ],
       },
     );
-  } catch (e: any) {
-    console.log(`error: ${e.message}`);
+  } catch (e: unknown) {
+    const errorMessage = e instanceof Error ? e.message : String(e);
+    console.log(`error: ${errorMessage}`);
     return new Response(`Failed to generate the image`, {
       status: 500,
     });
