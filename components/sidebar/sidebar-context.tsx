@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useState,
   FunctionComponent,
-  useSyncExternalStore,
 } from "react";
 
 import { isLg } from "hooks/media-query";
@@ -24,9 +23,10 @@ let lastClick: number = 0;
 export const SidebarContextProvider: FunctionComponent<{
   children?: React.ReactNode;
 }> = ({ children }) => {
-  const getInitialOpen = () => {
-    if (typeof window === "undefined") return true;
+  const [open, setOpen] = useState<boolean>(true);
 
+  // rehydrate the open state from localStorage after mount
+  useEffect(() => {
     let newOpen = true;
     try {
       const localStorageItem = localStorage.getItem("sidebar");
@@ -40,27 +40,16 @@ export const SidebarContextProvider: FunctionComponent<{
     // not open if on small screen
     if (!isLg()) newOpen = false;
 
-    return newOpen;
-  };
+    if (open !== newOpen) {
+      setOpen(newOpen);
+    }
 
-  const [open, setOpen] = useState<boolean>(getInitialOpen);
-
-  // Check if we're mounted (client-side)
-  const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
-  );
-
-  // Remove preflight class on mount
-  useEffect(() => {
-    if (
-      mounted &&
-      document.documentElement.classList.contains("sidebar-closed")
-    ) {
+    // remove the class from the preflight if it's there
+    if (document.documentElement.classList.contains("sidebar-closed")) {
       document.documentElement.classList.remove("sidebar-closed");
     }
-  }, [mounted]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // update localstorage on sidebar change
   useEffect(() => {

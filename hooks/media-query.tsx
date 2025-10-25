@@ -9,7 +9,7 @@ const getMediaQuery = (width: number): MediaQueryList | undefined => {
   return window.matchMedia && window.matchMedia(`(max-width: ${width}px)`);
 };
 
-const isLg = () => getMediaQuery(1024)?.matches ?? false;
+const isLg = () => !(getMediaQuery(1024)?.matches ?? true);
 
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(
