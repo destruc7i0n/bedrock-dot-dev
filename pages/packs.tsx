@@ -89,7 +89,7 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal);
-  const translations = (await import(`../public/locales/${locale}/common.json`))
+  const messages = (await import(`../public/locales/${locale}/common.json`))
     .default;
 
   const tags = await getTags(Locale.English); // only english since chinese has not been updated
@@ -105,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     return {
       props: {
         versions: {},
-        translations,
+        messages,
       },
     };
   }
@@ -159,7 +159,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   return {
     props: {
       versions,
-      translations,
+      messages,
     },
   };
 };

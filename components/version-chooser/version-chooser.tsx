@@ -16,6 +16,7 @@ import {
 } from "lib/util";
 import { BedrockVersions } from "lib/versions";
 import { Tags, TagsResponse } from "lib/tags";
+import { translateFileName } from "lib/i18n";
 
 type VersionFileProps = {
   title: string;
@@ -44,6 +45,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   tags,
 }) => {
   const t = useTranslations("component.version_chooser");
+  const tFiles = useTranslations();
   const [quickSelect, setQuickSelect] = useState(true);
 
   const router = useRouter();
@@ -141,7 +143,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
           {files.map((file) => (
             <VersionFile
               key={`file-${file}-${minor}`}
-              title={file}
+              title={translateFileName(tFiles, file)}
               link={getLink(major, minor, file, tags, quickSelect)}
             />
           ))}

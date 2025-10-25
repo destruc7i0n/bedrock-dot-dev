@@ -79,6 +79,8 @@
     "entity_events": "Entity Events",
     "item": "Item",
     "recipes": "Recipes",
-    "texture_sets": "Texture Sets"
+    "texture_sets": "Texture Sets",
+    "client_biomes": "Client Biomes",
+    "entity_timeline_events": "Entity Timeline Events"
   }
 }

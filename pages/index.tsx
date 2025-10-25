@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     props: {
       bedrockVersions,
       tags,
-      translations: (await import(`../public/locales/${locale}/common.json`))
+      messages: (await import(`../public/locales/${locale}/common.json`))
         .default,
     },
   };

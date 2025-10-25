@@ -132,20 +132,21 @@ const Docs: FunctionComponent<Props> = ({
   return (
     <Layout title={title} description={description}>
       <Head>
-        <Script id="sidebar-load-script" strategy="afterInteractive">
-          {oneLine(`
-            try {
-              var sidebar = window.localStorage.getItem('sidebar');
-              if (sidebar) {
-                var open = JSON.parse(sidebar).open;
-                if (!open) document.documentElement.classList.add('sidebar-closed');
-              }
-            } catch (e) {}
-          `)}
-        </Script>
         <meta name="docsearch:language" content={locale} />
         <meta key="meta-image" name="og:image" content={ogImageUrl} />
       </Head>
+
+      <Script id="sidebar-load-script" strategy="afterInteractive">
+        {oneLine(`
+          try {
+            var sidebar = window.localStorage.getItem('sidebar');
+            if (sidebar) {
+              var open = JSON.parse(sidebar).open;
+              if (!open) document.documentElement.classList.add('sidebar-closed');
+            }
+          } catch (e) {}
+        `)}
+      </Script>
 
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
@@ -287,7 +288,7 @@ export const getStaticProps: GetStaticProps = async ({
       tags,
       parsedData,
       version,
-      translations: (await import(`../../public/locales/${locale}/common.json`))
+      messages: (await import(`../../public/locales/${locale}/common.json`))
         .default,
     },
     // revalidate: 60 * 60 * 12, // every 12 hours

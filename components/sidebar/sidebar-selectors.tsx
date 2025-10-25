@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import VersionContext from "../version-context";
 import { bedrockVersionsInOrder } from "lib/bedrock-versions-transformer";
 import { getLink, getMinorVersionTitle } from "lib/util";
+import { translateFileName } from "lib/i18n";
 
 const SidebarSelectors: FunctionComponent = () => {
   const t = useTranslations();
@@ -116,7 +117,7 @@ const SidebarSelectors: FunctionComponent = () => {
           >
             {files.map((file) => (
               <option key={`file-${file}`} value={file}>
-                {file}
+                {translateFileName(t, file)}
               </option>
             ))}
           </select>

@@ -58,8 +58,8 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
       >
         <NextIntlClientProvider
           locale={router.locale}
-          timeZone="America/New_York"
-          messages={pageProps.translations}
+          messages={pageProps.messages}
+          timeZone="America/Los_Angeles"
         >
           <Component {...pageProps} />
         </NextIntlClientProvider>
