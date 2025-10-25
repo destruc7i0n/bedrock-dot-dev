@@ -87,14 +87,15 @@ const Docs: FunctionComponent<Props> = ({
     const { title: documentTitle, version: htmlVersion } = parsedData.title;
     // fallback to URL version if HTML doesn't contain version
     const pageVersion = htmlVersion || minor;
+    const pageTitle = documentTitle || file || "Documentation";
 
     title =
       t("website_title_untagged", {
-        title: documentTitle,
+        title: pageTitle,
         version: pageVersion,
       }) + " | bedrock.dev";
     description = t("website_description_untagged", {
-      title: documentTitle,
+      title: pageTitle,
       version: pageVersion,
     });
 
@@ -106,19 +107,19 @@ const Docs: FunctionComponent<Props> = ({
         case Tags.Stable: {
           title =
             t("website_title_tagged_stable", {
-              title: documentTitle,
+              title: pageTitle,
             }) + " | bedrock.dev";
           description = t("website_description_tagged_stable", {
-            title: documentTitle,
+            title: pageTitle,
           });
           break;
         }
         case Tags.Beta: {
           title =
-            t("website_title_tagged_beta", { title: documentTitle }) +
+            t("website_title_tagged_beta", { title: pageTitle }) +
             " | bedrock.dev";
           description = t("website_description_tagged_beta", {
-            title: documentTitle,
+            title: pageTitle,
           });
           break;
         }

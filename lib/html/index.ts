@@ -28,7 +28,7 @@ const getSidebarContent = (html: string): SidebarStructure => {
       const link = line.match(LINK_MATCH);
       if (link) {
         const id = link[1];
-        const title = link[2].trimLeft();
+        const title = link[2].trimStart();
 
         // if this is a title, then update the current title
         let isTitle = false;

@@ -36,9 +36,12 @@ export const getTitle = (html: string): TitleResponse => {
 
   // try "TITLE Documentation" (no version)
   const withoutVersion = title.match(/(.*) Documentation/);
-  resp.title = withoutVersion
-    ? withoutVersion[1]
-    : title.replace(/ Documentation/i, "");
+  if (withoutVersion) {
+    resp.title = withoutVersion[1];
+    return resp;
+  }
 
+  // fallback: remove " Documentation" if present, otherwise use title as-is
+  resp.title = title.replace(/ Documentation/i, "");
   return resp;
 };
