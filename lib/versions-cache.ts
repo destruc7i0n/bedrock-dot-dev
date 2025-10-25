@@ -14,7 +14,7 @@ const checkCache = (): BedrockVersionsFile | undefined => {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const docsContent = require("../public/static/docs.json");
     if (docsContent) return docsContent as BedrockVersionsFile;
-  } catch (e) {}
+  } catch {}
 
   if (process.env.NODE_ENV !== "production") {
     const cache = flatCache.create({
