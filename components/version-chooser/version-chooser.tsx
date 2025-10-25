@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import SpecificVersionChooser from "./specific-version-chooser";
 import TagVersionChooser from "./tag-version-chooser";
@@ -16,7 +16,7 @@ import {
 } from "lib/util";
 import { BedrockVersions } from "lib/versions";
 import { Tags, TagsResponse } from "lib/tags";
-import { translateFileNames } from "lib/i18n";
+import { translateFileName } from "lib/i18n";
 
 type VersionFileProps = {
   title: string;
@@ -44,7 +44,8 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   versions,
   tags,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("component.version_chooser");
+  const tFiles = useTranslations();
   const [quickSelect, setQuickSelect] = useState(true);
 
   const router = useRouter();
@@ -86,9 +87,6 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
     }
   }, [locale, major, stableMajor, stableMinor, versions]);
 
-  const fileNameTranslations: { [k: string]: string } = t("files", {
-    returnObjects: true,
-  });
   let files: string[] = [];
   if (versions[major] && versions[major][minor]) {
     files = versions[major][minor];
@@ -96,7 +94,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
 
   const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
   const minorVersions = Object.keys(versions?.[major] ?? {}).sort(
-    compareBedrockVersions
+    compareBedrockVersions,
   );
 
   // if the major version changes, set the minor to the latest minor from that major version
@@ -133,21 +131,19 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
             checked={!quickSelect}
             onChange={({ target: { checked } }) => setQuickSelect(!checked)}
           />
-          <span className="ml-2 text-sm select-none">
-            {t("component.version_chooser.view_all")}
-          </span>
+          <span className="ml-2 text-sm select-none">{t("view_all")}</span>
         </label>
       </div>
 
       <div className="w-full mt-2">
         <label className="block text-sm font-bold mb-2">
-          {t("component.version_chooser.file_selection")}
+          {t("file_selection")}
         </label>
         <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg">
           {files.map((file) => (
             <VersionFile
               key={`file-${file}-${minor}`}
-              title={translateFileNames(fileNameTranslations, file)}
+              title={translateFileName(tFiles, file)}
               link={getLink(major, minor, file, tags, quickSelect)}
             />
           ))}

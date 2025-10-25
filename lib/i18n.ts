@@ -61,12 +61,10 @@ export const groupVersionsByLocale = ({ versions }: BedrockVersionsFile) => {
   return byLocale;
 };
 
-export const translateFileNames = (
-  dict: { [k: string]: string },
-  fileName: string
+export const translateFileName = (
+  t: (key: string, options?: { default?: string }) => string,
+  fileName: string,
 ) => {
-  // the keys are lowercase and sep by underscore
   const key = fileName.toLowerCase().split(" ").join("_");
-  if (dict.hasOwnProperty(key)) return dict[key];
-  return fileName;
+  return t(`files.${key}`, { default: fileName });
 };

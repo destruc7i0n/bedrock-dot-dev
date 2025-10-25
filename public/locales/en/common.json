@@ -9,16 +9,16 @@
       "website_title": "Packs",
       "website_description": "Minecraft Bedrock Template Behavior and Resource Packs archive",
       "title": "Template Packs Archive",
-      "subtitle": "This is an archive of the default template packs provided by Mojang. The latest packs are available in Mojang's <1>bedrock-samples</1> GitHub repository. Older ones can be found in the <0>bedrock-dot-dev/packs</0> repository."
+      "subtitle": "This is an archive of the default template packs provided by Mojang. The latest packs are available in Mojang's <bedrock-samples-repo>bedrock-samples</bedrock-samples-repo> GitHub repository. Older ones can be found in the <packs-repo>bedrock-dot-dev/packs</packs-repo> repository."
     },
     "docs": {
       "website_title_loading": "Loading...",
-      "website_title_untagged": "{{title}} Documentation | {{version}}",
-      "website_description_untagged": "Minecraft Bedrock {{title}} Documentation Version {{version}}",
-      "website_title_tagged_stable": "{{title}} Documentation",
-      "website_description_tagged_stable": "Minecraft Bedrock {{title}} Documentation",
-      "website_title_tagged_beta": "Preview {{title}} Documentation",
-      "website_description_tagged_beta": "Minecraft Bedrock Preview {{title}} Documentation"
+      "website_title_untagged": "{title} Documentation | {version}",
+      "website_description_untagged": "Minecraft Bedrock {title} Documentation Version {version}",
+      "website_title_tagged_stable": "{title} Documentation",
+      "website_description_tagged_stable": "Minecraft Bedrock {title} Documentation",
+      "website_title_tagged_beta": "Preview {title} Documentation",
+      "website_description_tagged_beta": "Minecraft Bedrock Preview {title} Documentation"
     }
   },
   "component": {
@@ -79,6 +79,8 @@
     "entity_events": "Entity Events",
     "item": "Item",
     "recipes": "Recipes",
-    "texture_sets": "Texture Sets"
+    "texture_sets": "Texture Sets",
+    "client_biomes": "Client Biomes",
+    "entity_timeline_events": "Entity Timeline Events"
   }
 }

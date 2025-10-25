@@ -1,8 +1,7 @@
 import { FunctionComponent } from "react";
 import { GetStaticProps } from "next";
 
-import { useTranslation, Trans } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslations } from "next-intl";
 
 import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 
@@ -27,13 +26,13 @@ type PacksPageProps = {
 };
 
 const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("page.packs");
   const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
 
   return (
     <Layout
-      title={`${t("page.packs.website_title")} | bedrock.dev`}
-      description={t("page.packs.website_description")}
+      title={`${t("website_title")} | bedrock.dev`}
+      description={t("website_description")}
     >
       <div className="h-screen">
         <Navbar />
@@ -41,28 +40,31 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 mt-8 mb-10">
           <div className="max-w-screen-lg mx-auto space-y-4">
             <h4 className="text-4xl font-bold text-black dark:text-gray-200">
-              {t("page.packs.title")}
+              {t("title")}
             </h4>
             <p className="text-lg text-black dark:text-gray-200">
-              {/* @ts-expect-error - Trans component type error with react-jsx compiler option */}
-              <Trans
-                i18nKey="page.packs.subtitle"
-                t={t}
-                components={[
+              {t.rich("subtitle", {
+                "packs-repo": (chunks) => (
                   <a
                     key="packs-link"
                     className="link"
                     href="https://github.com/bedrock-dot-dev/packs"
                     target="_blank"
-                  />,
+                  >
+                    {chunks}
+                  </a>
+                ),
+                "bedrock-samples-repo": (chunks) => (
                   <a
                     key="bedrock-samples-link"
                     className="link"
                     href="https://github.com/Mojang/bedrock-samples?ref=bedrock.dev"
                     target="_blank"
-                  />,
-                ]}
-              />
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal">
@@ -87,7 +89,8 @@ const PacksPage: FunctionComponent<PacksPageProps> = ({ versions }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   const locale = getLocale(localeVal);
-  const translations = await serverSideTranslations(locale, ["common"]);
+  const messages = (await import(`../public/locales/${locale}/common.json`))
+    .default;
 
   const tags = await getTags(Locale.English); // only english since chinese has not been updated
 
@@ -102,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
     return {
       props: {
         versions: {},
-        ...translations,
+        messages,
       },
     };
   }
@@ -156,7 +159,7 @@ export const getStaticProps: GetStaticProps = async ({ locale: localeVal }) => {
   return {
     props: {
       versions,
-      ...translations,
+      messages,
     },
   };
 };

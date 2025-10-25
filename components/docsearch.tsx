@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import Link from "next/link";
 import Head from "next/head";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import {
   DocSearch as DocSearchComponent,
@@ -46,9 +46,9 @@ const DocSearch: FunctionComponent<Props> = ({
   fullWidth = false,
   slim = false,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("component.search");
   const locale = useLocale();
-  if (!placeHolder) placeHolder = t("component.search.title");
+  if (!placeHolder) placeHolder = t("title");
 
   const searchParameters: DocSearchProps["searchParameters"] = {
     facetFilters: [`lang:${locale}`],

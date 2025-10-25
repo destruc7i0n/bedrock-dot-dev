@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 
 import { getMinorVersionTitle } from "lib/util";
 import { TagsResponse } from "lib/tags";
@@ -26,7 +26,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   setMajor,
   tags,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   return (
     <>
       <div className="w-1/2 mb-2 pr-2">

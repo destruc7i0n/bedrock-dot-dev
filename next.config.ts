@@ -3,12 +3,11 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 import { getTags } from "lib/tags";
 import { Locale } from "lib/i18n";
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { i18n } = require("./next-i18next.config.js");
-
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
+
+const locales = ["en", "zh"];
 
 export default bundleAnalyzer({
   experimental: {
@@ -17,9 +16,12 @@ export default bundleAnalyzer({
     largePageDataBytes: 5 * 1000 * 1000, // 5 MB
   },
   reactStrictMode: true,
-  i18n,
+  i18n: {
+    defaultLocale: "en",
+    locales,
+  },
   outputFileTracingIncludes: {
-    "/*": ["next-i18next.config.js", "public/locales/**/*.json"],
+    "/*": ["public/locales/**/*.json"],
   },
   async redirects() {
     const { stable, beta } = await getTags(Locale.English);

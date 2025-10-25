@@ -4,9 +4,9 @@ import { GetStaticPaths, GetStaticPathsResult, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Error from "next/error";
+import Script from "next/script";
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslations } from "next-intl";
 
 import { extractDataFromHtml, ParseHtmlResponse, fetchHtml } from "lib/html";
 
@@ -54,7 +54,7 @@ const Docs: FunctionComponent<Props> = ({
   parsedData,
   version,
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("page.docs");
 
   const {
     isFallback,
@@ -79,16 +79,16 @@ const Docs: FunctionComponent<Props> = ({
   }
 
   const sidebar: SidebarStructure = (parsedData && parsedData.sidebar) || {};
-  let title = t("page.docs.website_title_loading");
+  let title = t("website_title_loading");
   let description = "";
   let ogImageUrl = `${VERCEL_URL}/api/og?file=${encodeURIComponent(file)}`;
 
   if (parsedData?.title) {
     const { title: documentTitle, version } = parsedData.title;
     title =
-      t("page.docs.website_title_untagged", { title: documentTitle, version }) +
+      t("website_title_untagged", { title: documentTitle, version }) +
       " | bedrock.dev";
-    description = t("page.docs.website_description_untagged", {
+    description = t("website_description_untagged", {
       title: documentTitle,
       version,
     });
@@ -100,19 +100,19 @@ const Docs: FunctionComponent<Props> = ({
       switch (versionTag) {
         case Tags.Stable: {
           title =
-            t("page.docs.website_title_tagged_stable", {
+            t("website_title_tagged_stable", {
               title: documentTitle,
             }) + " | bedrock.dev";
-          description = t("page.docs.website_description_tagged_stable", {
+          description = t("website_description_tagged_stable", {
             title: documentTitle,
           });
           break;
         }
         case Tags.Beta: {
           title =
-            t("page.docs.website_title_tagged_beta", { title: documentTitle }) +
+            t("website_title_tagged_beta", { title: documentTitle }) +
             " | bedrock.dev";
-          description = t("page.docs.website_description_tagged_beta", {
+          description = t("website_description_tagged_beta", {
             title: documentTitle,
           });
           break;
@@ -132,22 +132,21 @@ const Docs: FunctionComponent<Props> = ({
   return (
     <Layout title={title} description={description}>
       <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: oneLine(`
-            try {
-              var sidebar = window.localStorage.getItem('sidebar');
-              if (sidebar) {
-                var open = JSON.parse(sidebar).open;
-                if (!open) document.documentElement.classList.add('sidebar-closed');
-              }
-            } catch (e) {}
-            `),
-          }}
-        />
         <meta name="docsearch:language" content={locale} />
         <meta key="meta-image" name="og:image" content={ogImageUrl} />
       </Head>
+
+      <Script id="sidebar-load-script" strategy="afterInteractive">
+        {oneLine(`
+          try {
+            var sidebar = window.localStorage.getItem('sidebar');
+            if (sidebar) {
+              var open = JSON.parse(sidebar).open;
+              if (!open) document.documentElement.classList.add('sidebar-closed');
+            }
+          } catch (e) {}
+        `)}
+      </Script>
 
       <VersionContextProvider value={{ major, minor, file, versions, tags }}>
         <SidebarContextProvider>
@@ -289,7 +288,8 @@ export const getStaticProps: GetStaticProps = async ({
       tags,
       parsedData,
       version,
-      ...(await serverSideTranslations(locale, ["common"])),
+      messages: (await import(`../../public/locales/${locale}/common.json`))
+        .default,
     },
     // revalidate: 60 * 60 * 12, // every 12 hours
   };
