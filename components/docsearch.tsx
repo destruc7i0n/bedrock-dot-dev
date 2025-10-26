@@ -1,7 +1,8 @@
+"use client";
+
 import React, { FunctionComponent } from "react";
 
 import Link from "next/link";
-import Head from "next/head";
 
 import { useTranslations } from "next-intl";
 
@@ -12,12 +13,13 @@ import {
 
 import cn from "classnames";
 
-import { useLocale } from "lib/i18n";
+import { Locale } from "lib/i18n";
 
 type Props = {
   placeHolder?: string;
   fullWidth?: boolean;
   slim?: boolean;
+  locale?: Locale;
 };
 
 export const algolia: DocSearchProps = {
@@ -45,9 +47,9 @@ const DocSearch: FunctionComponent<Props> = ({
   placeHolder,
   fullWidth = false,
   slim = false,
+  locale = Locale.English,
 }) => {
   const t = useTranslations("component.search");
-  const locale = useLocale();
   if (!placeHolder) placeHolder = t("title");
 
   const searchParameters: DocSearchProps["searchParameters"] = {
@@ -55,43 +57,34 @@ const DocSearch: FunctionComponent<Props> = ({
   };
 
   return (
-    <>
-      <Head>
-        <link
-          rel="preconnect"
-          href={`https://${algolia.appId}-dsn.algolia.net`}
-          crossOrigin=""
-        />
-      </Head>
-      <div
-        className={cn("docsearch-wrapper", {
-          "full-width w-full": fullWidth,
-          slim: slim,
-        })}
-      >
-        <DocSearchComponent
-          {...algolia}
-          placeholder={placeHolder}
-          hitComponent={Hit}
-          transformItems={(items) => {
-            return items.map((item) => {
-              // We transform the absolute URL into a relative URL to
-              // leverage Next's preloading.
-              const a = document.createElement("a");
-              a.href = item.url;
+    <div
+      className={cn("docsearch-wrapper", {
+        "full-width w-full": fullWidth,
+        slim: slim,
+      })}
+    >
+      <DocSearchComponent
+        {...algolia}
+        placeholder={placeHolder}
+        hitComponent={Hit}
+        transformItems={(items) => {
+          return items.map((item) => {
+            // We transform the absolute URL into a relative URL to
+            // leverage Next's preloading.
+            const a = document.createElement("a");
+            a.href = item.url;
 
-              const hash = a.hash;
+            const hash = a.hash;
 
-              return {
-                ...item,
-                url: `${a.pathname}${hash}`,
-              };
-            });
-          }}
-          searchParameters={searchParameters}
-        />
-      </div>
-    </>
+            return {
+              ...item,
+              url: `${a.pathname}${hash}`,
+            };
+          });
+        }}
+        searchParameters={searchParameters}
+      />
+    </div>
   );
 };
 

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ChangeEvent,
   FunctionComponent,
@@ -8,9 +10,9 @@ import {
 
 import { useTranslations } from "next-intl";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
-import VersionContext from "../version-context";
+import { VersionContext } from "components/version-context";
 import { bedrockVersionsInOrder } from "lib/bedrock-versions-transformer";
 import { getLink, getMinorVersionTitle } from "lib/util";
 import { translateFileName } from "lib/i18n";
@@ -68,7 +70,7 @@ const SidebarSelectors: FunctionComponent = () => {
     if (!files.includes(file)) {
       // check without case
       const caseCheck = files.find(
-        (f) => f.toLowerCase() === file.toLowerCase(),
+        (f: string) => f.toLowerCase() === file.toLowerCase(),
       );
       if (caseCheck) {
         newFile = caseCheck;
@@ -77,13 +79,13 @@ const SidebarSelectors: FunctionComponent = () => {
       }
     }
 
-    router.push("/docs/[...slug]", getLink(major, minor, newFile, tags, true));
+    router.push(getLink(major, minor, newFile, tags, true));
   };
 
   const onFileChange = ({
     target: { value },
   }: ChangeEvent<HTMLSelectElement>) => {
-    router.push("/docs/[...slug]", getLink(major, minor, value, tags, true));
+    router.push(getLink(major, minor, value, tags, true));
   };
 
   return (
@@ -115,7 +117,7 @@ const SidebarSelectors: FunctionComponent = () => {
             onChange={onFileChange}
             className="block w-full leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800"
           >
-            {files.map((file) => (
+            {files.map((file: string) => (
               <option key={`file-${file}`} value={file}>
                 {translateFileName(t, file)}
               </option>

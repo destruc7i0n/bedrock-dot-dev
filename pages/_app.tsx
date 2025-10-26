@@ -43,6 +43,8 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
     console.log("Hey there!");
   }, []);
 
+  const locale = router.locale || "en";
+
   return (
     <>
       <style jsx global>{`
@@ -57,7 +59,7 @@ const App: AppType = ({ Component, pageProps }: AppProps) => {
         disableTransitionOnChange
       >
         <NextIntlClientProvider
-          locale={router.locale}
+          locale={locale}
           messages={pageProps.messages}
           timeZone="America/Los_Angeles"
         >

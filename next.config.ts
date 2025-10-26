@@ -12,8 +12,6 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-const locales = ["en", "zh"];
-
 const composeConfig = (config: NextConfig) => bundleAnalyzer(withNextIntl(config));
 
 export default composeConfig({
@@ -23,10 +21,8 @@ export default composeConfig({
     largePageDataBytes: 5 * 1000 * 1000, // 5 MB
   },
   reactStrictMode: true,
-  i18n: {
-    defaultLocale: "en",
-    locales,
-  },
+  // i18n config removed - not compatible with App Router
+  // Using next-intl with i18n/request.ts instead
   outputFileTracingIncludes: {
     "/*": ["public/locales/**/*.json"],
   },

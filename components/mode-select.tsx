@@ -1,3 +1,5 @@
+"use client";
+
 import { FunctionComponent, useEffect, useSyncExternalStore } from "react";
 
 import {
@@ -50,7 +52,7 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
-    () => false
+    () => false,
   );
   const { theme: hookTheme, resolvedTheme, setTheme } = useTheme();
 

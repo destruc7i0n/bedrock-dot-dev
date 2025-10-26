@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { BedrockVersionsFile } from "./versions";
 
 export enum Locale {
@@ -36,11 +34,6 @@ export const getLocale = (locale?: string): Locale => {
     default:
       return Locale.English;
   }
-};
-
-export const useLocale = () => {
-  const router = useRouter();
-  return getLocale(router.locale ?? "en");
 };
 
 export const getRepository = (locale: Locale) => {

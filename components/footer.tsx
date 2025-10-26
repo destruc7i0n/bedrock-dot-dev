@@ -1,3 +1,5 @@
+"use client";
+
 import { FunctionComponent } from "react";
 
 import { useTranslations } from "next-intl";

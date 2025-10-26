@@ -1,7 +1,8 @@
+"use client";
+
 import { FunctionComponent, memo, useContext } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
 
@@ -25,12 +26,14 @@ const HeaderLink: FunctionComponent<{
   </li>
 );
 
-const Header: FunctionComponent = () => {
-  const router = useRouter();
+type HeaderProps = {
+  showSidebarToggle?: boolean;
+};
 
+const Header: FunctionComponent<HeaderProps> = ({
+  showSidebarToggle = true,
+}) => {
   const { open, setOpen } = useContext(SidebarContext);
-
-  const isDocsPage = router.pathname.startsWith("/docs");
 
   const IconClass = open ? Bars3CenterLeftIcon : Bars3Icon;
 
@@ -38,7 +41,7 @@ const Header: FunctionComponent = () => {
     <>
       <header className="navbar flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200">
         <div className="flex items-center">
-          {isDocsPage && (
+          {showSidebarToggle && (
             <div className="flex mr-2">
               <button
                 onClick={() => setOpen(!open)}
