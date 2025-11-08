@@ -1,0 +1,119 @@
+---
+import { Font } from 'astro:assets';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "bedrock.dev", 
+  description = "Minecraft Bedrock Documentation" 
+} = Astro.props;
+
+// Get VERCEL_URL from environment
+const VERCEL_ENV = import.meta.env.PUBLIC_VERCEL_ENV ?? "development";
+const PUBLIC_VERCEL_URL = import.meta.env.PUBLIC_VERCEL_URL;
+const IS_VERCEL = Boolean(PUBLIC_VERCEL_URL);
+const VERCEL_URL = IS_VERCEL ? `https://${PUBLIC_VERCEL_URL}` : "";
+const ogImageUrl = `${VERCEL_URL}/api/og`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Theme script to prevent FOUC - must be inline and early -->
+<script is:inline>
+  (function() {
+    const getThemePreference = () => {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || stored === 'light' || stored === 'system') {
+        return stored;
+      }
+      return 'system';
+    };
+
+    const theme = getThemePreference();
+    const actualTheme = theme === 'system' 
+      ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      : theme;
+    
+    document.documentElement.classList.add(actualTheme);
+    
+    // Update theme-color meta tag after DOM is ready
+    const updateThemeColor = () => {
+      const themeColor = actualTheme === 'light' ? '#f9fafb' : '#18191a';
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', themeColor);
+      }
+    };
+    
+    // Set up theme change handlers after DOM is loaded
+    const setupThemeHandlers = () => {
+      updateThemeColor();
+      
+      // Listen for system theme changes
+      if (!window.__themeListenerAdded) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          const stored = localStorage.getItem('theme');
+          if (!stored || stored === 'system') {
+            const newTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(newTheme);
+            updateThemeColor();
+          }
+        });
+        window.__themeListenerAdded = true;
+      }
+    };
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupThemeHandlers);
+    } else {
+      setupThemeHandlers();
+    }
+    
+    // Support for view transitions
+    document.addEventListener('astro:after-swap', () => {
+      const theme = getThemePreference();
+      const actualTheme = theme === 'system' 
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : theme;
+      document.documentElement.classList.remove('light', 'dark');
+      document.documentElement.classList.add(actualTheme);
+      updateThemeColor();
+    });
+  })();
+</script>
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+
+<!-- Fonts - Using Astro's experimental fonts API -->
+<Font cssVariable="--font-inter" preload />
+<Font cssVariable="--font-fira-code" preload />
+<Font cssVariable="--font-monocraft" />
+
+<!-- Theme color -->
+<meta name="theme-color" content="#ffffff" />
+
+<!-- SEO -->
+<title>{title}</title>
+{description && (
+  <>
+    <meta name="description" content={description} />
+    <meta property="og:description" content={description} />
+  </>
+)}
+<meta property="og:title" content={title} />
+<meta property="og:image" content={ogImageUrl} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@TheDestruc7i0n" />

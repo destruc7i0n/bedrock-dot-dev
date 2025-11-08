@@ -16,10 +16,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 
 const config = {
   mode: "jit",
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   darkMode: "class",
   theme: {
     extend: {
@@ -57,6 +54,7 @@ const config = {
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         mono: ["var(--font-fira-code)", ...fontFamily.mono],
+        craft: ["var(--font-monocraft)", ...fontFamily.sans],
       },
     },
     screens: {

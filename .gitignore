@@ -2,6 +2,8 @@
 .idea
 node_modules
 .next
+.astro
+dist/
 old-css.css
 
 public/sitemap.xml

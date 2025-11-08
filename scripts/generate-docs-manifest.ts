@@ -4,9 +4,9 @@ import "isomorphic-unfetch";
 import path from "path";
 import fs from "fs";
 
-import { Locale } from "../lib/i18n";
-import { getTags, TagsResponse } from "../lib/tags";
-import { getVersionsFile } from "../lib/versions";
+import { Locale } from "../src/lib/i18n";
+import { getTags, TagsResponse } from "../src/lib/tags";
+import { getVersionsFile } from "../src/lib/versions";
 
 const main = async () => {
   const file = await getVersionsFile();
@@ -23,7 +23,7 @@ const main = async () => {
       // sum the number of files per version
       count += Object.values(minorVersions).reduce(
         (acc, files) => acc + files.length,
-        0
+        0,
       );
     }
     console.log(`found ${count} ${locale.toUpperCase()} documentation files`);

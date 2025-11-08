@@ -1,0 +1,30 @@
+---
+import DocSearchClient from './docsearch-client';
+import { Locale } from '../../lib/i18n';
+import { algolia } from '../../lib/algolia';
+
+interface Props {
+  placeHolder?: string;
+  fullWidth?: boolean;
+  slim?: boolean;
+  locale?: Locale;
+}
+
+const { 
+  placeHolder = "Search", 
+  fullWidth = false, 
+  slim = false,
+  locale = Locale.English 
+} = Astro.props;
+
+---
+
+<DocSearchClient
+  client:only="react"
+  placeHolder={placeHolder}
+  fullWidth={fullWidth}
+  slim={slim}
+  locale={locale}
+  {...algolia}
+/>
+

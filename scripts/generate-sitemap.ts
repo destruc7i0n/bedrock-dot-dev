@@ -5,9 +5,9 @@ import fs from "fs";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
-import { LIVE_URL } from "../lib/constants";
-import { getTags, Tags } from "../lib/tags";
-import { Locale, getLocale } from "../lib/i18n";
+import { LIVE_URL } from "../src/lib/constants";
+import { getTags, Tags } from "../src/lib/tags";
+import { Locale, getLocale } from "../src/lib/i18n";
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
   console.log("sitemap.xml not generated");
