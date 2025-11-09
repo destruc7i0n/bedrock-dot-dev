@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import en from "../../public/locales/en/common.json";
+import en from "../locales/en/common.json";
 import { BedrockVersionsFile } from "./versions";
 
 export enum Locale {
