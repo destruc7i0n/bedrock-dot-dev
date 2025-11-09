@@ -1,12 +1,11 @@
 import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
 import en from "../locales/en/common.json";
 import { BedrockVersionsFile } from "./versions";
 
 export enum Locale {
   English = "en",
 }
-
-const DEFAULT_LOCALE = Locale.English;
 
 type RepositoryData = {
   [key in Locale]: {
@@ -51,31 +50,34 @@ export const groupVersionsByLocale = ({ versions }: BedrockVersionsFile) => {
   return byLocale;
 };
 
-let initialized = false;
-
-export const initI18n = async () => {
-  if (!initialized) {
-    await i18next.init({
-      lng: DEFAULT_LOCALE,
-      fallbackLng: DEFAULT_LOCALE,
+if (!i18next.isInitialized) {
+  i18next.use(initReactI18next);
+  i18next.init(
+    {
+      lng: Locale.English,
+      fallbackLng: Locale.English,
       defaultNS: "common",
       resources: {
-        [DEFAULT_LOCALE]: {
+        [Locale.English]: {
           common: en,
         },
       },
       interpolation: {
         escapeValue: false,
       },
-    });
-    initialized = true;
-  }
-};
+      react: {
+        useSuspense: false,
+      },
+      initAsync: false,
+    },
+    (err) => {
+      if (err) {
+        console.error("i18next initialization error:", err);
+      }
+    },
+  );
+}
 
 export const t = (key: string) => {
-  if (!initialized || !i18next.isInitialized) {
-    console.warn(`i18next not initialized when translating key: ${key}`);
-    return key;
-  }
   return i18next.t(key);
 };

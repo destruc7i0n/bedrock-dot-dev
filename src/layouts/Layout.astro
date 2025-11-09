@@ -2,9 +2,6 @@
 import { ClientRouter } from 'astro:transitions';
 
 import Head from '../components/head.astro';
-import { I18nProvider } from '../components/i18n-provider';
-import { initI18n, Locale } from '../lib/i18n';
-import en from '../locales/en/common.json';
 
 import '../../styles/tailwind.scss';
 import '../../styles/fonts.scss';
@@ -15,13 +12,10 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title = "bedrock.dev", 
-  description = "" 
+const {
+  title = "bedrock.dev",
+  description = ""
 } = Astro.props;
-
-// Initialize i18next for SSR
-await initI18n();
 ---
 
 <!doctype html>
@@ -32,9 +26,11 @@ await initI18n();
     <ClientRouter />
   </head>
   <body>
-    <I18nProvider client:load translations={en} locale={Locale.English}>
-      <slot />
-    </I18nProvider>
+    <slot />
   </body>
 </html>
+
+<script>
+  import '../lib/i18n';
+</script>
 
