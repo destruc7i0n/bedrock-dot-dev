@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "git submodule update --init --recursive --force && pnpm run generate-docs-file && pnpm run generate-vercel-redirects && astro build && pnpm run generate-sitemap",
+    "build": "pnpm run generate-docs-file && pnpm run generate-vercel-redirects && astro build && pnpm run generate-sitemap",
     "start": "astro preview",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-docs-file": "tsx scripts/generate-docs-manifest.ts",
