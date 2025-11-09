@@ -42,9 +42,7 @@
   }
 
   @screen lg {
-    // hide based on pre-flight class
-    .sidebar-closed &,
-    // when on a larger screen, the sidebar should only rely on the open class
+    // hide if not open
     &:not(.open) {
       display: none;
     }
@@ -66,11 +64,17 @@
   left: 0;
   right: 0;
   z-index: 8;
-
-  animation: fade-in 300ms;
+  display: none;
+  pointer-events: none;
 
   @screen lg-max {
     background-color: rgba(0, 0, 0, 0.3);
+
+    .sidebar.open ~ & {
+      display: block;
+      pointer-events: auto;
+      animation: fade-in 300ms;
+    }
   }
 }
 

@@ -114,19 +114,6 @@ if (isStableRoute || isBetaRoute) {
   <Fragment slot="head">
     <meta name="docsearch:language" content={Locale.English} />
     <meta name="og:image" content={ogImageUrl} />
-    <script is:inline>
-      try {
-        const sidebar = window.localStorage.getItem('sidebar');
-        if (sidebar) {
-          const { open } = JSON.parse(sidebar);
-          if (!open) {
-            document.documentElement.classList.add('sidebar-closed');
-          }
-        }
-      } catch (e) {
-        // ignore errors
-      }
-    </script>
   </Fragment>
 
   <Header transition:persist="header" />

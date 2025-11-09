@@ -1,5 +1,4 @@
 ---
-import SidebarContainer from './sidebar-container';
 import Selectors from './sidebar-selectors';
 import SidebarFilter from './sidebar-filter';
 import SidebarContent from './sidebar-content';
@@ -20,11 +19,11 @@ interface Props {
 const { sidebar, file, major, minor, versions, tags } = Astro.props;
 ---
 
-<aside class="sidebar-wrapper">
-  <SidebarContainer client:load>
+<div>
+  <aside class="sidebar">
     <div class="w-full p-4 border-b border-gray-200 dark:border-dark-gray-800">
       <Selectors
-        transition:persist="selectors"
+        transition:persist="sidebar-selectors"
         client:load
         major={major}
         minor={minor}
@@ -41,11 +40,51 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
     />
     <div class="flex flex-row justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2">
       <ModeSelect
-        transition:persist="mode-select"
+        transition:persist="sidebar-mode-select"
         client:load
         className="ml-2"
       />
     </div>
-  </SidebarContainer>
-</aside>
+  </aside>
+  <div class="sidebar-mask" transition:persist="sidebar-mask"></div>
+</div>
+
+<script is:inline>
+  try {
+    const open = JSON.parse(localStorage.getItem('sidebar') || '{}').open !== false;
+    if (open) document.querySelector('.sidebar')?.classList.add('open');
+  } catch {}
+</script>
+
+<script>
+  import { sidebarOpen } from '@stores/sidebar-open';
+  import { MOBILE_BREAKPOINT } from '@lib/breakpoints';
+
+  document.addEventListener('astro:page-load', () => {
+    const sidebar = document.querySelector('.sidebar');
+    const mask = document.querySelector('.sidebar-mask');
+    const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+
+    const updateBodyScroll = () => {
+      document.body.style.overflow = mobile.matches && sidebarOpen.get() ? 'hidden' : '';
+    };
+
+    const unsub = sidebarOpen.subscribe(open => {
+      sidebar?.classList.toggle('open', open);
+      updateBodyScroll();
+    });
+
+    const handleMaskClick = () => sidebarOpen.set(false);
+    mask?.addEventListener('click', handleMaskClick);
+    mobile.addEventListener('change', updateBodyScroll);
+    requestAnimationFrame(() => sidebar?.classList.add('mounted'));
+
+    document.addEventListener('astro:before-preparation', () => {
+      unsub();
+      mask?.removeEventListener('click', handleMaskClick);
+      mobile.removeEventListener('change', updateBodyScroll);
+      document.body.style.overflow = '';
+    }, { once: true });
+  });
+</script>
 
