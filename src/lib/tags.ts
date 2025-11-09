@@ -1,7 +1,7 @@
-import { RAW_GITHUB_URL } from "./github/constants";
-import { getRepository, Locale } from "./i18n";
+import { Locale } from "./i18n";
 import * as fs from "fs";
 import * as path from "path";
+import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
 
 export enum Tags {
   Stable = "stable",
@@ -15,34 +15,25 @@ export const TagsValues: string[] = Object.keys(Tags).map(
 export type TagsResponse = {
   [tag in Tags]: string[];
 };
-// fetch the tags file from the repository
-export const getTags = async (
-  locale: Locale,
-  forceFetch = false,
-): Promise<TagsResponse> => {
-  if (process.env.NODE_ENV === "production" && !forceFetch) {
-    // fetch from cached file if on server
-    // This file is generated during the build process
-    try {
-      const tagsPath = path.resolve("public/static/tags.json");
-      const tagsContent = fs.readFileSync(tagsPath, "utf-8");
-      const allTags = JSON.parse(tagsContent);
-      return allTags[locale];
-    } catch (error) {
-      console.error("Error reading tags.json:", error);
-      // Fallback to fetching from GitHub if file doesn't exist
-      const repo = getRepository(locale);
-      const tags = await fetch(
-        `${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`,
-      );
-      return await tags.json();
-    }
-  } else {
-    // fetch the tags from the server
-    const repo = getRepository(locale);
-    const tags = await fetch(
-      `${RAW_GITHUB_URL}/${repo.name}/${repo.tag}/tags.json`,
+
+const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
+  const submodulePath = path.resolve(
+    process.cwd(),
+    DOCS_SUBMODULE_PATH,
+    TAGS_FILE_NAME,
+  );
+
+  try {
+    const tagsContent = fs.readFileSync(submodulePath, "utf-8");
+    const allTags = JSON.parse(tagsContent);
+    return allTags[locale] || allTags;
+  } catch (error) {
+    throw new Error(
+      `Failed to read tags.json from submodule: ${error instanceof Error ? error.message : String(error)}`,
     );
-    return await tags.json();
   }
+};
+
+export const getTags = async (locale: Locale): Promise<TagsResponse> => {
+  return readTagsFromSubmodule(locale);
 };

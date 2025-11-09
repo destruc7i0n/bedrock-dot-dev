@@ -1,4 +1,4 @@
-import { GitHubTreeResponse, listAllFilesFromRepo } from "./github/api";
+import { GitHubTreeResponse, listAllFilesFromRepo } from "./docs/fs";
 
 import { checkCache, setCache } from "./versions-cache";
 import { BedrockVersionsByLocale, groupVersionsByLocale, Locale } from "./i18n";

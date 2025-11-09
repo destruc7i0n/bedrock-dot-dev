@@ -1,4 +1,4 @@
-import { getDocsFilesFromRepo } from "../github/raw";
+import { getDocsFilesFromRepo } from "../docs/files";
 import Log from "../log";
 import { Locale } from "../i18n";
 import { cleanHtmlForDisplay } from "./clean";

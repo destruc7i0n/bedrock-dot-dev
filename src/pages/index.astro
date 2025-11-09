@@ -9,9 +9,8 @@ import { getTags } from '../lib/tags';
 import { Locale, t } from '../lib/i18n';
 import { algolia } from '../lib/algolia';
 import { allFilesList } from '../lib/versions';
-import type { BedrockVersions } from '../lib/versions';
 
-const versions: BedrockVersions = await allFilesList(Locale.English);
+const versions = await allFilesList(Locale.English);
 
 const tags = await getTags(Locale.English);
 ---

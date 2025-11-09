@@ -1,8 +1,5 @@
 import { Locale } from "../i18n";
-import { getDocsFilesFromRepo } from "../github/raw";
-import { cleanHtmlForDisplay } from "../html/clean";
-import { highlightHtml } from "../html/highlight";
-import { extractDataFromHtml } from "../html";
+import { extractDataFromHtml, fetchHtml } from "../html";
 import type { SidebarStructure } from "../../components/sidebar";
 
 export interface ProcessedDoc {
@@ -49,33 +46,24 @@ export async function processDocFile(
     return null;
   }
 
-  const pathWithoutExt = `${major}/${minor}/${file}`;
-
   try {
-    // 1. Fetch raw HTML from GitHub
-    // NOTE: getDocsFilesFromRepo adds .html extension
-    const rawHtml = await getDocsFilesFromRepo(pathWithoutExt, locale);
+    const htmlData = await fetchHtml([major, minor, file], locale);
+    if (!htmlData) {
+      return null;
+    }
 
-    // 2. Clean HTML for display
-    // CRITICAL: cleanHtmlForDisplay takes (html, file, MINOR_VERSION)
-    let displayHtml = cleanHtmlForDisplay(rawHtml, file, minor);
-
-    // 3. Highlight code blocks
-    displayHtml = highlightHtml(displayHtml, file);
-
-    // 4. Extract metadata from RAW html (not displayHtml!)
-    const { sidebar, title } = extractDataFromHtml(rawHtml, file);
+    const { sidebar, title } = extractDataFromHtml(htmlData.html, file);
 
     return {
       major,
       minor,
       file,
-      html: displayHtml, // The processed HTML for display
+      html: htmlData.displayHtml,
       sidebar,
       title,
     };
   } catch (error) {
-    console.error(`Error processing ${pathWithoutExt}:`, error);
+    console.error(`Error processing ${major}/${minor}/${file}:`, error);
     return null;
   }
 }

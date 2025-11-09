@@ -14,69 +14,63 @@ import { processDocFile } from '@lib/docs/process-file';
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);
   const tags = await getTags(Locale.English);
-
-  const paths: Array<{
-    params: { slug: string };
-    props: { pathInfo: string[]; tags: typeof tags; versions: typeof versions };
-  }> = [];
-
-  // Generate paths from cached versions structure
+  const paths = [];
+  
+  // Generate paths from versions structure - no file processing here
   for (const [major, minor, files] of bedrockVersionsInOrder(versions)) {
     for (const file of files) {
       const version = [major, minor];
-
+      
       // Main versioned route: /docs/major/minor/file
       paths.push({
         params: { slug: `${major}/${minor}/${file}` },
-        props: { pathInfo: [major, minor, file], tags, versions },
+        props: {
+          pathInfo: [major, minor, file],
+          tags,
+        },
       });
-
-      // Tagged routes
+      
+      // Tagged routes (stable/beta)
       if (areVersionsEqual(version, tags[Tags.Stable])) {
         paths.push({
           params: { slug: `stable/${file}` },
-          props: { pathInfo: [major, minor, file], tags, versions },
+          props: {
+            pathInfo: [major, minor, file],
+            tags,
+          },
         });
       } else if (areVersionsEqual(version, tags[Tags.Beta])) {
         paths.push({
           params: { slug: `beta/${file}` },
-          props: { pathInfo: [major, minor, file], tags, versions },
+          props: {
+            pathInfo: [major, minor, file],
+            tags,
+          },
         });
       }
     }
   }
-
+  
   return paths;
 }
 
-const { pathInfo, tags, versions } = Astro.props;
+const { tags, pathInfo } = Astro.props;
+const [major, minor, file] = pathInfo;
 
-const slugRaw = Astro.params.slug;
-const slug = typeof slugRaw === 'string' 
-  ? slugRaw.split('/').filter(Boolean)
-  : (slugRaw || []);
-
-const isStableRoute = slug[0] === 'stable';
-const isBetaRoute = slug[0] === 'beta';
-
-// Resolve actual version for tagged routes
-let actualPathInfo: string[];
-if (isStableRoute || isBetaRoute) {
-  // For tagged routes, use the pathInfo from props (already resolved)
-  actualPathInfo = pathInfo;
-} else {
-  // For versioned routes, use the slug directly
-  actualPathInfo = slug;
-}
-
-// Process file on-demand
-const processedDoc = await processDocFile(actualPathInfo, Locale.English);
-
+const processedDoc = await processDocFile([major, minor, file], Locale.English);
 if (!processedDoc) {
   return Astro.redirect('/404');
 }
 
-const { major, minor, file, html, sidebar, title: docTitle } = processedDoc;
+const { html, sidebar, title: docTitle } = processedDoc;
+
+const versions = await allFilesList(Locale.English);
+
+const slugRaw = Astro.params.slug;
+const slugParts = slugRaw.split('/').filter(Boolean)
+
+const isStableRoute = slugParts[0] === 'stable';
+const isBetaRoute = slugParts[0] === 'beta';
 
 // Build page title and description
 const documentTitle = docTitle.title || file || 'Documentation';
@@ -104,7 +98,7 @@ if (isStableRoute) {
 const baseUrl = import.meta.env.PROD ? 'https://bedrock.dev' : 'http://localhost:4321';
 let ogImageUrl = `${baseUrl}/api/og?file=${encodeURIComponent(file)}`;
 if (isStableRoute || isBetaRoute) {
-  ogImageUrl += `&version=${encodeURIComponent(slug[0])}`;
+  ogImageUrl += `&version=${encodeURIComponent(slugParts[0])}`;
 } else {
   ogImageUrl += `&version=${encodeURIComponent(htmlVersion)}`;
 }

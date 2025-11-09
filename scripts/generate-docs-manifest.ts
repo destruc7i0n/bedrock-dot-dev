@@ -5,16 +5,10 @@ import path from "path";
 import fs from "fs";
 
 import { Locale } from "../src/lib/i18n";
-import { getTags, TagsResponse } from "../src/lib/tags";
 import { getVersionsFile } from "../src/lib/versions";
 
 const main = async () => {
   const file = await getVersionsFile();
-
-  const tags: { [key in Locale]?: TagsResponse } = {};
-  for (const language of Object.values(Locale)) {
-    tags[language] = await getTags(language, true);
-  }
 
   // count the number of documentation files per locale
   for (const [locale, versions] of Object.entries(file["versions"])) {
@@ -32,10 +26,8 @@ const main = async () => {
   if (!fs.existsSync("public/static")) fs.mkdirSync("public/static");
 
   const docsFile = path.resolve("public/static/docs.json");
-  const tagsFile = path.resolve("public/static/tags.json");
 
   fs.writeFileSync(docsFile, JSON.stringify(file));
-  fs.writeFileSync(tagsFile, JSON.stringify(tags));
   console.log("static docs file generated!");
 };
 

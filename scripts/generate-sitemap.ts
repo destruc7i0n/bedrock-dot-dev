@@ -33,7 +33,7 @@ const main = async () => {
 
   for (const lang of langs) {
     const locale = getLocale(lang);
-    const tags = await getTags(locale, true);
+    const tags = await getTags(locale);
     const langVersions = versions[lang];
 
     for (const tag of Object.keys(tags)) {

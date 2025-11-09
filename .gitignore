@@ -3,12 +3,12 @@
 node_modules
 .next
 .astro
+.vercel
 dist/
 old-css.css
 
 public/sitemap.xml
 public/static/docs.json
-public/static/tags.json
 
 .env*
 

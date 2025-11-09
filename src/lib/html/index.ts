@@ -82,25 +82,38 @@ export const extractDataFromHtml = (
         ),
       };
       // order the object and bring the components list to the top
-      sidebarContent = {
+      const orderedContent: SidebarStructure = {
         Components: sidebarContent["Components"],
-        ...sidebarContent,
       };
+      for (const key in sidebarContent) {
+        if (key !== "Components") {
+          orderedContent[key] = sidebarContent[key];
+        }
+      }
+      sidebarContent = orderedContent;
     }
 
     if (!sidebarContent["AI Goals"]) {
-      sidebarContent = {
-        Components: sidebarContent["Components"],
-        "AI Goals": getAIGoals(html),
-        ...sidebarContent,
-      };
+      const aiGoals = getAIGoals(html);
+      const orderedContent: SidebarStructure = {};
+      if (sidebarContent["Components"]) {
+        orderedContent["Components"] = sidebarContent["Components"];
+      }
+      orderedContent["AI Goals"] = aiGoals;
+      for (const key in sidebarContent) {
+        if (key !== "Components" && key !== "AI Goals") {
+          orderedContent[key] = sidebarContent[key];
+        }
+      }
+      sidebarContent = orderedContent;
     }
   }
 
-  const total = Object.keys(sidebarContent).reduce(
-    (acc, key) => acc + sidebarContent[key].elements.length + 1,
-    0,
-  );
+  const total = Object.keys(sidebarContent).reduce((acc, key) => {
+    const group = sidebarContent[key];
+    if (!group || !group.elements) return acc;
+    return acc + group.elements.length + 1;
+  }, 0);
   Log.info(
     `Found ${
       Object.keys(sidebarContent).length
