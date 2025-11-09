@@ -2,7 +2,7 @@ import { GitHubTreeResponse, listAllFilesFromRepo } from "./github/api";
 
 import { checkCache, setCache } from "./versions-cache";
 import { BedrockVersionsByLocale, groupVersionsByLocale, Locale } from "./i18n";
-import { compareBedrockVersions } from "./util";
+import { compareBedrockVersions, isProduction } from "./util";
 
 export interface BedrockVersions {
   [key: string]: {
@@ -80,7 +80,7 @@ const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
   const check = checkCache();
   if (check) return check.versions[locale] ?? {};
   else {
-    if (process.env.NODE_ENV === "production") {
+    if (isProduction()) {
       console.error("Could not load the docs.json from cache!");
       return {};
     } else {

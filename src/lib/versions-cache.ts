@@ -3,10 +3,10 @@ import * as fs from "fs";
 
 import * as flatCache from "flat-cache";
 import { BedrockVersionsFile } from "./versions";
+import { isProduction } from "./util";
 
 // use tmp on production
-const cacheDirectory =
-  process.env.NODE_ENV === "production" ? join("/tmp", ".cache") : "";
+const cacheDirectory = isProduction() ? join("/tmp", ".cache") : "";
 
 // store ratelimited call as a file and fetch when needed
 const checkCache = (): BedrockVersionsFile | undefined => {
@@ -20,7 +20,7 @@ const checkCache = (): BedrockVersionsFile | undefined => {
     // console.error("Could not load docs content from cache!", error);
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (!isProduction()) {
     const cache = flatCache.create({
       cacheId: "versions",
       cacheDir: cacheDirectory,

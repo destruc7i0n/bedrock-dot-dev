@@ -125,3 +125,13 @@ export const oneLine = (str: string) =>
     .split(/\r?\n/)
     .map((e) => e.trim())
     .join("");
+
+export const isProduction = (): boolean => {
+  if (typeof import.meta !== "undefined" && import.meta.env) {
+    return import.meta.env.PROD === true;
+  }
+  if (typeof process !== "undefined" && process.env) {
+    return process.env.NODE_ENV === "production";
+  }
+  return false;
+};
