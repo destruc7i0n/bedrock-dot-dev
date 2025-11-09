@@ -92,17 +92,32 @@ async function generateVercelRedirects() {
     },
   ];
 
-  const vercelConfig = {
-    redirects: redirects.map((redirect) => ({
-      source: redirect.source,
-      destination: redirect.destination,
-      permanent: redirect.permanent,
-    })),
-  };
-
   const vercelJsonPath = path.resolve("vercel.json");
+
+  // Read existing vercel.json if it exists, otherwise start with empty object
+  let vercelConfig: any = {};
+  if (fs.existsSync(vercelJsonPath)) {
+    try {
+      const existingContent = fs.readFileSync(vercelJsonPath, "utf-8");
+      vercelConfig = JSON.parse(existingContent);
+    } catch (error) {
+      console.warn(
+        "Failed to parse existing vercel.json, starting fresh:",
+        error,
+      );
+      vercelConfig = {};
+    }
+  }
+
+  // Update/merge redirects into existing config
+  vercelConfig.redirects = redirects.map((redirect) => ({
+    source: redirect.source,
+    destination: redirect.destination,
+    permanent: redirect.permanent,
+  }));
+
   fs.writeFileSync(vercelJsonPath, JSON.stringify(vercelConfig, null, 2));
-  console.log("Generated vercel.json with redirects");
+  console.log("Wrote vercel.json with redirects");
 }
 
 generateVercelRedirects().catch(console.error);
