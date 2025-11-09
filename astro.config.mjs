@@ -2,12 +2,14 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel";
 
 import nprogress from "astro-nprogress";
 
 export default defineConfig({
   prefetch: true,
   integrations: [tailwind(), react(), nprogress()],
+  adapter: vercel(),
   experimental: {
     fonts: [
       {

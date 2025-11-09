@@ -1,5 +1,3 @@
-@import "nprogress/nprogress.css";
-
 @import "docsearch";
 
 body {
@@ -25,11 +23,13 @@ body {
   }
 
   .peg {
-    box-shadow: 0 0 10px theme("colors.blue.600"),
+    box-shadow:
+      0 0 10px theme("colors.blue.600"),
       0 0 5px theme("colors.blue.600");
 
     .dark & {
-      box-shadow: 0 0 10px theme("colors.blue.500"),
+      box-shadow:
+        0 0 10px theme("colors.blue.500"),
         0 0 5px theme("colors.blue.500");
     }
   }

@@ -14,23 +14,23 @@ import { processDocFile } from '@lib/docs/process-file';
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);
   const tags = await getTags(Locale.English);
-  
+
   const paths: Array<{
     params: { slug: string };
     props: { pathInfo: string[]; tags: typeof tags; versions: typeof versions };
   }> = [];
-  
+
   // Generate paths from cached versions structure
   for (const [major, minor, files] of bedrockVersionsInOrder(versions)) {
     for (const file of files) {
       const version = [major, minor];
-      
+
       // Main versioned route: /docs/major/minor/file
       paths.push({
         params: { slug: `${major}/${minor}/${file}` },
         props: { pathInfo: [major, minor, file], tags, versions },
       });
-      
+
       // Tagged routes
       if (areVersionsEqual(version, tags[Tags.Stable])) {
         paths.push({
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
       }
     }
   }
-  
+
   return paths;
 }
 
