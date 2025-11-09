@@ -22,7 +22,7 @@ const Hit = ({ hit, children }: HitComponentProps) => (
   <a href={hit.url}>{children}</a>
 );
 
-const DocSearchClient: FunctionComponent<Props> = ({
+const DocSearch: FunctionComponent<Props> = ({
   fullWidth = false,
   slim = false,
   locale = "en",
@@ -67,4 +67,4 @@ const DocSearchClient: FunctionComponent<Props> = ({
   );
 };
 
-export default DocSearchClient;
+export default DocSearch;

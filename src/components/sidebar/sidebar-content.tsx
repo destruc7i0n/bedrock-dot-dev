@@ -1,10 +1,6 @@
-import {
-  FunctionComponent,
-  memo,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
+import { useStore } from "@nanostores/react";
+import { sidebarFilter } from "@stores/sidebar-filter";
 
 import { SidebarStructure } from "./index";
 import SidebarGroupTitle from "./sidebar-group-title";
@@ -13,7 +9,6 @@ import SidebarGroupItem from "./sidebar-group-item";
 type Props = {
   sidebar: SidebarStructure;
   file: string;
-  search?: string;
 };
 
 type SidebarContentState = {
@@ -30,22 +25,21 @@ const getInitialOpen = (sidebar: SidebarStructure, file: string) => {
   return state;
 };
 
-const SidebarContent: FunctionComponent<Props> = ({
-  sidebar,
-  file,
-  search,
-}) => {
+const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
+  const $filter = useStore(sidebarFilter);
+  let search = $filter;
+
   const [mounted, setMounted] = useState(false);
   const [hash, setHash] = useState("");
   const [open, setOpen] = useState<SidebarContentState>(
-    getInitialOpen(sidebar, file)
+    getInitialOpen(sidebar, file),
   );
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-  // reset hash on page change
   useEffect(() => {
     setHash("");
-  }, [file]);
+    setOpen(getInitialOpen(sidebar, file));
+  }, [file, sidebar]);
 
   // open on page load if the heading is closed for the item in the hash
   useEffect(() => {
@@ -54,7 +48,7 @@ const SidebarContent: FunctionComponent<Props> = ({
       setHash(hash);
       // if there is a hash open the heading which contains the hash on load
       const heading = Object.keys(sidebar).find((h) =>
-        sidebar[h].elements.find((el) => el.id === hash.substring(1))
+        sidebar[h].elements.find((el) => el.id === hash.substring(1)),
       );
       if (heading && !open[heading]) setHeadingOpen(heading, true);
     }
@@ -75,8 +69,8 @@ const SidebarContent: FunctionComponent<Props> = ({
     if (hash) {
       const el: HTMLAnchorElement | null = document.querySelector(
         `.sidebar .sidebar-id[href="#${encodeURIComponent(
-          hash.replace("#", "")
-        )}"]`
+          hash.replace("#", ""),
+        )}"]`,
       );
       if (el) {
         if (sidebarRef.current) {
@@ -158,5 +152,3 @@ const SidebarContent: FunctionComponent<Props> = ({
 };
 
 export default memo(SidebarContent);
-
-

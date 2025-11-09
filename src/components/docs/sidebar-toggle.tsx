@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
 import { useStore } from "@nanostores/react";
-import { sidebarOpen } from "@stores/sidebar";
+import { sidebarOpen } from "@stores/sidebar-open";
 
 const SidebarToggle: FunctionComponent = () => {
   const $open = useStore(sidebarOpen);

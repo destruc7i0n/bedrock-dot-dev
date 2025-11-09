@@ -115,7 +115,6 @@ if (isStableRoute || isBetaRoute) {
     <meta name="docsearch:language" content={Locale.English} />
     <meta name="og:image" content={ogImageUrl} />
     <script is:inline>
-      // Set sidebar state immediately from localStorage before React hydrates
       try {
         const sidebar = window.localStorage.getItem('sidebar');
         if (sidebar) {

@@ -1,16 +1,13 @@
 import { FunctionComponent, memo } from "react";
-
+import { useStore } from "@nanostores/react";
+import { sidebarFilter } from "@stores/sidebar-filter";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-
 import { useTranslation } from "react-i18next";
 
-type Props = {
-  value: string;
-  setValue: (value: string) => void;
-};
-
-const SidebarFilter: FunctionComponent<Props> = ({ value, setValue }) => {
+const SidebarFilter: FunctionComponent = () => {
   const { t } = useTranslation();
+  const $filter = useStore(sidebarFilter);
+
   return (
     <div className="mt-4">
       <label className="block text-sm font-bold mb-1 sr-only" htmlFor="filter">
@@ -27,8 +24,8 @@ const SidebarFilter: FunctionComponent<Props> = ({ value, setValue }) => {
           className="border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pl-8 xl:pl-7 px-4 block w-full leading-4 bg-white dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 dark:placeholder-gray-400"
           type="text"
           placeholder={t("component.sidebar.filter_title")}
-          value={value}
-          onChange={({ target: { value } }) => setValue(value)}
+          value={$filter}
+          onChange={({ target: { value } }) => sidebarFilter.set(value)}
         />
       </div>
     </div>

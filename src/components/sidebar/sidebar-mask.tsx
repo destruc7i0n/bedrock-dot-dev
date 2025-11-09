@@ -1,6 +1,6 @@
 import { FunctionComponent, memo } from "react";
 
-import { sidebarOpen } from "@stores/sidebar";
+import { sidebarOpen } from "@stores/sidebar-open";
 
 const SidebarMask: FunctionComponent = () => {
   return (

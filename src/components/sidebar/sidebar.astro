@@ -1,5 +1,9 @@
 ---
-import SidebarComponent from './sidebar';
+import SidebarContainer from './sidebar-container';
+import Selectors from './sidebar-selectors';
+import SidebarFilter from './sidebar-filter';
+import SidebarContent from './sidebar-content';
+import ModeSelect from '@components/theme/mode-select';
 import type { SidebarStructure } from './index';
 import type { BedrockVersions } from '../../lib/versions';
 import type { TagsResponse } from '../../lib/tags';
@@ -17,15 +21,31 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
 ---
 
 <aside class="sidebar-wrapper">
-  <SidebarComponent
-    transition:persist="sidebar"
-    client:load
-    sidebar={sidebar}
-    file={file}
-    major={major}
-    minor={minor}
-    versions={versions}
-    tags={tags}
-  />
+  <SidebarContainer client:load>
+    <div class="w-full p-4 border-b border-gray-200 dark:border-dark-gray-800">
+      <Selectors
+        transition:persist="selectors"
+        client:load
+        major={major}
+        minor={minor}
+        file={file}
+        versions={versions}
+        tags={tags}
+      />
+      <SidebarFilter client:load />
+    </div>
+    <SidebarContent
+      client:load
+      sidebar={sidebar}
+      file={file}
+    />
+    <div class="flex flex-row justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2">
+      <ModeSelect
+        transition:persist="mode-select"
+        client:load
+        className="ml-2"
+      />
+    </div>
+  </SidebarContainer>
 </aside>
 

@@ -1,5 +1,5 @@
 ---
-import DocSearchClient from './docsearch-client';
+import DocSearch from './docsearch';
 import { Locale } from '../../lib/i18n';
 import { algolia } from '../../lib/algolia';
 
@@ -19,7 +19,7 @@ const {
 
 ---
 
-<DocSearchClient
+<DocSearch
   client:only="react"
   placeHolder={placeHolder}
   fullWidth={fullWidth}
