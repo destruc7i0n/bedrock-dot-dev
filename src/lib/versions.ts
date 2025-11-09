@@ -2,6 +2,7 @@ import { GitHubTreeResponse, listAllFilesFromRepo } from "./github/api";
 
 import { checkCache, setCache } from "./versions-cache";
 import { BedrockVersionsByLocale, groupVersionsByLocale, Locale } from "./i18n";
+import { compareBedrockVersions } from "./util";
 
 export interface BedrockVersions {
   [key: string]: {
@@ -89,5 +90,21 @@ const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
     }
   }
 };
+
+// helper generator to sort and loop through all bedrock versions
+export function* bedrockVersionsInOrder(
+  versions: BedrockVersions,
+): IterableIterator<[string, string, string[]]> {
+  const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
+  for (const major of majorVersions) {
+    const minorVersions = Object.keys(versions[major]).sort(
+      compareBedrockVersions,
+    );
+    for (const minor of minorVersions) {
+      const files = versions[major][minor];
+      yield [major, minor, files];
+    }
+  }
+}
 
 export { formatTree, allFilesList, getFormattedFilesList };

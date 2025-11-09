@@ -1,16 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/homepage/navbar.astro';
-import Footer from '../components/footer.astro';
-import VersionChooser from '../components/version-chooser/version-chooser';
-import DocSearch from '../components/docsearch/docsearch.astro';
+import Navbar from '@components/homepage/navbar.astro';
+import Footer from '@components/footer.astro';
+import VersionChooser from '@components/version-chooser/version-chooser';
+import DocSearch from '@components/docsearch/docsearch.astro';
 
 import { getTags } from '../lib/tags';
-import { allFilesList } from '../lib/versions';
 import { Locale, t } from '../lib/i18n';
 import { algolia } from '../lib/algolia';
+import { listAllFilesFromRepo } from '../lib/github/api';
+import { formatTree } from '../lib/versions';
+import type { BedrockVersions } from '../lib/versions';
 
-const versions = await allFilesList(Locale.English);
+const treeResponse = await listAllFilesFromRepo(Locale.English);
+const versions: BedrockVersions = treeResponse instanceof Error 
+  ? {} 
+  : formatTree(treeResponse);
+
 const tags = await getTags(Locale.English);
 ---
 

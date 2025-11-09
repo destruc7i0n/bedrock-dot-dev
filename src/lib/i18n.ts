@@ -22,7 +22,8 @@ const REPOSITORIES: RepositoryData = {
   },
 };
 
-export const getLocale = (locale?: string): Locale => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getLocale = (_locale?: string): Locale => {
   // Currently only English is supported
   // Add more cases here when more locales are added
   return Locale.English;

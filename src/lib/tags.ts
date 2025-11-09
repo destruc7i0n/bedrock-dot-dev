@@ -1,7 +1,7 @@
 import { RAW_GITHUB_URL } from "./github/constants";
 import { getRepository, Locale } from "./i18n";
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
 export enum Tags {
   Stable = "stable",

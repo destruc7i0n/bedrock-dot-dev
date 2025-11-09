@@ -1,0 +1,158 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/docs/header.astro';
+import Sidebar from '@components/sidebar/sidebar.astro';
+import DocsContainer from '@components/docs/docs-container.astro';
+import Footer from '@components/footer.astro';
+import BackToTop from '@components/docs/back-to-top';
+import { getTags, Tags } from '@lib/tags';
+import { Locale, t } from '@lib/i18n';
+import { areVersionsEqual } from '@lib/util';
+import { allFilesList, bedrockVersionsInOrder } from '@lib/versions';
+import { processDocFile } from '@lib/docs/process-file';
+
+export async function getStaticPaths() {
+  const versions = await allFilesList(Locale.English);
+  const tags = await getTags(Locale.English);
+  
+  const paths: Array<{
+    params: { slug: string };
+    props: { pathInfo: string[]; tags: typeof tags; versions: typeof versions };
+  }> = [];
+  
+  // Generate paths from cached versions structure
+  for (const [major, minor, files] of bedrockVersionsInOrder(versions)) {
+    for (const file of files) {
+      const version = [major, minor];
+      
+      // Main versioned route: /docs/major/minor/file
+      paths.push({
+        params: { slug: `${major}/${minor}/${file}` },
+        props: { pathInfo: [major, minor, file], tags, versions },
+      });
+      
+      // Tagged routes
+      if (areVersionsEqual(version, tags[Tags.Stable])) {
+        paths.push({
+          params: { slug: `stable/${file}` },
+          props: { pathInfo: [major, minor, file], tags, versions },
+        });
+      } else if (areVersionsEqual(version, tags[Tags.Beta])) {
+        paths.push({
+          params: { slug: `beta/${file}` },
+          props: { pathInfo: [major, minor, file], tags, versions },
+        });
+      }
+    }
+  }
+  
+  return paths;
+}
+
+const { pathInfo, tags, versions } = Astro.props;
+
+const slugRaw = Astro.params.slug;
+const slug = typeof slugRaw === 'string' 
+  ? slugRaw.split('/').filter(Boolean)
+  : (slugRaw || []);
+
+const isStableRoute = slug[0] === 'stable';
+const isBetaRoute = slug[0] === 'beta';
+
+// Resolve actual version for tagged routes
+let actualPathInfo: string[];
+if (isStableRoute || isBetaRoute) {
+  // For tagged routes, use the pathInfo from props (already resolved)
+  actualPathInfo = pathInfo;
+} else {
+  // For versioned routes, use the slug directly
+  actualPathInfo = slug;
+}
+
+// Process file on-demand
+const processedDoc = await processDocFile(actualPathInfo, Locale.English);
+
+if (!processedDoc) {
+  return Astro.redirect('/404');
+}
+
+const { major, minor, file, html, sidebar, title: docTitle } = processedDoc;
+
+// Build page title and description
+const documentTitle = docTitle.title || file || 'Documentation';
+const htmlVersion = docTitle.version || minor;
+
+let title = '';
+let description = '';
+
+if (isStableRoute) {
+  title = t('page.docs.website_title_tagged_stable').replace('{title}', documentTitle) + ' | bedrock.dev';
+  description = t('page.docs.website_description_tagged_stable').replace('{title}', documentTitle);
+} else if (isBetaRoute) {
+  title = t('page.docs.website_title_tagged_beta').replace('{title}', documentTitle) + ' | bedrock.dev';
+  description = t('page.docs.website_description_tagged_beta').replace('{title}', documentTitle);
+} else {
+  title = t('page.docs.website_title_untagged')
+    .replace('{title}', documentTitle)
+    .replace('{version}', htmlVersion) + ' | bedrock.dev';
+  description = t('page.docs.website_description_untagged')
+    .replace('{title}', documentTitle)
+    .replace('{version}', htmlVersion);
+}
+
+// OG image URL
+const baseUrl = import.meta.env.PROD ? 'https://bedrock.dev' : 'http://localhost:4321';
+let ogImageUrl = `${baseUrl}/api/og?file=${encodeURIComponent(file)}`;
+if (isStableRoute || isBetaRoute) {
+  ogImageUrl += `&version=${encodeURIComponent(slug[0])}`;
+} else {
+  ogImageUrl += `&version=${encodeURIComponent(htmlVersion)}`;
+}
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <meta name="docsearch:language" content={Locale.English} />
+    <meta name="og:image" content={ogImageUrl} />
+    <script is:inline>
+      // Set sidebar state immediately from localStorage before React hydrates
+      try {
+        const sidebar = window.localStorage.getItem('sidebar');
+        if (sidebar) {
+          const { open } = JSON.parse(sidebar);
+          if (!open) {
+            document.documentElement.classList.add('sidebar-closed');
+          }
+        }
+      } catch (e) {
+        // ignore errors
+      }
+    </script>
+  </Fragment>
+
+  <Header transition:persist="header" />
+  <div class="flex">
+    <Sidebar 
+      sidebar={sidebar}
+      file={file}
+      major={major}
+      minor={minor}
+      versions={versions}
+      tags={tags}
+    />
+    <DocsContainer 
+      transition:animate="fade"
+      html={html}
+      file={file}
+      version={minor}
+    />
+  </div>
+  <BackToTop client:load />
+  <Footer
+    dark={true}
+    darkClassName="bg-dark-gray-975"
+    showToggles={false}
+    outline={true}
+  />
+</Layout>
+

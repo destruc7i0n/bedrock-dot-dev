@@ -1,0 +1,31 @@
+---
+import SidebarComponent from './sidebar';
+import type { SidebarStructure } from './index';
+import type { BedrockVersions } from '../../lib/versions';
+import type { TagsResponse } from '../../lib/tags';
+
+interface Props {
+  sidebar: SidebarStructure;
+  file: string;
+  major: string;
+  minor: string;
+  versions: BedrockVersions;
+  tags: TagsResponse;
+}
+
+const { sidebar, file, major, minor, versions, tags } = Astro.props;
+---
+
+<aside class="sidebar-wrapper">
+  <SidebarComponent
+    transition:persist="sidebar"
+    client:load
+    sidebar={sidebar}
+    file={file}
+    major={major}
+    minor={minor}
+    versions={versions}
+    tags={tags}
+  />
+</aside>
+

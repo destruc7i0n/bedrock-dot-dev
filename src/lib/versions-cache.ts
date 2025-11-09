@@ -1,5 +1,5 @@
 import { join, resolve } from "path";
-import fs from "fs";
+import * as fs from "fs";
 
 import * as flatCache from "flat-cache";
 import { BedrockVersionsFile } from "./versions";
