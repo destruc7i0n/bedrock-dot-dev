@@ -21,71 +21,6 @@ const ogImageUrl = `${VERCEL_URL}/api/og`;
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Theme script to prevent FOUC - must be inline and early -->
-<script is:inline>
-  (function() {
-    const getThemePreference = () => {
-      const stored = localStorage.getItem('theme');
-      if (stored === 'dark' || stored === 'light' || stored === 'system') {
-        return stored;
-      }
-      return 'system';
-    };
-
-    const theme = getThemePreference();
-    const actualTheme = theme === 'system' 
-      ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-      : theme;
-    
-    document.documentElement.classList.add(actualTheme);
-    
-    // Update theme-color meta tag after DOM is ready
-    const updateThemeColor = () => {
-      const themeColor = actualTheme === 'light' ? '#f9fafb' : '#18191a';
-      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-      if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', themeColor);
-      }
-    };
-    
-    // Set up theme change handlers after DOM is loaded
-    const setupThemeHandlers = () => {
-      updateThemeColor();
-      
-      // Listen for system theme changes
-      if (!window.__themeListenerAdded) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-          const stored = localStorage.getItem('theme');
-          if (!stored || stored === 'system') {
-            const newTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            document.documentElement.classList.remove('light', 'dark');
-            document.documentElement.classList.add(newTheme);
-            updateThemeColor();
-          }
-        });
-        window.__themeListenerAdded = true;
-      }
-    };
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupThemeHandlers);
-    } else {
-      setupThemeHandlers();
-    }
-    
-    // Support for view transitions
-    document.addEventListener('astro:after-swap', () => {
-      const theme = getThemePreference();
-      const actualTheme = theme === 'system' 
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : theme;
-      document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(actualTheme);
-      updateThemeColor();
-    });
-  })();
-</script>
-
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
@@ -115,3 +50,18 @@ const ogImageUrl = `${VERCEL_URL}/api/og`;
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@TheDestruc7i0n" />
+
+<script is:inline>
+(() => {
+  let doc = document.documentElement, media = matchMedia("(prefers-color-scheme: dark)");
+  let updateMeta = (theme) => { let meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute("content", theme === "light" ? "#f9fafb" : "#18191a"); };
+  let getTheme = () => media.matches ? "dark" : "light";
+  let setup = () => { if (window.__t) return; media.addEventListener("change", () => { let stored = localStorage.getItem("theme"); if (!stored || stored === "system") { let theme = getTheme(); doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); } }); window.__t = 1; };
+  try {
+    let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored;
+    doc.classList.add(theme); updateMeta(theme);
+    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", setup) : setup();
+    document.addEventListener("astro:after-swap", () => { let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored; doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); });
+  } catch (e) {}
+})();
+</script>
