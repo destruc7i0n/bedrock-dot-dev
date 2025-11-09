@@ -37,6 +37,9 @@ importers:
       astro:
         specifier: ^5.15.4
         version: 5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0)
+      astro-nprogress:
+        specifier: ^0.0.2
+        version: 0.0.2(astro@5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0))
       astro-react-i18next:
         specifier: ^0.3.3
         version: 0.3.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
@@ -67,9 +70,6 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      nprogress:
-        specifier: ^0.2.0
-        version: 0.2.0
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -1709,9 +1709,19 @@ packages:
   ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
 
+  astro-nprogress@0.0.2:
+    resolution: {integrity: sha512-IH3NXbyZvOeQziFr5QtS2mAjW/EKvXtoGFVWMKtJ1tcH9SN5kV5ZtCXSI/byX7j9ogHor7onCeF4c2HecRgZZQ==}
+    peerDependencies:
+      astro: ^5.0.0
+
   astro-react-i18next@0.3.3:
     resolution: {integrity: sha512-eM72BChtygoME18vbNcGAf4AMieiazquekeMBtU0yf9eGdy7LSuLwLzXjfOcCLzgHC3JngU46W0uZxzShAlmWg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
+
+  astro-view-transition-script@0.0.1:
+    resolution: {integrity: sha512-VWU1uue11vPM4OKpZV9tXl8DgnVTUeSxpHHdA9WVtpqcEkRfzzxFnfDYGkh85lVMhcWVsd2obn+C0I1lv/5NwQ==}
+    peerDependencies:
+      astro: ^5.0.0
 
   astro@5.15.4:
     resolution: {integrity: sha512-0g/68hLHEJZF2nYUcZM5O0kOnzCsCIf8eA9+0jfBAxp4ycujrIHRgIOdZCFKL9GoTsn8AypWbziypH5aEIF+aA==}
@@ -6095,6 +6105,13 @@ snapshots:
 
   ast-types-flow@0.0.8: {}
 
+  astro-nprogress@0.0.2(astro@5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0)):
+    dependencies:
+      '@types/nprogress': 0.2.3
+      astro: 5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0)
+      astro-view-transition-script: 0.0.1(astro@5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0))
+      nprogress: 0.2.0
+
   astro-react-i18next@0.3.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3):
     dependencies:
       i18next: 25.6.1(typescript@5.9.3)
@@ -6109,6 +6126,10 @@ snapshots:
       - react-dom
       - react-native
       - typescript
+
+  astro-view-transition-script@0.0.1(astro@5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0)):
+    dependencies:
+      astro: 5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0)
 
   astro@5.15.4(@types/node@24.9.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(typescript@5.9.3)(yaml@2.7.0):
     dependencies:

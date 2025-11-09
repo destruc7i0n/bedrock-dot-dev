@@ -11,8 +11,6 @@ const {
   description = "Minecraft Bedrock Documentation" 
 } = Astro.props;
 
-// Get VERCEL_URL from environment
-const VERCEL_ENV = import.meta.env.PUBLIC_VERCEL_ENV ?? "development";
 const PUBLIC_VERCEL_URL = import.meta.env.PUBLIC_VERCEL_URL;
 const IS_VERCEL = Boolean(PUBLIC_VERCEL_URL);
 const VERCEL_URL = IS_VERCEL ? `https://${PUBLIC_VERCEL_URL}` : "";

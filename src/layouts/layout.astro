@@ -1,6 +1,8 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 
+import NProgress from 'astro-nprogress/component';
+
 import Head from '../components/head.astro';
 
 import '../../styles/tailwind.scss';
@@ -27,6 +29,7 @@ const {
   </head>
   <body>
     <slot />
+    <NProgress />
   </body>
 </html>
 
