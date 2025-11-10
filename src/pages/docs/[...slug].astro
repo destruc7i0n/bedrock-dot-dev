@@ -10,6 +10,7 @@ import { Locale, t } from '@lib/i18n';
 import { areVersionsEqual } from '@lib/util';
 import { allFilesList, bedrockVersionsInOrder } from '@lib/versions';
 import { processDocFile } from '@lib/docs/process-file';
+import { getOgImageUrl } from '@lib/og-image';
 
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);
@@ -95,19 +96,13 @@ if (isStableRoute) {
 }
 
 // OG image URL
-const baseUrl = import.meta.env.PROD ? 'https://bedrock.dev' : 'http://localhost:4321';
-let ogImageUrl = `${baseUrl}/api/og?file=${encodeURIComponent(file)}`;
-if (isStableRoute || isBetaRoute) {
-  ogImageUrl += `&version=${encodeURIComponent(slugParts[0])}`;
-} else {
-  ogImageUrl += `&version=${encodeURIComponent(htmlVersion)}`;
-}
+const versionParam = isStableRoute || isBetaRoute ? slugParts[0] : htmlVersion;
+const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} ogImage={ogImageUrl}>
   <Fragment slot="head">
     <meta name="docsearch:language" content={Locale.English} />
-    <meta name="og:image" content={ogImageUrl} />
   </Fragment>
 
   <Header transition:persist="header" />

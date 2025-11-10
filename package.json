@@ -21,6 +21,7 @@
     "@docsearch/react": "^3.9.0",
     "@heroicons/react": "^2.2.0",
     "@nanostores/react": "^1.0.0",
+    "@vercel/og": "^0.8.5",
     "astro": "^5.15.4",
     "astro-nprogress": "^0.0.2",
     "classnames": "^2.5.1",

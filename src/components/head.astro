@@ -6,37 +6,28 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title = "bedrock.dev", 
-  description = "Minecraft Bedrock Documentation" 
+const {
+  title = "bedrock.dev",
+  description = "Minecraft Bedrock Documentation"
 } = Astro.props;
-
-const PUBLIC_VERCEL_URL = import.meta.env.PUBLIC_VERCEL_URL;
-const IS_VERCEL = Boolean(PUBLIC_VERCEL_URL);
-const VERCEL_URL = IS_VERCEL ? `https://${PUBLIC_VERCEL_URL}` : "";
-const ogImageUrl = `${VERCEL_URL}/api/og`;
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 <link rel="manifest" href="/favicon/site.webmanifest" />
 <link rel="shortcut icon" href="/favicon/favicon.ico" />
 
-<!-- Fonts - Using Astro's experimental fonts API -->
 <Font cssVariable="--font-inter" preload />
 <Font cssVariable="--font-fira-code" preload />
 <Font cssVariable="--font-monocraft" />
 
-<!-- Theme color -->
 <meta name="theme-color" content="#ffffff" />
 
-<!-- SEO -->
 <title>{title}</title>
 {description && (
   <>
@@ -45,9 +36,7 @@ const ogImageUrl = `${VERCEL_URL}/api/og`;
   </>
 )}
 <meta property="og:title" content={title} />
-<meta property="og:image" content={ogImageUrl} />
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@TheDestruc7i0n" />
 

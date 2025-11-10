@@ -15,16 +15,17 @@ const versions = await allFilesList(Locale.English);
 const tags = await getTags(Locale.English);
 ---
 
-<Layout 
+<Layout
   title="bedrock.dev"
   description={t('page.home.website_description')}
 >
-  <link
-    slot="head"
-    rel="preconnect"
-    href={`https://${algolia.appId}-dsn.algolia.net`}
-    crossorigin
-  />
+  <Fragment slot="head">
+    <link
+      rel="preconnect"
+      href={`https://${algolia.appId}-dsn.algolia.net`}
+      crossorigin
+    />
+  </Fragment>
   
   <div class="bg-gray-50 dark:bg-dark-gray-950 border-b border-gray-200 dark:border-dark-gray-800">
     <Navbar />
