@@ -1,10 +1,10 @@
+import { LIVE_URL } from "./constants";
+
 export function getOgImageUrl(params?: {
   file?: string;
   version?: string;
 }): string {
-  const baseUrl = import.meta.env.PROD
-    ? import.meta.env.SITE
-    : "http://localhost:4321";
+  const baseUrl = import.meta.env.DEV ? "http://localhost:4321" : LIVE_URL;
 
   const url = new URL("/api/og.png", baseUrl);
 
