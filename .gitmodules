@@ -1,0 +1,4 @@
+[submodule "data/docs/bedrock-dev-docs"]
+	path = data/docs/bedrock-dev-docs
+	url = https://github.com/bedrock-dot-dev/docs.git
+	branch = master
