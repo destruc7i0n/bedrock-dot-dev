@@ -29,5 +29,3 @@ const fetchHtml = async (version: string[], locale: Locale) => {
 };
 
 export default fetchHtml;
-
-

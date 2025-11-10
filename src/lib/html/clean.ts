@@ -12,7 +12,7 @@ import { addAnchorsToMoLangQueries } from "./clean/molang";
 export const cleanHtmlForDisplay = (
   html: string,
   file: string,
-  version: string
+  version: string,
 ) => {
   const versionNumber = getVersionParts(version)[1];
 
@@ -50,7 +50,7 @@ const encloseDocumentationText = (html: string, file: string) => {
       const rawTextareaMatch = /<textarea.*?>[^]*?<\/textarea>/g;
       const bothMatches = new RegExp(
         `(?:${rawTableMatch.source}|${rawTextareaMatch.source})`,
-        "g"
+        "g",
       );
 
       let newEl = el;
@@ -79,7 +79,7 @@ const encloseDocumentationText = (html: string, file: string) => {
       }
 
       return match.replace(el, newEl);
-    }
+    },
   );
 
   return html;
@@ -95,5 +95,3 @@ export const removeDisplayHtml = (html: string) => {
 
   return html;
 };
-
-

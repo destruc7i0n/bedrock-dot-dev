@@ -109,11 +109,10 @@ export const extractDataFromHtml = (
     }
   }
 
-  const total = Object.keys(sidebarContent).reduce((acc, key) => {
-    const group = sidebarContent[key];
-    if (!group || !group.elements) return acc;
-    return acc + group.elements.length + 1;
-  }, 0);
+  const total = Object.keys(sidebarContent).reduce(
+    (acc, key) => acc + sidebarContent[key]?.elements?.length + 1,
+    0,
+  );
   Log.info(
     `Found ${
       Object.keys(sidebarContent).length

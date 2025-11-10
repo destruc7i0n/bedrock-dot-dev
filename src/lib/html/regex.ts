@@ -1,7 +1,11 @@
 // simple regex for matching tags in the html
 
+/**
+ * Uses `[^<]*` instead of `[^<]` because filesystem reads preserve `\r\n` (2 chars)
+ * while GitHub API normalizes to `\n` (1 char). Used by TD_COMPONENT_ID_MATCH and TD_MOLANG_QUERY_MATCH.
+ */
 const getTDMatch = (prefix: string) =>
-  new RegExp(`<tr>[^<]<td style=".*">(${prefix}.*)<\\/td>`, "g");
+  new RegExp(`<tr>[^<]*<td style=".*">(${prefix}.*)<\\/td>`, "g");
 
 export const H1_MATCH = /<h1>(.*)<\/h1>/;
 export const TABLE_MATCH = /<table.*>([^]*?)<\/table>/;
@@ -17,10 +21,8 @@ export const TEXTAREA_MATCH = /<textarea.*?>([^]*?)<\/textarea>/g;
 export const P_ID_MATCH = /<p id="(.*)">(.*)<\/p>/;
 export const H_TITLE_MATCH = new RegExp(
   `<h(\\d)>${P_ID_MATCH.source}<\\/h\\d>`,
-  "g"
+  "g",
 );
 export const ONLY_NEWLINES_AND_WHITESPACE = /^(?:\s*<\/?\s*br\s*\/?\s*>\s*)*$/;
 export const MARKDOWN_CODE_MATCH = /```([^]+)```/;
 export const VERSION = /(\d+\.\d+\.\d+\.\d+)/;
-
-
