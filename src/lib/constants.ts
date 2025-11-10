@@ -24,3 +24,16 @@ export const LIVE_URL = IS_VERCEL
     ? BEDROCK_DEV_URL
     : VERCEL_URL
   : BEDROCK_DEV_URL; // fallback to bedrock.dev if local
+
+console.log(
+  "VERCEL_ENV",
+  VERCEL_ENV,
+  "PUBLIC_VERCEL_URL",
+  PUBLIC_VERCEL_URL,
+  "IS_VERCEL",
+  IS_VERCEL,
+  "VERCEL_URL",
+  VERCEL_URL,
+  "LIVE_URL",
+  LIVE_URL,
+);
