@@ -13,11 +13,26 @@ const getEnvVar = (name: string): string | undefined => {
   return undefined;
 };
 
-const VERCEL_ENV = getEnvVar("PUBLIC_VERCEL_ENV") ?? "development";
-const PUBLIC_VERCEL_URL = getEnvVar("PUBLIC_VERCEL_PROJECT_PRODUCTION_URL");
-const IS_VERCEL = Boolean(PUBLIC_VERCEL_URL);
+// Use PUBLIC_VERCEL_TARGET_ENV as per Vercel docs for Astro/Vite
+// This indicates the target environment (production, preview, development, or custom)
+const VERCEL_ENV =
+  getEnvVar("PUBLIC_VERCEL_TARGET_ENV") ??
+  getEnvVar("PUBLIC_VERCEL_ENV") ??
+  getEnvVar("VERCEL_ENV") ??
+  "development";
 
-export const VERCEL_URL = IS_VERCEL ? `https://${PUBLIC_VERCEL_URL}` : "";
+// Use PUBLIC_VERCEL_PROJECT_PRODUCTION_URL for production (always bedrock.dev)
+// For preview builds, use PUBLIC_VERCEL_BRANCH_URL or PUBLIC_VERCEL_URL (actual preview URL)
+// VERCEL_URL is server-side only (without protocol)
+const isProduction = VERCEL_ENV === "production";
+const VERCEL_URL_RAW = isProduction
+  ? getEnvVar("PUBLIC_VERCEL_PROJECT_PRODUCTION_URL")
+  : (getEnvVar("VERCEL_URL") ??
+    getEnvVar("PUBLIC_VERCEL_BRANCH_URL") ??
+    getEnvVar("PUBLIC_VERCEL_URL"));
+const IS_VERCEL = Boolean(VERCEL_URL_RAW);
+
+export const VERCEL_URL = IS_VERCEL ? `https://${VERCEL_URL_RAW}` : "";
 
 export const LIVE_URL = IS_VERCEL
   ? VERCEL_ENV === "production"
@@ -28,11 +43,23 @@ export const LIVE_URL = IS_VERCEL
 console.log(
   "VERCEL_ENV",
   VERCEL_ENV,
+  "PUBLIC_VERCEL_TARGET_ENV",
+  getEnvVar("PUBLIC_VERCEL_TARGET_ENV"),
+  "PUBLIC_VERCEL_ENV",
+  getEnvVar("PUBLIC_VERCEL_ENV"),
+  "VERCEL_URL",
+  getEnvVar("VERCEL_URL"),
+  "PUBLIC_VERCEL_BRANCH_URL",
+  getEnvVar("PUBLIC_VERCEL_BRANCH_URL"),
   "PUBLIC_VERCEL_URL",
-  PUBLIC_VERCEL_URL,
+  getEnvVar("PUBLIC_VERCEL_URL"),
+  "PUBLIC_VERCEL_PROJECT_PRODUCTION_URL",
+  getEnvVar("PUBLIC_VERCEL_PROJECT_PRODUCTION_URL"),
+  "VERCEL_URL_RAW",
+  VERCEL_URL_RAW,
   "IS_VERCEL",
   IS_VERCEL,
-  "VERCEL_URL",
+  "VERCEL_URL (exported)",
   VERCEL_URL,
   "LIVE_URL",
   LIVE_URL,
