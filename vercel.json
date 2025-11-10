@@ -1,5 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro",
-  "installCommand": "git submodule update --init --recursive --force && pnpm install"
+  "framework": "astro"
 }
