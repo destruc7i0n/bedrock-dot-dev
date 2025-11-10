@@ -6,6 +6,7 @@ import ModeSelect from "@components/theme/mode-select";
 import type { SidebarStructure } from "./index";
 import type { BedrockVersions } from "../../lib/versions";
 import type { TagsResponse } from "../../lib/tags";
+import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
 interface Props {
   sidebar: SidebarStructure;
@@ -17,6 +18,13 @@ interface Props {
 }
 
 const { sidebar, file, major, minor, versions, tags } = Astro.props;
+
+const sidebarScript = `try {
+  const isMobile = window.matchMedia("(max-width: ${MOBILE_BREAKPOINT}px)");
+  const sidebarState = localStorage.getItem("sidebar") ? JSON.parse(localStorage.getItem("sidebar")).open !== false : true;
+  const open = isMobile.matches ? false : sidebarState;
+  if (open) document.querySelector(".sidebar")?.classList.add("open");
+} catch {}`;
 ---
 
 <div>
@@ -47,13 +55,7 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
   <div class="sidebar-mask" transition:persist="sidebar-mask"></div>
 </div>
 
-<script is:inline>
-  try {
-    const open =
-      JSON.parse(localStorage.getItem("sidebar") || "{}").open !== false;
-    if (open) document.querySelector(".sidebar")?.classList.add("open");
-  } catch {}
-</script>
+<script is:inline set:html={sidebarScript} />
 
 <script>
   import { sidebarOpen } from "@stores/sidebar-open";

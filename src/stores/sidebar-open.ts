@@ -1,7 +1,12 @@
 import { atom } from "nanostores";
+import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
 const getInitialValue = (): boolean => {
   if (typeof window === "undefined") return true;
+
+  // always closed by default on mobile, regardless of localStorage
+  const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+  if (mobile.matches) return false;
 
   try {
     const stored = localStorage.getItem("sidebar");
@@ -11,9 +16,7 @@ const getInitialValue = (): boolean => {
         return parsed.open;
       }
     }
-  } catch {
-    // Ignore errors (invalid JSON, storage disabled, etc.)
-  }
+  } catch {}
 
   return true;
 };
