@@ -1,5 +1,5 @@
 ---
-import { Font } from 'astro:assets';
+import { Font } from "astro:assets";
 
 interface Props {
   title?: string;
@@ -8,17 +8,45 @@ interface Props {
 
 const {
   title = "bedrock.dev",
-  description = "Minecraft Bedrock Documentation"
+  description = "Minecraft Bedrock Documentation",
 } = Astro.props;
+
+// use a string so prettier does not format it
+const themeScript = `(() => {
+let doc = document.documentElement, media = matchMedia("(prefers-color-scheme: dark)");
+let updateMeta = (theme) => { let meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute("content", theme === "light" ? "#f9fafb" : "#18191a"); };
+let getTheme = () => media.matches ? "dark" : "light";
+let setup = () => { if (window.__t) return; media.addEventListener("change", () => { let stored = localStorage.getItem("theme"); if (!stored || stored === "system") { let theme = getTheme(); doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); } }); window.__t = 1; };
+try {
+  let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored;
+  doc.classList.add(theme); updateMeta(theme);
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", setup) : setup();
+  document.addEventListener("astro:after-swap", () => { let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored; doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); });
+} catch (e) {}
+})();`;
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="generator" content={Astro.generator} />
 
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/favicon/apple-touch-icon.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/favicon/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/favicon/favicon-16x16.png"
+/>
 <link rel="manifest" href="/favicon/site.webmanifest" />
 <link rel="shortcut icon" href="/favicon/favicon.ico" />
 
@@ -29,28 +57,17 @@ const {
 <meta name="theme-color" content="#ffffff" />
 
 <title>{title}</title>
-{description && (
-  <>
-    <meta name="description" content={description} />
-    <meta property="og:description" content={description} />
-  </>
-)}
+{
+  description && (
+    <>
+      <meta name="description" content={description} />
+      <meta property="og:description" content={description} />
+    </>
+  )
+}
 <meta property="og:title" content={title} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@TheDestruc7i0n" />
 
-<script is:inline>
-(() => {
-  let doc = document.documentElement, media = matchMedia("(prefers-color-scheme: dark)");
-  let updateMeta = (theme) => { let meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute("content", theme === "light" ? "#f9fafb" : "#18191a"); };
-  let getTheme = () => media.matches ? "dark" : "light";
-  let setup = () => { if (window.__t) return; media.addEventListener("change", () => { let stored = localStorage.getItem("theme"); if (!stored || stored === "system") { let theme = getTheme(); doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); } }); window.__t = 1; };
-  try {
-    let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored;
-    doc.classList.add(theme); updateMeta(theme);
-    document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", setup) : setup();
-    document.addEventListener("astro:after-swap", () => { let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored; doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); });
-  } catch (e) {}
-})();
-</script>
+<script is:inline set:html={themeScript} />

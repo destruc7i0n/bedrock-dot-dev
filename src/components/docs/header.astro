@@ -1,10 +1,12 @@
 ---
-import DocSearch from '@components/docsearch/docsearch.astro';
-import SidebarToggle from '@components/docs/sidebar-toggle';
-import { Locale } from '@lib/i18n';
+import DocSearch from "@components/docsearch/docsearch.astro";
+import SidebarToggle from "@components/docs/sidebar-toggle";
+import { Locale } from "@lib/i18n";
 ---
 
-<header class="navbar flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200 z-50">
+<header
+  class="navbar flex items-center justify-between mx-auto sticky w-full top-0 left-0 h-12 px-4 lg:pr-2 bg-gray-50 dark:bg-dark-gray-975 border-b border-gray-200 dark:border-dark-gray-800 text-gray-900 dark:text-gray-200 z-50"
+>
   <div class="flex items-center">
     <SidebarToggle client:load transition:persist="sidebar-toggle" />
     <h1 class="mr-3 text-2xl">
@@ -30,5 +32,3 @@ import { Locale } from '@lib/i18n';
   </div>
   <DocSearch slim={true} locale={Locale.English} />
 </header>
-
-

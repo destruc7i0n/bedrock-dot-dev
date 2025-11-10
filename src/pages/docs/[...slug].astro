@@ -1,27 +1,27 @@
 ---
-import Layout from '@layouts/layout.astro';
-import Header from '@components/docs/header.astro';
-import Sidebar from '@components/sidebar/sidebar.astro';
-import DocsContainer from '@components/docs/docs-container.astro';
-import Footer from '@components/footer.astro';
-import BackToTop from '@components/docs/back-to-top';
-import { getTags, Tags } from '@lib/tags';
-import { Locale, t } from '@lib/i18n';
-import { areVersionsEqual } from '@lib/util';
-import { allFilesList, bedrockVersionsInOrder } from '@lib/versions';
-import { processDocFile } from '@lib/docs/process-file';
-import { getOgImageUrl } from '@lib/og-image';
+import Layout from "@layouts/layout.astro";
+import Header from "@components/docs/header.astro";
+import Sidebar from "@components/sidebar/sidebar.astro";
+import DocsContainer from "@components/docs/docs-container.astro";
+import Footer from "@components/footer.astro";
+import BackToTop from "@components/docs/back-to-top";
+import { getTags, Tags } from "@lib/tags";
+import { Locale, t } from "@lib/i18n";
+import { areVersionsEqual } from "@lib/util";
+import { allFilesList, bedrockVersionsInOrder } from "@lib/versions";
+import { processDocFile } from "@lib/docs/process-file";
+import { getOgImageUrl } from "@lib/og-image";
 
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);
   const tags = await getTags(Locale.English);
   const paths = [];
-  
+
   // Generate paths from versions structure - no file processing here
   for (const [major, minor, files] of bedrockVersionsInOrder(versions)) {
     for (const file of files) {
       const version = [major, minor];
-      
+
       // Main versioned route: /docs/major/minor/file
       paths.push({
         params: { slug: `${major}/${minor}/${file}` },
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
           tags,
         },
       });
-      
+
       // Tagged routes (stable/beta)
       if (areVersionsEqual(version, tags[Tags.Stable])) {
         paths.push({
@@ -51,7 +51,7 @@ export async function getStaticPaths() {
       }
     }
   }
-  
+
   return paths;
 }
 
@@ -60,7 +60,7 @@ const [major, minor, file] = pathInfo;
 
 const processedDoc = await processDocFile([major, minor, file], Locale.English);
 if (!processedDoc) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
 const { html, sidebar, title: docTitle } = processedDoc;
@@ -68,31 +68,44 @@ const { html, sidebar, title: docTitle } = processedDoc;
 const versions = await allFilesList(Locale.English);
 
 const slugRaw = Astro.params.slug;
-const slugParts = slugRaw.split('/').filter(Boolean)
+const slugParts = slugRaw.split("/").filter(Boolean);
 
-const isStableRoute = slugParts[0] === 'stable';
-const isBetaRoute = slugParts[0] === 'beta';
+const isStableRoute = slugParts[0] === "stable";
+const isBetaRoute = slugParts[0] === "beta";
 
 // Build page title and description
-const documentTitle = docTitle.title || file || 'Documentation';
+const documentTitle = docTitle.title || file || "Documentation";
 const htmlVersion = docTitle.version || minor;
 
-let title = '';
-let description = '';
+let title = "";
+let description = "";
 
 if (isStableRoute) {
-  title = t('page.docs.website_title_tagged_stable').replace('{title}', documentTitle) + ' | bedrock.dev';
-  description = t('page.docs.website_description_tagged_stable').replace('{title}', documentTitle);
+  title =
+    t("page.docs.website_title_tagged_stable").replace(
+      "{title}",
+      documentTitle,
+    ) + " | bedrock.dev";
+  description = t("page.docs.website_description_tagged_stable").replace(
+    "{title}",
+    documentTitle,
+  );
 } else if (isBetaRoute) {
-  title = t('page.docs.website_title_tagged_beta').replace('{title}', documentTitle) + ' | bedrock.dev';
-  description = t('page.docs.website_description_tagged_beta').replace('{title}', documentTitle);
+  title =
+    t("page.docs.website_title_tagged_beta").replace("{title}", documentTitle) +
+    " | bedrock.dev";
+  description = t("page.docs.website_description_tagged_beta").replace(
+    "{title}",
+    documentTitle,
+  );
 } else {
-  title = t('page.docs.website_title_untagged')
-    .replace('{title}', documentTitle)
-    .replace('{version}', htmlVersion) + ' | bedrock.dev';
-  description = t('page.docs.website_description_untagged')
-    .replace('{title}', documentTitle)
-    .replace('{version}', htmlVersion);
+  title =
+    t("page.docs.website_title_untagged")
+      .replace("{title}", documentTitle)
+      .replace("{version}", htmlVersion) + " | bedrock.dev";
+  description = t("page.docs.website_description_untagged")
+    .replace("{title}", documentTitle)
+    .replace("{version}", htmlVersion);
 }
 
 // OG image URL
@@ -107,7 +120,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 
   <Header transition:persist="header" />
   <div class="flex">
-    <Sidebar 
+    <Sidebar
       sidebar={sidebar}
       file={file}
       major={major}
@@ -115,7 +128,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       versions={versions}
       tags={tags}
     />
-    <DocsContainer 
+    <DocsContainer
       transition:animate="fade"
       html={html}
       file={file}
@@ -130,4 +143,3 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
     outline={true}
   />
 </Layout>
-

@@ -1,14 +1,14 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+import { ClientRouter } from "astro:transitions";
 
-import NProgress from 'astro-nprogress/component';
+import NProgress from "astro-nprogress/component";
 
-import Head from '../components/head.astro';
-import { getOgImageUrl } from '../lib/og-image';
+import Head from "../components/head.astro";
+import { getOgImageUrl } from "../lib/og-image";
 
-import '../../styles/tailwind.scss';
-import '../../styles/fonts.scss';
-import '../../styles/app.scss';
+import "../../styles/tailwind.scss";
+import "../../styles/fonts.scss";
+import "../../styles/app.scss";
 
 interface Props {
   title?: string;
@@ -19,7 +19,7 @@ interface Props {
 const {
   title = "bedrock.dev",
   description = "",
-  ogImage = getOgImageUrl()
+  ogImage = getOgImageUrl(),
 } = Astro.props;
 ---
 
@@ -38,6 +38,5 @@ const {
 </html>
 
 <script>
-  import '../lib/i18n';
+  import "../lib/i18n";
 </script>
-

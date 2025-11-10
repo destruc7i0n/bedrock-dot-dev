@@ -1,7 +1,7 @@
 ---
-import DocSearch from './docsearch';
-import { Locale } from '../../lib/i18n';
-import { algolia } from '../../lib/algolia';
+import DocSearch from "./docsearch";
+import { Locale } from "../../lib/i18n";
+import { algolia } from "../../lib/algolia";
 
 interface Props {
   placeHolder?: string;
@@ -10,13 +10,12 @@ interface Props {
   locale?: Locale;
 }
 
-const { 
-  placeHolder = "Search", 
-  fullWidth = false, 
+const {
+  placeHolder = "Search",
+  fullWidth = false,
   slim = false,
-  locale = Locale.English 
+  locale = Locale.English,
 } = Astro.props;
-
 ---
 
 <DocSearch
@@ -27,4 +26,3 @@ const {
   locale={locale}
   {...algolia}
 />
-

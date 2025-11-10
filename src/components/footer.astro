@@ -24,7 +24,7 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
   class={cn(
     "w-full py-12 px-4 overflow-hidden sm:px-6 lg:px-8",
     { [darkClass]: dark },
-    { "border-t border-gray-200 dark:border-dark-gray-800": outline }
+    { "border-t border-gray-200 dark:border-dark-gray-800": outline },
   )}
 >
   <div class="max-w-screen-lg mx-auto space-y-3">
@@ -63,17 +63,20 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
         </a>
       </div>
     </div>
-    <div class="flex flex-wrap justify-center text-gray-500 dark:text-gray-400 font-medium">
+    <div
+      class="flex flex-wrap justify-center text-gray-500 dark:text-gray-400 font-medium"
+    >
       <div class="px-2">
         <p>{t("component.footer.legal_mojang")}</p>
       </div>
     </div>
 
-    {showToggles && (
-      <div class="!mt-9 flex justify-center">
-        <ModeSelect client:only="react" />
-      </div>
-    )}
+    {
+      showToggles && (
+        <div class="!mt-9 flex justify-center">
+          <ModeSelect client:only="react" />
+        </div>
+      )
+    }
   </div>
 </div>
-

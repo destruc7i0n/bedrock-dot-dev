@@ -1,11 +1,11 @@
 ---
-import Selectors from './sidebar-selectors';
-import SidebarFilter from './sidebar-filter';
-import SidebarContent from './sidebar-content';
-import ModeSelect from '@components/theme/mode-select';
-import type { SidebarStructure } from './index';
-import type { BedrockVersions } from '../../lib/versions';
-import type { TagsResponse } from '../../lib/tags';
+import Selectors from "./sidebar-selectors";
+import SidebarFilter from "./sidebar-filter";
+import SidebarContent from "./sidebar-content";
+import ModeSelect from "@components/theme/mode-select";
+import type { SidebarStructure } from "./index";
+import type { BedrockVersions } from "../../lib/versions";
+import type { TagsResponse } from "../../lib/tags";
 
 interface Props {
   sidebar: SidebarStructure;
@@ -33,12 +33,10 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
       />
       <SidebarFilter client:load />
     </div>
-    <SidebarContent
-      client:load
-      sidebar={sidebar}
-      file={file}
-    />
-    <div class="flex flex-row justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2">
+    <SidebarContent client:load sidebar={sidebar} file={file} />
+    <div
+      class="flex flex-row justify-end items-center bg-white dark:bg-dark-gray-950 w-full px-4 py-2 border-t border-gray-200 dark:border-dark-gray-800 bottom-safe-area-inset inset-2"
+    >
       <ModeSelect
         transition:persist="sidebar-mode-select"
         client:load
@@ -51,40 +49,45 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
 
 <script is:inline>
   try {
-    const open = JSON.parse(localStorage.getItem('sidebar') || '{}').open !== false;
-    if (open) document.querySelector('.sidebar')?.classList.add('open');
+    const open =
+      JSON.parse(localStorage.getItem("sidebar") || "{}").open !== false;
+    if (open) document.querySelector(".sidebar")?.classList.add("open");
   } catch {}
 </script>
 
 <script>
-  import { sidebarOpen } from '@stores/sidebar-open';
-  import { MOBILE_BREAKPOINT } from '@lib/breakpoints';
+  import { sidebarOpen } from "@stores/sidebar-open";
+  import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
-  document.addEventListener('astro:page-load', () => {
-    const sidebar = document.querySelector('.sidebar');
-    const mask = document.querySelector('.sidebar-mask');
+  document.addEventListener("astro:page-load", () => {
+    const sidebar = document.querySelector(".sidebar");
+    const mask = document.querySelector(".sidebar-mask");
     const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
 
     const updateBodyScroll = () => {
-      document.body.style.overflow = mobile.matches && sidebarOpen.get() ? 'hidden' : '';
+      document.body.style.overflow =
+        mobile.matches && sidebarOpen.get() ? "hidden" : "";
     };
 
-    const unsub = sidebarOpen.subscribe(open => {
-      sidebar?.classList.toggle('open', open);
+    const unsub = sidebarOpen.subscribe((open) => {
+      sidebar?.classList.toggle("open", open);
       updateBodyScroll();
     });
 
     const handleMaskClick = () => sidebarOpen.set(false);
-    mask?.addEventListener('click', handleMaskClick);
-    mobile.addEventListener('change', updateBodyScroll);
-    requestAnimationFrame(() => sidebar?.classList.add('mounted'));
+    mask?.addEventListener("click", handleMaskClick);
+    mobile.addEventListener("change", updateBodyScroll);
+    requestAnimationFrame(() => sidebar?.classList.add("mounted"));
 
-    document.addEventListener('astro:before-preparation', () => {
-      unsub();
-      mask?.removeEventListener('click', handleMaskClick);
-      mobile.removeEventListener('change', updateBodyScroll);
-      document.body.style.overflow = '';
-    }, { once: true });
+    document.addEventListener(
+      "astro:before-preparation",
+      () => {
+        unsub();
+        mask?.removeEventListener("click", handleMaskClick);
+        mobile.removeEventListener("change", updateBodyScroll);
+        document.body.style.overflow = "";
+      },
+      { once: true },
+    );
   });
 </script>
-
