@@ -21,7 +21,8 @@ const { sidebar, file, major, minor, versions, tags } = Astro.props;
 
 const sidebarScript = `try {
   const isMobile = window.matchMedia("(max-width: ${MOBILE_BREAKPOINT}px)");
-  const sidebarState = localStorage.getItem("sidebar") ? JSON.parse(localStorage.getItem("sidebar")).open !== false : true;
+  const stored = localStorage.getItem("sidebar");
+  const sidebarState = stored === null ? true : stored === "true";
   const open = isMobile.matches ? false : sidebarState;
   if (open) document.querySelector(".sidebar")?.classList.add("open");
 } catch {}`;

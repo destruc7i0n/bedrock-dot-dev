@@ -21,6 +21,7 @@
     "@docsearch/css": "^3.9.0",
     "@docsearch/react": "^3.9.0",
     "@heroicons/react": "^2.2.0",
+    "@nanostores/persistent": "^1.2.0",
     "@nanostores/react": "^1.0.0",
     "@vercel/og": "^0.8.5",
     "astro": "^5.15.4",

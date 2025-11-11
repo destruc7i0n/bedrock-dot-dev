@@ -1,32 +1,13 @@
-import { atom } from "nanostores";
+import { persistentAtom } from "@nanostores/persistent";
 import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
-const getInitialValue = (): boolean => {
+const getDefaultValue = (): boolean => {
   if (typeof window === "undefined") return true;
-
-  // always closed by default on mobile, regardless of localStorage
   const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
-  if (mobile.matches) return false;
-
-  try {
-    const stored = localStorage.getItem("sidebar");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (typeof parsed?.open === "boolean") {
-        return parsed.open;
-      }
-    }
-  } catch {}
-
-  return true;
+  return !mobile.matches;
 };
 
-export const sidebarOpen = atom<boolean>(getInitialValue());
-
-if (typeof window !== "undefined") {
-  sidebarOpen.subscribe((value) => {
-    try {
-      localStorage.setItem("sidebar", JSON.stringify({ open: value }));
-    } catch {}
-  });
-}
+export const sidebarOpen = persistentAtom<boolean>("sidebar", getDefaultValue(), {
+  encode: (value) => String(value),
+  decode: (str) => str === "true",
+});
