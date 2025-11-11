@@ -95,7 +95,7 @@ async function generateVercelRedirects() {
   const vercelJsonPath = path.resolve("vercel.json");
 
   // Read existing vercel.json if it exists, otherwise start with empty object
-  let vercelConfig: any = {};
+  let vercelConfig: Record<string, unknown> = {};
   if (fs.existsSync(vercelJsonPath)) {
     try {
       const existingContent = fs.readFileSync(vercelJsonPath, "utf-8");
