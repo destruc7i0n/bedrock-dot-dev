@@ -30,65 +30,61 @@ type BuildOutputConfig = {
   [key: string]: unknown;
 };
 
-async function generateVercelRedirects(): Promise<BuildOutputRoute[]> {
+// https://vercel.com/docs/build-output-api/configuration#routes
+async function generateVercelRoutes(): Promise<BuildOutputRoute[]> {
   const { stable, beta } = await getTags(Locale.English);
   const version = "\\d+\\.\\d+\\.\\d+\\.\\d+";
 
   return [
     {
-      src: "/docs",
+      src: "^/docs$",
       dest: "/",
       status: 302,
     },
     {
-      src: `/{docs}?:path((?:${version})\\/?(?:(?:${version})\\/?)?)`,
+      src: `^/{docs}?:path((?:${version})\\/?(?:(?:${version})\\/?)?)$`,
       dest: "/?r=:path",
       status: 302,
     },
     {
-      src: "/docs/stable",
+      src: "^/docs/stable$",
       dest: `/?r=${stable.join("/")}`,
       status: 302,
     },
     {
-      src: "/docs/beta",
+      src: "^/docs/beta$",
       dest: `/?r=${beta.join("/")}`,
       status: 302,
     },
     {
-      src: "/(r|c|s)/MoLang",
+      src: "^/(r|c|s)/MoLang$",
       dest: "/docs/stable/Molang",
       status: 302,
     },
     {
-      src: "/(r|c|s)/:file",
-      dest: "/docs/stable/:file",
+      src: "^/(r|c|s)/(.+)$",
+      dest: "/docs/stable/$2",
       status: 302,
     },
     {
-      src: "/(r|c|s)",
+      src: "^/(r|c|s)$",
       dest: `/?r=${stable.join("/")}`,
       status: 302,
     },
     {
-      src: "/b/MoLang",
+      src: "^/b/MoLang$",
       dest: "/docs/beta/Molang",
       status: 302,
     },
     {
-      src: "/b/:file",
-      dest: "/docs/beta/:file",
+      src: "^/b/(.+)$",
+      dest: "/docs/beta/$1",
       status: 302,
     },
     {
-      src: "/b",
+      src: "^/b$",
       dest: `/?r=${beta.join("/")}`,
       status: 302,
-    },
-    {
-      src: `/:major(${version})/:minor(${version})/:file.:ext?`,
-      dest: "/docs/:major/:minor/:file",
-      status: 308,
     },
   ];
 }
@@ -121,7 +117,7 @@ export default function vercelRedirectsIntegration(): AstroIntegration {
           return;
         }
 
-        const redirects = await generateVercelRedirects();
+        const redirects = await generateVercelRoutes();
 
         let config: BuildOutputConfig;
 
