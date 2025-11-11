@@ -25,4 +25,13 @@ const {
   slim={slim}
   locale={locale}
   {...algolia}
-/>
+>
+  <div
+    slot="fallback"
+    class={`docsearch-wrapper${fullWidth ? " full-width w-full" : ""}${slim ? " slim" : ""}`}
+  >
+    <button type="button" class="DocSearch DocSearch-Button">
+      <span class="DocSearch-Button-Container"></span>
+    </button>
+  </div>
+</DocSearch>

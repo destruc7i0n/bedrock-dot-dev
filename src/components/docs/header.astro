@@ -8,7 +8,9 @@ import { Locale } from "@lib/i18n";
   class="navbar sticky left-0 top-0 z-50 mx-auto flex h-12 w-full items-center justify-between border-b border-gray-200 bg-gray-50 px-4 text-gray-900 dark:border-dark-gray-800 dark:bg-dark-gray-975 dark:text-gray-200 lg:pr-2"
 >
   <div class="flex items-center">
-    <SidebarToggle client:load transition:persist="sidebar-toggle" />
+    <SidebarToggle client:only="react" transition:persist="sidebar-toggle">
+      <SidebarToggle slot="fallback" client:idle />
+    </SidebarToggle>
     <h1 class="mr-3 text-2xl">
       <a
         href="/"
@@ -30,5 +32,7 @@ import { Locale } from "@lib/i18n";
       </li>
     </ul>
   </div>
-  <DocSearch slim={true} locale={Locale.English} />
+  <div class="w-full max-w-48">
+    <DocSearch slim={true} fullWidth={true} locale={Locale.English} />
+  </div>
 </header>

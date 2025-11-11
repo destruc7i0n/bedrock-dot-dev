@@ -74,7 +74,9 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
     {
       showToggles && (
         <div class="!mt-9 flex justify-center">
-          <ModeSelect client:only="react" />
+          <ModeSelect client:only="react">
+            <ModeSelect slot="fallback" client:idle />
+          </ModeSelect>
         </div>
       )
     }
