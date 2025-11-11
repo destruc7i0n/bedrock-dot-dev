@@ -44,7 +44,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
         className={cn(
           "flex flex-row py-2 px-4 text-gray-800 dark:text-gray-300 bg-white dark:bg-dark-gray-950 cursor-pointer",
           { "sticky top-0": isOpen && hasChildren, "select-none": hasChildren },
-          "border-b border-gray-200 dark:border-dark-gray-800"
+          "border-b border-gray-200 dark:border-dark-gray-800",
         )}
         onClick={handleClick}
       >
@@ -56,9 +56,10 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
                 active,
               "hover:text-gray-900 dark:hover:text-gray-200": !active,
             },
-            "transition-all duration-75 ease-in-out"
+            "transition-all duration-75 ease-in-out",
           )}
           href={`#${encodeURIComponent(id)}`}
+          data-astro-reload
         >
           {title}
         </a>
@@ -66,7 +67,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
           <div
             className={cn(
               "flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out",
-              { "-rotate-90": isOpen }
+              { "-rotate-90": isOpen },
             )}
           >
             <ChevronLeftIcon className="w-5 h-5" />
@@ -86,5 +87,3 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
 };
 
 export default SidebarGroupTitle;
-
-

@@ -30,10 +30,11 @@ const SidebarGroupItem: FunctionComponent<Props> = ({
             "text-gray-800 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-dark-gray-900":
               !active,
           },
-          "transition-all duration-150 ease-in-out"
+          "transition-all duration-150 ease-in-out",
         )}
         href={`#${encodeURIComponent(id)}`}
         onClick={onClick}
+        data-astro-reload
       >
         {title}
       </a>
@@ -42,5 +43,3 @@ const SidebarGroupItem: FunctionComponent<Props> = ({
 };
 
 export default memo(SidebarGroupItem);
-
-

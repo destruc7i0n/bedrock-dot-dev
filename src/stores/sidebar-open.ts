@@ -23,13 +23,10 @@ const getInitialValue = (): boolean => {
 
 export const sidebarOpen = atom<boolean>(getInitialValue());
 
-// Persist changes to localStorage
 if (typeof window !== "undefined") {
   sidebarOpen.subscribe((value) => {
     try {
       localStorage.setItem("sidebar", JSON.stringify({ open: value }));
-    } catch {
-      // Ignore storage errors (quota exceeded, disabled, etc.)
-    }
+    } catch {}
   });
 }

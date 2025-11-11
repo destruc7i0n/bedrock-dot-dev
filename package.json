@@ -7,6 +7,7 @@
     "build:prepare": "pnpm run generate-docs-file && pnpm run generate-vercel-redirects && pnpm run generate-sitemap",
     "build:astro": "astro build",
     "start": "astro preview",
+    "astro": "astro",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-docs-file": "tsx scripts/generate-docs-manifest.ts",
     "generate-vercel-redirects": "tsx scripts/generate-vercel-redirects.ts",

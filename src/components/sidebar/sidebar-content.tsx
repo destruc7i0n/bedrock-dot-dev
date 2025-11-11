@@ -55,7 +55,10 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
     setMounted(true);
 
     // store the hash for re-render
-    const onHashChange = () => setHash(decodeURIComponent(location.hash));
+    const onHashChange = () => {
+      const decoded = decodeURIComponent(location.hash);
+      setHash(decoded);
+    };
 
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);

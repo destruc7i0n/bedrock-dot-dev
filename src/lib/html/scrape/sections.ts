@@ -14,7 +14,7 @@ const addAnchors = (html: string) => {
       <h${headerNumber} class="anchored-heading">
         <a aria-hidden="true" tabindex="-1" class="anchor" id="${id}"></a>
         ${title}
-        <a href="#${encoded}" tabindex="-1" class="hash-link" aria-label="Anchor" aria-hidden="true">#</a>
+        <a href="#${encoded}" tabindex="-1" class="hash-link" aria-label="Anchor" aria-hidden="true" data-astro-reload>#</a>
       </h${headerNumber}>
     `);
   });
