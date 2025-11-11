@@ -12,7 +12,8 @@
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-docs-file": "tsx scripts/generate-docs-manifest.ts",
     "generate-vercel-redirects": "tsx scripts/generate-vercel-redirects.ts",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "postinstall": "git submodule update --recursive --remote"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
