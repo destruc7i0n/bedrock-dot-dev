@@ -7,7 +7,11 @@ const getDefaultValue = (): boolean => {
   return !mobile.matches;
 };
 
-export const sidebarOpen = persistentAtom<boolean>("sidebar", getDefaultValue(), {
-  encode: (value) => String(value),
-  decode: (str) => str === "true",
-});
+export const sidebarOpen = persistentAtom<boolean>(
+  "sidebar",
+  getDefaultValue(),
+  {
+    encode: (value) => String(value),
+    decode: (str) => str === "true",
+  },
+);

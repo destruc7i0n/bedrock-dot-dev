@@ -1,4 +1,4 @@
-/// <reference path="../.astro/types.d.ts" />
+import "../.astro/types.d.ts";
 
 interface ImportMetaEnv {
   readonly PROD: boolean;

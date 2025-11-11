@@ -12,8 +12,8 @@ const { html, file, version } = Astro.props;
 const alerts = getDocAlerts(file, version);
 ---
 
-<div class="flex-1 w-0 bg-white dark:bg-dark-gray-900">
-  <div class="pt-4 pr-5 pl-5 pb-5 lg:max-w-9/10 mx-auto">
+<div class="w-0 flex-1 bg-white dark:bg-dark-gray-900">
+  <div class="mx-auto pb-5 pl-5 pr-5 pt-4 lg:max-w-9/10">
     {alerts.map((alert) => <DocsAlert {...alert} />)}
     <div
       class="docs-content text-gray-900 dark:text-gray-200"

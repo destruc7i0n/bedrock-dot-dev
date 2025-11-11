@@ -28,13 +28,13 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   const { t } = useTranslation();
   return (
     <>
-      <div className="w-1/2 mb-2 pr-2">
-        <label className="block text-sm font-bold mb-2" htmlFor="major">
+      <div className="mb-2 w-1/2 pr-2">
+        <label className="mb-2 block text-sm font-bold" htmlFor="major">
           {t("component.version_chooser.major")}
         </label>
         <select
           id="major"
-          className="border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full"
+          className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
           value={major}
           onChange={({ target: { value } }) => setMajor(value)}
         >
@@ -45,13 +45,13 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
           ))}
         </select>
       </div>
-      <div className="w-1/2 mb-2">
-        <label className="block text-sm font-bold mb-2" htmlFor="minor">
+      <div className="mb-2 w-1/2">
+        <label className="mb-2 block text-sm font-bold" htmlFor="minor">
           {t("component.version_chooser.minor")}
         </label>
         <select
           id="minor"
-          className="border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full"
+          className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
           value={minor}
           onChange={({ target: { value } }) => setMinor(value)}
         >

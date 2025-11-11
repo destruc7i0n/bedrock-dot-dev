@@ -121,7 +121,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
     <div className="flex flex-row">
       <div className="w-1/2">
         <label
-          className="block text-sm font-bold mb-1 sr-only"
+          className="sr-only mb-1 block text-sm font-bold"
           htmlFor="version"
         >
           {translate("component.sidebar.version_title")}
@@ -130,13 +130,13 @@ const SidebarSelectors: FunctionComponent<Props> = ({
           value={`${major}/${minor}`}
           id="version"
           onChange={onVersionChange}
-          className="block w-full leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800"
+          className="block w-full rounded-md border-gray-300 leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
         >
           {options}
         </select>
       </div>
-      <div className="w-1/2 ml-4">
-        <label className="block text-sm font-bold mb-1 sr-only" htmlFor="file">
+      <div className="ml-4 w-1/2">
+        <label className="sr-only mb-1 block text-sm font-bold" htmlFor="file">
           {translate("component.sidebar.file_title")}
         </label>
         {files && (
@@ -144,7 +144,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
             value={file}
             id="file"
             onChange={onFileChange}
-            className="block w-full leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 text-black dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800"
+            className="block w-full rounded-md border-gray-300 leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
           >
             {files.map((file) => (
               <option key={`file-${file}`} value={file}>

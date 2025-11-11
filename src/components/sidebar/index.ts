@@ -11,5 +11,3 @@ export interface SidebarStructureGroup {
 export type SidebarStructure = {
   [key: string]: SidebarStructureGroup;
 };
-
-

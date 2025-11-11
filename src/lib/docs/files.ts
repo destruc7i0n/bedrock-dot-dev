@@ -11,6 +11,7 @@ import { DOCS_SUBMODULE_PATH } from "./constants";
  */
 export async function getDocsFilesFromRepo(
   filePath: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _locale: Locale,
 ): Promise<string> {
   const submodulePath = path.resolve(process.cwd(), DOCS_SUBMODULE_PATH);

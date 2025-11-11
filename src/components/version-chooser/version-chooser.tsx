@@ -20,7 +20,7 @@ type VersionFileProps = {
 
 const VersionFile: FunctionComponent<VersionFileProps> = ({ title, link }) => {
   return (
-    <a href={link} className="link px-2 truncate text-lg">
+    <a href={link} className="link truncate px-2 text-lg">
       {title}
     </a>
   );
@@ -64,7 +64,6 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
       parsedUrlQuery = parseUrlQuery(query.r, versions);
 
       // Intentionally setting state in effect to sync with URL query params
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuickSelect(false);
       if (parsedUrlQuery.major) setMajor(parsedUrlQuery.major);
       if (parsedUrlQuery.minor) setMinor(parsedUrlQuery.minor);
@@ -75,7 +74,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   useEffect(() => {
     if (!versions[major]) {
       // Intentionally setting state in effect to sync with locale changes
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMajor(stableMajor);
       setMinor(stableMinor);
       setQuickSelect(false);
@@ -96,7 +95,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   useEffect(() => {
     if (!minorVersions.includes(minor)) {
       // Intentionally setting state in effect to ensure valid minor version
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMinor(minorVersions[0]);
     }
   }, [major, minor, minorVersions]);
@@ -107,7 +106,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
 
   return (
     <>
-      <div className="w-full flex flex-row">
+      <div className="flex w-full flex-row">
         <VersionChooserComponent
           major={major}
           minor={minor}
@@ -122,21 +121,21 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
         <label className="flex items-center">
           <input
             type="checkbox"
-            className="text-blue-500 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            className="rounded-md border-gray-300 text-blue-500 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             checked={!quickSelect}
             onChange={({ target: { checked } }) => setQuickSelect(!checked)}
           />
-          <span className="ml-2 text-sm select-none">
+          <span className="ml-2 select-none text-sm">
             {t("component.version_chooser.view_all")}
           </span>
         </label>
       </div>
 
-      <div className="w-full mt-2">
-        <label className="block text-sm font-bold mb-2">
+      <div className="mt-2 w-full">
+        <label className="mb-2 block text-sm font-bold">
           {t("component.version_chooser.file_selection")}
         </label>
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-2 bg-gray-50 dark:bg-dark-gray-900 border border-gray-200 dark:border-dark-gray-800 p-2 rounded-lg">
+        <div className="grid w-full grid-cols-2 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-dark-gray-800 dark:bg-dark-gray-900 md:grid-cols-3">
           {files.map((file) => {
             const fileKey = file.toLowerCase().split(" ").join("_");
             const fileName = t(`files.${fileKey}`, { defaultValue: file });

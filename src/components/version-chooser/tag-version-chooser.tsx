@@ -21,13 +21,13 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   useEffect(updateVersion, [version, tags, setMajor, setMinor]);
 
   return (
-    <div className="w-full mb-2">
-      <label className="block text-sm font-bold mb-2" htmlFor="tag">
+    <div className="mb-2 w-full">
+      <label className="mb-2 block text-sm font-bold" htmlFor="tag">
         {t("component.version_chooser.tagged_version_title")}
       </label>
       <select
         id="tag"
-        className="border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:text-gray-200 dark:bg-dark-gray-900 dark:border-dark-gray-800 leading-5 w-full "
+        className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
         value={version}
         onChange={({ target: { value } }) => setVersion(value as Tags)}
       >

@@ -22,6 +22,7 @@ const addAnchors = (html: string) => {
 
 const getSection = (html: string, title: string) => {
   // match the title and everything up to the next title or eof
+  // eslint-disable-next-line no-useless-escape
   const sectionRe = `<h1><p id="${title}">${title}<\/p><\/h1>([^]*?)(<h1>|$)`;
   const matchSection = new RegExp(sectionRe);
 

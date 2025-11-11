@@ -25,20 +25,20 @@ const tags = await getTags(Locale.English);
   </Fragment>
 
   <div
-    class="bg-gray-50 dark:bg-dark-gray-950 border-b border-gray-200 dark:border-dark-gray-800"
+    class="border-b border-gray-200 bg-gray-50 dark:border-dark-gray-800 dark:bg-dark-gray-950"
   >
     <Navbar />
 
     <div
-      class="max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 py-10 flex flex-wrap text-center"
+      class="mx-auto flex max-w-screen-sm flex-wrap px-4 py-10 text-center sm:px-6 md:px-8"
     >
       <h1
-        class="font-extrabold text-4xl md:text-5xl leading-10 text-gray-900 dark:text-white w-full"
+        class="w-full text-4xl font-extrabold leading-10 text-gray-900 dark:text-white md:text-5xl"
       >
         bedrock.dev
       </h1>
       <h2
-        class="mt-4 mb-6 sm:mt-5 font-medium text-xl md:text-2xl text-center leading-tight text-gray-900 dark:text-gray-200 w-full"
+        class="mb-6 mt-4 w-full text-center text-xl font-medium leading-tight text-gray-900 dark:text-gray-200 sm:mt-5 md:text-2xl"
       >
         {t("page.home.subtitle")}
       </h2>
@@ -51,11 +51,11 @@ const tags = await getTags(Locale.English);
     </div>
   </div>
 
-  <div class="max-w-screen-sm mx-auto px-4 sm:px-6 md:px-8 mt-10">
+  <div class="mx-auto mt-10 max-w-screen-sm px-4 sm:px-6 md:px-8">
     <div
-      class="w-full bg-white dark:bg-dark-gray-950 text-black dark:text-gray-200 rounded-lg outline-none appearance-none transition duration-150 ease-in-out"
+      class="w-full appearance-none rounded-lg bg-white text-black outline-none transition duration-150 ease-in-out dark:bg-dark-gray-950 dark:text-gray-200"
     >
-      <div class="flex flex-wrap xl:items-center text-xl font-normal p-3">
+      <div class="flex flex-wrap p-3 text-xl font-normal xl:items-center">
         <h2 class="w-full pb-3 text-xl font-bold">
           {t("component.version_chooser.title")}
         </h2>

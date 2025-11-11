@@ -16,7 +16,7 @@ const checkCache = (): BedrockVersionsFile | undefined => {
     const docsContent = fs.readFileSync(docsPath, "utf-8");
     const parsedContent = JSON.parse(docsContent);
     if (parsedContent) return parsedContent as BedrockVersionsFile;
-  } catch (error) {
+  } catch {
     // console.error("Could not load docs content from cache!", error);
   }
 

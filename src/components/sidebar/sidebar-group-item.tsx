@@ -23,11 +23,11 @@ const SidebarGroupItem: FunctionComponent<Props> = ({
     <li className="my-1">
       <a
         className={cn(
-          "sidebar-id block text-sm w-full px-2 rounded-md py-1",
+          "sidebar-id block w-full rounded-md px-2 py-1 text-sm",
           {
-            "text-blue-600 dark:text-blue-500 bg-gray-100 dark:bg-dark-gray-900":
+            "bg-gray-100 text-blue-600 dark:bg-dark-gray-900 dark:text-blue-500":
               active,
-            "text-gray-800 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-dark-gray-900":
+            "text-gray-800 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-dark-gray-900 dark:hover:text-gray-200":
               !active,
           },
           "transition-all duration-150 ease-in-out",

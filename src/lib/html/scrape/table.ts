@@ -9,6 +9,7 @@ import { TABLE_MATCH, TD_COMPONENT_ID_MATCH } from "../regex";
 
 export const getTable = (html: string, id: string, tagNum: number) => {
   const tableRegex =
+    // eslint-disable-next-line no-useless-escape
     `<h${tagNum}><p id="${id}">(.*?)<\/p><\/h${tagNum}>[^]*?` +
     TABLE_MATCH.source;
 

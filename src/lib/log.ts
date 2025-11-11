@@ -8,13 +8,3 @@ const logger = {
 };
 
 export default logger;
-
-// Simple color function for terminal output (no dependencies)
-export const logLinkColor = (text: string): string => {
-  if (process.env.NODE_ENV === "development" && typeof process !== "undefined" && process.stdout?.isTTY) {
-    // ANSI color code for green
-    return `\x1b[32m${text}\x1b[0m`;
-  }
-  return text;
-};
-

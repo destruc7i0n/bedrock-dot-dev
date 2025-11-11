@@ -85,5 +85,3 @@ const getDocAlerts = (doc: string, version: string): DocAlert[] => {
 };
 
 export { getDocAlerts };
-
-

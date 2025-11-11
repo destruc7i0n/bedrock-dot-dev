@@ -45,5 +45,3 @@ export const getTitle = (html: string): TitleResponse => {
   resp.title = title.replace(/ Documentation/i, "");
   return resp;
 };
-
-

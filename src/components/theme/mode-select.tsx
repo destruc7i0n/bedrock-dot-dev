@@ -35,19 +35,19 @@ const ModeSelect: FunctionComponent<Props> = ({ className }) => {
 
   return (
     <div className={cn("relative dark:text-gray-200", className)}>
-      <label className="block text-sm font-bold mb-1 sr-only" htmlFor="mode">
+      <label className="sr-only mb-1 block text-sm font-bold" htmlFor="mode">
         Mode Select
       </label>
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
+      <div className="absolute inset-y-0 left-0 flex items-center pl-3">
         <span className="leading-4">
-          <Icon className="pointer-events-none w-4 h-4" />
+          <Icon className="pointer-events-none h-4 w-4" />
         </span>
       </div>
       <select
         value={theme}
         onChange={({ target: { value } }) => setTheme(value as Theme)}
         id="mode"
-        className="leading-4 border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-dark-gray-900 dark:border-dark-gray-800 text-sm py-2 pl-8 block"
+        className="block rounded-md border-gray-300 py-2 pl-8 text-sm leading-4 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900"
       >
         <option value={Theme.System}>
           {t("component.color_theme_select.system")}

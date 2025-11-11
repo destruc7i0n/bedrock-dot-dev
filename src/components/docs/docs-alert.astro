@@ -1,7 +1,7 @@
 ---
 import type { DocAlert } from "../../lib/docs-alerts";
 
-interface Props extends DocAlert {}
+type Props = DocAlert;
 
 const { title, type, message } = Astro.props;
 

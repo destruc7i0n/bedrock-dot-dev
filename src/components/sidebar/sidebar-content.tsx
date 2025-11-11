@@ -62,8 +62,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
 
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Intentionally empty - only run on mount for hash initialization
+  }, []);
 
   // run after mount to scroll to the hash
   // since the group might be closed
@@ -122,7 +121,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
 
   return (
     <div
-      className="flex-1 flex flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8 h-0"
+      className="flex h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8"
       ref={sidebarRef}
     >
       {Object.keys(sidebar).map((id, index) => {

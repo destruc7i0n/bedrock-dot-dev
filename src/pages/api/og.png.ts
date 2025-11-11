@@ -29,7 +29,7 @@ const ASSETS = {
 
 const getAsset = async (file: string): Promise<string | null> => {
   const name = file.toLowerCase().replace(/ /g, "_") as keyof typeof ASSETS;
-  if (!ASSETS.hasOwnProperty(name)) return null;
+  if (!(name in ASSETS)) return null;
 
   const asset = ASSETS[name];
 

@@ -42,7 +42,7 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
     <div>
       <div
         className={cn(
-          "flex flex-row py-2 px-4 text-gray-800 dark:text-gray-300 bg-white dark:bg-dark-gray-950 cursor-pointer",
+          "flex cursor-pointer flex-row bg-white px-4 py-2 text-gray-800 dark:bg-dark-gray-950 dark:text-gray-300",
           { "sticky top-0": isOpen && hasChildren, "select-none": hasChildren },
           "border-b border-gray-200 dark:border-dark-gray-800",
         )}
@@ -66,11 +66,11 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
         {hasChildren && (
           <div
             className={cn(
-              "flex ml-auto items-center cursor-pointer select-none transform transition duration-150 ease-in-out",
+              "ml-auto flex transform cursor-pointer select-none items-center transition duration-150 ease-in-out",
               { "-rotate-90": isOpen },
             )}
           >
-            <ChevronLeftIcon className="w-5 h-5" />
+            <ChevronLeftIcon className="h-5 w-5" />
           </div>
         )}
       </div>

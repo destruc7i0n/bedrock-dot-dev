@@ -23,14 +23,12 @@ const BackToTop = () => {
 
   return showScroll ? (
     <button
-      className="scroll-button flex items-center justify-center bg-blue-500 hover:bg-blue-700 transition duration-150 ease-in-out text-white font-bold py-1.5 px-1.5 rounded-lg"
+      className="scroll-button flex items-center justify-center rounded-lg bg-blue-500 px-1.5 py-1.5 font-bold text-white transition duration-150 ease-in-out hover:bg-blue-700"
       onClick={scrollTop}
     >
-      <ChevronUpIcon className="w-6 h-6" />
+      <ChevronUpIcon className="h-6 w-6" />
     </button>
   ) : null;
 };
 
 export default BackToTop;
-
-

@@ -12,13 +12,13 @@ const SidebarToggle: FunctionComponent = () => {
   };
 
   return (
-    <div className="flex mr-2">
+    <div className="mr-2 flex">
       <button
         onClick={handleToggle}
         className="no-double-tap-zoom"
         aria-label="Toggle sidebar"
       >
-        <IconClass className="w-6 h-6" />
+        <IconClass className="h-6 w-6" />
       </button>
     </div>
   );

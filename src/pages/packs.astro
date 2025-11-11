@@ -84,8 +84,8 @@ const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
   <div class="h-screen">
     <Navbar />
 
-    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 md:px-8 mt-8 mb-10">
-      <div class="max-w-screen-lg mx-auto space-y-4">
+    <div class="mx-auto mb-10 mt-8 max-w-screen-xl px-4 sm:px-6 md:px-8">
+      <div class="mx-auto max-w-screen-lg space-y-4">
         <h4 class="text-4xl font-bold text-black dark:text-gray-200">
           {t("page.packs.title")}
         </h4>
@@ -113,7 +113,7 @@ const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
         </p>
 
         <div
-          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal"
+          class="grid grid-cols-2 gap-4 font-normal md:grid-cols-3 lg:grid-cols-4"
         >
           {
             versionsSorted.map((v) => {
