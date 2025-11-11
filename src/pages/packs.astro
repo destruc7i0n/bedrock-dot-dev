@@ -3,7 +3,7 @@ import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import Layout from "@layouts/layout.astro";
 import Navbar from "../components/homepage/navbar.astro";
 import Footer from "../components/footer.astro";
-import PackCard from "../components/packs/pack-card";
+import PackCard from "../components/packs/pack-card.astro";
 
 import { getTags, Tags } from "../lib/tags";
 import { Locale, t } from "../lib/i18n";
@@ -116,9 +116,10 @@ const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
           class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-normal"
         >
           {
-            versionsSorted.map((v) => (
-              <PackCard client:idle versionName={v} versionData={versions[v]} />
-            ))
+            versionsSorted.map((v) => {
+              const versionData = versions[v];
+              return <PackCard versionName={v} versionData={versionData} />;
+            })
           }
         </div>
       </div>

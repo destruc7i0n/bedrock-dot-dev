@@ -1,0 +1,121 @@
+---
+import { t } from "../../lib/i18n";
+import { Tags } from "../../lib/tags";
+import { getPackUrl } from "../../lib/util";
+import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+
+export type PackVersions = {
+  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tags; git: string }>;
+};
+
+interface Props {
+  versionName: string;
+  versionData: PackVersions[string];
+}
+
+const { versionName, versionData } = Astro.props;
+
+const TAG_STYLES = {
+  [Tags.Beta]: {
+    border:
+      "border-2 border-yellow-500 bg-yellow-50 dark:border-yellow-600 dark:bg-yellow-600/10",
+    translationKey: "component.version_chooser.beta_string",
+  },
+  [Tags.Stable]: {
+    border:
+      "border-2 border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-600/10",
+    translationKey: "component.version_chooser.stable_string",
+  },
+} as const;
+
+const isGitHubLink = !!versionData.git;
+
+// Pre-compute translations in frontmatter
+const behavioursText = t("component.packs_page.behaviours_link");
+const resourcesText = t("component.packs_page.resources_link");
+
+// Compute title and border styles
+let title = versionName;
+let border = "border-gray-200 dark:border-transparent";
+if (versionData.t && TAG_STYLES[versionData.t]) {
+  const tagStyle = TAG_STYLES[versionData.t];
+  border = tagStyle.border;
+  title = `${title} (${t(tagStyle.translationKey)})`;
+}
+---
+
+<pack-card-toggle data-version={versionName}>
+  <div
+    class={`text-center bg-gray-50 dark:bg-dark-gray-950 border ${border} p-2 rounded-md`}
+  >
+    <p class="text-lg dark:text-gray-200">{title}</p>
+
+    <div
+      class="flex flex-col w-full md:flex-row md:justify-around items-center justify-center"
+    >
+      {
+        isGitHubLink ? (
+          <a href={versionData.git} class="link" target="_blank">
+            GitHub
+          </a>
+        ) : (
+          <>
+            <button
+              class="link cursor-pointer border-none bg-transparent p-0"
+              aria-label="Show download options"
+            >
+              <ArrowDownTrayIcon className="pointer-events-none w-6 h-6" />
+            </button>
+            {versionData.b ? (
+              <a
+                href={getPackUrl("behaviours", versionName)}
+                class="link hidden"
+                download
+              >
+                {behavioursText}
+              </a>
+            ) : (
+              <p class="text-gray-500 dark:text-gray-400 hidden">
+                {behavioursText}
+              </p>
+            )}
+
+            {versionData.r ? (
+              <a
+                href={getPackUrl("resources", versionName)}
+                class="link hidden"
+                target="_blank"
+                download
+              >
+                {resourcesText}
+              </a>
+            ) : (
+              <p class="text-gray-500 dark:text-gray-400 hidden">
+                {resourcesText}
+              </p>
+            )}
+          </>
+        )
+      }
+    </div>
+  </div>
+</pack-card-toggle>
+
+<script>
+  class PackCardToggle extends HTMLElement {
+    connectedCallback() {
+      const btn = this.querySelector("button");
+      const links = this.querySelectorAll("a, p");
+
+      btn?.addEventListener(
+        "click",
+        () => {
+          btn.classList.add("hidden");
+          links.forEach((link) => link.classList.remove("hidden"));
+        },
+        { once: true },
+      );
+    }
+  }
+  customElements.define("pack-card-toggle", PackCardToggle);
+</script>
