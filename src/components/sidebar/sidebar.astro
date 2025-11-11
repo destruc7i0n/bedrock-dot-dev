@@ -48,9 +48,11 @@ const sidebarScript = `try {
     >
       <ModeSelect
         transition:persist="sidebar-mode-select"
-        client:load
+        client:only="react"
         className="ml-2"
-      />
+      >
+        <ModeSelect slot="fallback" />
+      </ModeSelect>
     </div>
   </aside>
   <div class="sidebar-mask" transition:persist="sidebar-mask"></div>
