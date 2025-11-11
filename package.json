@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run build:prepare && pnpm run build:astro",
-    "build:prepare": "pnpm run generate-docs-file && pnpm run generate-vercel-redirects && pnpm run generate-sitemap",
+    "build:prepare": "pnpm run generate-docs-file && pnpm run generate-sitemap",
     "build:astro": "astro build",
     "start": "astro preview",
     "astro": "astro",
