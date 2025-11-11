@@ -84,10 +84,10 @@
     }
 
     tr:nth-child(2n + 3) td {
-      @apply bg-dark-gray-850 #{!important};
+      background-color: var(--color-dark-gray-850) !important;
 
       table td {
-        @apply bg-dark-gray-900 #{!important};
+        background-color: var(--color-dark-gray-900) !important;
       }
     }
   }
@@ -102,16 +102,16 @@
     @apply font-mono;
   }
 
-  :not(.dark-mode) & {
-    @import "code/light.scss";
+  :not(.dark) & {
+    @import "./code/light.scss";
   }
 
   .dark & {
-    @import "code/dark.scss";
+    @import "./code/dark.scss";
   }
 
   .monocraft & {
-    @import "code/monocraft.scss";
+    @import "./code/monocraft.scss";
   }
 
   /* headings */

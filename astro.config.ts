@@ -11,12 +11,7 @@ export default defineConfig({
   site: "https://bedrock.dev",
   output: "static",
   prefetch: true,
-  integrations: [
-    tailwind(),
-    react(),
-    nprogress(),
-    vercelRedirects(),
-  ],
+  integrations: [tailwind(), react(), nprogress(), vercelRedirects()],
   adapter: vercel(),
   build: {
     redirects: false,

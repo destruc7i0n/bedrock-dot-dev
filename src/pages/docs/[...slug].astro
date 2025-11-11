@@ -1,4 +1,6 @@
 ---
+import { Font } from "astro:assets";
+
 import Layout from "@layouts/layout.astro";
 import Header from "@components/docs/header.astro";
 import Sidebar from "@components/sidebar/sidebar.astro";
@@ -115,6 +117,9 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 
 <Layout title={title} description={description} ogImage={ogImageUrl}>
   <Fragment slot="head">
+    <Font cssVariable="--font-fira-code" preload />
+    <Font cssVariable="--font-monocraft" />
+
     <meta name="docsearch:language" content={Locale.English} />
     <link rel="expect" href="#end-of-content" blocking="render" />
   </Fragment>

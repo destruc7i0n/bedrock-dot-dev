@@ -37,7 +37,7 @@ html.dark {
   @apply ring-0 ring-transparent;
 }
 
-// https://github.com/algolia/docsearch/blob/97b279a334e7debc06bfea3b283810b3685b683c/packages/docsearch-css/src/_variables.css
+/* https://github.com/algolia/docsearch/blob/97b279a334e7debc06bfea3b283810b3685b683c/packages/docsearch-css/src/_variables.css */
 
 :root {
   --docsearch-primary-color: theme(colors.blue.500);

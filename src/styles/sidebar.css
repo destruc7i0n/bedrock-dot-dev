@@ -19,11 +19,11 @@
     @apply border-dark-gray-800;
   }
 
-  // lg screen and below
+  /* lg screen and below */
   @screen lg-max {
     position: fixed;
     transform: translateX(-100%);
-    // like silk
+    /* like silk */
     will-change: transform;
 
     width: 80%;
@@ -42,14 +42,14 @@
   }
 
   @screen lg {
-    // hide if not open
+    /* hide if not open */
     &:not(.open) {
       display: none;
     }
   }
 
-  // when on mobile, wait for the component to be mounted
-  // so as to prevent a closing animation when loading the page
+  /* when on mobile, wait for the component to be mounted
+  so as to prevent a closing animation when loading the page */
   @screen lg-max {
     &:not(.mounted) {
       display: none;
