@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import Analytics from "./analytics.astro";
 
 interface Props {
   title?: string;
@@ -71,3 +72,5 @@ try {
 <meta name="twitter:creator" content="@TheDestruc7i0n" />
 
 <script is:inline set:html={themeScript} />
+
+<Analytics />
