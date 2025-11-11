@@ -1,0 +1,46 @@
+---
+import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
+---
+
+<div class="mr-2 flex">
+  <button
+    id="sidebar-toggle"
+    class="no-double-tap-zoom"
+    aria-label="Toggle sidebar"
+  >
+    <Bars3Icon id="icon-closed" className="h-6 w-6" />
+    <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />
+  </button>
+</div>
+
+<script>
+  import { sidebarOpen } from "@stores/sidebar-open";
+
+  document.addEventListener("astro:page-load", () => {
+    const button = document.getElementById("sidebar-toggle");
+    if (!button) return;
+
+    const iconClosed = button.querySelector("#icon-closed");
+    const iconOpen = button.querySelector("#icon-open");
+    if (!iconClosed || !iconOpen) return;
+
+    const updateIcons = (open: boolean) => {
+      if (open) {
+        iconClosed.classList.add("hidden");
+        iconOpen.classList.remove("hidden");
+      } else {
+        iconClosed.classList.remove("hidden");
+        iconOpen.classList.add("hidden");
+      }
+    };
+
+    updateIcons(sidebarOpen.get());
+    const unsub = sidebarOpen.subscribe(updateIcons);
+
+    button.addEventListener("click", () => sidebarOpen.set(!sidebarOpen.get()));
+
+    document.addEventListener("astro:before-preparation", () => unsub(), {
+      once: true,
+    });
+  });
+</script>

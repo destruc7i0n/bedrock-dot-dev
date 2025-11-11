@@ -1,6 +1,6 @@
 ---
 import DocSearch from "@components/docsearch/docsearch.astro";
-import SidebarToggle from "@components/docs/sidebar-toggle";
+import SidebarToggle from "@components/docs/sidebar-toggle.astro";
 import { Locale } from "@lib/i18n";
 ---
 
@@ -8,9 +8,7 @@ import { Locale } from "@lib/i18n";
   class="navbar sticky left-0 top-0 z-50 mx-auto flex h-12 w-full items-center justify-between border-b border-gray-200 bg-gray-50 px-4 text-gray-900 dark:border-dark-gray-800 dark:bg-dark-gray-975 dark:text-gray-200 lg:pr-2"
 >
   <div class="flex items-center">
-    <SidebarToggle client:only="react" transition:persist="sidebar-toggle">
-      <SidebarToggle slot="fallback" client:idle />
-    </SidebarToggle>
+    <SidebarToggle />
     <h1 class="mr-3 text-2xl">
       <a
         href="/"
