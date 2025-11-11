@@ -8,7 +8,7 @@ export enum Theme {
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return Theme.System;
+    if (import.meta.env.SSR) return Theme.System;
     const stored = localStorage.getItem("theme");
     if (
       stored === Theme.Light ||
@@ -22,7 +22,7 @@ export function useTheme() {
 
   const [resolvedTheme, setResolvedTheme] = useState<Theme.Light | Theme.Dark>(
     () => {
-      if (typeof window === "undefined") return Theme.Light;
+      if (import.meta.env.SSR) return Theme.Light;
       const stored = localStorage.getItem("theme");
       const t =
         stored === Theme.Light ||

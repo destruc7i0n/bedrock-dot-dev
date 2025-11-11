@@ -40,7 +40,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
 
   // Parse query params from browser
   const getQueryParams = () => {
-    if (typeof window === "undefined") return {};
+    if (import.meta.env.SSR) return {};
     const params = new URLSearchParams(window.location.search);
     return {
       r: params.get("r") || undefined,
