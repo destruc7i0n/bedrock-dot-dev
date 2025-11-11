@@ -116,6 +116,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 <Layout title={title} description={description} ogImage={ogImageUrl}>
   <Fragment slot="head">
     <meta name="docsearch:language" content={Locale.English} />
+    <link rel="expect" href="#end-of-content" blocking="render" />
   </Fragment>
 
   <Header transition:persist="header" />
@@ -135,6 +136,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       version={minor}
     />
   </div>
+  <div id="end-of-content"></div>
   <BackToTop client:load />
   <Footer
     dark={true}
