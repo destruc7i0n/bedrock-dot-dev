@@ -8,6 +8,7 @@
     "build:astro": "astro build",
     "start": "astro preview",
     "astro": "astro",
+    "check": "astro check",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "generate-docs-file": "tsx scripts/generate-docs-manifest.ts",
     "generate-vercel-redirects": "tsx scripts/generate-vercel-redirects.ts",
