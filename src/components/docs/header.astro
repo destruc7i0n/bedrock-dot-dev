@@ -4,6 +4,12 @@ import SidebarToggle from "@components/docs/sidebar-toggle.astro";
 import { Locale } from "@lib/i18n";
 ---
 
+<style>
+  .navbar {
+    z-index: 10;
+  }
+</style>
+
 <header
   class="navbar sticky left-0 top-0 z-50 mx-auto flex h-12 w-full items-center justify-between border-b border-gray-200 bg-gray-50 px-4 text-gray-900 dark:border-dark-gray-800 dark:bg-dark-gray-975 dark:text-gray-200 lg:pr-2"
 >

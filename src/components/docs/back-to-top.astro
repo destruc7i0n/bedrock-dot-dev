@@ -2,6 +2,35 @@
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 ---
 
+<style>
+  .scroll-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    /* hidden by default */
+    display: none;
+    opacity: 0;
+
+    &.visible {
+      display: flex;
+      opacity: 1;
+    }
+
+    @supports (transition-behavior: allow-discrete) {
+      transition:
+        opacity 0.3s ease-in-out,
+        display 0.3s ease-in-out allow-discrete;
+
+      @starting-style {
+        &.visible {
+          opacity: 0;
+        }
+      }
+    }
+  }
+</style>
+
 <button
   id="back-to-top"
   class="scroll-button flex items-center justify-center rounded-lg bg-blue-500 px-1.5 py-1.5 font-bold text-white hover:bg-blue-700"

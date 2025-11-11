@@ -1,5 +1,3 @@
-@import "docsearch";
-
 body {
   -webkit-font-smoothing: antialiased;
 
@@ -66,79 +64,10 @@ h4 {
   }
 }
 
-.bottom-safe-area-inset {
-  @supports (padding: max(0px)) {
-    &.inset-3 {
-      padding-bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
-    }
-    &.inset-2 {
-      padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
-    }
-  }
-}
-
-.home-container {
-  // the width is constant on larger devices
-  @screen md {
-    width: 448px;
-  }
-
-  // on smaller screens make the width be auto to fit better
-  @screen md-max {
-    width: auto;
-    max-width: 448px;
-  }
-}
-
-/* header */
-.no-double-tap-zoom {
-  touch-action: manipulation;
-}
-
-/* navbar */
-.navbar {
-  z-index: 10;
-}
-
-/* sidebar */
-@import "./sidebar.scss";
-
 /* docs */
 .docs-alert a {
   @extend .link;
   @apply underline;
-}
-
-/* docs container */
-@import "./docs-container.scss";
-
-/* scroll to top */
-
-.scroll-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  // hidden by default
-  display: none;
-  opacity: 0;
-
-  &.visible {
-    display: flex;
-    opacity: 1;
-  }
-
-  @supports (transition-behavior: allow-discrete) {
-    transition:
-      opacity 0.3s ease-in-out,
-      display 0.3s ease-in-out allow-discrete;
-
-    @starting-style {
-      &.visible {
-        opacity: 0;
-      }
-    }
-  }
 }
 
 /* scrollbars */

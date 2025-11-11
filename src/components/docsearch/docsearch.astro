@@ -3,6 +3,9 @@ import DocSearch from "./docsearch";
 import { Locale } from "../../lib/i18n";
 import { algolia } from "../../lib/algolia";
 
+import "@docsearch/css";
+import "../../styles/docsearch.scss";
+
 interface Props {
   placeHolder?: string;
   fullWidth?: boolean;

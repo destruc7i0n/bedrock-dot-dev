@@ -2,12 +2,14 @@
 import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
 ---
 
+<style>
+  button#sidebar-toggle {
+    touch-action: manipulation;
+  }
+</style>
+
 <div class="mr-2 flex">
-  <button
-    id="sidebar-toggle"
-    class="no-double-tap-zoom"
-    aria-label="Toggle sidebar"
-  >
+  <button id="sidebar-toggle" aria-label="Toggle sidebar">
     <Bars3Icon id="icon-closed" className="h-6 w-6" />
     <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />
   </button>

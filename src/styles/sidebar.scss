@@ -86,3 +86,14 @@
     opacity: 1;
   }
 }
+
+.bottom-safe-area-inset {
+  @supports (padding: max(0px)) {
+    &.inset-3 {
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
+    }
+    &.inset-2 {
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+    }
+  }
+}
