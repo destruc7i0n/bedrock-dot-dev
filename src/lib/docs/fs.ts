@@ -12,7 +12,7 @@ export interface GitHubTreeResponse {
 }
 
 export async function listAllFilesFromRepo(
-  locale: Locale,
+  _locale: Locale,
 ): Promise<GitHubTreeResponse | Error> {
   const submodulePath = resolve(process.cwd(), DOCS_SUBMODULE_PATH);
 

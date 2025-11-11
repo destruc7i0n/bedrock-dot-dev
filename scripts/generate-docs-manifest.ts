@@ -4,7 +4,6 @@ import "isomorphic-unfetch";
 import path from "path";
 import fs from "fs";
 
-import { Locale } from "../src/lib/i18n";
 import { getVersionsFile } from "../src/lib/versions";
 
 const main = async () => {
