@@ -1,4 +1,5 @@
-import { ChangeEvent, FunctionComponent, memo, useMemo } from "react";
+import { memo, useMemo } from "react";
+import type { ChangeEvent, FunctionComponent } from "react";
 
 import { useTranslation } from "react-i18next";
 import { navigate } from "astro:transitions/client";

@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from "react";
-import {
-  DocSearch as DocSearchComponent,
-  DocSearchProps,
-} from "@docsearch/react";
+import React from "react";
+import type { FunctionComponent } from "react";
+import { DocSearch as DocSearchComponent } from "@docsearch/react";
+import type { DocSearchProps } from "@docsearch/react";
 import cn from "classnames";
 import { algolia } from "../../lib/algolia";
 

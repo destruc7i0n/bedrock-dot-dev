@@ -2,7 +2,7 @@ import { join, resolve } from "path";
 import * as fs from "fs";
 
 import * as flatCache from "flat-cache";
-import { BedrockVersionsFile } from "./versions";
+import type { BedrockVersionsFile } from "./versions";
 import { isProduction } from "./util";
 
 // use tmp on production

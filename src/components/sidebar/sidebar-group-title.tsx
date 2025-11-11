@@ -1,4 +1,5 @@
-import React, { Children, FunctionComponent, MouseEvent } from "react";
+import React, { Children } from "react";
+import type { FunctionComponent, MouseEvent } from "react";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 

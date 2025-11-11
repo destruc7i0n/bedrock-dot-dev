@@ -1,10 +1,11 @@
 import Log from "../log";
 
-import {
+import type {
   SidebarStructure,
   SidebarStructureElement,
 } from "../../components/sidebar";
-import { getTitle, TitleResponse } from "./scrape/title";
+import { getTitle } from "./scrape/title";
+import type { TitleResponse } from "./scrape/title";
 import { getAIGoals, getComponentsList } from "./scrape/table";
 import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from "./regex";
 import { removeHashIfNeeded } from "../util";

@@ -1,5 +1,5 @@
 // get the regex for the title
-import { SidebarStructure } from "../../../components/sidebar";
+import type { SidebarStructure } from "../../../components/sidebar";
 
 import { H_TITLE_MATCH, P_ID_MATCH } from "../regex";
 

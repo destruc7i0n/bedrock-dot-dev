@@ -1,5 +1,6 @@
-import { BedrockVersions } from "./versions";
-import { Tags, TagsResponse } from "./tags";
+import type { BedrockVersions } from "./versions";
+import { Tags } from "./tags";
+import type { TagsResponse } from "./tags";
 
 export const PACK_BASE_URL = "https://void.bedrock.dev";
 

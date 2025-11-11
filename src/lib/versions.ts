@@ -1,7 +1,9 @@
-import { GitHubTreeResponse, listAllFilesFromRepo } from "./docs/fs";
+import { listAllFilesFromRepo } from "./docs/fs";
+import type { GitHubTreeResponse } from "./docs/fs";
 
 import { checkCache, setCache } from "./versions-cache";
-import { BedrockVersionsByLocale, groupVersionsByLocale, Locale } from "./i18n";
+import { groupVersionsByLocale, Locale } from "./i18n";
+import type { BedrockVersionsByLocale } from "./i18n";
 import { compareBedrockVersions, isProduction } from "./util";
 
 export interface BedrockVersions {

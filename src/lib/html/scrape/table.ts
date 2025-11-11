@@ -1,6 +1,6 @@
 import Log from "../../log";
 
-import {
+import type {
   SidebarStructureElement,
   SidebarStructureGroup,
 } from "../../../components/sidebar";

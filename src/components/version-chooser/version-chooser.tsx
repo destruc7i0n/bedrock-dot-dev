@@ -1,17 +1,15 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
 import SpecificVersionChooser from "./specific-version-chooser";
 import TagVersionChooser from "./tag-version-chooser";
 
-import {
-  compareBedrockVersions,
-  getLink,
-  ParsedUrlResponse,
-  parseUrlQuery,
-} from "../../lib/util";
-import { BedrockVersions } from "../../lib/versions";
-import { Tags, TagsResponse } from "../../lib/tags";
+import { compareBedrockVersions, getLink, parseUrlQuery } from "../../lib/util";
+import type { ParsedUrlResponse } from "../../lib/util";
+import type { BedrockVersions } from "../../lib/versions";
+import { Tags } from "../../lib/tags";
+import type { TagsResponse } from "../../lib/tags";
 
 type VersionFileProps = {
   title: string;
@@ -74,7 +72,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   useEffect(() => {
     if (!versions[major]) {
       // Intentionally setting state in effect to sync with locale changes
-       
+
       setMajor(stableMajor);
       setMinor(stableMinor);
       setQuickSelect(false);
@@ -95,7 +93,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   useEffect(() => {
     if (!minorVersions.includes(minor)) {
       // Intentionally setting state in effect to ensure valid minor version
-       
+
       setMinor(minorVersions[0]);
     }
   }, [major, minor, minorVersions]);

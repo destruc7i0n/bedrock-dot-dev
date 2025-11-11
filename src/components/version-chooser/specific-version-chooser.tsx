@@ -1,8 +1,8 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { getMinorVersionTitle } from "../../lib/util";
-import { TagsResponse } from "../../lib/tags";
+import type { TagsResponse } from "../../lib/tags";
 
 export type VersionSelectorProps = {
   majorVersions: string[];

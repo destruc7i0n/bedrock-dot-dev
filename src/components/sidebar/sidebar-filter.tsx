@@ -1,4 +1,5 @@
-import { FunctionComponent, memo } from "react";
+import { memo } from "react";
+import type { FunctionComponent } from "react";
 import { useStore } from "@nanostores/react";
 import { sidebarFilter } from "@stores/sidebar-filter";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";

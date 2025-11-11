@@ -1,8 +1,9 @@
-import { FunctionComponent, memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
+import type { FunctionComponent } from "react";
 import { useStore } from "@nanostores/react";
 import { sidebarFilter } from "@stores/sidebar-filter";
 
-import { SidebarStructure } from "./index";
+import type { SidebarStructure } from "./index";
 import SidebarGroupTitle from "./sidebar-group-title";
 import SidebarGroupItem from "./sidebar-group-item";
 

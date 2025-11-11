@@ -1,7 +1,8 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
-import { VersionSelectorProps } from "./specific-version-chooser";
+import type { VersionSelectorProps } from "./specific-version-chooser";
 import { Tags } from "../../lib/tags";
 
 const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
