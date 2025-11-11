@@ -125,7 +125,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
   </Fragment>
 
   <Header transition:persist="header" />
-  <div class="flex">
+  <div class="flex" transition:animate="fade">
     <Sidebar
       sidebar={sidebar}
       file={file}
@@ -134,12 +134,7 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       versions={versions}
       tags={tags}
     />
-    <DocsContainer
-      transition:animate="fade"
-      html={html}
-      file={file}
-      version={minor}
-    />
+    <DocsContainer html={html} file={file} version={minor} />
   </div>
   <div id="end-of-content"></div>
   <BackToTop />

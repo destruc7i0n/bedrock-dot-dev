@@ -15,14 +15,14 @@ const {
 // use a string so prettier does not format it
 const themeScript = `(() => {
 let doc = document.documentElement, media = matchMedia("(prefers-color-scheme: dark)");
-let updateMeta = (theme) => { let meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute("content", theme === "light" ? "#f9fafb" : "#18191a"); };
+let updateMeta = (theme, targetDoc) => { let meta = (targetDoc || document).querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute("content", theme === "light" ? "#f9fafb" : "#18191a"); };
 let getTheme = () => media.matches ? "dark" : "light";
 let setup = () => { if (window.__t) return; media.addEventListener("change", () => { let stored = localStorage.getItem("theme"); if (!stored || stored === "system") { let theme = getTheme(); doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); } }); window.__t = 1; };
 try {
   let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored;
   doc.classList.add(theme); updateMeta(theme);
-  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", setup) : setup();
-  document.addEventListener("astro:after-swap", () => { let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored; doc.classList.remove("light", "dark"); doc.classList.add(theme); updateMeta(theme); });
+  setup();
+  document.addEventListener("astro:before-swap", (event) => { let stored = localStorage.getItem("theme") || "system", theme = stored === "system" ? getTheme() : stored; event.newDocument.documentElement.classList.remove("light", "dark"); event.newDocument.documentElement.classList.add(theme); updateMeta(theme, event.newDocument); });
 } catch (e) {}
 })();`;
 ---
