@@ -1,6 +1,6 @@
 ---
 import cn from "classnames";
-import ModeSelect from "./theme/mode-select";
+import ModeSelect from "./theme/mode-select.astro";
 import { t } from "../lib/i18n";
 
 interface Props {
@@ -74,9 +74,7 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
     {
       showToggles && (
         <div class="!mt-9 flex justify-center">
-          <ModeSelect client:only="react">
-            <ModeSelect slot="fallback" />
-          </ModeSelect>
+          <ModeSelect />
         </div>
       )
     }

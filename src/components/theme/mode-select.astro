@@ -1,0 +1,119 @@
+---
+import { t } from "@lib/i18n";
+import {
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
+} from "@heroicons/react/20/solid";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["relative dark:text-gray-200", className]}>
+  <label class="sr-only mb-1 block text-sm font-bold" for="theme-mode-select">
+    Mode Select
+  </label>
+  <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+    <span class="leading-4">
+      <ComputerDesktopIcon
+        id="icon-system"
+        className="pointer-events-none h-4 w-4"
+      />
+      <SunIcon id="icon-light" className="pointer-events-none hidden h-4 w-4" />
+      <MoonIcon id="icon-dark" className="pointer-events-none hidden h-4 w-4" />
+    </span>
+  </div>
+  <select
+    id="theme-mode-select"
+    class="block rounded-md border-gray-300 py-2 pl-8 text-sm leading-4 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900"
+  >
+    <option value="system">
+      {t("component.color_theme_select.system")}
+    </option>
+    <option value="dark">
+      {t("component.color_theme_select.dark")}
+    </option>
+    <option value="light">
+      {t("component.color_theme_select.light")}
+    </option>
+  </select>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const select = document.getElementById(
+      "theme-mode-select",
+    ) as HTMLSelectElement;
+    if (!select) return;
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      const theme = select.value;
+      const isDark =
+        theme === "dark" || (theme === "system" && mediaQuery.matches);
+
+      document.documentElement.classList.toggle("dark", isDark);
+      document.documentElement.classList.toggle("light", !isDark);
+
+      const color = isDark ? "#18191a" : "#f9fafb";
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute("content", color);
+
+      document
+        .getElementById("icon-system")
+        ?.classList.toggle("hidden", theme !== "system");
+      document
+        .getElementById("icon-light")
+        ?.classList.toggle("hidden", theme !== "light");
+      document
+        .getElementById("icon-dark")
+        ?.classList.toggle("hidden", theme !== "dark");
+    };
+
+    const stored = localStorage.getItem("theme");
+    if (stored === "system" || stored === "light" || stored === "dark") {
+      select.value = stored;
+    } else {
+      select.value = "system";
+    }
+    applyTheme();
+
+    const onChange = () => {
+      localStorage.setItem("theme", select.value);
+      applyTheme();
+    };
+
+    const onSystemChange = () => {
+      if (select.value === "system") {
+        applyTheme();
+      }
+    };
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "theme" && e.newValue) {
+        select.value = e.newValue;
+        applyTheme();
+      }
+    };
+
+    select.addEventListener("change", onChange);
+    mediaQuery.addEventListener("change", onSystemChange);
+    window.addEventListener("storage", onStorage);
+
+    document.addEventListener(
+      "astro:before-preparation",
+      () => {
+        select.removeEventListener("change", onChange);
+        mediaQuery.removeEventListener("change", onSystemChange);
+        window.removeEventListener("storage", onStorage);
+      },
+      { once: true },
+    );
+  });
+</script>

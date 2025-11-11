@@ -1,8 +1,8 @@
 ---
 import Selectors from "./sidebar-selectors";
-import SidebarFilter from "./sidebar-filter";
+import SidebarFilter from "./sidebar-filter.astro";
 import SidebarContent from "./sidebar-content";
-import ModeSelect from "@components/theme/mode-select";
+import ModeSelect from "@components/theme/mode-select.astro";
 import type { SidebarStructure } from "./index";
 import type { BedrockVersions } from "../../lib/versions";
 import type { TagsResponse } from "../../lib/tags";
@@ -40,19 +40,13 @@ const sidebarScript = `try {
         versions={versions}
         tags={tags}
       />
-      <SidebarFilter client:load />
+      <SidebarFilter />
     </div>
     <SidebarContent client:load sidebar={sidebar} file={file} />
     <div
       class="bottom-safe-area-inset inset-2 flex w-full flex-row items-center justify-end border-t border-gray-200 bg-white px-4 py-2 dark:border-dark-gray-800 dark:bg-dark-gray-950"
     >
-      <ModeSelect
-        transition:persist="sidebar-mode-select"
-        client:only="react"
-        className="ml-2"
-      >
-        <ModeSelect slot="fallback" />
-      </ModeSelect>
+      <ModeSelect transition:persist="sidebar-mode-select" />
     </div>
   </aside>
   <div class="sidebar-mask" transition:persist="sidebar-mask"></div>
