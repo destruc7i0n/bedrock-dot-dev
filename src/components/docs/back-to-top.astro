@@ -1,0 +1,41 @@
+---
+import { ChevronUpIcon } from "@heroicons/react/20/solid";
+---
+
+<button
+  id="back-to-top"
+  class="scroll-button flex items-center justify-center rounded-lg bg-blue-500 px-1.5 py-1.5 font-bold text-white hover:bg-blue-700"
+  aria-label="Back to top"
+>
+  <ChevronUpIcon className="h-6 w-6" />
+</button>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const button = document.getElementById("back-to-top");
+    if (!button) return;
+
+    const checkScrollTop = () => {
+      const shouldShow = window.pageYOffset > 400;
+      button.classList.toggle("visible", shouldShow);
+    };
+
+    const scrollTop = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    checkScrollTop();
+
+    window.addEventListener("scroll", checkScrollTop);
+    button.addEventListener("click", scrollTop);
+
+    document.addEventListener(
+      "astro:before-preparation",
+      () => {
+        window.removeEventListener("scroll", checkScrollTop);
+        button.removeEventListener("click", scrollTop);
+      },
+      { once: true },
+    );
+  });
+</script>
