@@ -84,10 +84,10 @@
     }
 
     tr:nth-child(2n + 3) td {
-      background-color: var(--color-dark-gray-850) !important;
+      @apply bg-dark-gray-850 #{!important};
 
       table td {
-        background-color: var(--color-dark-gray-900) !important;
+        @apply bg-dark-gray-900 #{!important};
       }
     }
   }

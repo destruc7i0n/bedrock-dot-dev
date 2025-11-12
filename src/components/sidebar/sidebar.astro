@@ -8,8 +8,6 @@ import type { BedrockVersions } from "../../lib/versions";
 import type { TagsResponse } from "../../lib/tags";
 import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
-import "@styles/sidebar.css";
-
 interface Props {
   sidebar: SidebarStructure;
   file: string;
@@ -29,6 +27,108 @@ const sidebarScript = `try {
   if (open) document.querySelector(".sidebar")?.classList.add("open");
 } catch {}`;
 ---
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: 3rem;
+    z-index: 9;
+    width: 400px;
+    height: calc(100vh - 3rem);
+
+    @apply bg-white;
+    .dark & {
+      @apply bg-dark-gray-950;
+    }
+
+    @apply flex;
+    @apply flex-col;
+    @apply border-r;
+    @apply border-l;
+    @apply border-gray-200;
+    .dark & {
+      @apply border-dark-gray-800;
+    }
+
+    /* lg screen and below */
+    @screen lg-max {
+      position: fixed;
+      transform: translateX(-100%);
+      /* like silk */
+      will-change: transform;
+
+      width: 80%;
+      @screen md {
+        width: auto;
+        min-width: 50%;
+      }
+
+      & {
+        transition: transform ease-in-out 150ms;
+      }
+
+      &.open {
+        transform: translateX(0);
+      }
+    }
+
+    @screen lg {
+      /* hide if not open */
+      &:not(.open) {
+        display: none;
+      }
+    }
+
+    /* when on mobile, wait for the component to be mounted
+    so as to prevent a closing animation when loading the page */
+    @screen lg-max {
+      &:not(.mounted) {
+        display: none;
+      }
+    }
+  }
+
+  .sidebar-mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    display: none;
+    pointer-events: none;
+
+    @screen lg-max {
+      background-color: rgba(0, 0, 0, 0.3);
+
+      .sidebar.open ~ & {
+        display: block;
+        pointer-events: auto;
+        animation: fade-in 300ms;
+      }
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .bottom-safe-area-inset {
+    @supports (padding: max(0px)) {
+      &.inset-3 {
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
+      }
+      &.inset-2 {
+        padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+      }
+    }
+  }
+</style>
 
 <div>
   <aside class="sidebar">
