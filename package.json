@@ -26,12 +26,11 @@
     "@nanostores/persistent": "^1.2.0",
     "@nanostores/react": "^1.0.0",
     "@vercel/og": "^0.8.5",
-    "astro": "^5.15.4",
+    "astro": "^5.15.5",
     "astro-nprogress": "^0.0.2",
     "classnames": "^2.5.1",
-    "element-in-view": "^0.1.0",
     "flat-cache": "^6.1.18",
-    "i18next": "^25.6.1",
+    "i18next": "^25.6.2",
     "nanostores": "^1.0.1",
     "nprogress": "^0.2.0",
     "prismjs": "^1.30.0",
@@ -39,30 +38,26 @@
     "react-dom": "19.2.0",
     "react-i18next": "^16.2.4",
     "sass": "^1.77.8",
-    "sitemap": "^8.0.1"
+    "sitemap": "^9.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/forms": "^0.5.10",
     "@types/flat-cache": "^2.0.2",
-    "@types/node": "^24.9.1",
+    "@types/node": "^24.10.1",
     "@types/nprogress": "^0.2.3",
     "@types/prismjs": "^1.26.5",
-    "@types/react": "19.2.2",
+    "@types/react": "19.2.3",
     "@types/react-dom": "19.2.2",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
-    "autoprefixer": "^10.4.21",
-    "chalk": "^4.1.2",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "globals": "^16.5.0",
     "isomorphic-unfetch": "^4.0.2",
-    "postcss": "^8.5.6",
-    "postcss-import": "^16.1.1",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.1",
@@ -71,12 +66,5 @@
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.4"
   },
-  "license": "GPL-3.0",
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.2",
-      "@types/react-dom": "19.2.2",
-      "ws@>=7.0.0 <7.5.10": ">=7.5.10"
-    }
-  }
+  "license": "GPL-3.0"
 }
