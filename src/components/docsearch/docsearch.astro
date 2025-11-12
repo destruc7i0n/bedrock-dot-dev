@@ -1,21 +1,18 @@
 ---
-import DocSearch from "./docsearch";
-import { Locale } from "../../lib/i18n";
-import { algolia } from "../../lib/algolia";
+import DocSearchInput from "./docsearch-input";
+import DocSearchButton from "./docsearch-button";
+import { Locale, t } from "../../lib/i18n";
 
 import "@docsearch/css";
 
 interface Props {
   placeHolder?: string;
-  fullWidth?: boolean;
-  slim?: boolean;
+  xl?: boolean;
   locale?: Locale;
 }
-
 const {
-  placeHolder = "Search",
-  fullWidth = false,
-  slim = false,
+  placeHolder = t("component.search.title"),
+  xl = false,
   locale = Locale.English,
 } = Astro.props;
 ---
@@ -96,21 +93,12 @@ const {
   }
 </style>
 
-<DocSearch
+<DocSearchInput
   client:only="react"
   transition:persist="docsearch"
   placeHolder={placeHolder}
-  fullWidth={fullWidth}
-  slim={slim}
+  xl={xl}
   locale={locale}
-  {...algolia}
 >
-  <div
-    slot="fallback"
-    class={`docsearch-wrapper${fullWidth ? " full-width w-full" : ""}${slim ? " slim" : ""}`}
-  >
-    <button type="button" class="DocSearch DocSearch-Button">
-      <span class="DocSearch-Button-Container"></span>
-    </button>
-  </div>
-</DocSearch>
+  <DocSearchButton slot="fallback" placeHolder={placeHolder} xl={xl} />
+</DocSearchInput>

@@ -1,7 +1,5 @@
 ---
-import DocSearch from "@components/docsearch/docsearch.astro";
 import SidebarToggle from "@components/docs/sidebar-toggle.astro";
-import { Locale } from "@lib/i18n";
 ---
 
 <style>
@@ -23,20 +21,15 @@ import { Locale } from "@lib/i18n";
         bedrock.dev
       </a>
     </h1>
-    <ul class="hidden md:flex">
-      <li class="h-full">
-        <a
-          class="px-2 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-          href="https://wiki.bedrock.dev"
-          target="_blank"
-          rel="noopener"
-        >
-          Wiki
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="w-full max-w-48">
-    <DocSearch slim={true} fullWidth={true} locale={Locale.English} />
+    <div class="flex items-center">
+      <a
+        class="px-2 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+        href="https://wiki.bedrock.dev"
+        target="_blank"
+        rel="noopener"
+      >
+        Wiki
+      </a>
+    </div>
   </div>
 </header>

@@ -1,11 +1,12 @@
 ---
 import Selectors from "./sidebar-selectors";
-import SidebarFilter from "./sidebar-filter.astro";
 import SidebarContent from "./sidebar-content";
 import ModeSelect from "@components/theme/mode-select.astro";
+import DocSearch from "@components/docsearch/docsearch.astro";
 import type { SidebarStructure } from "./index";
 import type { BedrockVersions } from "../../lib/versions";
 import type { TagsResponse } from "../../lib/tags";
+import { Locale, t } from "@lib/i18n";
 import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
 
 interface Props {
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const { sidebar, file, major, minor, versions, tags } = Astro.props;
+
+const searchTitle = t("component.search.title");
 
 const sidebarScript = `try {
   const isMobile = window.matchMedia("(max-width: ${MOBILE_BREAKPOINT}px)");
@@ -142,7 +145,12 @@ const sidebarScript = `try {
         versions={versions}
         tags={tags}
       />
-      <SidebarFilter />
+      <div class="mt-4">
+        <label class="sr-only mb-1 block text-sm font-bold" for="filter">
+          {searchTitle}
+        </label>
+        <DocSearch locale={Locale.English} />
+      </div>
     </div>
     <SidebarContent client:load sidebar={sidebar} file={file} />
     <div
