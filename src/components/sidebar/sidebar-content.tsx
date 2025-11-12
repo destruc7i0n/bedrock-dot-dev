@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { FunctionComponent } from "react";
 import { useStore } from "@nanostores/react";
 import { sidebarFilter } from "@stores/sidebar-filter";
@@ -16,19 +16,22 @@ type SidebarContentState = {
   [key: string]: boolean;
 };
 
+// Sidebar configuration constants
+const SIDEBAR_SCROLL_OFFSET = 164; // Header + padding height
+const COLLAPSED_BY_DEFAULT_PAGES = ["Entities"];
+
 // initially open or closed state for the sidebar
 const getInitialOpen = (sidebar: SidebarStructure, file: string) => {
   const state: SidebarContentState = {};
   for (const { header } of Object.values(sidebar)) {
-    // be default open on all pages other than the entities page
-    state[header.id] = file !== "Entities";
+    // by default open on all pages other than the entities page
+    state[header.id] = !COLLAPSED_BY_DEFAULT_PAGES.includes(file);
   }
   return state;
 };
 
 const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
   const $filter = useStore(sidebarFilter);
-  let search = $filter;
 
   const [mounted, setMounted] = useState(false);
   const [hash, setHash] = useState("");
@@ -77,39 +80,37 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
       );
       if (el) {
         if (sidebarRef.current) {
-          sidebarRef.current.scrollTop = el.offsetTop - 164;
+          sidebarRef.current.scrollTop = el.offsetTop - SIDEBAR_SCROLL_OFFSET;
         }
       }
     }
   }, [hash, mounted]);
 
-  // filter if filtering
-  if (search) {
-    const filteredSidebar: SidebarStructure = {};
+  const filteredSidebar = useMemo(() => {
+    if (!$filter) return sidebar;
 
-    search = search.toLowerCase();
+    const searchTerm = $filter.toLowerCase();
+    const result: SidebarStructure = {};
 
-    const keys = Object.keys(sidebar);
-    for (const key of keys) {
-      const el = sidebar[key];
-      // check if the key includes the search term by chance
-      if (key.toLowerCase().includes(search)) {
-        if (!filteredSidebar[key])
-          filteredSidebar[key] = { header: el.header, elements: [] };
-      }
+    for (const [key, value] of Object.entries(sidebar)) {
+      const keyMatches = key.toLowerCase().includes(searchTerm);
 
-      for (const id of el.elements) {
-        if (id.title.toLowerCase().includes(search) || id.id.includes(search)) {
-          if (!filteredSidebar[key])
-            filteredSidebar[key] = { header: el.header, elements: [] };
+      const matchingElements = value.elements.filter(
+        (element) =>
+          element.title.toLowerCase().includes(searchTerm) ||
+          element.id.includes(searchTerm),
+      );
 
-          filteredSidebar[key].elements.push(id);
-        }
+      if (keyMatches || matchingElements.length > 0) {
+        result[key] = {
+          header: value.header,
+          elements: keyMatches ? value.elements : matchingElements,
+        };
       }
     }
 
-    sidebar = filteredSidebar;
-  }
+    return result;
+  }, [sidebar, $filter]);
 
   // helper method to update the state
   const setHeadingOpen = (heading: string, value: boolean) => {
@@ -125,11 +126,11 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
       className="flex h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8"
       ref={sidebarRef}
     >
-      {Object.keys(sidebar).map((id, index) => {
-        const { header, elements } = sidebar[id];
+      {Object.keys(filteredSidebar).map((id, index) => {
+        const { header, elements } = filteredSidebar[id];
         return (
           <SidebarGroupTitle
-            searching={!!search}
+            searching={!!$filter}
             key={`${file}-title-${index}`}
             open={open[header.id]}
             setOpen={(open) => setHeadingOpen(header.id, open)}

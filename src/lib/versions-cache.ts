@@ -1,19 +1,21 @@
 import { join, resolve } from "path";
-import * as fs from "fs";
+import { promises as fs } from "fs";
 
 import * as flatCache from "flat-cache";
 import type { BedrockVersionsFile } from "./versions";
 import { isProduction } from "./util";
 
+const CACHE_DURATION_MINUTES = 10;
+
 // use tmp on production
 const cacheDirectory = isProduction() ? join("/tmp", ".cache") : "";
 
 // store ratelimited call as a file and fetch when needed
-const checkCache = (): BedrockVersionsFile | undefined => {
+const checkCache = async (): Promise<BedrockVersionsFile | undefined> => {
   // try to use the static docs.json file first (built at build time)
   try {
     const docsPath = resolve("public/static/docs.json");
-    const docsContent = fs.readFileSync(docsPath, "utf-8");
+    const docsContent = await fs.readFile(docsPath, "utf-8");
     const parsedContent = JSON.parse(docsContent);
     if (parsedContent) return parsedContent as BedrockVersionsFile;
   } catch {
@@ -35,8 +37,7 @@ const checkCache = (): BedrockVersionsFile | undefined => {
       );
 
       const files: BedrockVersionsFile = cache.getKey("files");
-      // update every 10 min
-      if (difference < 10 && files) return files;
+      if (difference < CACHE_DURATION_MINUTES && files) return files;
     }
   }
 };

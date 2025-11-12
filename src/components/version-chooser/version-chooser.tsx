@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -37,16 +37,13 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   const [quickSelect, setQuickSelect] = useState(true);
 
   // Parse query params from browser
-  const getQueryParams = () => {
+  const query = useMemo(() => {
     if (import.meta.env.SSR) return {};
     const params = new URLSearchParams(window.location.search);
     return {
       r: params.get("r") || undefined,
     };
-  };
-
-  const query = getQueryParams();
-  const locale = "en";
+  }, []);
 
   const [stableMajor, stableMinor] = tags[Tags.Stable];
 
@@ -56,44 +53,41 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
 
   // set from query string if possible
   useEffect(() => {
-    let parsedUrlQuery: ParsedUrlResponse = { major: "", minor: "" };
-
     if (query?.r && typeof query.r === "string") {
-      parsedUrlQuery = parseUrlQuery(query.r, versions);
+      const parsedUrlQuery: ParsedUrlResponse = parseUrlQuery(
+        query.r,
+        versions,
+      );
 
-      // Intentionally setting state in effect to sync with URL query params
       setQuickSelect(false);
       if (parsedUrlQuery.major) setMajor(parsedUrlQuery.major);
       if (parsedUrlQuery.minor) setMinor(parsedUrlQuery.minor);
     }
   }, [query, versions]);
 
-  // handle locale change and reset to the latest stable version
   useEffect(() => {
     if (!versions[major]) {
-      // Intentionally setting state in effect to sync with locale changes
-
       setMajor(stableMajor);
       setMinor(stableMinor);
       setQuickSelect(false);
     }
-  }, [locale, major, stableMajor, stableMinor, versions]);
+  }, [major, stableMajor, stableMinor, versions]);
 
-  let files: string[] = [];
-  if (versions[major] && versions[major][minor]) {
-    files = versions[major][minor];
-  }
+  const files = useMemo(() => {
+    return versions[major]?.[minor] ?? [];
+  }, [versions, major, minor]);
 
-  const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
-  const minorVersions = Object.keys(versions?.[major] ?? {}).sort(
-    compareBedrockVersions,
-  );
+  const majorVersions = useMemo(() => {
+    return Object.keys(versions).sort(compareBedrockVersions);
+  }, [versions]);
+
+  const minorVersions = useMemo(() => {
+    return Object.keys(versions?.[major] ?? {}).sort(compareBedrockVersions);
+  }, [versions, major]);
 
   // if the major version changes, set the minor to the latest minor from that major version
   useEffect(() => {
     if (!minorVersions.includes(minor)) {
-      // Intentionally setting state in effect to ensure valid minor version
-
       setMinor(minorVersions[0]);
     }
   }, [major, minor, minorVersions]);

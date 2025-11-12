@@ -79,7 +79,7 @@ export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
 
 const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
   // only use local cache in dev
-  const check = checkCache();
+  const check = await checkCache();
   if (check) return check.versions[locale] ?? {};
   else {
     if (isProduction()) {
