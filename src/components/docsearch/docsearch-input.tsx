@@ -9,13 +9,13 @@ import DocSearchButton from "./docsearch-button";
 
 type Props = {
   placeHolder?: string;
-  xl?: boolean;
+  size?: "sm" | "md" | "lg";
   locale?: string;
 };
 
 const DocSearchInput: React.FC<Props> = ({
   placeHolder = "Search",
-  xl = false,
+  size = "md",
   locale = "en",
 }) => {
   const searchButtonRef = useRef<HTMLButtonElement>(null);
@@ -54,7 +54,7 @@ const DocSearchInput: React.FC<Props> = ({
     <>
       <DocSearchButton
         ref={searchButtonRef}
-        xl={xl}
+        size={size}
         placeHolder={placeHolder}
         onClick={onOpen}
       />

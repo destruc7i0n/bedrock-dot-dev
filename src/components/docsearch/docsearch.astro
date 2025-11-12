@@ -7,12 +7,12 @@ import "@docsearch/css";
 
 interface Props {
   placeHolder?: string;
-  xl?: boolean;
+  size?: "sm" | "md" | "lg";
   locale?: Locale;
 }
 const {
   placeHolder = t("component.search.title"),
-  xl = false,
+  size = "md",
   locale = Locale.English,
 } = Astro.props;
 ---
@@ -97,8 +97,8 @@ const {
   client:only="react"
   transition:persist="docsearch"
   placeHolder={placeHolder}
-  xl={xl}
+  size={size}
   locale={locale}
 >
-  <DocSearchButton slot="fallback" placeHolder={placeHolder} xl={xl} />
+  <DocSearchButton slot="fallback" placeHolder={placeHolder} size={size} />
 </DocSearchInput>
