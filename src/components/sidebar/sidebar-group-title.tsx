@@ -1,5 +1,5 @@
 import React, { Children } from "react";
-import type { FunctionComponent, MouseEvent } from "react";
+import type { MouseEvent } from "react";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
@@ -12,42 +12,42 @@ type Props = {
   id: string;
   hash: string;
   open: boolean;
-  setOpen: (open: boolean) => void;
-  searching: boolean;
+  onToggle: (open: boolean) => void;
   children?: React.ReactNode;
 };
 
-const SidebarGroupTitle: FunctionComponent<Props> = ({
+const SidebarGroupTitle: React.FunctionComponent<Props> = ({
   title,
   id,
   children,
   hash,
   open,
-  setOpen,
-  searching,
+  onToggle,
 }) => {
   const hasChildren = !!Children.count(children);
 
-  const handleClick = (e: MouseEvent) => {
+  const handleToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    onToggle(e.currentTarget.open);
+  };
+
+  const handleSummaryClick = (e: MouseEvent) => {
     // do not toggle open if this was a click on the link
     if ((e.nativeEvent.target as HTMLElement).nodeName === "A") {
-      return;
+      e.stopPropagation();
     }
-    setOpen(!open);
   };
 
   const active = removeHashIfNeeded(hash) === id;
-  const isOpen = open || searching;
 
   return (
-    <div>
-      <div
+    <details className="sidebar-group" open={open} onToggle={handleToggle}>
+      <summary
         className={cn(
           "flex cursor-pointer flex-row bg-white px-4 py-2 text-gray-800 dark:bg-dark-gray-950 dark:text-gray-300",
-          { "sticky top-0": isOpen && hasChildren, "select-none": hasChildren },
+          { "sticky top-0": open && hasChildren, "select-none": hasChildren },
           "border-b border-gray-200 dark:border-dark-gray-800",
         )}
-        onClick={handleClick}
+        onClick={handleSummaryClick}
       >
         <a
           className={cn(
@@ -68,22 +68,19 @@ const SidebarGroupTitle: FunctionComponent<Props> = ({
           <div
             className={cn(
               "ml-auto flex transform cursor-pointer select-none items-center transition duration-150 ease-in-out",
-              { "-rotate-90": isOpen },
+              open ? "-rotate-90" : "",
             )}
           >
             <ChevronLeftIcon className="h-5 w-5" />
           </div>
         )}
-      </div>
-      <ul
-        className={cn("nav px-4", {
-          "border-b border-gray-200 dark:border-dark-gray-800":
-            isOpen && hasChildren,
-        })}
-      >
-        {isOpen && children}
-      </ul>
-    </div>
+      </summary>
+      {hasChildren && (
+        <ul className="nav border-b border-gray-200 px-4 dark:border-dark-gray-800">
+          {children}
+        </ul>
+      )}
+    </details>
   );
 };
 
