@@ -23,9 +23,7 @@ const DocSearchButton = forwardRef<HTMLButtonElement, Props>(
           onClick={onClick}
         >
           <div className="pointer-events-none flex items-center">
-            <span className="leading-4 text-white">
-              <MagnifyingGlassIcon className="h-5 w-5" />
-            </span>
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-600 dark:text-white" />
           </div>
         </button>
       );
@@ -39,11 +37,12 @@ const DocSearchButton = forwardRef<HTMLButtonElement, Props>(
             size === "lg" && "lg:pl-3",
           )}
         >
-          <span className="leading-4 text-gray-600 dark:text-white">
-            <MagnifyingGlassIcon
-              className={cn("h-4 w-4", size === "lg" && "lg:h-5 lg:w-5")}
-            />
-          </span>
+          <MagnifyingGlassIcon
+            className={cn(
+              "h-4 w-4 text-gray-600 dark:text-white",
+              size === "lg" && "lg:h-5 lg:w-5",
+            )}
+          />
         </div>
         <button
           ref={ref}

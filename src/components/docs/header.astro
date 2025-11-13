@@ -1,7 +1,7 @@
 ---
-import SidebarToggle from "@components/docs/sidebar-toggle.astro";
 import DocSearch from "@components/docsearch/docsearch.astro";
 import { Locale } from "@lib/i18n";
+import SidebarToggle from "@components/docs/sidebar-toggle.astro";
 ---
 
 <style>
@@ -13,9 +13,9 @@ import { Locale } from "@lib/i18n";
 <header
   class="navbar sticky left-0 top-0 z-50 mx-auto flex h-12 w-full items-center justify-between border-b border-gray-200 bg-gray-50 px-4 text-gray-900 dark:border-dark-gray-800 dark:bg-dark-gray-975 dark:text-gray-200 lg:pr-2"
 >
-  <div class="flex items-center">
-    <SidebarToggle />
-    <h1 class="mr-3 text-2xl">
+  <div class="flex items-center gap-4">
+    <SidebarToggle class="-mr-1" />
+    <h1 class="text-2xl">
       <a
         href="/"
         class="font-normal text-black dark:text-white dark:hover:text-white"
@@ -23,16 +23,14 @@ import { Locale } from "@lib/i18n";
         bedrock.dev
       </a>
     </h1>
-    <div class="flex items-center">
-      <a
-        class="px-2 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-        href="https://wiki.bedrock.dev"
-        target="_blank"
-        rel="noopener"
-      >
-        Wiki
-      </a>
-    </div>
+    <a
+      class="rounded-lg p-1.5 font-medium text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-dark-gray-800 dark:hover:text-gray-100"
+      href="https://wiki.bedrock.dev"
+      target="_blank"
+      rel="noopener"
+    >
+      Wiki
+    </a>
   </div>
   <div class="flex items-center lg:hidden">
     <DocSearch size="sm" locale={Locale.English} />

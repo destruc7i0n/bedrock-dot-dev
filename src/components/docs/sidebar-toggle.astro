@@ -1,5 +1,12 @@
 ---
 import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
+import { cn } from "@lib/cn";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 ---
 
 <style>
@@ -8,12 +15,17 @@ import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
   }
 </style>
 
-<div class="mr-2 flex">
-  <button id="sidebar-toggle" aria-label="Toggle sidebar">
-    <Bars3Icon id="icon-closed" className="h-6 w-6" />
-    <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />
-  </button>
-</div>
+<button
+  id="sidebar-toggle"
+  aria-label="Toggle sidebar"
+  class={cn(
+    "rounded-lg p-1.5 transition-colors hover:bg-gray-200 dark:hover:bg-dark-gray-800",
+    className,
+  )}
+>
+  <Bars3Icon id="icon-closed" className="h-6 w-6" />
+  <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />
+</button>
 
 <script>
   import { sidebarOpen } from "@stores/sidebar-open";
@@ -26,14 +38,9 @@ import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
     const iconOpen = button.querySelector("#icon-open");
     if (!iconClosed || !iconOpen) return;
 
-    const updateIcons = (open: boolean) => {
-      if (open) {
-        iconClosed.classList.add("hidden");
-        iconOpen.classList.remove("hidden");
-      } else {
-        iconClosed.classList.remove("hidden");
-        iconOpen.classList.add("hidden");
-      }
+    const updateIcons = (isOpen: boolean) => {
+      iconClosed.classList.toggle("hidden", isOpen);
+      iconOpen.classList.toggle("hidden", !isOpen);
     };
 
     updateIcons(sidebarOpen.get());
@@ -41,7 +48,7 @@ import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
 
     button.addEventListener("click", () => sidebarOpen.set(!sidebarOpen.get()));
 
-    document.addEventListener("astro:before-preparation", () => unsub(), {
+    document.addEventListener("astro:before-preparation", unsub, {
       once: true,
     });
   });
