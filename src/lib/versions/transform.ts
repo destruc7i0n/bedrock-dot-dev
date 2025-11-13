@@ -38,7 +38,7 @@ export const compressVersions = (data: BedrockVersions): CompressedVersions => {
     for (const file of files) {
       if (!fileIndexMap.has(file)) {
         out.k.push(file);
-        fileIndexMap.set(file, out.k.length);
+        fileIndexMap.set(file, out.k.length - 1);
       }
       fileIndices.push(fileIndexMap.get(file)!);
     }
