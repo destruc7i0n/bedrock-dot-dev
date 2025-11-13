@@ -50,8 +50,8 @@ const DocSearchButton = forwardRef<HTMLButtonElement, Props>(
           type="button"
           className={cn(
             baseButtonClasses,
-            "w-full py-2 pl-8",
-            size === "lg" && "lg:py-4 lg:pl-10",
+            "w-full pl-8",
+            size === "lg" ? "py-3 lg:py-4 lg:pl-10" : "py-2",
           )}
           onClick={onClick}
         >
