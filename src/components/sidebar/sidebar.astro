@@ -8,6 +8,7 @@ import type { BedrockVersions } from "../../lib/versions";
 import type { TagsResponse } from "../../lib/tags";
 import { Locale, t } from "@lib/i18n";
 import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
+import { compressVersions } from "@lib/transform-versions";
 
 interface Props {
   sidebar: SidebarStructure;
@@ -19,6 +20,9 @@ interface Props {
 }
 
 const { sidebar, file, major, minor, versions, tags } = Astro.props;
+
+// compress versions to reduce the size in the initial payload
+const compressedVersions = compressVersions(versions);
 
 const searchTitle = t("component.search.title");
 
@@ -156,7 +160,7 @@ const sidebarScript = `try {
         major={major}
         minor={minor}
         file={file}
-        versions={versions}
+        compressedVersions={compressedVersions}
         tags={tags}
       />
       <div class="mt-4 hidden lg:block">

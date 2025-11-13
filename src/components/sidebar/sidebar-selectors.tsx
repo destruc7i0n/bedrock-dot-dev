@@ -12,16 +12,16 @@ import {
 } from "@lib/util";
 import { getVersionTag } from "@lib/tags";
 import { TAG_STYLES } from "@lib/tag-styles";
+import {
+  decompressVersions,
+  type CompressedVersions,
+} from "@lib/transform-versions";
 
 interface Props {
   major: string;
   minor: string;
   file: string;
-  versions: {
-    [key: string]: {
-      [key: string]: string[];
-    };
-  };
+  compressedVersions: CompressedVersions;
   tags: {
     stable: string[];
     beta: string[];
@@ -32,10 +32,16 @@ const SidebarSelectors: FunctionComponent<Props> = ({
   major,
   minor,
   file,
-  versions,
+  compressedVersions,
   tags,
 }) => {
   const { t: translate } = useTranslation();
+
+  // decompress once
+  const versions = useMemo(
+    () => decompressVersions(compressedVersions),
+    [compressedVersions],
+  );
 
   const translateFileName = (fileName: string) => {
     const key = fileName.toLowerCase().split(" ").join("_");

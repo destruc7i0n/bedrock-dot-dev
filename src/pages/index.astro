@@ -5,12 +5,16 @@ import Footer from "@components/footer.astro";
 import VersionChooser from "@components/version-chooser/version-chooser";
 import DocSearch from "@components/docsearch/docsearch.astro";
 
-import { getTags } from "../lib/tags";
-import { Locale, t } from "../lib/i18n";
-import { algolia } from "../lib/algolia";
-import { allFilesList } from "../lib/versions";
+import { getTags } from "@lib/tags";
+import { Locale, t } from "@lib/i18n";
+import { algolia } from "@lib/algolia";
+import { allFilesList } from "@lib/versions";
+import { compressVersions } from "@lib/transform-versions";
 
 const versions = await allFilesList(Locale.English);
+
+// compress versions to reduce the size in the initial payload
+const compressedVersions = compressVersions(versions);
 
 const tags = await getTags(Locale.English);
 ---
@@ -60,7 +64,11 @@ const tags = await getTags(Locale.English);
           {t("component.version_chooser.title")}
         </h2>
 
-        <VersionChooser client:load versions={versions} tags={tags} />
+        <VersionChooser
+          client:load
+          compressedVersions={compressedVersions}
+          tags={tags}
+        />
       </div>
     </div>
 

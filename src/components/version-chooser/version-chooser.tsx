@@ -5,11 +5,14 @@ import { useTranslation } from "react-i18next";
 import SpecificVersionChooser from "./specific-version-chooser";
 import TagVersionChooser from "./tag-version-chooser";
 
-import { compareBedrockVersions, getLink, parseUrlQuery } from "../../lib/util";
-import type { ParsedUrlResponse } from "../../lib/util";
-import type { BedrockVersions } from "../../lib/versions";
-import { Tags } from "../../lib/tags";
-import type { TagsResponse } from "../../lib/tags";
+import { compareBedrockVersions, getLink, parseUrlQuery } from "@lib/util";
+import type { ParsedUrlResponse } from "@lib/util";
+import { Tags } from "@lib/tags";
+import type { TagsResponse } from "@lib/tags";
+import {
+  decompressVersions,
+  type CompressedVersions,
+} from "@lib/transform-versions";
 
 type VersionFileProps = {
   title: string;
@@ -25,16 +28,22 @@ const VersionFile: FunctionComponent<VersionFileProps> = ({ title, link }) => {
 };
 
 type VersionChooserProps = {
-  versions: BedrockVersions;
+  compressedVersions: CompressedVersions;
   tags: TagsResponse;
 };
 
 const VersionChooser: FunctionComponent<VersionChooserProps> = ({
-  versions,
+  compressedVersions,
   tags,
 }) => {
   const { t } = useTranslation();
   const [quickSelect, setQuickSelect] = useState(true);
+
+  // decompress once
+  const versions = useMemo(
+    () => decompressVersions(compressedVersions),
+    [compressedVersions],
+  );
 
   // Parse query params from browser
   const query = useMemo(() => {
