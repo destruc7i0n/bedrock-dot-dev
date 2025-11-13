@@ -3,19 +3,8 @@ import * as fs from "fs";
 import * as path from "path";
 import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
 import { areVersionsEqual } from "./util";
-
-export enum Tags {
-  Stable = "stable",
-  Beta = "beta",
-}
-
-export const TagsValues: string[] = Object.keys(Tags).map(
-  (k) => Tags[k as keyof typeof Tags],
-);
-
-export type TagsResponse = {
-  [tag in Tags]: string[];
-};
+import { Tag } from "./types";
+import type { TagsResponse } from "./types";
 
 const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
   const submodulePath = path.resolve(
@@ -42,12 +31,12 @@ export const getTags = async (locale: Locale): Promise<TagsResponse> => {
 export const getVersionTag = (
   version: string[],
   tags: TagsResponse,
-): Tags | null => {
+): Tag | null => {
   if (areVersionsEqual(version, tags.stable)) {
-    return Tags.Stable;
+    return Tag.Stable;
   }
   if (areVersionsEqual(version, tags.beta)) {
-    return Tags.Beta;
+    return Tag.Beta;
   }
   return null;
 };

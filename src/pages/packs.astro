@@ -5,20 +5,21 @@ import Navbar from "../components/homepage/navbar.astro";
 import Footer from "../components/footer.astro";
 import PackCard from "../components/packs/pack-card.astro";
 
-import { getTags, Tags } from "../lib/tags";
+import { getTags } from "@lib/tags";
+import { Tag } from "@lib/types";
 import { Locale, t } from "../lib/i18n";
 import { compareBedrockVersions } from "../lib/util";
 import { listReleases } from "../lib/github/api";
 
 export type PackVersions = {
-  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tags; git: string }>;
+  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;
 };
 
 const VERSION = /(\d+\.\d+\.\d+\.\d+)/;
 
 const tags = await getTags(Locale.English);
-const stableTag = tags[Tags.Stable]?.at(-1) ?? "";
-const betaTag = tags[Tags.Beta]?.at(-1) ?? "";
+const stableTag = tags[Tag.Stable]?.at(-1) ?? "";
+const betaTag = tags[Tag.Beta]?.at(-1) ?? "";
 
 const versions: PackVersions = {};
 let paths: string[] = [];
@@ -71,8 +72,8 @@ for (const release of mojangBedrockSamples) {
 }
 
 // Add the tags to the versions
-if (versions[stableTag]) versions[stableTag].t = Tags.Stable;
-if (versions[betaTag]) versions[betaTag].t = Tags.Beta;
+if (versions[stableTag]) versions[stableTag].t = Tag.Stable;
+if (versions[betaTag]) versions[betaTag].t = Tag.Beta;
 
 const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
 ---

@@ -2,7 +2,8 @@ import { ImageResponse } from "@vercel/og";
 import type { APIRoute } from "astro";
 import type { ReactElement } from "react";
 
-import { getTags, Tags } from "@lib/tags";
+import { getTags } from "@lib/tags";
+import { Tag } from "@lib/types";
 import { VERSION } from "@lib/html/regex";
 import { Locale } from "@lib/i18n";
 
@@ -44,13 +45,13 @@ const getBgColor = (
   taggedVersion: string | null,
   versionParam: string | null,
 ) => {
-  if (taggedVersion === Tags.Beta) return "rgb(234, 179, 8)"; // yellow-500
-  if (versionParam !== Tags.Beta) return "rgb(37, 99, 235)"; // blue-600
+  if (taggedVersion === Tag.Beta) return "rgb(234, 179, 8)"; // yellow-500
+  if (versionParam !== Tag.Beta) return "rgb(37, 99, 235)"; // blue-600
   return "rgb(37, 99, 235)"; // default to blue-600
 };
 
 const getBoxShadowColor = (taggedVersion: string | null) => {
-  return taggedVersion === Tags.Beta
+  return taggedVersion === Tag.Beta
     ? "rgba(234, 179, 8, 0.6)"
     : "rgba(37, 99, 235, 0.6)";
 };
@@ -81,13 +82,13 @@ export const GET: APIRoute = async ({ request }) => {
     let version: string | null = null;
 
     switch (versionParam) {
-      case Tags.Stable: {
-        taggedVersion = Tags.Stable;
+      case Tag.Stable: {
+        taggedVersion = Tag.Stable;
         version = tags.stable[1];
         break;
       }
-      case Tags.Beta: {
-        taggedVersion = Tags.Beta;
+      case Tag.Beta: {
+        taggedVersion = Tag.Beta;
         version = tags.beta[1];
         break;
       }

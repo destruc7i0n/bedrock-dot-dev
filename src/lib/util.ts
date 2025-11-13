@@ -1,6 +1,7 @@
 import type { BedrockVersions } from "./versions";
-import { Tags, getVersionTag } from "./tags";
-import type { TagsResponse } from "./tags";
+import { getVersionTag } from "./tags";
+import { Tag } from "./types";
+import type { TagsResponse } from "./types";
 
 export const PACK_BASE_URL = "https://void.bedrock.dev";
 
@@ -34,8 +35,8 @@ export const getLink = (
   if (replaceWithTagged) {
     const version = [major, minor];
     const tag = getVersionTag(version, tags);
-    if (tag === Tags.Stable) return `/docs/stable/${file}`;
-    if (tag === Tags.Beta) return `/docs/beta/${file}`;
+    if (tag === Tag.Stable) return `/docs/stable/${file}`;
+    if (tag === Tag.Beta) return `/docs/beta/${file}`;
   }
   return `/docs/${major}/${minor}/${file}`;
 };
@@ -47,9 +48,9 @@ export const getMinorVersionTitle = (
 ) => {
   let title = version[1];
   const tag = getVersionTag(version, tags);
-  if (tag === Tags.Beta)
+  if (tag === Tag.Beta)
     title += ` (${t("component.version_chooser.beta_string")})`;
-  if (tag === Tags.Stable)
+  if (tag === Tag.Stable)
     title += ` (${t("component.version_chooser.stable_string")})`;
   return title;
 };
@@ -69,8 +70,8 @@ export const getVersionParts = (version: string): number[] =>
 export const getTagFromSlug = (slug: string | string[] | undefined) => {
   if (typeof slug === "object" && slug.length === 2) {
     if (["stable", "beta"].includes(slug[0])) {
-      if (slug[0] === "stable") return Tags.Stable;
-      else if (slug[0] === "beta") return Tags.Beta;
+      if (slug[0] === "stable") return Tag.Stable;
+      else if (slug[0] === "beta") return Tag.Beta;
     }
   }
   return null;

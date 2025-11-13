@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { cn } from "@lib/cn";
 
 import type { VersionSelectorProps } from "./specific-version-chooser";
-import { Tags } from "../../lib/tags";
-import { TAG_STYLES } from "../../lib/tag-styles";
+import { Tag } from "@lib/types";
+import { TAG_STYLES } from "@lib/tag-styles";
 
 const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   tags,
@@ -13,7 +13,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   setMinor,
 }) => {
   const { t } = useTranslation();
-  const [version, setVersion] = useState(Tags.Stable);
+  const [version, setVersion] = useState(Tag.Stable);
 
   const updateVersion = () => {
     const [major, minor] = tags[version];
@@ -39,12 +39,12 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
         id="tag"
         className={selectClassName}
         value={version}
-        onChange={({ target: { value } }) => setVersion(value as Tags)}
+        onChange={({ target: { value } }) => setVersion(value as Tag)}
       >
-        <option value={Tags.Stable}>
+        <option value={Tag.Stable}>
           {tags.stable[1]} ({t("component.version_chooser.stable_string")})
         </option>
-        <option value={Tags.Beta}>
+        <option value={Tag.Beta}>
           {tags.beta[1]} ({t("component.version_chooser.beta_string")})
         </option>
       </select>

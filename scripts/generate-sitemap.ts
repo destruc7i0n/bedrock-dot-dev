@@ -6,7 +6,8 @@ import fs from "fs";
 import { SitemapStream, streamToPromise } from "sitemap";
 
 import { LIVE_URL } from "../src/lib/constants";
-import { getTags, Tags } from "../src/lib/tags";
+import { getTags } from "../src/lib/tags";
+import { Tag } from "../src/lib/types";
 import { Locale, getLocale } from "../src/lib/i18n";
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
@@ -37,7 +38,7 @@ const main = async () => {
     const langVersions = versions[lang];
 
     for (const tag of Object.keys(tags)) {
-      const [major, minor] = tags[tag as Tags];
+      const [major, minor] = tags[tag as Tag];
       if (!langVersions[major] || !langVersions[major][minor]) {
         console.warn(
           `Warning: Version ${major}.${minor} not found in docs.json for language ${lang}, skipping`,

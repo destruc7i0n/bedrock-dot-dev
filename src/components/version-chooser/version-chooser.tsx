@@ -7,8 +7,8 @@ import TagVersionChooser from "./tag-version-chooser";
 
 import { compareBedrockVersions, getLink, parseUrlQuery } from "@lib/util";
 import type { ParsedUrlResponse } from "@lib/util";
-import { Tags } from "@lib/tags";
-import type { TagsResponse } from "@lib/tags";
+import { Tag } from "@lib/types";
+import type { TagsResponse } from "@lib/types";
 import {
   decompressVersions,
   type CompressedVersions,
@@ -54,7 +54,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
     };
   }, []);
 
-  const [stableMajor, stableMinor] = tags[Tags.Stable];
+  const [stableMajor, stableMinor] = tags[Tag.Stable];
 
   // initialize to the current stable version
   const [major, setMajor] = useState(stableMajor);
