@@ -28,8 +28,8 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
   )}
 >
   <div class="mx-auto max-w-screen-lg space-y-3">
-    <div class="flex flex-wrap justify-center font-medium">
-      <div class="px-2 text-gray-500 dark:text-gray-300">
+    <div class="flex flex-wrap justify-center gap-2 font-medium">
+      <div class="text-gray-500 dark:text-gray-300">
         {t("component.footer.credits_prefix")}{" "}
         <a
           class="link"
@@ -40,28 +40,24 @@ const darkClass = "bg-gray-50 dark:" + darkClassName;
           destruc7i0n
         </a>
       </div>
-      <div class="px-2">
-        <a
-          href="https://patreon.com/destruc7i0n"
-          class="link"
-          target="_blank"
-          rel="noopener"
-        >
-          {t("component.footer.donate")}
-        </a>
-      </div>
     </div>
-    <div class="flex flex-wrap justify-center font-medium">
-      <div class="px-2">
-        <a
-          class="link"
-          href="https://github.com/destruc7i0n/bedrock-dot-dev"
-          target="_blank"
-          rel="noopener"
-        >
-          {t("component.footer.github")}
-        </a>
-      </div>
+    <div class="flex flex-wrap justify-center gap-4 font-medium">
+      <a
+        class="link"
+        href="https://github.com/destruc7i0n/bedrock-dot-dev"
+        target="_blank"
+        rel="noopener"
+      >
+        {t("component.footer.github")}
+      </a>
+      <a
+        href="https://patreon.com/destruc7i0n"
+        class="link"
+        target="_blank"
+        rel="noopener"
+      >
+        {t("component.footer.donate")}
+      </a>
     </div>
     <div
       class="flex flex-wrap justify-center text-center font-medium text-gray-500 dark:text-gray-400"
