@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
+import cn from "classnames";
 
 import type { VersionSelectorProps } from "./specific-version-chooser";
 import { Tags } from "../../lib/tags";
+import { TAG_STYLES } from "../../lib/tag-styles";
 
 const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   tags,
@@ -21,6 +23,13 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
 
   useEffect(updateVersion, [version, tags, setMajor, setMinor]);
 
+  const selectClassName = cn(
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    TAG_STYLES[version]
+      ? [TAG_STYLES[version].border, "font-medium", "dark:text-gray-200"]
+      : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
+  );
+
   return (
     <div className="mb-2 w-full">
       <label className="mb-2 block text-sm font-bold" htmlFor="tag">
@@ -28,7 +37,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
       </label>
       <select
         id="tag"
-        className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
+        className={selectClassName}
         value={version}
         onChange={({ target: { value } }) => setVersion(value as Tags)}
       >

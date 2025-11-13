@@ -1,8 +1,11 @@
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
+import cn from "classnames";
 
 import { getMinorVersionTitle } from "../../lib/util";
 import type { TagsResponse } from "../../lib/tags";
+import { getVersionTag } from "../../lib/tags";
+import { TAG_STYLES } from "../../lib/tag-styles";
 
 export type VersionSelectorProps = {
   majorVersions: string[];
@@ -26,6 +29,23 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   tags,
 }) => {
   const { t } = useTranslation();
+
+  const currentTag = getVersionTag([major, minor], tags);
+
+  const majorSelectClassName = cn(
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    currentTag && TAG_STYLES[currentTag]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
+  );
+
+  const minorSelectClassName = cn(
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    currentTag && TAG_STYLES[currentTag]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
+  );
+
   return (
     <>
       <div className="mb-2 w-1/2 pr-2">
@@ -34,7 +54,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
         </label>
         <select
           id="major"
-          className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
+          className={majorSelectClassName}
           value={major}
           onChange={({ target: { value } }) => setMajor(value)}
         >
@@ -51,7 +71,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
         </label>
         <select
           id="minor"
-          className="w-full rounded-md border-gray-300 leading-5 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
+          className={minorSelectClassName}
           value={minor}
           onChange={({ target: { value } }) => setMinor(value)}
         >

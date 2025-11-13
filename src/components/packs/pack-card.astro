@@ -3,6 +3,7 @@ import { t } from "../../lib/i18n";
 import { Tags } from "../../lib/tags";
 import { getPackUrl } from "../../lib/util";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+import { TAG_STYLES } from "../../lib/tag-styles";
 
 export type PackVersions = {
   [key: string]: Partial<{ b: boolean; r: boolean; t?: Tags; git: string }>;
@@ -15,17 +16,9 @@ interface Props {
 
 const { versionName, versionData } = Astro.props;
 
-const TAG_STYLES = {
-  [Tags.Beta]: {
-    border:
-      "border-2 border-yellow-500 bg-yellow-50 dark:border-yellow-600 dark:bg-yellow-600/10",
-    translationKey: "component.version_chooser.beta_string",
-  },
-  [Tags.Stable]: {
-    border:
-      "border-2 border-blue-400 bg-blue-50 dark:border-blue-600 dark:bg-blue-600/10",
-    translationKey: "component.version_chooser.stable_string",
-  },
+const TAG_TRANSLATION_KEYS = {
+  [Tags.Beta]: "component.version_chooser.beta_string",
+  [Tags.Stable]: "component.version_chooser.stable_string",
 } as const;
 
 const isGitHubLink = !!versionData.git;
@@ -38,9 +31,8 @@ const resourcesText = t("component.packs_page.resources_link");
 let title = versionName;
 let border = "border-gray-200 dark:border-transparent";
 if (versionData.t && TAG_STYLES[versionData.t]) {
-  const tagStyle = TAG_STYLES[versionData.t];
-  border = tagStyle.border;
-  title = `${title} (${t(tagStyle.translationKey)})`;
+  border = TAG_STYLES[versionData.t].border;
+  title = `${title} (${t(TAG_TRANSLATION_KEYS[versionData.t])})`;
 }
 ---
 

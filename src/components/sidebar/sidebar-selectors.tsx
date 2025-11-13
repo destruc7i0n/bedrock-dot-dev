@@ -3,12 +3,15 @@ import type { ChangeEvent, FunctionComponent } from "react";
 
 import { useTranslation } from "react-i18next";
 import { navigate } from "astro:transitions/client";
+import cn from "classnames";
 
 import {
   compareBedrockVersions,
   getLink,
   getMinorVersionTitle,
 } from "@lib/util";
+import { getVersionTag } from "@lib/tags";
+import { TAG_STYLES } from "@lib/tag-styles";
 
 interface Props {
   major: string;
@@ -38,6 +41,15 @@ const SidebarSelectors: FunctionComponent<Props> = ({
     const key = fileName.toLowerCase().split(" ").join("_");
     return translate(`files.${key}`, { defaultValue: fileName });
   };
+
+  const currentTag = getVersionTag([major, minor], tags);
+
+  const versionSelectClassName = cn(
+    "block w-full rounded-md leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    currentTag && TAG_STYLES[currentTag]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
+  );
 
   const options = useMemo(() => {
     if (!major || !versions) return [];
@@ -131,7 +143,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
           value={`${major}/${minor}`}
           id="version"
           onChange={onVersionChange}
-          className="block w-full rounded-md border-gray-300 leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
+          className={versionSelectClassName}
         >
           {options}
         </select>
