@@ -1,6 +1,5 @@
 ---
 import { Bars3Icon, Bars3CenterLeftIcon } from "@heroicons/react/20/solid";
-import { cn } from "@lib/cn";
 
 type Props = {
   class?: string;
@@ -18,10 +17,10 @@ const { class: className } = Astro.props;
 <button
   id="sidebar-toggle"
   aria-label="Toggle sidebar"
-  class={cn(
-    "rounded-lg p-1.5 transition-colors hover:bg-gray-200 dark:hover:bg-dark-gray-800",
+  class:list={[
+    "-ml-1.5 rounded-lg p-1.5 transition-colors hover:bg-gray-200 dark:hover:bg-dark-gray-800",
     className,
-  )}
+  ]}
 >
   <Bars3Icon id="icon-closed" className="h-6 w-6" />
   <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />

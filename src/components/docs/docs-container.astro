@@ -15,7 +15,7 @@ const alerts = getDocAlerts(file, version);
 ---
 
 <div class="w-0 flex-1 bg-white dark:bg-dark-gray-900">
-  <div class="mx-auto p-4 lg:max-w-9/10">
+  <div class="mx-auto p-4 lg:max-w-9/10 lg:px-0">
     {alerts.map((alert) => <DocsAlert {...alert} />)}
     <div
       class="docs-content text-gray-900 dark:text-gray-200"
