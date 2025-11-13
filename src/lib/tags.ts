@@ -2,6 +2,7 @@ import { Locale } from "./i18n";
 import * as fs from "fs";
 import * as path from "path";
 import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
+import { areVersionsEqual } from "./util";
 
 export enum Tags {
   Stable = "stable",
@@ -36,4 +37,17 @@ const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
 
 export const getTags = async (locale: Locale): Promise<TagsResponse> => {
   return readTagsFromSubmodule(locale);
+};
+
+export const getVersionTag = (
+  version: string[],
+  tags: TagsResponse,
+): Tags | null => {
+  if (areVersionsEqual(version, tags.stable)) {
+    return Tags.Stable;
+  }
+  if (areVersionsEqual(version, tags.beta)) {
+    return Tags.Beta;
+  }
+  return null;
 };
