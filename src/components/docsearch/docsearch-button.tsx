@@ -39,7 +39,7 @@ const DocSearchButton = forwardRef<HTMLButtonElement, Props>(
             size === "lg" && "lg:pl-3",
           )}
         >
-          <span className="leading-4 text-white">
+          <span className="leading-4 text-gray-600 dark:text-white">
             <MagnifyingGlassIcon
               className={cn("h-4 w-4", size === "lg" && "lg:h-5 lg:w-5")}
             />
