@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 import type { VersionSelectorProps } from "./specific-version-chooser";
 import { Tags } from "../../lib/tags";

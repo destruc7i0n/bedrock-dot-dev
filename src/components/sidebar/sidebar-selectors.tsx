@@ -3,7 +3,7 @@ import type { ChangeEvent, FunctionComponent } from "react";
 
 import { useTranslation } from "react-i18next";
 import { navigate } from "astro:transitions/client";
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 import {
   compareBedrockVersions,

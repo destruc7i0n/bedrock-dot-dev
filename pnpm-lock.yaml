@@ -44,9 +44,9 @@ importers:
       astro-nprogress:
         specifier: ^0.0.2
         version: 0.0.2(astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
-      classnames:
-        specifier: ^2.5.1
-        version: 2.5.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       flat-cache:
         specifier: ^6.1.18
         version: 6.1.18
@@ -77,6 +77,9 @@ importers:
       sitemap:
         specifier: ^9.0.0
         version: 9.0.0
+      tailwind-merge:
+        specifier: 2.6.0
+        version: 2.6.0
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.5
@@ -1868,9 +1871,6 @@ packages:
     resolution: {integrity: sha512-Wdy2Igu8OcBpI2pZePZ5oWjPC38tmDVx5WKUXKwlLYkA0ozo85sLsLvkBbBn/sZaSCMFOGZJ14fvW9t5/d7kdA==}
     engines: {node: '>=8'}
 
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
-
   cli-boxes@3.0.0:
     resolution: {integrity: sha512-/lzGpEWL/8PfI0BmBOPRwp0c/wFNX1RdUML3jK/RcSBA9T8mZDdQpqYBKtCFTOfQbwPqWEOpjqW+Fnayc0969g==}
     engines: {node: '>=10'}
@@ -3386,6 +3386,9 @@ packages:
   synckit@0.11.11:
     resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
     engines: {node: ^14.18.0 || >=16.0.0}
+
+  tailwind-merge@2.6.0:
+    resolution: {integrity: sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==}
 
   tailwindcss@3.4.17:
     resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
@@ -6249,8 +6252,6 @@ snapshots:
 
   ci-info@4.3.1: {}
 
-  classnames@2.5.1: {}
-
   cli-boxes@3.0.0: {}
 
   cliui@8.0.1:
@@ -7952,6 +7953,8 @@ snapshots:
   synckit@0.11.11:
     dependencies:
       '@pkgr/core': 0.2.9
+
+  tailwind-merge@2.6.0: {}
 
   tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3)):
     dependencies:

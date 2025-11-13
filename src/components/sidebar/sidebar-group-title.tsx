@@ -3,7 +3,7 @@ import type { MouseEvent } from "react";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 import { removeHashIfNeeded } from "../../lib/util";
 

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 import { getMinorVersionTitle } from "../../lib/util";
 import type { TagsResponse } from "../../lib/tags";

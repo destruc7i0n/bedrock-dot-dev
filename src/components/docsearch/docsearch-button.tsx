@@ -1,6 +1,6 @@
 import { forwardRef, memo } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 type Props = {
   placeHolder: string;

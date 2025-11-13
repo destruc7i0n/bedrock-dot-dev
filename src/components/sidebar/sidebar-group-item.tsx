@@ -1,7 +1,7 @@
 import { memo } from "react";
 import type { FunctionComponent } from "react";
 
-import cn from "classnames";
+import { cn } from "@lib/cn";
 
 import { removeHashIfNeeded } from "../../lib/util";
 
