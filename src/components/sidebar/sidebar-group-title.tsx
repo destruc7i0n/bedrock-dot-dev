@@ -76,7 +76,7 @@ const SidebarGroupTitle: React.FunctionComponent<Props> = ({
         )}
       </summary>
       {hasChildren && (
-        <ul className="nav border-b border-gray-200 px-4 dark:border-dark-gray-800">
+        <ul className="nav border-b border-gray-200 pl-4 pr-1 dark:border-dark-gray-800">
           {children}
         </ul>
       )}

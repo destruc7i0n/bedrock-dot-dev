@@ -96,7 +96,7 @@ const SidebarContent: FunctionComponent<Props> = ({ sidebar, file }) => {
 
   return (
     <div
-      className="flex h-0 flex-1 flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8"
+      className="content flex flex-1 flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8"
       ref={sidebarRef}
     >
       {Object.values(sidebar).map((value, index) => {
