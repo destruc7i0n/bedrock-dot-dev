@@ -1,3 +1,4 @@
+import { FlatCache } from "flat-cache";
 import { listAllFilesFromRepo } from "../docs/fs";
 import type { GitHubTreeResponse } from "../docs/fs";
 
@@ -54,7 +55,6 @@ export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
     versions: {},
     byLocale: {},
   };
-  // console.log('Fetching files list')
   for (const locale of Object.values(Locale)) {
     file.versions[locale] = await getFormattedFilesList(locale);
   }
@@ -63,8 +63,38 @@ export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
 };
 
 const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
+  const cached = checkCache();
+  if (cached) return cached.versions[locale] ?? {};
+
   const file = await getVersionsFile();
+  setCache(file);
   return file.versions[locale] ?? {};
 };
 
 export { formatTree, allFilesList, getFormattedFilesList };
+
+// caching so we don't have to build the file list every single time
+// have a cache invalidation period for dev
+const CACHE_DURATION_MINUTES = 10;
+
+const cache = new FlatCache({ cacheId: "versions" });
+
+const checkCache = (): BedrockVersionsFile | undefined => {
+  const timestamp: string = cache.getKey("timestamp");
+
+  if (timestamp) {
+    const cachedTime = new Date(timestamp);
+    const difference = Math.round(
+      (new Date().getTime() - cachedTime.getTime()) / 60000,
+    );
+
+    const files: BedrockVersionsFile = cache.getKey("files");
+    if (difference < CACHE_DURATION_MINUTES && files) return files;
+  }
+};
+
+const setCache = (file: BedrockVersionsFile) => {
+  cache.setKey("timestamp", new Date().getTime());
+  cache.setKey("files", file);
+  cache.save();
+};
