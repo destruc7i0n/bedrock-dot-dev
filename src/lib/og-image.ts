@@ -1,4 +1,4 @@
-import { LIVE_URL } from "./constants";
+import { LIVE_URL } from "./constants/env";
 
 export function getOgImageUrl(params?: {
   file?: string;

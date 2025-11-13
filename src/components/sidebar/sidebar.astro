@@ -4,11 +4,11 @@ import SidebarContent from "./sidebar-content";
 import ModeSelect from "@components/theme/mode-select.astro";
 import DocSearch from "@components/docsearch/docsearch.astro";
 import type { SidebarStructure } from "./index";
-import type { BedrockVersions } from "@lib/versions";
+import type { BedrockVersions } from "@lib/versions/types";
 import type { TagsResponse } from "@lib/types";
 import { Locale, t } from "@lib/i18n";
-import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
-import { compressVersions } from "@lib/transform-versions";
+import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+import { compressVersions } from "@lib/versions/transform";
 
 interface Props {
   sidebar: SidebarStructure;
@@ -184,7 +184,7 @@ const sidebarScript = `try {
 
 <script>
   import { sidebarOpen } from "@stores/sidebar-open";
-  import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
+  import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
 
   document.addEventListener("astro:page-load", () => {
     const sidebar = document.querySelector(".sidebar");

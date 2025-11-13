@@ -1,7 +1,7 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindForms from "@tailwindcss/forms";
 
-import { BREAKPOINTS } from "./src/lib/breakpoints";
+import { BREAKPOINTS } from "./src/lib/constants/breakpoints";
 
 const screens = {
   sm: `${BREAKPOINTS.sm}px`,

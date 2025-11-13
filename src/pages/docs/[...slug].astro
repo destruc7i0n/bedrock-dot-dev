@@ -10,7 +10,8 @@ import BackToTop from "@components/docs/back-to-top.astro";
 import { getTags, getVersionTag } from "@lib/tags";
 import { Tag } from "@lib/types";
 import { Locale, t } from "@lib/i18n";
-import { allFilesList, bedrockVersionsInOrder } from "@lib/versions";
+import { allFilesList } from "@lib/versions/submodule";
+import { bedrockVersionsInOrder } from "@lib/versions/helpers";
 import { processDocFile } from "@lib/docs/process-file";
 import { getOgImageUrl } from "@lib/og-image";
 

@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "../locales/en/common.json";
-import type { BedrockVersionsFile } from "./versions";
+import type { BedrockVersionsFile } from "@lib/versions/types";
 
 export enum Locale {
   English = "en",

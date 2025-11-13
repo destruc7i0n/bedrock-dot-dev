@@ -5,7 +5,7 @@ import fs from "fs";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
-import { LIVE_URL } from "../src/lib/constants";
+import { LIVE_URL } from "../src/lib/constants/env";
 import { getTags } from "../src/lib/tags";
 import { Tag } from "../src/lib/types";
 import { Locale, getLocale } from "../src/lib/i18n";

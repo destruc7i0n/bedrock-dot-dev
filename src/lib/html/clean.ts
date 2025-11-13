@@ -4,7 +4,8 @@ import {
   TABLE_MATCH,
   ONLY_NEWLINES_AND_WHITESPACE,
 } from "./regex";
-import { getVersionParts, oneLine } from "../util";
+import { getVersionParts } from "@lib/versions/helpers";
+import { oneLine } from "@lib/util";
 
 import { addAnchors } from "./scrape/sections";
 import { addAnchorsToMoLangQueries } from "./clean/molang";

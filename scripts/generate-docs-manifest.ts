@@ -4,7 +4,7 @@ import "isomorphic-unfetch";
 import path from "path";
 import fs from "fs";
 
-import { getVersionsFile } from "../src/lib/versions";
+import { getVersionsFile } from "../src/lib/versions/submodule";
 
 const main = async () => {
   const file = await getVersionsFile();

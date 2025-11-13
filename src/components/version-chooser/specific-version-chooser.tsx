@@ -5,7 +5,7 @@ import { cn } from "@lib/cn";
 import { getMinorVersionTitle } from "@lib/util";
 import type { TagsResponse } from "@lib/types";
 import { getVersionTag } from "@lib/tags";
-import { TAG_STYLES } from "@lib/tag-styles";
+import { TAG_STYLES } from "@lib/constants/tag-styles";
 
 export type VersionSelectorProps = {
   majorVersions: string[];

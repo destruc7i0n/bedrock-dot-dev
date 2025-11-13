@@ -1,7 +1,8 @@
-import type { BedrockVersions } from "./versions";
+import type { BedrockVersions } from "@lib/versions/types";
 import { getVersionTag } from "./tags";
 import { Tag } from "./types";
 import type { TagsResponse } from "./types";
+import { compareBedrockVersions } from "./versions/helpers";
 
 export const PACK_BASE_URL = "https://void.bedrock.dev";
 
@@ -11,18 +12,6 @@ export const getPackUrl = (
 ): string => {
   return `${PACK_BASE_URL}/${folder}/${version}.zip`;
 };
-
-export function compareBedrockVersions(a: string, b: string) {
-  const sa = getVersionParts(a);
-  const sb = getVersionParts(b);
-  for (let i = 0; i < 4; i++) {
-    const na = sa[i];
-    const nb = sb[i];
-    if (na > nb) return -1;
-    if (nb > na) return 1;
-  }
-  return 0;
-}
 
 export const getLink = (
   major: string,
@@ -60,12 +49,6 @@ export const addHashIfNeeded = (s: string) => {
 };
 
 export const removeHashIfNeeded = (s: string) => s.replace("#", "");
-
-export const areVersionsEqual = (a: string[], b: string[]) =>
-  a[0] === b[0] && a[1] === b[1];
-
-export const getVersionParts = (version: string): number[] =>
-  version.split(".").map(Number);
 
 export const getTagFromSlug = (slug: string | string[] | undefined) => {
   if (typeof slug === "object" && slug.length === 2) {

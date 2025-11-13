@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { DocSearchModal, useDocSearchKeyboardEvents } from "@docsearch/react";
 import type { DocSearchModalProps } from "@docsearch/react";
 
-import { algolia } from "../../lib/algolia";
+import { algolia } from "@lib/constants/algolia";
 import DocSearchButton from "./docsearch-button";
 
 type Props = {

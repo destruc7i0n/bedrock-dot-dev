@@ -7,9 +7,9 @@ import DocSearch from "@components/docsearch/docsearch.astro";
 
 import { getTags } from "@lib/tags";
 import { Locale, t } from "@lib/i18n";
-import { algolia } from "@lib/algolia";
-import { allFilesList } from "@lib/versions";
-import { compressVersions } from "@lib/transform-versions";
+import { algolia } from "@lib/constants/algolia";
+import { allFilesList } from "@lib/versions/submodule";
+import { compressVersions } from "@lib/versions/transform";
 
 const versions = await allFilesList(Locale.English);
 

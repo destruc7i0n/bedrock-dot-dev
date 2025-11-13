@@ -1,23 +1,8 @@
-import { listAllFilesFromRepo } from "./docs/fs";
-import type { GitHubTreeResponse } from "./docs/fs";
+import { listAllFilesFromRepo } from "../docs/fs";
+import type { GitHubTreeResponse } from "../docs/fs";
 
-import { checkCache, setCache } from "./versions-cache";
-import { groupVersionsByLocale, Locale } from "./i18n";
-import type { BedrockVersionsByLocale } from "./i18n";
-import { compareBedrockVersions, isProduction } from "./util";
-
-export interface BedrockVersions {
-  [key: string]: {
-    [key: string]: string[];
-  };
-}
-
-export type BedrockVersionsFile = {
-  versions: {
-    [key in Locale]?: BedrockVersions;
-  };
-  byLocale: BedrockVersionsByLocale;
-};
+import { groupVersionsByLocale, Locale } from "../i18n";
+import type { BedrockVersions, BedrockVersionsFile } from "./types";
 
 function formatTree(resp: GitHubTreeResponse): BedrockVersions {
   const versions: BedrockVersions = {};
@@ -78,35 +63,8 @@ export const getVersionsFile = async (): Promise<BedrockVersionsFile> => {
 };
 
 const allFilesList = async (locale: Locale): Promise<BedrockVersions> => {
-  // only use local cache in dev
-  const check = await checkCache();
-  if (check) return check.versions[locale] ?? {};
-  else {
-    if (isProduction()) {
-      console.error("Could not load the docs.json from cache!");
-      return {};
-    } else {
-      const file = await getVersionsFile();
-      setCache(file);
-      return file.versions[locale] ?? {};
-    }
-  }
+  const file = await getVersionsFile();
+  return file.versions[locale] ?? {};
 };
-
-// helper generator to sort and loop through all bedrock versions
-export function* bedrockVersionsInOrder(
-  versions: BedrockVersions,
-): IterableIterator<[string, string, string[]]> {
-  const majorVersions = Object.keys(versions).sort(compareBedrockVersions);
-  for (const major of majorVersions) {
-    const minorVersions = Object.keys(versions[major]).sort(
-      compareBedrockVersions,
-    );
-    for (const minor of minorVersions) {
-      const files = versions[major][minor];
-      yield [major, minor, files];
-    }
-  }
-}
 
 export { formatTree, allFilesList, getFormattedFilesList };

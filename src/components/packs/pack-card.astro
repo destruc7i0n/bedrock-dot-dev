@@ -3,7 +3,7 @@ import { t } from "@lib/i18n";
 import { Tag } from "@lib/types";
 import { getPackUrl } from "@lib/util";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
-import { TAG_STYLES } from "@lib/tag-styles";
+import { TAG_STYLES } from "@lib/constants/tag-styles";
 
 export type PackVersions = {
   [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;

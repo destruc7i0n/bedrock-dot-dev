@@ -1,4 +1,4 @@
-import { isVersionBefore, isVersionSince } from "./util";
+import { isVersionBefore, isVersionSince } from "../util";
 
 export interface DocAlert {
   type: "info" | "success" | "warning" | "error";

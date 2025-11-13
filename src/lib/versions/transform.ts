@@ -1,6 +1,6 @@
-import type { BedrockVersions } from "./versions";
-import { getVersionParts } from "./util";
-import { bedrockVersionsInOrder } from "./versions";
+import type { BedrockVersions } from "./types";
+import { getVersionParts } from "./helpers";
+import { bedrockVersionsInOrder } from "./helpers";
 
 export interface CompressedVersions {
   k: string[]; // key: unique file names

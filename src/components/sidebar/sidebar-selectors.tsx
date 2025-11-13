@@ -5,17 +5,14 @@ import { useTranslation } from "react-i18next";
 import { navigate } from "astro:transitions/client";
 import { cn } from "@lib/cn";
 
-import {
-  compareBedrockVersions,
-  getLink,
-  getMinorVersionTitle,
-} from "@lib/util";
+import { getLink, getMinorVersionTitle } from "@lib/util";
 import { getVersionTag } from "@lib/tags";
-import { TAG_STYLES } from "@lib/tag-styles";
+import { TAG_STYLES } from "@lib/constants/tag-styles";
 import {
   decompressVersions,
   type CompressedVersions,
-} from "@lib/transform-versions";
+} from "@lib/versions/transform";
+import { compareBedrockVersions } from "@lib/versions/helpers";
 
 interface Props {
   major: string;

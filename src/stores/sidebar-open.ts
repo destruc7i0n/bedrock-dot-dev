@@ -1,5 +1,5 @@
 import { persistentAtom } from "@nanostores/persistent";
-import { MOBILE_BREAKPOINT } from "@lib/breakpoints";
+import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
 
 const getDefaultValue = (): boolean => {
   if (typeof window === "undefined") return true;

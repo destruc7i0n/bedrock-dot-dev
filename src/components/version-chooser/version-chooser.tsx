@@ -5,14 +5,15 @@ import { useTranslation } from "react-i18next";
 import SpecificVersionChooser from "./specific-version-chooser";
 import TagVersionChooser from "./tag-version-chooser";
 
-import { compareBedrockVersions, getLink, parseUrlQuery } from "@lib/util";
+import { getLink, parseUrlQuery } from "@lib/util";
 import type { ParsedUrlResponse } from "@lib/util";
 import { Tag } from "@lib/types";
 import type { TagsResponse } from "@lib/types";
 import {
   decompressVersions,
   type CompressedVersions,
-} from "@lib/transform-versions";
+} from "@lib/versions/transform";
+import { compareBedrockVersions } from "@lib/versions/helpers";
 
 type VersionFileProps = {
   title: string;

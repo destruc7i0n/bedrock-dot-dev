@@ -1,8 +1,9 @@
-import { Locale } from "./i18n";
 import * as fs from "fs";
 import * as path from "path";
+
+import { Locale } from "./i18n";
 import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
-import { areVersionsEqual } from "./util";
+import { areVersionsEqual } from "./versions/helpers";
 import { Tag } from "./types";
 import type { TagsResponse } from "./types";
 

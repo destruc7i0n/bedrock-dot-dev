@@ -1,4 +1,4 @@
-import { Tag } from "./types";
+import { Tag } from "../types";
 
 export const TAG_STYLES = {
   [Tag.Beta]: {

@@ -1,15 +1,16 @@
 ---
 import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
+
 import Layout from "@layouts/layout.astro";
-import Navbar from "../components/homepage/navbar.astro";
-import Footer from "../components/footer.astro";
-import PackCard from "../components/packs/pack-card.astro";
+import Navbar from "@components/homepage/navbar.astro";
+import Footer from "@components/footer.astro";
+import PackCard from "@components/packs/pack-card.astro";
 
 import { getTags } from "@lib/tags";
 import { Tag } from "@lib/types";
-import { Locale, t } from "../lib/i18n";
-import { compareBedrockVersions } from "../lib/util";
-import { listReleases } from "../lib/github/api";
+import { Locale, t } from "@lib/i18n";
+import { compareBedrockVersions } from "@lib/versions/helpers";
+import { listReleases } from "@lib/github/api";
 
 export type PackVersions = {
   [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;
@@ -71,7 +72,6 @@ for (const release of mojangBedrockSamples) {
     versions[version] = { git: release.html_url };
 }
 
-// Add the tags to the versions
 if (versions[stableTag]) versions[stableTag].t = Tag.Stable;
 if (versions[betaTag]) versions[betaTag].t = Tag.Beta;
 

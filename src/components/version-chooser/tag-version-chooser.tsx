@@ -5,7 +5,7 @@ import { cn } from "@lib/cn";
 
 import type { VersionSelectorProps } from "./specific-version-chooser";
 import { Tag } from "@lib/types";
-import { TAG_STYLES } from "@lib/tag-styles";
+import { TAG_STYLES } from "@lib/constants/tag-styles";
 
 const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   tags,
