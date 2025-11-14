@@ -7,32 +7,6 @@ body {
   }
 }
 
-#nprogress {
-  .bar {
-    @apply bg-blue-600;
-
-    .dark & {
-      @apply bg-blue-500;
-    }
-
-    & {
-      height: 3px;
-    }
-  }
-
-  .peg {
-    box-shadow:
-      0 0 10px theme("colors.blue.600"),
-      0 0 5px theme("colors.blue.600");
-
-    .dark & {
-      box-shadow:
-        0 0 10px theme("colors.blue.500"),
-        0 0 5px theme("colors.blue.500");
-    }
-  }
-}
-
 hr {
   border-width: 1px;
 }

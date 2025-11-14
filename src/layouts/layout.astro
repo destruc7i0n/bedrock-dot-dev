@@ -1,10 +1,10 @@
 ---
 import { ClientRouter } from "astro:transitions";
 
-import NProgress from "astro-nprogress/component";
+import NProgress from "@components/nprogress.astro";
+import Head from "@components/head.astro";
 
-import Head from "../components/head.astro";
-import { getOgImageUrl } from "../lib/og-image";
+import { getOgImageUrl } from "@lib/og-image";
 
 import "@styles/tailwind.css";
 import "@styles/fonts.css";

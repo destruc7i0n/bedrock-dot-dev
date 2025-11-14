@@ -5,17 +5,21 @@ import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
 
 import vercelRedirects from "./src/integrations/vercel-redirects";
-import nprogress from "astro-nprogress";
 
 export default defineConfig({
   site: "https://bedrock.dev",
   output: "static",
   prefetch: true,
-  integrations: [tailwind(), react(), nprogress(), vercelRedirects()],
+  integrations: [tailwind(), react(), vercelRedirects()],
   adapter: vercel(),
   build: {
     redirects: false,
     concurrency: 10,
+  },
+  vite: {
+    optimizeDeps: {
+      include: ["nprogress"],
+    },
   },
   experimental: {
     fonts: [

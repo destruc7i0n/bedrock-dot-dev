@@ -41,9 +41,6 @@ importers:
       astro:
         specifier: ^5.15.5
         version: 5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
-      astro-nprogress:
-        specifier: ^0.0.2
-        version: 0.0.2(astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1718,16 +1715,6 @@ packages:
   astro-eslint-parser@1.2.2:
     resolution: {integrity: sha512-JepyLROIad6f44uyqMF6HKE2QbunNzp3mYKRcPoDGt0QkxXmH222FAFC64WTyQu2Kg8NNEXHTN/sWuUId9sSxw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  astro-nprogress@0.0.2:
-    resolution: {integrity: sha512-IH3NXbyZvOeQziFr5QtS2mAjW/EKvXtoGFVWMKtJ1tcH9SN5kV5ZtCXSI/byX7j9ogHor7onCeF4c2HecRgZZQ==}
-    peerDependencies:
-      astro: ^5.0.0
-
-  astro-view-transition-script@0.0.1:
-    resolution: {integrity: sha512-VWU1uue11vPM4OKpZV9tXl8DgnVTUeSxpHHdA9WVtpqcEkRfzzxFnfDYGkh85lVMhcWVsd2obn+C0I1lv/5NwQ==}
-    peerDependencies:
-      astro: ^5.0.0
 
   astro@5.15.5:
     resolution: {integrity: sha512-A56u4H6gFHEb0yRHcGTOADBb7jmEwfDjQpkqVV/Z+ZWlu6mYuwCrIcOUtZjNno0chrRKmOeZWDofW23ql18y3w==}
@@ -6001,17 +5988,6 @@ snapshots:
       semver: 7.7.3
     transitivePeerDependencies:
       - supports-color
-
-  astro-nprogress@0.0.2(astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)):
-    dependencies:
-      '@types/nprogress': 0.2.3
-      astro: 5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
-      astro-view-transition-script: 0.0.1(astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1))
-      nprogress: 0.2.0
-
-  astro-view-transition-script@0.0.1(astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)):
-    dependencies:
-      astro: 5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1)
 
   astro@5.15.5(@types/node@24.10.1)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.758.0))(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.1)(sass@1.77.8)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.7.1):
     dependencies:

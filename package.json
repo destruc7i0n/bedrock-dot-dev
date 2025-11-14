@@ -27,7 +27,6 @@
     "@nanostores/react": "^1.0.0",
     "@vercel/og": "^0.8.5",
     "astro": "^5.15.5",
-    "astro-nprogress": "^0.0.2",
     "clsx": "^2.1.1",
     "flat-cache": "^6.1.18",
     "i18next": "^25.6.2",
