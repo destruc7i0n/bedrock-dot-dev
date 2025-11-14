@@ -53,7 +53,12 @@ export async function processDocFile(
       return null;
     }
 
+    const id = `${major}/${minor}/${file}`;
+
+    console.log(`Processing ${id}...`);
+    console.time(id);
     const { sidebar, title } = extractDataFromHtml(htmlData.html, file);
+    console.timeEnd(id);
 
     return {
       major,
