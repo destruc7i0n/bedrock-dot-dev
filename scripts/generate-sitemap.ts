@@ -1,14 +1,14 @@
 import "isomorphic-unfetch";
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
-import { LIVE_URL } from "../src/lib/constants/env";
-import { getTags } from "../src/lib/tags";
-import { Tag } from "../src/lib/types";
-import { Locale, getLocale } from "../src/lib/i18n";
+import { LIVE_URL } from "@lib/constants/env";
+import { getLocale, Locale } from "@lib/i18n";
+import { getTags } from "@lib/tags";
+import { Tag } from "@lib/types";
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
   console.log("sitemap.xml not generated");

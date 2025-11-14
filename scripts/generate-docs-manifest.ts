@@ -1,10 +1,10 @@
 // fetch polyfill
 import "isomorphic-unfetch";
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-import { getVersionsFile } from "../src/lib/versions/submodule";
+import { getVersionsFile } from "@lib/versions/list";
 
 const main = async () => {
   const file = await getVersionsFile();

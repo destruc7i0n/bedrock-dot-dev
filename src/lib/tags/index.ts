@@ -1,11 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
-import { Locale } from "./i18n";
-import type { TagsResponse } from "./types";
-import { Tag } from "./types";
-import { areVersionsEqual } from "./versions/helpers";
+import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "../docs/constants";
+import { Locale } from "../i18n";
+import type { TagsResponse } from "../types";
 
 const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
   const submodulePath = path.resolve(
@@ -27,17 +25,4 @@ const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
 
 export const getTags = async (locale: Locale): Promise<TagsResponse> => {
   return readTagsFromSubmodule(locale);
-};
-
-export const getVersionTag = (
-  version: string[],
-  tags: TagsResponse,
-): Tag | null => {
-  if (areVersionsEqual(version, tags.stable)) {
-    return Tag.Stable;
-  }
-  if (areVersionsEqual(version, tags.beta)) {
-    return Tag.Beta;
-  }
-  return null;
 };

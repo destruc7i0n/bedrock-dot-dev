@@ -1,6 +1,6 @@
 import type { BedrockVersions } from "@lib/versions/types";
 
-import { getVersionTag } from "./tags";
+import { getVersionTag } from "./tags/util";
 import type { TagsResponse } from "./types";
 import { Tag } from "./types";
 import { compareBedrockVersions } from "./versions/helpers";

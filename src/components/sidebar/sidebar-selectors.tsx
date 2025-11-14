@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
-import { getVersionTag } from "@lib/tags";
+import { getVersionTag } from "@lib/tags/util";
 import { getLink, getMinorVersionTitle } from "@lib/util";
 import { compareBedrockVersions } from "@lib/versions/helpers";
 import type { CompressedVersions } from "@lib/versions/transform";

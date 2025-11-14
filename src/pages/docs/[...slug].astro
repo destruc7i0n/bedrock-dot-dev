@@ -11,10 +11,11 @@ import Layout from "@layouts/layout.astro";
 import { processDocFile } from "@lib/docs/process-file";
 import { Locale, t } from "@lib/i18n";
 import { getOgImageUrl } from "@lib/og-image";
-import { getTags, getVersionTag } from "@lib/tags";
+import { getTags } from "@lib/tags";
+import { getVersionTag } from "@lib/tags/util";
 import { Tag } from "@lib/types";
 import { bedrockVersionsInOrder } from "@lib/versions/helpers";
-import { allFilesList } from "@lib/versions/submodule";
+import { allFilesList } from "@lib/versions/list";
 
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);
