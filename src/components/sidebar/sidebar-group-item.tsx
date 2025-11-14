@@ -3,7 +3,7 @@ import type { FunctionComponent } from "react";
 
 import { cn } from "@lib/cn";
 
-import { removeHashIfNeeded } from "../../lib/util";
+import { removeHashIfNeeded } from "@lib/util";
 
 type Props = {
   title: string;

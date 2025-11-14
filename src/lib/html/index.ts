@@ -1,9 +1,7 @@
-import Log from "../log";
-
 import type {
   SidebarStructure,
   SidebarStructureElement,
-} from "../../components/sidebar";
+} from "@components/sidebar";
 import { getTitle } from "./scrape/title";
 import type { TitleResponse } from "./scrape/title";
 import { getAIGoals, getComponentsList } from "./scrape/table";
@@ -69,7 +67,7 @@ export const extractDataFromHtml = (
 ): ParseHtmlResponse => {
   const title = getTitle(html);
 
-  Log.info(`Title data: ${JSON.stringify(title)}`);
+  console.log(`Title data: ${JSON.stringify(title)}`);
 
   let sidebarContent = getSidebarContent(html);
   if (file && file === "Entities") {
@@ -114,7 +112,7 @@ export const extractDataFromHtml = (
     (acc, key) => acc + sidebarContent[key]?.elements?.length + 1,
     0,
   );
-  Log.info(
+  console.log(
     `Found ${
       Object.keys(sidebarContent).length
     } sidebar headings, ${total} total elements`,
