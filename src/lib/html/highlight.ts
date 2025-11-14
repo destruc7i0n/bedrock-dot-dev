@@ -1,8 +1,9 @@
 import Prism from "prismjs";
+
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-javascript";
 
-import { TEXTAREA_MATCH, MARKDOWN_CODE_MATCH } from "./regex";
+import { MARKDOWN_CODE_MATCH, TEXTAREA_MATCH } from "./regex";
 
 // use prism to highlightHtml the code blocks
 const highlightTextarea = (html: string, file: string) => {

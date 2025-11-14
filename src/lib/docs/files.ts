@@ -1,5 +1,6 @@
 import * as fs from "fs/promises";
 import * as path from "path";
+
 import { Locale } from "../i18n";
 import { DOCS_SUBMODULE_PATH } from "./constants";
 

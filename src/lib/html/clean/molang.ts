@@ -1,6 +1,5 @@
-import { getTable } from "../scrape/table";
-
 import { TD_MOLANG_QUERY_MATCH } from "../regex";
+import { getTable } from "../scrape/table";
 
 export const addAnchorsToMoLangQueries = (html: string) => {
   const tags = [

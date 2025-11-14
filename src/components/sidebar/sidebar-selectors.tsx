@@ -1,18 +1,17 @@
+import { navigate } from "astro:transitions/client";
+
 import { memo, useMemo } from "react";
 import type { ChangeEvent, FunctionComponent } from "react";
 
 import { useTranslation } from "react-i18next";
-import { navigate } from "astro:transitions/client";
-import { cn } from "@lib/cn";
 
-import { getLink, getMinorVersionTitle } from "@lib/util";
-import { getVersionTag } from "@lib/tags";
+import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
-import {
-  decompressVersions,
-  type CompressedVersions,
-} from "@lib/versions/transform";
+import { getVersionTag } from "@lib/tags";
+import { getLink, getMinorVersionTitle } from "@lib/util";
 import { compareBedrockVersions } from "@lib/versions/helpers";
+import type { CompressedVersions } from "@lib/versions/transform";
+import { decompressVersions } from "@lib/versions/transform";
 
 interface Props {
   major: string;

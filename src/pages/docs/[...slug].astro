@@ -1,19 +1,20 @@
 ---
 import { Font } from "astro:assets";
 
-import Layout from "@layouts/layout.astro";
-import Header from "@components/docs/header.astro";
-import Sidebar from "@components/sidebar/sidebar.astro";
-import DocsContainer from "@components/docs/docs-container.astro";
-import Footer from "@components/footer.astro";
 import BackToTop from "@components/docs/back-to-top.astro";
+import DocsContainer from "@components/docs/docs-container.astro";
+import Header from "@components/docs/header.astro";
+import Footer from "@components/footer.astro";
+import Sidebar from "@components/sidebar/sidebar.astro";
+import Layout from "@layouts/layout.astro";
+
+import { processDocFile } from "@lib/docs/process-file";
+import { Locale, t } from "@lib/i18n";
+import { getOgImageUrl } from "@lib/og-image";
 import { getTags, getVersionTag } from "@lib/tags";
 import { Tag } from "@lib/types";
-import { Locale, t } from "@lib/i18n";
-import { allFilesList } from "@lib/versions/submodule";
 import { bedrockVersionsInOrder } from "@lib/versions/helpers";
-import { processDocFile } from "@lib/docs/process-file";
-import { getOgImageUrl } from "@lib/og-image";
+import { allFilesList } from "@lib/versions/submodule";
 
 export async function getStaticPaths() {
   const versions = await allFilesList(Locale.English);

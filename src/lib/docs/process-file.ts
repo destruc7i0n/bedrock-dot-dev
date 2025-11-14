@@ -1,7 +1,7 @@
-import { Locale } from "../i18n";
-import { extractDataFromHtml, fetchHtml } from "../html";
-
 import type { SidebarStructure } from "@components/sidebar";
+
+import { extractDataFromHtml, fetchHtml } from "../html";
+import { Locale } from "../i18n";
 
 export interface ProcessedDoc {
   major: string;

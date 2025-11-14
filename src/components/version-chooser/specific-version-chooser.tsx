@@ -1,11 +1,12 @@
 import type { FunctionComponent } from "react";
-import { useTranslation } from "react-i18next";
-import { cn } from "@lib/cn";
 
-import { getMinorVersionTitle } from "@lib/util";
-import type { TagsResponse } from "@lib/types";
-import { getVersionTag } from "@lib/tags";
+import { useTranslation } from "react-i18next";
+
+import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
+import { getVersionTag } from "@lib/tags";
+import type { TagsResponse } from "@lib/types";
+import { getMinorVersionTitle } from "@lib/util";
 
 export type VersionSelectorProps = {
   majorVersions: string[];

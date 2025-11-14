@@ -1,7 +1,7 @@
 import { FlatCache } from "flat-cache";
-import { listAllFilesFromRepo } from "../docs/fs";
-import type { GitHubTreeResponse } from "../docs/fs";
 
+import type { GitHubTreeResponse } from "../docs/fs";
+import { listAllFilesFromRepo } from "../docs/fs";
 import { groupVersionsByLocale, Locale } from "../i18n";
 import type { BedrockVersions, BedrockVersionsFile } from "./types";
 

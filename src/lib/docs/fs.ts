@@ -1,5 +1,6 @@
-import { readdirSync, existsSync } from "fs";
+import { existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
+
 import { Locale } from "../i18n";
 import { DOCS_SUBMODULE_PATH } from "./constants";
 

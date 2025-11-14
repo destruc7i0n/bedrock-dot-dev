@@ -1,9 +1,9 @@
 // get the regex for the title
 import type { SidebarStructure } from "@components/sidebar";
 
-import { H_TITLE_MATCH, P_ID_MATCH } from "../regex";
-
 import { oneLine } from "@lib/util";
+
+import { H_TITLE_MATCH, P_ID_MATCH } from "../regex";
 
 const addAnchors = (html: string) => {
   return html.replace(H_TITLE_MATCH, (value, headerNumber) => {

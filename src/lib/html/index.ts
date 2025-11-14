@@ -2,11 +2,12 @@ import type {
   SidebarStructure,
   SidebarStructureElement,
 } from "@components/sidebar";
-import { getTitle } from "./scrape/title";
-import type { TitleResponse } from "./scrape/title";
-import { getAIGoals, getComponentsList } from "./scrape/table";
-import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from "./regex";
+
 import { removeHashIfNeeded } from "../util";
+import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from "./regex";
+import { getAIGoals, getComponentsList } from "./scrape/table";
+import type { TitleResponse } from "./scrape/title";
+import { getTitle } from "./scrape/title";
 
 export { default as fetchHtml } from "./fetch";
 

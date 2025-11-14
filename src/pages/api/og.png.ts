@@ -1,11 +1,13 @@
-import { ImageResponse } from "@vercel/og";
 import type { APIRoute } from "astro";
+
 import type { ReactElement } from "react";
 
-import { getTags } from "@lib/tags";
-import { Tag } from "@lib/types";
+import { ImageResponse } from "@vercel/og";
+
 import { VERSION } from "@lib/html/regex";
 import { Locale } from "@lib/i18n";
+import { getTags } from "@lib/tags";
+import { Tag } from "@lib/types";
 
 import trans from "../../locales/en/common.json";
 

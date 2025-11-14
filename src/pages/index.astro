@@ -1,13 +1,13 @@
 ---
-import Layout from "@layouts/layout.astro";
-import Navbar from "@components/homepage/navbar.astro";
-import Footer from "@components/footer.astro";
-import VersionChooser from "@components/version-chooser/version-chooser";
 import DocSearch from "@components/docsearch/docsearch.astro";
+import Footer from "@components/footer.astro";
+import Navbar from "@components/homepage/navbar.astro";
+import VersionChooser from "@components/version-chooser/version-chooser";
+import Layout from "@layouts/layout.astro";
 
-import { getTags } from "@lib/tags";
-import { Locale, t } from "@lib/i18n";
 import { algolia } from "@lib/constants/algolia";
+import { Locale, t } from "@lib/i18n";
+import { getTags } from "@lib/tags";
 import { allFilesList } from "@lib/versions/submodule";
 import { compressVersions } from "@lib/versions/transform";
 

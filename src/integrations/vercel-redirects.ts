@@ -10,12 +10,13 @@
  * allowing us to redirect shortcuts like `/r`, `/b`, `/c`, `/s` to the appropriate docs
  * versions, and handle version-specific URL patterns dynamically.
  */
-import type { AstroConfig, AstroIntegration } from "astro";
-
 import * as fs from "fs";
 import { fileURLToPath } from "url";
-import { getTags } from "../lib/tags";
+
+import type { AstroConfig, AstroIntegration } from "astro";
+
 import { Locale } from "../lib/i18n";
+import { getTags } from "../lib/tags";
 
 type BuildOutputRoute = {
   src: string;

@@ -2,8 +2,8 @@ import { memo, useEffect, useRef, useState } from "react";
 import type { FunctionComponent } from "react";
 
 import type { SidebarStructure } from "./index";
-import SidebarGroupTitle from "./sidebar-group-title";
 import SidebarGroupItem from "./sidebar-group-item";
+import SidebarGroupTitle from "./sidebar-group-title";
 
 type Props = {
   sidebar: SidebarStructure;

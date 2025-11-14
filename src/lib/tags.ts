@@ -1,11 +1,11 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { Locale } from "./i18n";
 import { DOCS_SUBMODULE_PATH, TAGS_FILE_NAME } from "./docs/constants";
-import { areVersionsEqual } from "./versions/helpers";
-import { Tag } from "./types";
+import { Locale } from "./i18n";
 import type { TagsResponse } from "./types";
+import { Tag } from "./types";
+import { areVersionsEqual } from "./versions/helpers";
 
 const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
   const submodulePath = path.resolve(

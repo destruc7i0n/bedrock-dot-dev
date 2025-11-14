@@ -1,14 +1,16 @@
 ---
-import Selectors from "./sidebar-selectors";
-import SidebarContent from "./sidebar-content";
-import ModeSelect from "@components/theme/mode-select.astro";
 import DocSearch from "@components/docsearch/docsearch.astro";
-import type { SidebarStructure } from "./index";
-import type { BedrockVersions } from "@lib/versions/types";
-import type { TagsResponse } from "@lib/types";
-import { Locale, t } from "@lib/i18n";
+import ModeSelect from "@components/theme/mode-select.astro";
+
 import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+import { Locale, t } from "@lib/i18n";
+import type { TagsResponse } from "@lib/types";
 import { compressVersions } from "@lib/versions/transform";
+import type { BedrockVersions } from "@lib/versions/types";
+
+import type { SidebarStructure } from "./index";
+import SidebarContent from "./sidebar-content";
+import Selectors from "./sidebar-selectors";
 
 interface Props {
   sidebar: SidebarStructure;
@@ -183,8 +185,8 @@ const sidebarScript = `try {
 <script is:inline set:html={sidebarScript} />
 
 <script>
-  import { sidebarOpen } from "@stores/sidebar-open";
   import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+  import { sidebarOpen } from "@stores/sidebar-open";
 
   document.addEventListener("astro:page-load", () => {
     const sidebar = document.querySelector(".sidebar");

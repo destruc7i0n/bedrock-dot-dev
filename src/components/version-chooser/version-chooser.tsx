@@ -1,19 +1,18 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { FunctionComponent } from "react";
+
 import { useTranslation } from "react-i18next";
+
+import type { TagsResponse } from "@lib/types";
+import { Tag } from "@lib/types";
+import type { ParsedUrlResponse } from "@lib/util";
+import { getLink, parseUrlQuery } from "@lib/util";
+import { compareBedrockVersions } from "@lib/versions/helpers";
+import type { CompressedVersions } from "@lib/versions/transform";
+import { decompressVersions } from "@lib/versions/transform";
 
 import SpecificVersionChooser from "./specific-version-chooser";
 import TagVersionChooser from "./tag-version-chooser";
-
-import { getLink, parseUrlQuery } from "@lib/util";
-import type { ParsedUrlResponse } from "@lib/util";
-import { Tag } from "@lib/types";
-import type { TagsResponse } from "@lib/types";
-import {
-  decompressVersions,
-  type CompressedVersions,
-} from "@lib/versions/transform";
-import { compareBedrockVersions } from "@lib/versions/helpers";
 
 type VersionFileProps = {
   title: string;

@@ -1,4 +1,5 @@
 import { persistentAtom } from "@nanostores/persistent";
+
 import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
 
 const getDefaultValue = (): boolean => {
