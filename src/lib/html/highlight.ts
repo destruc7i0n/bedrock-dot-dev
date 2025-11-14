@@ -3,6 +3,7 @@ import Prism from "prismjs";
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-javascript";
 
+import Log from "../log";
 import { MARKDOWN_CODE_MATCH, TEXTAREA_MATCH } from "./regex";
 
 // use prism to highlightHtml the code blocks
@@ -22,7 +23,7 @@ const highlightTextarea = (html: string, file: string) => {
       return `<pre class="language-${language}">${hl}</pre>`;
     } catch (error) {
       // Fallback on highlight error
-      console.error(`Prism highlight error for ${language}:`, error);
+      Log.error(`Prism highlight error for ${language}:`, error);
       return `<pre class="language-${language}"><code>${group}</code></pre>`;
     }
   });
@@ -47,7 +48,7 @@ const highlightMarkdownCode = (html: string) => {
       return '<pre class="language-json">' + highlighted + "</pre>";
     } catch (error) {
       // Fallback on highlight error
-      console.error("Prism highlight error for json:", error);
+      Log.error("Prism highlight error for json:", error);
       return '<pre class="language-json"><code>' + content + "</code></pre>";
     }
   });

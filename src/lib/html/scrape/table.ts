@@ -3,6 +3,8 @@ import type {
   SidebarStructureGroup,
 } from "@components/sidebar";
 
+import Log from "@lib/log";
+
 import { TABLE_MATCH, TD_COMPONENT_ID_MATCH } from "../regex";
 
 export const getTable = (html: string, id: string, tagNum: number) => {
@@ -39,7 +41,7 @@ const scrapeTable = (html: string, id: string) => {
 };
 
 export const getComponentsList = (html: string): SidebarStructureGroup => {
-  console.log("Generating components list...");
+  Log.info("Generating components list...");
 
   const componentsScrape = scrapeTable(html, "Components");
   const components = [
@@ -47,7 +49,7 @@ export const getComponentsList = (html: string): SidebarStructureGroup => {
     ...scrapeTable(html, "Attributes").elements,
     ...scrapeTable(html, "Properties").elements,
   ];
-  console.log(`Found ${components.length} components`);
+  Log.info(`Found ${components.length} components`);
 
   return {
     header: { id: "Components", title: componentsScrape.title ?? "" },
@@ -56,9 +58,9 @@ export const getComponentsList = (html: string): SidebarStructureGroup => {
 };
 
 export const getAIGoals = (html: string): SidebarStructureGroup => {
-  console.log("Generating AI Goals list...");
+  Log.info("Generating AI Goals list...");
   const scrape = scrapeTable(html, "AI Goals");
-  console.log(`Found ${scrape.elements.length} AI goals`);
+  Log.info(`Found ${scrape.elements.length} AI goals`);
   return {
     header: { id: "AI Goals", title: scrape.title ?? "" },
     elements: scrape.elements,

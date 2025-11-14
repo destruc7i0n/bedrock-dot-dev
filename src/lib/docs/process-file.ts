@@ -2,6 +2,7 @@ import type { SidebarStructure } from "@components/sidebar";
 
 import { extractDataFromHtml, fetchHtml } from "../html";
 import { Locale } from "../i18n";
+import Log from "../log";
 
 export interface ProcessedDoc {
   major: string;
@@ -55,10 +56,8 @@ export async function processDocFile(
 
     const id = `${major}/${minor}/${file}`;
 
-    console.log(`Processing ${id}...`);
-    console.time(id);
+    Log.info(`Processing ${id}...`);
     const { sidebar, title } = extractDataFromHtml(htmlData.html, file);
-    console.timeEnd(id);
 
     return {
       major,

@@ -3,6 +3,7 @@ import type {
   SidebarStructureElement,
 } from "@components/sidebar";
 
+import Log from "../log";
 import { removeHashIfNeeded } from "../util";
 import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from "./regex";
 import { getAIGoals, getComponentsList } from "./scrape/table";
@@ -68,7 +69,7 @@ export const extractDataFromHtml = (
 ): ParseHtmlResponse => {
   const title = getTitle(html);
 
-  console.log(`Title data: ${JSON.stringify(title)}`);
+  Log.info(`Title data: ${JSON.stringify(title)}`);
 
   let sidebarContent = getSidebarContent(html);
   if (file && file === "Entities") {
@@ -113,7 +114,7 @@ export const extractDataFromHtml = (
     (acc, key) => acc + sidebarContent[key]?.elements?.length + 1,
     0,
   );
-  console.log(
+  Log.info(
     `Found ${
       Object.keys(sidebarContent).length
     } sidebar headings, ${total} total elements`,

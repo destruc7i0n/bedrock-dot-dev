@@ -1,5 +1,6 @@
 import { getDocsFilesFromRepo } from "../docs/files";
 import { Locale } from "../i18n";
+import Log from "../log";
 import { cleanHtmlForDisplay } from "./clean";
 import { highlightHtml } from "./highlight";
 
@@ -13,7 +14,7 @@ const fetchHtml = async (version: string[], locale: Locale) => {
   try {
     html = await getDocsFilesFromRepo(path, locale);
   } catch {
-    console.error(`Could not get file for "${path}"!`);
+    Log.error(`Could not get file for "${path}"!`);
     return null;
   }
 
