@@ -1,0 +1,97 @@
+body {
+  -webkit-font-smoothing: antialiased;
+
+  @apply bg-white;
+  .dark & {
+    @apply bg-dark-gray-900;
+  }
+}
+
+hr {
+  border-width: 1px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: none;
+  @apply font-bold;
+}
+
+.link {
+  @apply text-blue-600;
+  @apply transition;
+  @apply duration-75;
+  @apply ease-in-out;
+
+  .dark & {
+    @apply text-blue-500;
+  }
+
+  &:hover {
+    @apply text-blue-500;
+
+    .dark & {
+      @apply text-blue-400;
+    }
+  }
+}
+
+/* docs */
+.docs-alert a {
+  @extend .link;
+  @apply underline;
+}
+
+/* scrollbars */
+
+body {
+  ::-webkit-scrollbar,
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+
+    .dark & {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  ::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+
+    .dark & {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  ::-webkit-scrollbar-thumb:window-inactive,
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.15);
+
+    .dark & {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+
+    .dark & {
+      background: rgba(255, 255, 255, 0.35);
+    }
+  }
+}

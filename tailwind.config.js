@@ -1,12 +1,14 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindForms from "@tailwindcss/forms";
 
+import { BREAKPOINTS } from "./src/lib/constants/breakpoints";
+
 const screens = {
-  sm: "640px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-  "2xl": "1536px",
+  sm: `${BREAKPOINTS.sm}px`,
+  md: `${BREAKPOINTS.md}px`,
+  lg: `${BREAKPOINTS.lg}px`,
+  xl: `${BREAKPOINTS.xl}px`,
+  "2xl": `${BREAKPOINTS["2xl"]}px`,
 };
 
 const maxScreens = Object.keys(screens).reduce((acc, key) => {
@@ -16,10 +18,7 @@ const maxScreens = Object.keys(screens).reduce((acc, key) => {
 
 const config = {
   mode: "jit",
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   darkMode: "class",
   theme: {
     extend: {
@@ -57,6 +56,7 @@ const config = {
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         mono: ["var(--font-fira-code)", ...fontFamily.mono],
+        craft: ["var(--font-monocraft)", ...fontFamily.sans],
       },
     },
     screens: {

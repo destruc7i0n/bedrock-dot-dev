@@ -1,0 +1,26 @@
+---
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const isProd = import.meta.env.PROD;
+
+const gtagScript = `document.addEventListener('astro:page-load', () => {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag('js', new Date());
+  window.gtag('config', '${measurementId}');
+});`;
+---
+
+{
+  isProd && measurementId && (
+    <>
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+      />
+      <script is:inline set:html={gtagScript} />
+    </>
+  )
+}

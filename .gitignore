@@ -1,12 +1,12 @@
 .cache
 .idea
 node_modules
-.next
-old-css.css
+.astro
+.vercel
+dist/
 
 public/sitemap.xml
 public/static/docs.json
-public/static/tags.json
 
 .env*
 

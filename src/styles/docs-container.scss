@@ -1,0 +1,173 @@
+.docs-content {
+  overflow-x: auto;
+
+  a {
+    @apply underline;
+  }
+
+  .anchored-heading {
+    position: relative;
+
+    &:hover {
+      .hash-link {
+        visibility: visible;
+      }
+    }
+
+    > a.anchor[id] {
+      margin-top: -4rem;
+      padding-top: 4rem;
+      display: block;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .hash-link {
+      visibility: hidden;
+      margin-left: 0.25rem;
+      user-select: none;
+
+      @apply text-blue-600;
+      @apply no-underline;
+      @apply outline-none;
+    }
+  }
+
+  table {
+    display: block;
+    width: auto !important;
+    max-width: 100%;
+    overflow-x: auto;
+
+    /* On iOS devices just allow it to scroll */
+    @supports (-webkit-touch-callout: none) {
+      overflow-x: visible;
+    }
+
+    @screen lg-max {
+      tbody {
+        width: 100%;
+        @apply border;
+      }
+    }
+  }
+
+  /* Thanks, Jannis! */
+  td,
+  th {
+    border: none;
+    border-width: 1px;
+    padding: 6px;
+    border-color: #656e73;
+    background-color: #ddfbdd;
+  }
+
+  th {
+    background-color: #a5f1b2;
+  }
+
+  .dark & {
+    td,
+    th,
+    tbody {
+      border-style: solid;
+      @apply border;
+      @apply border-dark-gray-700;
+    }
+
+    th {
+      @apply bg-dark-gray-950;
+    }
+
+    td {
+      @apply bg-dark-gray-900;
+    }
+
+    tr:nth-child(2n + 3) td {
+      @apply bg-dark-gray-850 #{!important};
+
+      table td {
+        @apply bg-dark-gray-900 #{!important};
+      }
+    }
+  }
+
+  a {
+    color: inherit;
+  }
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    @apply rounded;
+    @apply font-mono;
+  }
+
+  :not(.dark) & {
+    @import "./code/light.scss";
+  }
+
+  .dark & {
+    @import "./code/dark.scss";
+  }
+
+  .monocraft & {
+    @import "./code/monocraft.scss";
+  }
+
+  /* headings */
+  h1,
+  h2 {
+    overflow-wrap: break-word;
+  }
+
+  h1 {
+    @apply leading-snug;
+    @apply text-3xl;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+    @apply pb-1;
+  }
+
+  h2 {
+    @apply leading-snug;
+    @apply text-2xl;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h3 {
+    @apply leading-snug;
+    @apply text-lg;
+    @apply font-bold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h4 {
+    @apply leading-none;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply mt-2;
+    @apply mb-2;
+  }
+
+  h5,
+  h6 {
+    @apply leading-tight;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply mb-2;
+  }
+
+  @screen md-max {
+    h1 {
+      @apply text-2xl;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
+  }
+}

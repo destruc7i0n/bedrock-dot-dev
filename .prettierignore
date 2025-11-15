@@ -1,5 +1,6 @@
 # Ignore
-.next
+.astro
+dist
 .idea
 
 public/sitemap.xml

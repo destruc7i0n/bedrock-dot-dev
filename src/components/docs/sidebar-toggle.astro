@@ -1,0 +1,54 @@
+---
+import { Bars3CenterLeftIcon, Bars3Icon } from "@heroicons/react/20/solid";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<style>
+  button#sidebar-toggle {
+    touch-action: manipulation;
+  }
+</style>
+
+<button
+  id="sidebar-toggle"
+  aria-label="Toggle sidebar"
+  class:list={[
+    "-ml-1.5 rounded-lg p-1.5 transition-colors hover:bg-gray-200 dark:hover:bg-dark-gray-800",
+    className,
+  ]}
+>
+  <Bars3Icon id="icon-closed" className="h-6 w-6" />
+  <Bars3CenterLeftIcon id="icon-open" className="hidden h-6 w-6" />
+</button>
+
+<script>
+  import { sidebarOpen } from "@stores/sidebar-open";
+
+  document.addEventListener("astro:page-load", () => {
+    const button = document.getElementById("sidebar-toggle");
+    if (!button) return;
+
+    const iconClosed = button.querySelector("#icon-closed");
+    const iconOpen = button.querySelector("#icon-open");
+    if (!iconClosed || !iconOpen) return;
+
+    const updateIcons = (isOpen: boolean) => {
+      iconClosed.classList.toggle("hidden", isOpen);
+      iconOpen.classList.toggle("hidden", !isOpen);
+    };
+
+    updateIcons(sidebarOpen.get());
+    const unsub = sidebarOpen.subscribe(updateIcons);
+
+    button.addEventListener("click", () => sidebarOpen.set(!sidebarOpen.get()));
+
+    document.addEventListener("astro:before-preparation", unsub, {
+      once: true,
+    });
+  });
+</script>

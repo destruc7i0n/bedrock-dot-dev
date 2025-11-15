@@ -1,0 +1,151 @@
+---
+import { Font } from "astro:assets";
+
+import BackToTop from "@components/docs/back-to-top.astro";
+import DocsContainer from "@components/docs/docs-container.astro";
+import Header from "@components/docs/header.astro";
+import Footer from "@components/footer.astro";
+import Sidebar from "@components/sidebar/sidebar.astro";
+import Layout from "@layouts/layout.astro";
+
+import { processDocFile } from "@lib/docs/process-file";
+import { Locale, t } from "@lib/i18n";
+import { getOgImageUrl } from "@lib/og-image";
+import { getTags } from "@lib/tags";
+import { getVersionTag } from "@lib/tags/util";
+import { Tag } from "@lib/types";
+import { bedrockVersionsInOrder } from "@lib/versions/helpers";
+import { allFilesList } from "@lib/versions/list";
+
+export async function getStaticPaths() {
+  const versions = await allFilesList(Locale.English);
+  const tags = await getTags(Locale.English);
+  const paths = [];
+
+  // Generate paths from versions structure - no file processing here
+  for (const [major, minor, files] of bedrockVersionsInOrder(versions)) {
+    for (const file of files) {
+      const version = [major, minor];
+
+      // Main versioned route: /docs/major/minor/file
+      paths.push({
+        params: { slug: `${major}/${minor}/${file}` },
+        props: {
+          pathInfo: [major, minor, file],
+          tags,
+        },
+      });
+
+      // Tagged routes (stable/beta)
+      const tag = getVersionTag(version, tags);
+      if (tag === Tag.Stable) {
+        paths.push({
+          params: { slug: `stable/${file}` },
+          props: {
+            pathInfo: [major, minor, file],
+            tags,
+          },
+        });
+      } else if (tag === Tag.Beta) {
+        paths.push({
+          params: { slug: `beta/${file}` },
+          props: {
+            pathInfo: [major, minor, file],
+            tags,
+          },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { tags, pathInfo } = Astro.props;
+const [major, minor, file] = pathInfo;
+
+const processedDoc = await processDocFile([major, minor, file], Locale.English);
+if (!processedDoc) {
+  return Astro.redirect("/404");
+}
+
+const { html, sidebar, title: docTitle } = processedDoc;
+
+const versions = await allFilesList(Locale.English);
+
+const slugRaw = Astro.params.slug;
+const slugParts = slugRaw.split("/").filter(Boolean);
+
+const isStableRoute = slugParts[0] === "stable";
+const isBetaRoute = slugParts[0] === "beta";
+
+// Build page title and description
+const documentTitle = docTitle.title || file || "Documentation";
+const htmlVersion = docTitle.version || minor;
+
+let title = "";
+let description = "";
+
+if (isStableRoute) {
+  title =
+    t("page.docs.website_title_tagged_stable").replace(
+      "{title}",
+      documentTitle,
+    ) + " | bedrock.dev";
+  description = t("page.docs.website_description_tagged_stable").replace(
+    "{title}",
+    documentTitle,
+  );
+} else if (isBetaRoute) {
+  title =
+    t("page.docs.website_title_tagged_beta").replace("{title}", documentTitle) +
+    " | bedrock.dev";
+  description = t("page.docs.website_description_tagged_beta").replace(
+    "{title}",
+    documentTitle,
+  );
+} else {
+  title =
+    t("page.docs.website_title_untagged")
+      .replace("{title}", documentTitle)
+      .replace("{version}", htmlVersion) + " | bedrock.dev";
+  description = t("page.docs.website_description_untagged")
+    .replace("{title}", documentTitle)
+    .replace("{version}", htmlVersion);
+}
+
+// OG image URL
+const versionParam = isStableRoute || isBetaRoute ? slugParts[0] : htmlVersion;
+const ogImageUrl = getOgImageUrl({ file, version: versionParam });
+---
+
+<Layout title={title} description={description} ogImage={ogImageUrl}>
+  <Fragment slot="head">
+    <Font cssVariable="--font-fira-code" preload />
+    <Font cssVariable="--font-monocraft" />
+
+    <meta name="docsearch:language" content={Locale.English} />
+    <link rel="expect" href="#end-of-content" blocking="render" />
+  </Fragment>
+
+  <Header transition:persist="header" />
+  <div class="flex">
+    <Sidebar
+      sidebar={sidebar}
+      file={file}
+      major={major}
+      minor={minor}
+      versions={versions}
+      tags={tags}
+    />
+    <DocsContainer html={html} file={file} version={minor} />
+  </div>
+  <div id="end-of-content"></div>
+  <BackToTop />
+  <Footer
+    dark={true}
+    darkClassName="bg-dark-gray-975"
+    showToggles={false}
+    outline={true}
+  />
+</Layout>

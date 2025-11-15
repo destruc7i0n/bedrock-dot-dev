@@ -8,7 +8,7 @@ The documentation files are sourced from [bedrock-dot-dev/docs](https://github.c
 
 Feel free to make any contributions there.
 
-Written in TypeScript using the Next.js framework.
+Written in TypeScript using the Astro framework.
 
 ## Features
 

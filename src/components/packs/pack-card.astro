@@ -1,0 +1,114 @@
+---
+import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+
+import { TAG_STYLES } from "@lib/constants/tag-styles";
+import { t } from "@lib/i18n";
+import { Tag } from "@lib/types";
+import { getPackUrl } from "@lib/util";
+
+export type PackVersions = {
+  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;
+};
+
+interface Props {
+  versionName: string;
+  versionData: PackVersions[string];
+}
+
+const { versionName, versionData } = Astro.props;
+
+const TAG_TRANSLATION_KEYS = {
+  [Tag.Beta]: "component.version_chooser.beta_string",
+  [Tag.Stable]: "component.version_chooser.stable_string",
+} as const;
+
+const isGitHubLink = !!versionData.git;
+
+// Pre-compute translations in frontmatter
+const behavioursText = t("component.packs_page.behaviours_link");
+const resourcesText = t("component.packs_page.resources_link");
+
+// Compute title and border styles
+let title = versionName;
+let border = "border-gray-200 dark:border-transparent";
+if (versionData.t && TAG_STYLES[versionData.t]) {
+  border = TAG_STYLES[versionData.t].border;
+  title = `${title} (${t(TAG_TRANSLATION_KEYS[versionData.t])})`;
+}
+---
+
+<pack-card-toggle data-version={versionName}>
+  <div
+    class={`text-center bg-gray-50 dark:bg-dark-gray-950 border ${border} p-2 rounded-md`}
+  >
+    <p class="text-lg dark:text-gray-200">{title}</p>
+
+    <div
+      class="flex w-full flex-col items-center justify-center md:flex-row md:justify-around"
+    >
+      {
+        isGitHubLink ? (
+          <a href={versionData.git} class="link" target="_blank">
+            GitHub
+          </a>
+        ) : (
+          <>
+            <button
+              class="link cursor-pointer border-none bg-transparent p-0"
+              aria-label="Show download options"
+            >
+              <ArrowDownTrayIcon className="pointer-events-none w-6 h-6" />
+            </button>
+            {versionData.b ? (
+              <a
+                href={getPackUrl("behaviours", versionName)}
+                class="link hidden"
+                download
+              >
+                {behavioursText}
+              </a>
+            ) : (
+              <p class="hidden text-gray-500 dark:text-gray-400">
+                {behavioursText}
+              </p>
+            )}
+
+            {versionData.r ? (
+              <a
+                href={getPackUrl("resources", versionName)}
+                class="link hidden"
+                target="_blank"
+                download
+              >
+                {resourcesText}
+              </a>
+            ) : (
+              <p class="hidden text-gray-500 dark:text-gray-400">
+                {resourcesText}
+              </p>
+            )}
+          </>
+        )
+      }
+    </div>
+  </div>
+</pack-card-toggle>
+
+<script>
+  class PackCardToggle extends HTMLElement {
+    connectedCallback() {
+      const btn = this.querySelector("button");
+      const links = this.querySelectorAll("a, p");
+
+      btn?.addEventListener(
+        "click",
+        () => {
+          btn.classList.add("hidden");
+          links.forEach((link) => link.classList.remove("hidden"));
+        },
+        { once: true },
+      );
+    }
+  }
+  customElements.define("pack-card-toggle", PackCardToggle);
+</script>

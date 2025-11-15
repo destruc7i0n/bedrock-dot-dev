@@ -1,18 +1,50 @@
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
-import nextTypescript from "eslint-config-next/typescript";
+import { defineConfig } from "eslint/config";
 
-const eslintConfig = [
-  ...nextCoreWebVitals,
-  ...nextTypescript,
+import globals from "globals";
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+import astro from "eslint-plugin-astro";
+import prettier from "eslint-plugin-prettier";
+import reactHooks from "eslint-plugin-react-hooks";
+
+export default defineConfig([
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
   },
-];
-
-export default eslintConfig;
+  js.configs.recommended,
+  tseslint.configs.recommended,
+  {
+    plugins: {
+      prettier: prettier,
+      "react-hooks": reactHooks,
+    },
+    rules: {
+      // disable warnings, since prettier should format on save
+      "prettier/prettier": "off",
+    },
+  },
+  astro.configs.recommended,
+  {
+    files: ["**/*.astro"],
+    languageOptions: {
+      parser: astro.parser,
+      parserOptions: {
+        parser: tseslint.parser,
+        extraFileExtensions: [".astro"],
+        sourceType: "module",
+        ecmaVersion: "latest",
+      },
+    },
+    rules: {
+      "no-undef": "off",
+    },
+  },
+  {
+    ignores: ["node_modules/**", "dist/**", ".astro/**", "out/**", "build/**"],
+  },
+]);

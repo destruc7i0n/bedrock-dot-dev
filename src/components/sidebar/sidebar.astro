@@ -1,0 +1,222 @@
+---
+import DocSearch from "@components/docsearch/docsearch.astro";
+import ModeSelect from "@components/theme/mode-select.astro";
+
+import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+import { Locale, t } from "@lib/i18n";
+import type { TagsResponse } from "@lib/types";
+import { compressVersions } from "@lib/versions/transform";
+import type { BedrockVersions } from "@lib/versions/types";
+
+import type { SidebarStructure } from "./index";
+import SidebarContent from "./sidebar-content";
+import Selectors from "./sidebar-selectors";
+
+interface Props {
+  sidebar: SidebarStructure;
+  file: string;
+  major: string;
+  minor: string;
+  versions: BedrockVersions;
+  tags: TagsResponse;
+}
+
+const { sidebar, file, major, minor, versions, tags } = Astro.props;
+
+// compress versions to reduce the size in the initial payload
+const compressedVersions = compressVersions(versions);
+
+const searchTitle = t("component.search.title");
+
+const sidebarScript = `try {
+  const isMobile = window.matchMedia("(max-width: ${MOBILE_BREAKPOINT}px)");
+  const stored = localStorage.getItem("sidebar");
+  const sidebarState = stored === null ? true : stored === "true";
+  const open = isMobile.matches ? false : sidebarState;
+  if (open) document.querySelector(".sidebar")?.classList.add("open");
+} catch {}`;
+---
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: 3rem;
+    z-index: 9;
+    width: 400px;
+    height: calc(100vh - 3rem);
+    @supports (height: 100dvh) {
+      height: calc(100dvh - 3rem);
+    }
+
+    .content {
+      -webkit-transform: translateZ(0);
+    }
+
+    @apply bg-white;
+    .dark & {
+      @apply bg-dark-gray-950;
+    }
+
+    @apply grid grid-rows-[auto_1fr_auto];
+    @apply border-r;
+    @apply border-l;
+    @apply border-gray-200;
+    .dark & {
+      @apply border-dark-gray-800;
+    }
+
+    /* lg screen and below */
+    @screen lg-max {
+      position: fixed;
+      transform: translateX(-100%);
+      /* like silk */
+      will-change: transform;
+
+      width: 80%;
+      @screen md {
+        width: auto;
+        min-width: 50%;
+      }
+
+      & {
+        transition: transform ease-in-out 150ms;
+      }
+
+      &.open {
+        transform: translateX(0);
+      }
+    }
+
+    @screen lg {
+      /* hide if not open */
+      &:not(.open) {
+        display: none;
+      }
+    }
+
+    /* when on mobile, wait for the component to be mounted
+    so as to prevent a closing animation when loading the page */
+    @screen lg-max {
+      &:not(.mounted) {
+        display: none;
+      }
+    }
+  }
+
+  .sidebar-mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 8;
+    display: none;
+    pointer-events: none;
+
+    @screen lg-max {
+      background-color: rgba(0, 0, 0, 0.3);
+
+      .sidebar.open ~ & {
+        display: block;
+        pointer-events: auto;
+        animation: fade-in 300ms;
+      }
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .bottom-safe-area-inset {
+    @supports (padding: max(0px)) {
+      &.inset-3 {
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
+      }
+      &.inset-2 {
+        padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+      }
+    }
+  }
+
+  .sidebar-group summary {
+    list-style: none;
+  }
+
+  .sidebar-group summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<div>
+  <aside class="sidebar">
+    <div class="w-full border-b border-gray-200 p-4 dark:border-dark-gray-800">
+      <Selectors
+        transition:persist="sidebar-selectors"
+        client:load
+        major={major}
+        minor={minor}
+        file={file}
+        compressedVersions={compressedVersions}
+        tags={tags}
+      />
+      <div class="mt-4 hidden lg:block">
+        <label class="sr-only mb-1 block text-sm font-bold" for="filter">
+          {searchTitle}
+        </label>
+        <DocSearch locale={Locale.English} />
+      </div>
+    </div>
+    <SidebarContent client:load sidebar={sidebar} file={file} />
+    <div
+      class="bottom-safe-area-inset inset-2 flex w-full flex-row items-center justify-end border-t border-gray-200 bg-white px-4 py-2 dark:border-dark-gray-800 dark:bg-dark-gray-950"
+    >
+      <ModeSelect transition:persist="sidebar-mode-select" />
+    </div>
+  </aside>
+  <div class="sidebar-mask" transition:persist="sidebar-mask"></div>
+</div>
+
+<script is:inline set:html={sidebarScript} />
+
+<script>
+  import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+  import { sidebarOpen } from "@stores/sidebar-open";
+
+  document.addEventListener("astro:page-load", () => {
+    const sidebar = document.querySelector(".sidebar");
+    const mask = document.querySelector(".sidebar-mask");
+    const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+
+    const updateBodyScroll = () => {
+      document.body.style.overflow =
+        mobile.matches && sidebarOpen.get() ? "hidden" : "";
+    };
+
+    const unsub = sidebarOpen.subscribe((open) => {
+      sidebar?.classList.toggle("open", open);
+      updateBodyScroll();
+    });
+
+    const handleMaskClick = () => sidebarOpen.set(false);
+    mask?.addEventListener("click", handleMaskClick);
+    mobile.addEventListener("change", updateBodyScroll);
+    requestAnimationFrame(() => sidebar?.classList.add("mounted"));
+
+    document.addEventListener(
+      "astro:before-preparation",
+      () => {
+        unsub();
+        mask?.removeEventListener("click", handleMaskClick);
+        mobile.removeEventListener("change", updateBodyScroll);
+        document.body.style.overflow = "";
+      },
+      { once: true },
+    );
+  });
+</script>

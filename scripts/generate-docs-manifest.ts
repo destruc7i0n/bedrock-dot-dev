@@ -1,20 +1,13 @@
 // fetch polyfill
 import "isomorphic-unfetch";
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-import { Locale } from "../lib/i18n";
-import { getTags, TagsResponse } from "../lib/tags";
-import { getVersionsFile } from "../lib/versions";
+import { getVersionsFile } from "@lib/versions/list";
 
 const main = async () => {
   const file = await getVersionsFile();
-
-  const tags: { [key in Locale]?: TagsResponse } = {};
-  for (const language of Object.values(Locale)) {
-    tags[language] = await getTags(language, true);
-  }
 
   // count the number of documentation files per locale
   for (const [locale, versions] of Object.entries(file["versions"])) {
@@ -23,7 +16,7 @@ const main = async () => {
       // sum the number of files per version
       count += Object.values(minorVersions).reduce(
         (acc, files) => acc + files.length,
-        0
+        0,
       );
     }
     console.log(`found ${count} ${locale.toUpperCase()} documentation files`);
@@ -32,10 +25,8 @@ const main = async () => {
   if (!fs.existsSync("public/static")) fs.mkdirSync("public/static");
 
   const docsFile = path.resolve("public/static/docs.json");
-  const tagsFile = path.resolve("public/static/tags.json");
 
   fs.writeFileSync(docsFile, JSON.stringify(file));
-  fs.writeFileSync(tagsFile, JSON.stringify(tags));
   console.log("static docs file generated!");
 };
 

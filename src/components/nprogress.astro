@@ -1,0 +1,61 @@
+---
+import "nprogress/nprogress.css";
+---
+
+<div id="nprogress-container" transition:persist="nprogress"></div>
+
+<style>
+  #nprogress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 9999;
+    pointer-events: none;
+  }
+</style>
+
+<style is:global>
+  #nprogress {
+    .bar {
+      @apply bg-blue-600;
+
+      .dark & {
+        @apply bg-blue-500;
+      }
+
+      & {
+        height: 3px;
+      }
+    }
+
+    .peg {
+      box-shadow:
+        0 0 10px theme("colors.blue.600"),
+        0 0 5px theme("colors.blue.600");
+
+      .dark & {
+        box-shadow:
+          0 0 10px theme("colors.blue.500"),
+          0 0 5px theme("colors.blue.500");
+      }
+    }
+  }
+</style>
+
+<script>
+  import NProgress from "nprogress";
+
+  NProgress.configure({
+    parent: "#nprogress-container",
+  });
+
+  document.addEventListener("astro:before-preparation", () => {
+    NProgress.start();
+  });
+
+  document.addEventListener("astro:after-preparation", () => {
+    NProgress.done();
+  });
+</script>

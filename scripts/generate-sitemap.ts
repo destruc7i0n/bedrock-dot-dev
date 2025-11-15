@@ -1,13 +1,14 @@
 import "isomorphic-unfetch";
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
-import { LIVE_URL } from "../lib/constants";
-import { getTags, Tags } from "../lib/tags";
-import { Locale, getLocale } from "../lib/i18n";
+import { LIVE_URL } from "@lib/constants/env";
+import { getLocale, Locale } from "@lib/i18n";
+import { getTags } from "@lib/tags";
+import { Tag } from "@lib/types";
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
   console.log("sitemap.xml not generated");
@@ -33,11 +34,11 @@ const main = async () => {
 
   for (const lang of langs) {
     const locale = getLocale(lang);
-    const tags = await getTags(locale, true);
+    const tags = await getTags(locale);
     const langVersions = versions[lang];
 
     for (const tag of Object.keys(tags)) {
-      const [major, minor] = tags[tag as Tags];
+      const [major, minor] = tags[tag as Tag];
       if (!langVersions[major] || !langVersions[major][minor]) {
         console.warn(
           `Warning: Version ${major}.${minor} not found in docs.json for language ${lang}, skipping`,
