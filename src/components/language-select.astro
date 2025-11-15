@@ -1,0 +1,48 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["relative dark:text-gray-200", className]}>
+  <label class="sr-only mb-1 block text-sm font-bold" for="language-select">
+    Language Select
+  </label>
+  <select
+    id="language-select"
+    class="block rounded-md border-gray-300 py-2 pl-2 text-sm leading-4 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900"
+    value="en"
+  >
+    <option value="en">EN</option>
+    <option value="zh">中文</option>
+  </select>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const select = document.getElementById(
+      "language-select",
+    ) as HTMLSelectElement;
+    if (!select) return;
+
+    const onChange = () => {
+      if (select.value === "zh") {
+        const redirectUrl = new URL("https://nextjs.bedrock.dev");
+        redirectUrl.pathname = `/zh${window.location.pathname}`;
+        window.location.href = redirectUrl.href;
+      }
+    };
+
+    select.addEventListener("change", onChange);
+
+    document.addEventListener(
+      "astro:before-preparation",
+      () => {
+        select.removeEventListener("change", onChange);
+      },
+      { once: true },
+    );
+  });
+</script>

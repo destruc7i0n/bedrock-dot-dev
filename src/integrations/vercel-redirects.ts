@@ -43,6 +43,11 @@ async function generateVercelRoutes(): Promise<BuildOutputRoute[]> {
       status: 302,
     },
     {
+      src: "^/zh(/.*)?$",
+      dest: "https://nextjs.bedrock.dev/zh$1",
+      status: 302,
+    },
+    {
       src: `^/{docs}?:path((?:${version})\\/?(?:(?:${version})\\/?)?)$`,
       dest: "/?r=:path",
       status: 302,
