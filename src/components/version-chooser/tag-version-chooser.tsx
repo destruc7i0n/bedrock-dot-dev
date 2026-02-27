@@ -28,7 +28,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   const selectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     TAG_STYLES[version]
-      ? [TAG_STYLES[version].border, "font-medium", "dark:text-gray-200"]
+      ? [TAG_STYLES[version].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 

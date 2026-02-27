@@ -49,7 +49,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
   const versionSelectClassName = cn(
     "block w-full rounded-md leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 
@@ -57,7 +57,6 @@ const SidebarSelectors: FunctionComponent<Props> = ({
     if (!major || !versions) return [];
 
     const result = [];
-    const majorVersions: string[] = [];
 
     // Sort major versions
     const sortedMajors = Object.keys(versions).sort(compareBedrockVersions);
@@ -69,29 +68,25 @@ const SidebarSelectors: FunctionComponent<Props> = ({
         compareBedrockVersions,
       );
 
-      for (const minorVersion of sortedMinors) {
-        // only add the major version once
-        if (!majorVersions.includes(majorVersion)) {
-          result.push(
-            <option key={`version-${majorVersion}`} disabled>
-              {majorVersion}
-            </option>,
-          );
-          majorVersions.push(majorVersion);
-        }
+      const minorOptions = sortedMinors.map((minorVersion) => {
         const path = `${majorVersion}/${minorVersion}`;
-
         const title = getMinorVersionTitle(
           [majorVersion, minorVersion],
           tags,
           translate,
         );
-        result.push(
+        return (
           <option key={`version-${majorVersion}-${minorVersion}`} value={path}>
             {title}
-          </option>,
+          </option>
         );
-      }
+      });
+
+      result.push(
+        <optgroup key={`group-${majorVersion}`} label={majorVersion}>
+          {minorOptions}
+        </optgroup>,
+      );
     }
     return result;
   }, [major, versions, tags, translate]);

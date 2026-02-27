@@ -36,14 +36,14 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   const majorSelectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 
   const minorSelectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:text-gray-200"]
+      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 
