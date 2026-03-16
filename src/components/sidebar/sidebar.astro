@@ -53,7 +53,7 @@ const sidebarScript = `try {
     }
 
     @apply bg-white;
-    .dark & {
+    :global(.dark) & {
       @apply bg-dark-gray-950;
     }
 
@@ -61,7 +61,7 @@ const sidebarScript = `try {
     @apply border-r;
     @apply border-l;
     @apply border-gray-200;
-    .dark & {
+    :global(.dark) & {
       @apply border-dark-gray-800;
     }
 

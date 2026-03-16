@@ -1,3 +1,7 @@
+@use "./code/light" as light-theme;
+@use "./code/dark" as dark-theme;
+@use "./code/monocraft" as monocraft-theme;
+
 .docs-content {
   overflow-x: auto;
 
@@ -103,15 +107,15 @@
   }
 
   :not(.dark) & {
-    @import "./code/light.scss";
+    @include light-theme.theme;
   }
 
   .dark & {
-    @import "./code/dark.scss";
+    @include dark-theme.theme;
   }
 
   .monocraft & {
-    @import "./code/monocraft.scss";
+    @include monocraft-theme.theme;
   }
 
   /* headings */

@@ -21,30 +21,30 @@ export default defineConfig({
       include: ["nprogress"],
     },
   },
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.google(),
-        name: "Inter",
-        cssVariable: "--font-inter",
-        weights: [400, 500, 600, 700],
-        styles: ["normal"],
-        subsets: ["latin"],
-        display: "swap",
-      },
-      {
-        provider: fontProviders.google(),
-        name: "Fira Code",
-        cssVariable: "--font-fira-code",
-        weights: [400, 500, 600, 700],
-        styles: ["normal"],
-        subsets: ["latin"],
-        display: "swap",
-      },
-      {
-        provider: "local",
-        name: "Monocraft",
-        cssVariable: "--font-monocraft",
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: "Inter",
+      cssVariable: "--font-inter",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin"],
+      display: "swap",
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Fira Code",
+      cssVariable: "--font-fira-code",
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin"],
+      display: "swap",
+    },
+    {
+      provider: fontProviders.local(),
+      name: "Monocraft",
+      cssVariable: "--font-monocraft",
+      options: {
         variants: [
           {
             weight: 400,
@@ -54,6 +54,6 @@ export default defineConfig({
           },
         ],
       },
-    ],
-  },
+    },
+  ],
 });

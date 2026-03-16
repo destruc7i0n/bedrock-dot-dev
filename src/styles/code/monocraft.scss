@@ -1,4 +1,8 @@
+@mixin theme {
+
 code[class*="language-"],
 pre[class*="language-"] {
   font-family: "Monocraft", serif !important;
 }
+
+} // end @mixin theme

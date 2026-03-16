@@ -4,6 +4,8 @@
  * @author Lea Verou
  */
 
+@mixin theme {
+
 code[class*="language-"],
 pre[class*="language-"] {
   color: black;
@@ -140,3 +142,5 @@ pre[class*="language-"] {
 .token.entity {
   cursor: help;
 }
+
+} // end @mixin theme
