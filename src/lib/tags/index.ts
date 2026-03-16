@@ -19,6 +19,7 @@ const readTagsFromSubmodule = (locale: Locale): TagsResponse => {
   } catch (error) {
     throw new Error(
       `Failed to read tags.json from submodule: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     );
   }
 };

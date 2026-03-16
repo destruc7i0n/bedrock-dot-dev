@@ -8,8 +8,8 @@ const fetchHtml = async (version: string[], locale: Locale) => {
   const file = version[2];
   const path = version.join("/");
 
-  let html: string | null = null;
-  let displayHtml: string | null = null;
+  let html: string;
+  let displayHtml: string;
 
   try {
     html = await getDocsFilesFromRepo(path, locale);

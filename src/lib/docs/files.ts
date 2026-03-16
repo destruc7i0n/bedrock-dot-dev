@@ -25,10 +25,11 @@ export async function getDocsFilesFromRepo(
     return content;
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {
-      throw new Error(`Documentation file not found: ${filePath}.html`);
+      throw new Error(`Documentation file not found: ${filePath}.html`, { cause: error });
     }
     throw new Error(
       `Failed to read documentation file ${filePath}.html: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     );
   }
 }
