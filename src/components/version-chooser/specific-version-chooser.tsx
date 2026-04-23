@@ -1,11 +1,10 @@
 import type { FunctionComponent } from "react";
 
-import { useTranslation } from "react-i18next";
-
 import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
 import { getVersionTag } from "@lib/tags/util";
 import type { TagsResponse } from "@lib/types";
+import { useAppTranslation } from "@lib/use-app-translation";
 import { getMinorVersionTitle } from "@lib/util";
 
 export type VersionSelectorProps = {
@@ -29,21 +28,31 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   setMajor,
   tags,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
 
   const currentTag = getVersionTag([major, minor], tags);
 
   const majorSelectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
+      ? [
+          TAG_STYLES[currentTag].border,
+          "font-medium",
+          "dark:bg-dark-gray-900",
+          "dark:text-gray-200",
+        ]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 
   const minorSelectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
+      ? [
+          TAG_STYLES[currentTag].border,
+          "font-medium",
+          "dark:bg-dark-gray-900",
+          "dark:text-gray-200",
+        ]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 

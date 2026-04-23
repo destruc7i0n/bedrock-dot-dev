@@ -3,11 +3,10 @@ import { navigate } from "astro:transitions/client";
 import { memo, useMemo } from "react";
 import type { ChangeEvent, FunctionComponent } from "react";
 
-import { useTranslation } from "react-i18next";
-
 import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
 import { getVersionTag } from "@lib/tags/util";
+import { useAppTranslation } from "@lib/use-app-translation";
 import { getLink, getMinorVersionTitle } from "@lib/util";
 import { compareBedrockVersions } from "@lib/versions/helpers";
 import type { CompressedVersions } from "@lib/versions/transform";
@@ -31,7 +30,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
   compressedVersions,
   tags,
 }) => {
-  const { t: translate } = useTranslation();
+  const { t: translate } = useAppTranslation();
 
   // decompress once
   const versions = useMemo(
@@ -49,7 +48,12 @@ const SidebarSelectors: FunctionComponent<Props> = ({
   const versionSelectClassName = cn(
     "block w-full rounded-md leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     currentTag && TAG_STYLES[currentTag]
-      ? [TAG_STYLES[currentTag].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
+      ? [
+          TAG_STYLES[currentTag].border,
+          "font-medium",
+          "dark:bg-dark-gray-900",
+          "dark:text-gray-200",
+        ]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 

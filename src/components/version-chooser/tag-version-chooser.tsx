@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import type { FunctionComponent } from "react";
 
-import { useTranslation } from "react-i18next";
-
 import { cn } from "@lib/cn";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
 import { Tag } from "@lib/types";
+import { useAppTranslation } from "@lib/use-app-translation";
 
 import type { VersionSelectorProps } from "./specific-version-chooser";
 
@@ -14,7 +13,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   setMajor,
   setMinor,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const [version, setVersion] = useState(Tag.Stable);
 
   const updateVersion = () => {
@@ -28,7 +27,12 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   const selectClassName = cn(
     "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
     TAG_STYLES[version]
-      ? [TAG_STYLES[version].border, "font-medium", "dark:bg-dark-gray-900", "dark:text-gray-200"]
+      ? [
+          TAG_STYLES[version].border,
+          "font-medium",
+          "dark:bg-dark-gray-900",
+          "dark:text-gray-200",
+        ]
       : "border-gray-300 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200",
   );
 

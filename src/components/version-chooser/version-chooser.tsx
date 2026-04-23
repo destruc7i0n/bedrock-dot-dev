@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FunctionComponent } from "react";
 
-import { useTranslation } from "react-i18next";
-
 import type { TagsResponse } from "@lib/types";
 import { Tag } from "@lib/types";
+import { useAppTranslation } from "@lib/use-app-translation";
 import type { ParsedUrlResponse } from "@lib/util";
 import { getLink, parseUrlQuery } from "@lib/util";
 import { compareBedrockVersions } from "@lib/versions/helpers";
@@ -36,7 +35,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
   compressedVersions,
   tags,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const [quickSelect, setQuickSelect] = useState(true);
 
   // decompress once

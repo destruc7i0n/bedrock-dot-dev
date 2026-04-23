@@ -1,9 +1,11 @@
-import i18next from "i18next";
+import i18next, { type TOptions } from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import type { BedrockVersionsFile } from "@lib/versions/types";
 
 import en from "../locales/en/common.json";
+
+export const i18n = i18next;
 
 export enum Locale {
   English = "en",
@@ -52,34 +54,41 @@ export const groupVersionsByLocale = ({ versions }: BedrockVersionsFile) => {
   return byLocale;
 };
 
-if (!i18next.isInitialized) {
-  i18next.use(initReactI18next);
-  i18next.init(
-    {
-      lng: Locale.English,
-      fallbackLng: Locale.English,
-      defaultNS: "common",
-      resources: {
-        [Locale.English]: {
-          common: en,
+export const ensureI18n = () => {
+  if (!i18n.isInitialized) {
+    i18n.use(initReactI18next);
+    i18n.init(
+      {
+        lng: Locale.English,
+        fallbackLng: Locale.English,
+        defaultNS: "common",
+        resources: {
+          [Locale.English]: {
+            common: en,
+          },
         },
+        interpolation: {
+          escapeValue: false,
+        },
+        react: {
+          useSuspense: false,
+        },
+        initAsync: false,
       },
-      interpolation: {
-        escapeValue: false,
+      (err) => {
+        if (err) {
+          console.error("i18next initialization error:", err);
+        }
       },
-      react: {
-        useSuspense: false,
-      },
-      initAsync: false,
-    },
-    (err) => {
-      if (err) {
-        console.error("i18next initialization error:", err);
-      }
-    },
-  );
-}
+    );
+  }
 
-export const t = (key: string) => {
-  return i18next.t(key);
+  return i18n;
+};
+
+export const changeLocale = (locale: Locale) =>
+  ensureI18n().changeLanguage(locale);
+
+export const t = (key: string, options?: TOptions) => {
+  return ensureI18n().t(key, options);
 };
