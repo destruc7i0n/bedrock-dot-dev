@@ -5,9 +5,10 @@
 interface ImportMetaEnv {
   readonly PROD: boolean;
   readonly SITE?: string;
-  readonly AWS_ACCESS_KEY_ID_BEDROCK?: string;
-  readonly AWS_SECRET_ACCESS_KEY_BEDROCK?: string;
-  readonly AWS_BUCKET_NAME_BEDROCK?: string;
+  readonly R2_ACCESS_KEY_ID_BEDROCK?: string;
+  readonly R2_SECRET_ACCESS_KEY_BEDROCK?: string;
+  readonly R2_BUCKET_NAME_BEDROCK?: string;
+  readonly R2_ENDPOINT_BEDROCK?: string;
 }
 
 interface ImportMeta {
