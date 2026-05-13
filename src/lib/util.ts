@@ -5,15 +5,6 @@ import type { TagsResponse } from "./types";
 import { Tag } from "./types";
 import { compareBedrockVersions } from "./versions/helpers";
 
-export const PACK_BASE_URL = "https://void.bedrock.dev";
-
-export const getPackUrl = (
-  folder: "behaviours" | "resources",
-  version: string,
-): string => {
-  return `${PACK_BASE_URL}/${folder}/${version}.zip`;
-};
-
 export const getLink = (
   major: string,
   minor: string,

@@ -4,7 +4,6 @@ import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 import { TAG_STYLES } from "@lib/constants/tag-styles";
 import { t } from "@lib/i18n";
 import { Tag } from "@lib/types";
-import { getPackUrl } from "@lib/util";
 
 export type PackVersions = {
   [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;
@@ -54,6 +53,8 @@ if (versionData.t && TAG_STYLES[versionData.t]) {
         ) : (
           <>
             <button
+              data-pack-toggle
+              type="button"
               class="link cursor-pointer border-none bg-transparent p-0"
               aria-label="Show download options"
             >
@@ -61,8 +62,10 @@ if (versionData.t && TAG_STYLES[versionData.t]) {
             </button>
             {versionData.b ? (
               <a
-                href={getPackUrl("behaviours", versionName)}
-                class="link hidden"
+                data-pack-download="behaviours"
+                class="link hidden cursor-pointer border-none bg-transparent p-0"
+                target="_blank"
+                rel="noopener"
                 download
               >
                 {behavioursText}
@@ -75,9 +78,10 @@ if (versionData.t && TAG_STYLES[versionData.t]) {
 
             {versionData.r ? (
               <a
-                href={getPackUrl("resources", versionName)}
-                class="link hidden"
+                data-pack-download="resources"
+                class="link hidden cursor-pointer border-none bg-transparent p-0"
                 target="_blank"
+                rel="noopener"
                 download
               >
                 {resourcesText}
@@ -95,16 +99,32 @@ if (versionData.t && TAG_STYLES[versionData.t]) {
 </pack-card-toggle>
 
 <script>
+  const PACK_BASE_URL = "https://void.bedrock.dev";
+
   class PackCardToggle extends HTMLElement {
     connectedCallback() {
-      const btn = this.querySelector("button");
-      const links = this.querySelectorAll("a, p");
+      const toggleButton = this.querySelector("[data-pack-toggle]");
+      const options = this.querySelectorAll("[data-pack-download], a, p");
+      const downloadLinks = this.querySelectorAll("[data-pack-download]");
 
-      btn?.addEventListener(
+      toggleButton?.addEventListener(
         "click",
         () => {
-          btn.classList.add("hidden");
-          links.forEach((link) => link.classList.remove("hidden"));
+          const version = this.dataset.version;
+
+          if (version) {
+            for (const link of downloadLinks) {
+              if (!(link instanceof HTMLAnchorElement)) continue;
+
+              const folder = link.dataset.packDownload;
+              if (folder) {
+                link.href = `${PACK_BASE_URL}/${folder}/${version}.zip`;
+              }
+            }
+          }
+
+          toggleButton.classList.add("hidden");
+          for (const option of options) option.classList.remove("hidden");
         },
         { once: true },
       );
