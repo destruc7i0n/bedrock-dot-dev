@@ -16,16 +16,28 @@ export async function listReleases(
 
   while (true) {
     // https://api.github.com/repos/bedrock-dot-dev/docs/releases?page=1
-    const res = await fetch(
-      `${GITHUB_API_URL}/repos/${repo}/releases?page=${page}&per_page=100`,
-    );
+    try {
+      const res = await fetch(
+        `${GITHUB_API_URL}/repos/${repo}/releases?page=${page}&per_page=100`,
+      );
 
-    if (res.ok) {
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        console.error(
+          `Could not list GitHub releases for ${repo} on page ${page}: ${res.status} ${res.statusText}${body ? ` - ${body}` : ""}`,
+        );
+        return [];
+      }
+
       const json = await res.json();
       if (json.length === 0) break;
-      releases = [...releases, ...json];
+      releases = [...releases, ...(json as GithubReleasePartial[])];
       page++;
-    } else {
+    } catch (error) {
+      console.error(
+        `Could not list GitHub releases for ${repo} on page ${page}:`,
+        error,
+      );
       return [];
     }
   }
