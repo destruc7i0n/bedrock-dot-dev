@@ -14,68 +14,25 @@ Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /api/
 
+# same policy as above, listed by name for tooling that looks for them
 User-agent: GPTBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: OAI-SearchBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: ChatGPT-User
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: ClaudeBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Claude-Web
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Claude-User
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Claude-SearchBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: anthropic-ai
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Google-Extended
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Applebot-Extended
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Amazonbot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: PerplexityBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: meta-externalagent
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: Bytespider
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: CCBot
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
-
 User-agent: cohere-ai
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
+Disallow: /api/
 
 Sitemap: https://bedrock.dev/sitemap.xml
