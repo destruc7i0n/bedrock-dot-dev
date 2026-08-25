@@ -1,0 +1,28 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://bedrock.dev/",
+      "service-doc": [
+        {
+          "href": "https://bedrock.dev/llms.txt",
+          "type": "text/plain",
+          "title": "bedrock.dev documentation index for agents"
+        }
+      ],
+      "service-desc": [
+        {
+          "href": "https://bedrock.dev/static/docs.json",
+          "type": "application/json",
+          "title": "Every documented Minecraft: Bedrock Edition version and its files"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://bedrock.dev/sitemap.xml",
+          "type": "application/xml",
+          "title": "Sitemap"
+        }
+      ]
+    }
+  ]
+}

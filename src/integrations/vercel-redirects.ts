@@ -23,6 +23,8 @@ type BuildOutputRoute = {
   dest?: string;
   status?: number;
   headers?: Record<string, string>;
+  has?: { type: "header"; key: string; value: string }[];
+  continue?: boolean;
 };
 
 type BuildOutputConfig = {
@@ -30,6 +32,71 @@ type BuildOutputConfig = {
   routes?: BuildOutputRoute[];
   [key: string]: unknown;
 };
+
+// `src` is Go RE2 with no lookahead, so the rewrites below exclude `.` from the
+// file segment to avoid rewriting Entities.md to Entities.md.md
+const ACCEPTS_MARKDOWN = [
+  { type: "header" as const, key: "accept", value: "(.*)text/markdown(.*)" },
+];
+
+const MARKDOWN_CACHE_CONTROL =
+  "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400";
+
+// uncacheable so a markdown body is never served to a browser at the same url,
+// which Vary alone would not prevent on cloudflare's free plan
+const MARKDOWN_HEADERS = {
+  Vary: "Accept",
+  "Cache-Control": "no-store",
+};
+
+// https://www.rfc-editor.org/rfc/rfc8288
+const DISCOVERY_LINKS = [
+  '</llms.txt>; rel="llms-txt"; type="text/plain"',
+  '</llms.txt>; rel="service-doc"; type="text/plain"',
+  '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
+  '</sitemap.xml>; rel="describedby"; type="application/xml"',
+].join(", ");
+
+// discovery headers and markdown content negotiation, run before the redirects
+function generateAgentRoutes(): BuildOutputRoute[] {
+  return [
+    {
+      src: "^/(.*)$",
+      headers: { Link: DISCOVERY_LINKS, Vary: "Accept" },
+      continue: true,
+    },
+    {
+      // the .md files are immutable per deploy, unlike the negotiated responses
+      src: "^/(.+)\\.md$",
+      headers: { "Cache-Control": MARKDOWN_CACHE_CONTROL },
+      continue: true,
+    },
+    {
+      // served from public/ without an extension, so vercel cannot infer the type
+      src: "^/\\.well-known/api-catalog$",
+      headers: { "Content-Type": "application/linkset+json" },
+      continue: true,
+    },
+    {
+      src: "^/$",
+      has: ACCEPTS_MARKDOWN,
+      dest: "/index.md",
+      headers: MARKDOWN_HEADERS,
+    },
+    {
+      src: "^/packs/?$",
+      has: ACCEPTS_MARKDOWN,
+      dest: "/packs.md",
+      headers: MARKDOWN_HEADERS,
+    },
+    {
+      src: "^/docs/(stable|beta)/([^/.]+)$",
+      has: ACCEPTS_MARKDOWN,
+      dest: "/docs/$1/$2.md",
+      headers: MARKDOWN_HEADERS,
+    },
+  ];
+}
 
 // https://vercel.com/docs/build-output-api/configuration#routes
 async function generateVercelRoutes(): Promise<BuildOutputRoute[]> {
@@ -123,7 +190,10 @@ export default function vercelRedirectsIntegration(): AstroIntegration {
           return;
         }
 
-        const redirects = await generateVercelRoutes();
+        const redirects = [
+          ...generateAgentRoutes(),
+          ...(await generateVercelRoutes()),
+        ];
 
         let config: BuildOutputConfig;
 

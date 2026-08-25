@@ -114,6 +114,12 @@ if (isStableRoute) {
     .replace("{version}", htmlVersion);
 }
 
+// only the tagged routes have a markdown twin
+const markdownHref =
+  isStableRoute || isBetaRoute
+    ? `/docs/${slugParts[0]}/${encodeURIComponent(file)}.md`
+    : null;
+
 // OG image URL
 const versionParam = isStableRoute || isBetaRoute ? slugParts[0] : htmlVersion;
 const ogImageUrl = getOgImageUrl({ file, version: versionParam });
@@ -126,6 +132,11 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 
     <meta name="docsearch:language" content={Locale.English} />
     <link rel="expect" href="#end-of-content" blocking="render" />
+    {
+      markdownHref && (
+        <link rel="alternate" type="text/markdown" href={markdownHref} />
+      )
+    }
   </Fragment>
 
   <Header transition:persist="header" />
