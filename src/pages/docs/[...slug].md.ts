@@ -1,8 +1,8 @@
 import type { APIRoute } from "astro";
 
 import { LIVE_URL } from "@lib/constants/env";
-import { getDocsFilesFromRepo } from "@lib/docs/files";
-import { cleanHtmlForDisplay } from "@lib/html/clean";
+import { processDocFile } from "@lib/docs/process-file";
+import { MARKDOWN_TRANSFORMS } from "@lib/html/transforms";
 import { Locale } from "@lib/i18n";
 import { getTags } from "@lib/tags";
 import { Tag, TagValues } from "@lib/types";
@@ -34,26 +34,23 @@ export const GET: APIRoute = async ({ props }) => {
     tag: string;
   };
 
-  let raw: string;
-  try {
-    raw = await getDocsFilesFromRepo(
-      `${major}/${minor}/${file}`,
-      Locale.English,
-    );
-  } catch {
+  const doc = await processDocFile(
+    [major, minor, file],
+    Locale.English,
+    MARKDOWN_TRANSFORMS,
+  );
+
+  if (!doc) {
     return new Response(`Documentation not found: ${tag}/${file}`, {
       status: 404,
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
   }
 
-  // same transforms as the page, without the highlighting and anchors
-  const content = cleanHtmlForDisplay(raw, file, minor, { anchors: false });
-
   const frontmatter = [
     "---",
-    `title: ${JSON.stringify(file)}`,
-    `version: ${minor}`,
+    `title: ${JSON.stringify(doc.title.title || file)}`,
+    `version: ${doc.title.version || minor}`,
     `channel: ${tag}`,
     `source: ${LIVE_URL}/docs/${tag}/${encodeURIComponent(file)}`,
     "---",
@@ -65,7 +62,7 @@ export const GET: APIRoute = async ({ props }) => {
     "> Append `.md` to any /docs/stable/ or /docs/beta/ URL for markdown.",
   ].join("\n");
 
-  return new Response(`${frontmatter}\n\n${banner}\n\n${content}`, {
+  return new Response(`${frontmatter}\n\n${banner}\n\n${doc.html}`, {
     headers: { "Content-Type": "text/markdown; charset=utf-8" },
   });
 };

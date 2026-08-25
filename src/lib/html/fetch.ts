@@ -1,15 +1,18 @@
 import { getDocsFilesFromRepo } from "../docs/files";
 import { Locale } from "../i18n";
 import Log from "../log";
-import { cleanHtmlForDisplay } from "./clean";
-import { highlightHtml } from "./highlight";
+import type { DocTransform } from "./transforms";
+import { applyTransforms, DISPLAY_TRANSFORMS } from "./transforms";
 
-const fetchHtml = async (version: string[], locale: Locale) => {
-  const file = version[2];
+const fetchHtml = async (
+  version: string[],
+  locale: Locale,
+  transforms: DocTransform[] = DISPLAY_TRANSFORMS,
+) => {
+  const [major, minor, file] = version;
   const path = version.join("/");
 
   let html: string;
-  let displayHtml: string;
 
   try {
     html = await getDocsFilesFromRepo(path, locale);
@@ -18,13 +21,9 @@ const fetchHtml = async (version: string[], locale: Locale) => {
     return null;
   }
 
-  // the html to be presented on the site
-  displayHtml = cleanHtmlForDisplay(html, file, version[1]);
-  displayHtml = highlightHtml(displayHtml, file);
-
   return {
     html,
-    displayHtml,
+    output: applyTransforms(html, { major, minor, file }, transforms),
   };
 };
 
