@@ -56,12 +56,31 @@ const DISCOVERY_LINKS = [
   '</sitemap.xml>; rel="describedby"; type="application/xml"',
 ].join(", ");
 
+const alternate = (href: string) =>
+  `<${href}>; rel="alternate"; type="text/markdown"`;
+
 // discovery headers and markdown negotiation
 function generateAgentRoutes(): BuildOutputRoute[] {
   return [
     {
       src: "^/(.*)$",
       headers: { Link: DISCOVERY_LINKS, Vary: "Accept" },
+      continue: true,
+    },
+    // later routes win on the same header, so these repeat the discovery links
+    {
+      src: "^/$",
+      headers: { Link: `${DISCOVERY_LINKS}, ${alternate("/index.md")}` },
+      continue: true,
+    },
+    {
+      src: "^/packs/?$",
+      headers: { Link: `${DISCOVERY_LINKS}, ${alternate("/packs.md")}` },
+      continue: true,
+    },
+    {
+      src: "^/docs/(stable|beta)/([^/.]+)$",
+      headers: { Link: `${DISCOVERY_LINKS}, ${alternate("/docs/$1/$2.md")}` },
       continue: true,
     },
     {

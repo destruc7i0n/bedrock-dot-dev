@@ -11,6 +11,7 @@ import Layout from "@layouts/layout.astro";
 import { processDocFile } from "@lib/docs/process-file";
 import { Locale, t } from "@lib/i18n";
 import { getOgImageUrl } from "@lib/og-image";
+import { breadcrumbSchema, docSchema } from "@lib/structured-data";
 import { getTags } from "@lib/tags";
 import { getVersionTag } from "@lib/tags/util";
 import { Tag } from "@lib/types";
@@ -120,6 +121,19 @@ const markdownHref =
     ? `/docs/${slugParts[0]}/${encodeURIComponent(file)}.md`
     : null;
 
+const structuredData = [
+  docSchema({
+    title: documentTitle,
+    description,
+    path: Astro.url.pathname,
+    version: htmlVersion,
+  }),
+  breadcrumbSchema([
+    { name: "bedrock.dev", path: "/" },
+    { name: documentTitle },
+  ]),
+];
+
 // OG image URL
 const versionParam = isStableRoute || isBetaRoute ? slugParts[0] : htmlVersion;
 const ogImageUrl = getOgImageUrl({ file, version: versionParam });
@@ -136,6 +150,15 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       markdownHref && (
         <link rel="alternate" type="text/markdown" href={markdownHref} />
       )
+    }
+    {
+      structuredData.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      ))
     }
   </Fragment>
 
