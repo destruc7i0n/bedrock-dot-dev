@@ -1,89 +1,23 @@
 ---
-import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
-
 import Footer from "@components/footer.astro";
 import Navbar from "@components/homepage/navbar.astro";
 import PackCard from "@components/packs/pack-card.astro";
 import Layout from "@layouts/layout.astro";
 
-import { listReleases } from "@lib/github/api";
-import { Locale, t } from "@lib/i18n";
-import { getTags } from "@lib/tags";
-import { Tag } from "@lib/types";
-import { compareBedrockVersions } from "@lib/versions/helpers";
+import { t } from "@lib/i18n";
+import { getPackVersions } from "@lib/packs";
 
-export type PackVersions = {
-  [key: string]: Partial<{ b: boolean; r: boolean; t?: Tag; git: string }>;
-};
-
-const VERSION = /(\d+\.\d+\.\d+\.\d+)/;
-
-const tags = await getTags(Locale.English);
-const stableTag = tags[Tag.Stable]?.at(-1) ?? "";
-const betaTag = tags[Tag.Beta]?.at(-1) ?? "";
-
-const versions: PackVersions = {};
-let paths: string[] = [];
-
-// Fetch from R2 if credentials are available
-if (
-  import.meta.env.R2_ACCESS_KEY_ID_BEDROCK &&
-  import.meta.env.R2_SECRET_ACCESS_KEY_BEDROCK &&
-  import.meta.env.R2_BUCKET_NAME_BEDROCK &&
-  import.meta.env.R2_ENDPOINT_BEDROCK
-) {
-  const r2 = new S3Client({
-    region: "auto",
-    endpoint: import.meta.env.R2_ENDPOINT_BEDROCK,
-    credentials: {
-      accessKeyId: import.meta.env.R2_ACCESS_KEY_ID_BEDROCK,
-      secretAccessKey: import.meta.env.R2_SECRET_ACCESS_KEY_BEDROCK,
-    },
-  });
-
-  try {
-    const command = new ListObjectsV2Command({
-      Bucket: import.meta.env.R2_BUCKET_NAME_BEDROCK,
-    });
-    const objects = await r2.send(command);
-    if (objects.Contents) {
-      paths = objects.Contents.filter(
-        (c) => c.Key && c.Key?.endsWith(".zip"),
-      ).map((c) => c.Key!);
-    }
-  } catch (error) {
-    console.error("Could not list items from bucket!", error);
-  }
-
-  for (const path of paths) {
-    const [folder, name] = path.split("/");
-    if (folder && name) {
-      const version = name.replace(".zip", "");
-      if (!versions[version]) versions[version] = { b: false, r: false };
-      if (folder === "behaviours") versions[version].b = true;
-      if (folder === "resources") versions[version].r = true;
-    }
-  }
-}
-
-// Get the releases from the bedrock-samples repo
-const mojangBedrockSamples = await listReleases("Mojang/bedrock-samples");
-for (const release of mojangBedrockSamples) {
-  const version = release.tag_name.match(VERSION)?.[0];
-  if (version && !versions[version])
-    versions[version] = { git: release.html_url };
-}
-
-if (versions[stableTag]) versions[stableTag].t = Tag.Stable;
-if (versions[betaTag]) versions[betaTag].t = Tag.Beta;
-
-const versionsSorted = Object.keys(versions).sort(compareBedrockVersions);
+const { versions, sorted: versionsSorted } = await getPackVersions();
 ---
 
 <Layout
   title={`${t("page.packs.website_title")} | bedrock.dev`}
   description={t("page.packs.website_description")}
 >
+  <Fragment slot="head">
+    <link rel="alternate" type="text/markdown" href="/packs.md" />
+  </Fragment>
+
   <div class="h-screen">
     <Navbar />
 

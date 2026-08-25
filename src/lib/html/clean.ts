@@ -10,10 +10,12 @@ import {
 } from "./regex";
 import { addAnchors } from "./scrape/sections";
 
+// anchors are only useful on the rendered page
 export const cleanHtmlForDisplay = (
   html: string,
   file: string,
   version: string,
+  { anchors = true }: { anchors?: boolean } = {},
 ) => {
   const versionNumber = getVersionParts(version)[1];
 
@@ -31,7 +33,7 @@ export const cleanHtmlForDisplay = (
       break;
   }
 
-  html = addAnchors(html);
+  if (anchors) html = addAnchors(html);
 
   return html;
 };
