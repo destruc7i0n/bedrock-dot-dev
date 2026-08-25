@@ -10,9 +10,9 @@
 # Crawl rules follow https://www.rfc-editor.org/rfc/rfc9309
 
 User-agent: *
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
 Disallow: /api/
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 # same policy as above, listed by name for tooling that looks for them
 User-agent: GPTBot
@@ -31,8 +31,8 @@ User-agent: meta-externalagent
 User-agent: Bytespider
 User-agent: CCBot
 User-agent: cohere-ai
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
-Allow: /
 Disallow: /api/
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://bedrock.dev/sitemap.xml
