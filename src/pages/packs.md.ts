@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 
 import { LIVE_URL } from "@lib/constants/env";
 import { PACKS_REPO } from "@lib/constants/packs";
+import { frontmatter, indexBanner } from "@lib/markdown";
 import { getPackVersions } from "@lib/packs";
 import { Tag } from "@lib/types";
 
@@ -34,12 +35,12 @@ export const GET: APIRoute = async () => {
   );
 
   const body = [
-    "---",
-    'title: "Template Packs"',
-    `source: ${LIVE_URL}/packs`,
-    "---",
+    frontmatter({
+      title: '"Template Packs"',
+      source: `${LIVE_URL}/packs`,
+    }),
     "",
-    `> Documentation index: ${LIVE_URL}/llms.txt`,
+    indexBanner(),
     "",
     "# Minecraft: Bedrock Edition template packs",
     "",

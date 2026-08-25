@@ -2,23 +2,18 @@ import type { APIRoute } from "astro";
 
 import { LIVE_URL } from "@lib/constants/env";
 import { processDocFile } from "@lib/docs/process-file";
+import { getTaggedFiles } from "@lib/docs/tagged";
 import { MARKDOWN_TRANSFORMS } from "@lib/html/transforms";
 import { Locale } from "@lib/i18n";
-import { getTags } from "@lib/tags";
-import { Tag, TagValues } from "@lib/types";
-import { allFilesList } from "@lib/versions/list";
+import { docPath, frontmatter, indexBanner } from "@lib/markdown";
 
 export const prerender = true;
 
 // only the tagged routes, same as the sitemap
 export async function getStaticPaths() {
-  const versions = await allFilesList(Locale.English);
-  const tags = await getTags(Locale.English);
+  const tagged = await getTaggedFiles(Locale.English);
 
-  return TagValues.flatMap((tag) => {
-    const [major, minor] = tags[tag as Tag];
-    const files = versions[major]?.[minor] ?? [];
-
+  return Object.entries(tagged).flatMap(([tag, { major, minor, files }]) => {
     return files.map((file) => ({
       params: { slug: `${tag}/${file}` },
       props: { major, minor, file, tag },
@@ -47,22 +42,18 @@ export const GET: APIRoute = async ({ props }) => {
     });
   }
 
-  const frontmatter = [
-    "---",
-    `title: ${JSON.stringify(doc.title.title || file)}`,
-    `version: ${doc.title.version || minor}`,
-    `channel: ${tag}`,
-    `source: ${LIVE_URL}/docs/${tag}/${encodeURIComponent(file)}`,
-    "---",
-  ].join("\n");
+  const meta = frontmatter({
+    title: JSON.stringify(doc.title.title || file),
+    version: doc.title.version || minor,
+    channel: tag,
+    source: `${LIVE_URL}${docPath(tag, file)}`,
+  });
 
-  // point back at the index
-  const banner = [
-    `> Documentation index: ${LIVE_URL}/llms.txt`,
-    "> Append `.md` to any /docs/stable/ or /docs/beta/ URL for markdown.",
-  ].join("\n");
+  const banner = indexBanner(
+    "Append `.md` to any /docs/stable/ or /docs/beta/ URL for markdown.",
+  );
 
-  return new Response(`${frontmatter}\n\n${banner}\n\n${doc.html}`, {
+  return new Response(`${meta}\n\n${banner}\n\n${doc.html}`, {
     headers: { "Content-Type": "text/markdown; charset=utf-8" },
   });
 };

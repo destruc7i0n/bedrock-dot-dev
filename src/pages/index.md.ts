@@ -1,37 +1,29 @@
 import type { APIRoute } from "astro";
 
 import { LIVE_URL } from "@lib/constants/env";
+import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale, t } from "@lib/i18n";
-import { getTags } from "@lib/tags";
+import { docMarkdownPath, frontmatter } from "@lib/markdown";
 import { Tag } from "@lib/types";
-import { allFilesList } from "@lib/versions/list";
 
 export const prerender = true;
 
 export const GET: APIRoute = async () => {
-  const versions = await allFilesList(Locale.English);
-  const tags = await getTags(Locale.English);
-
-  const filesFor = (tag: Tag) => {
-    const [major, minor] = tags[tag];
-    return { major, minor, files: versions[major]?.[minor] ?? [] };
-  };
-
-  const stable = filesFor(Tag.Stable);
-  const beta = filesFor(Tag.Beta);
+  const tagged = await getTaggedFiles(Locale.English);
+  const stable = tagged[Tag.Stable];
+  const beta = tagged[Tag.Beta];
 
   const links = (tag: Tag, files: string[]) =>
     files
-      .map(
-        (file) =>
-          `- [${file}](${LIVE_URL}/docs/${tag}/${encodeURIComponent(file)}.md)`,
-      )
+      .map((file) => `- [${file}](${LIVE_URL}${docMarkdownPath(tag, file)})`)
       .join("\n");
 
-  const body = `---
-title: "bedrock.dev"
-source: ${LIVE_URL}/
----
+  const meta = frontmatter({
+    title: '"bedrock.dev"',
+    source: `${LIVE_URL}/`,
+  });
+
+  const body = `${meta}
 
 # bedrock.dev
 

@@ -10,6 +10,7 @@ import Layout from "@layouts/layout.astro";
 
 import { processDocFile } from "@lib/docs/process-file";
 import { Locale, t } from "@lib/i18n";
+import { docMarkdownPath } from "@lib/markdown";
 import { getOgImageUrl } from "@lib/og-image";
 import { breadcrumbSchema, docSchema } from "@lib/structured-data";
 import { getTags } from "@lib/tags";
@@ -117,9 +118,7 @@ if (isStableRoute) {
 
 // only the tagged routes have a markdown twin
 const markdownHref =
-  isStableRoute || isBetaRoute
-    ? `/docs/${slugParts[0]}/${encodeURIComponent(file)}.md`
-    : null;
+  isStableRoute || isBetaRoute ? docMarkdownPath(slugParts[0], file) : null;
 
 const structuredData = [
   docSchema({
