@@ -8,11 +8,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run build:prepare && pnpm run build:astro && pnpm run ping-indexnow",
-    "build:prepare": "pnpm run update-docs && pnpm run generate-docs-file && pnpm run generate-sitemap",
+    "build:prepare": "pnpm run update-docs && pnpm run generate-docs-file && pnpm run generate-lastmod && pnpm run generate-sitemap",
     "build:astro": "astro build",
     "start": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "generate-lastmod": "tsx scripts/generate-lastmod.ts",
     "generate-sitemap": "tsx scripts/generate-sitemap.ts",
     "ping-indexnow": "tsx scripts/ping-indexnow.ts",
     "generate-docs-file": "tsx scripts/generate-docs-manifest.ts",

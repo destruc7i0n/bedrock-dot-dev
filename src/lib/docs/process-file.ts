@@ -1,6 +1,7 @@
 import type { SidebarStructure } from "@components/sidebar";
 
 import { extractDataFromHtml, fetchHtml } from "../html";
+import type { Heading } from "../html/scrape/headings";
 import type { DocTransform } from "../html/transforms";
 import { DISPLAY_TRANSFORMS } from "../html/transforms";
 import { Locale } from "../i18n";
@@ -16,6 +17,7 @@ export interface ProcessedDoc {
     title?: string;
     version?: string;
   };
+  headings: Heading[];
 }
 
 /**
@@ -61,7 +63,10 @@ export async function processDocFile(
     const id = `${major}/${minor}/${file}`;
 
     Log.info(`Processing ${id}...`);
-    const { sidebar, title } = extractDataFromHtml(htmlData.html, file);
+    const { sidebar, title, headings } = extractDataFromHtml(
+      htmlData.html,
+      file,
+    );
 
     return {
       major,
@@ -70,6 +75,7 @@ export async function processDocFile(
       html: htmlData.output,
       sidebar,
       title,
+      headings,
     };
   } catch (error) {
     console.error(`Error processing ${major}/${minor}/${file}:`, error);

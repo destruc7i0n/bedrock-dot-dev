@@ -1,7 +1,9 @@
 {
   "page": {
     "home": {
+      "website_title": "bedrock.dev – Minecraft 基岩版文档",
       "website_description": "Minecraft基岩版文档",
+      "website_blurb": "由社区维护的非官方镜像，收录 Mojang 随 Minecraft 基岩版一同发布的附加包文档，可按游戏版本浏览。自 1.2 起的每个版本均有存档。",
       "subtitle": "Minecraft基岩版文档",
       "search_placeholder": "搜索文档"
     },
@@ -13,12 +15,17 @@
     },
     "docs": {
       "website_title_loading": "加载中……",
-      "website_title_untagged": "{title}文档 | {version}",
-      "website_description_untagged": "Minecraft基岩版{title}文档 版本：{version}",
-      "website_title_tagged_stable": "{title}文档",
-      "website_description_tagged_stable": "Minecraft基岩版{title}文档",
-      "website_title_tagged_beta": "测试版{title}文档",
-      "website_description_tagged_beta": "Minecraft基岩版测试版{title}文档"
+      "og_subtitle": "文档",
+      "title_stable": "{title} – Minecraft 基岩版文档",
+      "title_beta": "{title} – Minecraft 基岩版测试版文档",
+      "title_version": "{title} – Minecraft 基岩版 {version} 文档",
+      "channel_stable": "正式版 {version}",
+      "channel_beta": "测试版 {version}",
+      "channel_version": "版本 {version}",
+      "description": "Minecraft 基岩版 {title} 文档，{channel}。",
+      "description_sections": "Minecraft 基岩版 {title} 文档，{channel}。包含{sections}。",
+      "sections_more": "{sections} 等 {count} 个章节",
+      "sections_more_one": "{sections} 等 1 个章节"
     }
   },
   "component": {

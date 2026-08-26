@@ -6,6 +6,8 @@ import type {
 import Log from "../log";
 import { removeHashIfNeeded } from "../util";
 import { LINK_MATCH, TABLE_MATCH, TH_MATCH } from "./regex";
+import type { Heading } from "./scrape/headings";
+import { getHeadings } from "./scrape/headings";
 import { getAIGoals, getComponentsList } from "./scrape/table";
 import type { TitleResponse } from "./scrape/title";
 import { getTitle } from "./scrape/title";
@@ -61,6 +63,7 @@ const getSidebarContent = (html: string): SidebarStructure => {
 export type ParseHtmlResponse = {
   sidebar: SidebarStructure;
   title: TitleResponse;
+  headings: Heading[];
 };
 
 export const extractDataFromHtml = (
@@ -123,5 +126,6 @@ export const extractDataFromHtml = (
   return {
     sidebar: sidebarContent,
     title,
+    headings: getHeadings(html),
   };
 };

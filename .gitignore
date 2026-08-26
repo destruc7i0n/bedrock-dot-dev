@@ -11,3 +11,5 @@ public/static/docs.json
 .env*
 
 .DS_Store
+
+data/generated

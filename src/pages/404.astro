@@ -6,7 +6,11 @@ import Layout from "@layouts/layout.astro";
 import { t } from "@lib/i18n";
 ---
 
-<Layout title="404 | bedrock.dev" description="">
+<Layout title="404 | bedrock.dev" description={t("page.not_found.message")}>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
   <div class="flex min-h-screen flex-col justify-between">
     <Navbar />
 

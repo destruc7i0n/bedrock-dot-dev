@@ -8,11 +8,26 @@ const SITE = {
   url: LIVE_URL,
 };
 
+// the site operator. mojang is named as the source below, never as the operator
+const PUBLISHER = {
+  "@type": "Organization",
+  name: "bedrock.dev",
+  url: LIVE_URL,
+};
+
+const GAME = {
+  "@type": "VideoGame",
+  name: "Minecraft: Bedrock Edition",
+  publisher: { "@type": "Organization", name: "Mojang Studios" },
+};
+
 export const websiteSchema = (description: string) => ({
   "@context": CONTEXT,
   ...SITE,
   description,
   inLanguage: "en",
+  publisher: PUBLISHER,
+  about: GAME,
 });
 
 export const docSchema = ({
@@ -20,21 +35,28 @@ export const docSchema = ({
   description,
   path,
   version,
+  dateModified,
 }: {
   title: string;
   description: string;
   path: string;
   version: string;
+  dateModified?: string;
 }) => ({
   "@context": CONTEXT,
   "@type": "TechArticle",
+  name: title,
   headline: title,
   description,
   url: `${LIVE_URL}${path}`,
+  mainEntityOfPage: `${LIVE_URL}${path}`,
   inLanguage: "en",
   isPartOf: SITE,
-  about: { "@type": "VideoGame", name: "Minecraft: Bedrock Edition" },
+  publisher: PUBLISHER,
+  about: GAME,
   version,
+  // only the real commit date of the source file, never a stand-in
+  ...(dateModified ? { dateModified } : {}),
 });
 
 export const breadcrumbSchema = (trail: { name: string; path?: string }[]) => ({

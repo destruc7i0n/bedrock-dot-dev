@@ -26,7 +26,7 @@ export const GET: APIRoute = async () => {
   const body = [
     "# bedrock.dev",
     "",
-    `> ${t("page.home.website_description")}. An unofficial, community-maintained mirror of Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by game version. This file indexes the markdown version of every documentation page.`,
+    `> ${t("page.home.website_description")}. ${t("page.home.website_blurb")} This file indexes the markdown version of every documentation page.`,
     "",
     WHEN_TO_USE,
     "",

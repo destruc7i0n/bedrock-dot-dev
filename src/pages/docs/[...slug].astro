@@ -8,10 +8,17 @@ import Footer from "@components/footer.astro";
 import Sidebar from "@components/sidebar/sidebar.astro";
 import Layout from "@layouts/layout.astro";
 
+import { getLastModified, lastModifiedFor } from "@lib/docs/lastmod";
 import { processDocFile } from "@lib/docs/process-file";
-import { Locale, t } from "@lib/i18n";
+import { Locale } from "@lib/i18n";
 import { docMarkdownPath } from "@lib/markdown";
 import { getOgImageUrl } from "@lib/og-image";
+import type { DocChannel } from "@lib/seo";
+import {
+  getBreadcrumbTrail,
+  getDocumentDescription,
+  getDocumentTitle,
+} from "@lib/seo";
 import { breadcrumbSchema, docSchema } from "@lib/structured-data";
 import { getTags } from "@lib/tags";
 import { getVersionTag } from "@lib/tags/util";
@@ -71,7 +78,7 @@ if (!processedDoc) {
   return Astro.redirect("/404");
 }
 
-const { html, sidebar, title: docTitle } = processedDoc;
+const { html, sidebar, headings, title: docTitle } = processedDoc;
 
 const versions = await allFilesList(Locale.English);
 
@@ -85,36 +92,19 @@ const isBetaRoute = slugParts[0] === "beta";
 const documentTitle = docTitle.title || file || "Documentation";
 const htmlVersion = docTitle.version || minor;
 
-let title: string;
-let description: string;
+const channel: DocChannel = {
+  tag: isStableRoute ? Tag.Stable : isBetaRoute ? Tag.Beta : null,
+  version: htmlVersion,
+  major,
+  minor,
+};
 
-if (isStableRoute) {
-  title =
-    t("page.docs.website_title_tagged_stable").replace(
-      "{title}",
-      documentTitle,
-    ) + " | bedrock.dev";
-  description = t("page.docs.website_description_tagged_stable").replace(
-    "{title}",
-    documentTitle,
-  );
-} else if (isBetaRoute) {
-  title =
-    t("page.docs.website_title_tagged_beta").replace("{title}", documentTitle) +
-    " | bedrock.dev";
-  description = t("page.docs.website_description_tagged_beta").replace(
-    "{title}",
-    documentTitle,
-  );
-} else {
-  title =
-    t("page.docs.website_title_untagged")
-      .replace("{title}", documentTitle)
-      .replace("{version}", htmlVersion) + " | bedrock.dev";
-  description = t("page.docs.website_description_untagged")
-    .replace("{title}", documentTitle)
-    .replace("{version}", htmlVersion);
-}
+const title = getDocumentTitle({ name: documentTitle, channel });
+const description = getDocumentDescription({
+  name: documentTitle,
+  channel,
+  headings,
+});
 
 // only the tagged routes have a markdown twin
 const markdownHref =
@@ -126,11 +116,9 @@ const structuredData = [
     description,
     path: Astro.url.pathname,
     version: htmlVersion,
+    dateModified: lastModifiedFor(getLastModified(), major, minor, file),
   }),
-  breadcrumbSchema([
-    { name: "bedrock.dev", path: "/" },
-    { name: documentTitle },
-  ]),
+  breadcrumbSchema(getBreadcrumbTrail({ name: documentTitle, channel })),
 ];
 
 // OG image URL
@@ -176,7 +164,13 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       versions={versions}
       tags={tags}
     />
-    <DocsContainer html={html} file={file} version={minor} />
+    <DocsContainer
+      html={html}
+      file={file}
+      version={minor}
+      name={documentTitle}
+      channel={channel}
+    />
   </div>
   <div id="end-of-content"></div>
   <BackToTop />

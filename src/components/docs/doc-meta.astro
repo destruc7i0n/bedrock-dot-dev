@@ -1,0 +1,77 @@
+---
+import { cn } from "@lib/cn";
+import { TAG_STYLES } from "@lib/constants/tag-styles";
+import { t } from "@lib/i18n";
+import type { DocChannel } from "@lib/seo";
+import { getBreadcrumbTrail } from "@lib/seo";
+import { Tag } from "@lib/types";
+
+interface Props {
+  name: string;
+  channel: DocChannel;
+}
+
+const { name, channel } = Astro.props;
+
+const trail = getBreadcrumbTrail({ name, channel });
+
+const tagLabel = (tag: Tag) =>
+  t(`component.version_chooser.${tag}_string` as const);
+
+// links elsewhere on the site keep the native focus outline, so no ring here
+const link = "transition-colors hover:text-gray-900 dark:hover:text-gray-100";
+---
+
+<div class="w-full border-b border-gray-200 dark:border-dark-gray-800">
+  {/* one line at any width: it scrolls sideways rather than wrapping */}
+  <div
+    class="mx-auto flex [scrollbar-width:none] items-center gap-x-3 overflow-x-auto px-4 py-2 text-sm font-medium whitespace-nowrap text-gray-700 lg:max-w-[90%] lg:px-0 dark:text-gray-200 [&::-webkit-scrollbar]:hidden"
+  >
+    <nav aria-label="Breadcrumb">
+      <ol class="flex items-center gap-x-1.5">
+        {
+          trail.map((crumb, i) => (
+            <li class="flex items-center gap-x-1.5">
+              {i > 0 && (
+                <span
+                  class="font-normal text-gray-400 dark:text-gray-500"
+                  aria-hidden="true"
+                >
+                  /
+                </span>
+              )}
+              {crumb.path ? (
+                <a class={link} href={crumb.path}>
+                  {crumb.name}
+                </a>
+              ) : i === trail.length - 1 ? (
+                <span
+                  class="font-semibold text-gray-900 dark:text-white"
+                  aria-current="page"
+                >
+                  {crumb.name}
+                </span>
+              ) : (
+                <span>{crumb.name}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    {
+      channel.tag && (
+        <span
+          class={cn(
+            "shrink-0 rounded-md px-1.5 py-0.5 text-xs font-medium",
+            "text-gray-700 dark:text-gray-300",
+            TAG_STYLES[channel.tag].border,
+          )}
+        >
+          {tagLabel(channel.tag)}
+        </span>
+      )
+    }
+  </div>
+</div>
