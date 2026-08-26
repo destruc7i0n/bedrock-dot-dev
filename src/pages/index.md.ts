@@ -3,7 +3,12 @@ import type { APIRoute } from "astro";
 import { LIVE_URL } from "@lib/constants/env";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale, t } from "@lib/i18n";
-import { docMarkdownPath, frontmatter, WHEN_TO_USE } from "@lib/markdown";
+import {
+  docMarkdownPath,
+  frontmatter,
+  SEARCH,
+  WHEN_TO_USE,
+} from "@lib/markdown";
 import { Tag } from "@lib/types";
 
 export const prerender = true;
@@ -32,6 +37,8 @@ Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by
 game version. Documentation is available for every release back to 1.2.
 
 ${WHEN_TO_USE}
+
+${SEARCH}
 
 ## URL scheme
 

@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import { LIVE_URL } from "@lib/constants/env";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale, t } from "@lib/i18n";
-import { docMarkdownPath, WHEN_TO_USE } from "@lib/markdown";
+import { docMarkdownPath, SEARCH, WHEN_TO_USE } from "@lib/markdown";
 import { Tag } from "@lib/types";
 
 export const prerender = true;
@@ -29,6 +29,8 @@ export const GET: APIRoute = async () => {
     `> ${t("page.home.website_description")}. An unofficial, community-maintained mirror of Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by game version. This file indexes the markdown version of every documentation page.`,
     "",
     WHEN_TO_USE,
+    "",
+    SEARCH,
     "",
     section("Stable", stable.minor, Tag.Stable, stable.files),
     "",

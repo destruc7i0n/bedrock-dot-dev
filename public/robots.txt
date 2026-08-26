@@ -2,6 +2,7 @@
 #
 # Machine-readable index: https://bedrock.dev/llms.txt
 # Discovery catalog:      https://bedrock.dev/.well-known/api-catalog
+# Search over MCP:        https://QLWYANMOJF.algolia.net/mcp/1/RZ-zM1VTRZWEmIO3cJUdmw/mcp
 #
 # Every /docs/stable/ and /docs/beta/ page is available as markdown by
 # appending `.md` to the URL, or by sending `Accept: text/markdown`.

@@ -1,3 +1,4 @@
+import { ALGOLIA_MCP_TOOL, ALGOLIA_MCP_URL } from "./constants/algolia";
 import { LIVE_URL } from "./constants/env";
 import type { Tag } from "./types";
 
@@ -37,4 +38,27 @@ export const WHEN_TO_USE = [
   "- Versioned `/docs/<major>/<minor>/` pages are HTML only and have no `.md` twin",
   "- `/packs.md` lists Mojang's default template packs per version",
   "- Some pages are large (Addons, Entities); fetch them in chunks",
+  "- Search the docs over MCP to find the right page first, see below",
+].join("\n");
+
+// the search index is exposed over mcp, so agents can locate a page before fetching it
+export const SEARCH = [
+  "## Search",
+  "",
+  `The documentation search index is available over MCP at \`${ALGOLIA_MCP_URL}\``,
+  "(streamable HTTP, no authentication, read-only, scoped to this site).",
+  "",
+  `The \`${ALGOLIA_MCP_TOOL}\` tool takes a \`queries\` array of up to five variations, each`,
+  "with a `query` and optional `facet_lang` (`en`) and `facet_type` (`lvl1`-`lvl5`,",
+  "`content`) filters. It also requires `originalQuery`, `sessionId` and `userIntent`.",
+  "Every hit carries the page `url` and its `anchor`.",
+  "",
+  "Prefer it over fetching pages speculatively: resolve a symbol to its page and anchor,",
+  "then read that page. Searching `minecraft:explode` returns",
+  "`/docs/stable/Entities#minecraft:explode`, so fetch `/docs/stable/Entities.md` and go",
+  "to that anchor rather than downloading every entity page to find one component.",
+  "",
+  "Heading records pinpoint a symbol but have a null `content`; records with",
+  "`type: content` carry surrounding prose. Most of this documentation is tables and",
+  "schemas, so treat search as a way to locate a page, and the `.md` page as the source.",
 ].join("\n");
