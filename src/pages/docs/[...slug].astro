@@ -138,7 +138,12 @@ const versionParam = isStableRoute || isBetaRoute ? slugParts[0] : htmlVersion;
 const ogImageUrl = getOgImageUrl({ file, version: versionParam });
 ---
 
-<Layout title={title} description={description} ogImage={ogImageUrl}>
+<Layout
+  title={title}
+  description={description}
+  ogImage={ogImageUrl}
+  ogType="article"
+>
   <Fragment slot="head">
     <Font cssVariable="--font-fira-code" preload />
     <Font cssVariable="--font-monocraft" />

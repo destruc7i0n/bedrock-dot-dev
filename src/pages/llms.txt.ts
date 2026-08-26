@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import { LIVE_URL } from "@lib/constants/env";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale, t } from "@lib/i18n";
-import { docMarkdownPath } from "@lib/markdown";
+import { docMarkdownPath, WHEN_TO_USE } from "@lib/markdown";
 import { Tag } from "@lib/types";
 
 export const prerender = true;
@@ -26,7 +26,9 @@ export const GET: APIRoute = async () => {
   const body = [
     "# bedrock.dev",
     "",
-    `> ${t("page.home.website_description")}. An unofficial, community-maintained mirror of Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by game version. This file indexes the markdown version of every documentation page. Append \`.md\` to any /docs/stable/ or /docs/beta/ URL (or send \`Accept: text/markdown\`) to get its markdown twin.`,
+    `> ${t("page.home.website_description")}. An unofficial, community-maintained mirror of Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by game version. This file indexes the markdown version of every documentation page.`,
+    "",
+    WHEN_TO_USE,
     "",
     section("Stable", stable.minor, Tag.Stable, stable.files),
     "",

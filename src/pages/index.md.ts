@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import { LIVE_URL } from "@lib/constants/env";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale, t } from "@lib/i18n";
-import { docMarkdownPath, frontmatter } from "@lib/markdown";
+import { docMarkdownPath, frontmatter, WHEN_TO_USE } from "@lib/markdown";
 import { Tag } from "@lib/types";
 
 export const prerender = true;
@@ -31,16 +31,14 @@ ${t("page.home.website_description")}. An unofficial, community-maintained mirro
 Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by
 game version. Documentation is available for every release back to 1.2.
 
+${WHEN_TO_USE}
+
 ## URL scheme
 
 - \`/docs/stable/<file>\` - current stable release (${stable.minor})
 - \`/docs/beta/<file>\` - current preview release (${beta.minor})
 - \`/docs/<major>/<minor>/<file>\` - a specific version, e.g. \`/docs/${stable.major}/${stable.minor}/Entities\`
 - \`/r/<file>\` and \`/b/<file>\` - shortcuts for stable and beta
-
-Append \`.md\` to any \`/docs/stable/\` or \`/docs/beta/\` URL, or send
-\`Accept: text/markdown\`, to get the markdown representation. Versioned
-\`/docs/<major>/<minor>/\` pages are HTML only and have no \`.md\` twin.
 
 ## Stable (${stable.minor})
 
