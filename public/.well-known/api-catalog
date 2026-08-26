@@ -14,6 +14,11 @@
           "href": "https://bedrock.dev/static/docs.json",
           "type": "application/json",
           "title": "Every documented Minecraft: Bedrock Edition version and its files"
+        },
+        {
+          "href": "https://QLWYANMOJF.algolia.net/mcp/1/RZ-zM1VTRZWEmIO3cJUdmw/mcp",
+          "type": "application/json",
+          "title": "MCP server for searching the documentation index"
         }
       ],
       "describedby": [
