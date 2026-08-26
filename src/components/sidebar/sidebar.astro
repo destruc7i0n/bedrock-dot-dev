@@ -29,7 +29,7 @@ const compressedVersions = compressVersions(versions);
 const searchTitle = t("component.search.title");
 
 const sidebarScript = `try {
-  const isMobile = window.matchMedia("(max-width: ${MOBILE_BREAKPOINT}px)");
+  const isMobile = window.matchMedia("(width < ${MOBILE_BREAKPOINT}px)");
   const stored = localStorage.getItem("sidebar");
   const sidebarState = stored === null ? true : stored === "true";
   const open = isMobile.matches ? false : sidebarState;
@@ -38,6 +38,8 @@ const sidebarScript = `try {
 ---
 
 <style>
+  @reference "../../styles/tailwind.css";
+
   .sidebar {
     position: sticky;
     top: 3rem;
@@ -66,14 +68,14 @@ const sidebarScript = `try {
     }
 
     /* lg screen and below */
-    @screen lg-max {
+    @variant max-lg {
       position: fixed;
       transform: translateX(-100%);
       /* like silk */
       will-change: transform;
 
       width: 80%;
-      @screen md {
+      @variant md {
         width: auto;
         min-width: 50%;
       }
@@ -87,7 +89,7 @@ const sidebarScript = `try {
       }
     }
 
-    @screen lg {
+    @variant lg {
       /* hide if not open */
       &:not(.open) {
         display: none;
@@ -96,7 +98,7 @@ const sidebarScript = `try {
 
     /* when on mobile, wait for the component to be mounted
     so as to prevent a closing animation when loading the page */
-    @screen lg-max {
+    @variant max-lg {
       &:not(.mounted) {
         display: none;
       }
@@ -113,14 +115,16 @@ const sidebarScript = `try {
     display: none;
     pointer-events: none;
 
-    @screen lg-max {
+    @variant max-lg {
       background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
 
-      .sidebar.open ~ & {
-        display: block;
-        pointer-events: auto;
-        animation: fade-in 300ms;
-      }
+  @variant max-lg {
+    .sidebar.open ~ .sidebar-mask {
+      display: block;
+      pointer-events: auto;
+      animation: fade-in 300ms;
     }
   }
 
@@ -191,11 +195,32 @@ const sidebarScript = `try {
   document.addEventListener("astro:page-load", () => {
     const sidebar = document.querySelector(".sidebar");
     const mask = document.querySelector(".sidebar-mask");
-    const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const mobile = window.matchMedia(`(width < ${MOBILE_BREAKPOINT}px)`);
+
+    // the page scrolls on <html>, so overflow: hidden on <body> does nothing —
+    // and setting it on <html> breaks the sticky header on iOS Safari. Take the
+    // body out of flow instead, restoring scroll position on unlock.
+    let lockedScrollY = 0;
+    let isLocked = false;
 
     const updateBodyScroll = () => {
-      document.body.style.overflow =
-        mobile.matches && sidebarOpen.get() ? "hidden" : "";
+      const shouldLock = mobile.matches && sidebarOpen.get();
+      if (shouldLock === isLocked) return;
+      isLocked = shouldLock;
+
+      if (shouldLock) {
+        lockedScrollY = window.scrollY;
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${lockedScrollY}px`;
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+      } else {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        window.scrollTo(0, lockedScrollY);
+      }
     };
 
     const unsub = sidebarOpen.subscribe((open) => {
@@ -204,7 +229,19 @@ const sidebarScript = `try {
     });
 
     const handleMaskClick = () => sidebarOpen.set(false);
+
+    // close the drawer when a heading is picked, otherwise the scroll lock
+    // swallows the anchor jump. listens in the capture phase since the group
+    // titles stop propagation on link clicks, and react's island root sits
+    // inside the sidebar
+    const handleLinkClick = (event: MouseEvent) => {
+      const target = event.target as Element | null;
+      if (!target?.closest?.(".sidebar a[href^='#']")) return;
+      if (mobile.matches) sidebarOpen.set(false);
+    };
+
     mask?.addEventListener("click", handleMaskClick);
+    document.addEventListener("click", handleLinkClick, true);
     mobile.addEventListener("change", updateBodyScroll);
     requestAnimationFrame(() => sidebar?.classList.add("mounted"));
 
@@ -213,8 +250,12 @@ const sidebarScript = `try {
       () => {
         unsub();
         mask?.removeEventListener("click", handleMaskClick);
+        document.removeEventListener("click", handleLinkClick, true);
         mobile.removeEventListener("change", updateBodyScroll);
-        document.body.style.overflow = "";
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
       },
       { once: true },
     );

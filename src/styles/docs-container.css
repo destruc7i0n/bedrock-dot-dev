@@ -1,6 +1,8 @@
-@use "./code/light" as light-theme;
-@use "./code/dark" as dark-theme;
-@use "./code/monocraft" as monocraft-theme;
+@import "./code/light.css";
+@import "./code/dark.css";
+@import "./code/monocraft.css";
+
+@reference "./tailwind.css";
 
 .docs-content {
   overflow-x: auto;
@@ -33,7 +35,7 @@
 
       @apply text-blue-600;
       @apply no-underline;
-      @apply outline-none;
+      @apply outline-hidden;
     }
   }
 
@@ -48,7 +50,7 @@
       overflow-x: visible;
     }
 
-    @screen lg-max {
+    @variant max-lg {
       tbody {
         width: 100%;
         @apply border;
@@ -88,10 +90,10 @@
     }
 
     tr:nth-child(2n + 3) td {
-      @apply bg-dark-gray-850 #{!important};
+      @apply bg-dark-gray-850!;
 
       table td {
-        @apply bg-dark-gray-900 #{!important};
+        @apply bg-dark-gray-900!;
       }
     }
   }
@@ -102,20 +104,8 @@
 
   code[class*="language-"],
   pre[class*="language-"] {
-    @apply rounded;
+    @apply rounded-sm;
     @apply font-mono;
-  }
-
-  :not(.dark) & {
-    @include light-theme.theme;
-  }
-
-  .dark & {
-    @include dark-theme.theme;
-  }
-
-  .monocraft & {
-    @include monocraft-theme.theme;
   }
 
   /* headings */
@@ -125,7 +115,6 @@
   }
 
   h1 {
-    @apply leading-snug;
     @apply text-3xl;
     @apply font-bold;
     @apply mt-2;
@@ -134,7 +123,6 @@
   }
 
   h2 {
-    @apply leading-snug;
     @apply text-2xl;
     @apply font-bold;
     @apply mt-2;
@@ -142,7 +130,6 @@
   }
 
   h3 {
-    @apply leading-snug;
     @apply text-lg;
     @apply font-bold;
     @apply mt-2;
@@ -150,7 +137,6 @@
   }
 
   h4 {
-    @apply leading-none;
     @apply text-sm;
     @apply font-semibold;
     @apply mt-2;
@@ -159,13 +145,12 @@
 
   h5,
   h6 {
-    @apply leading-tight;
     @apply text-sm;
     @apply font-semibold;
     @apply mb-2;
   }
 
-  @screen md-max {
+  @variant max-md {
     h1 {
       @apply text-2xl;
     }

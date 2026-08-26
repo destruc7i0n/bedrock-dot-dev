@@ -33,7 +33,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   const currentTag = getVersionTag([major, minor], tags);
 
   const majorSelectClassName = cn(
-    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200/50",
     currentTag && TAG_STYLES[currentTag]
       ? [
           TAG_STYLES[currentTag].border,
@@ -45,7 +45,7 @@ const SpecificVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   );
 
   const minorSelectClassName = cn(
-    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200/50",
     currentTag && TAG_STYLES[currentTag]
       ? [
           TAG_STYLES[currentTag].border,

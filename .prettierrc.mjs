@@ -5,6 +5,8 @@ export default {
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
   ],
+  // point the class sorter at the css entry
+  tailwindStylesheet: "./src/styles/tailwind.css",
   importOrder: [
     "<BUILTIN_MODULES>",
     "",

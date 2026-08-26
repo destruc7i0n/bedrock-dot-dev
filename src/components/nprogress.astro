@@ -17,6 +17,8 @@ import "nprogress/nprogress.css";
 </style>
 
 <style is:global>
+  @reference "../styles/tailwind.css";
+
   #nprogress {
     .bar {
       @apply bg-blue-600;
@@ -32,13 +34,13 @@ import "nprogress/nprogress.css";
 
     .peg {
       box-shadow:
-        0 0 10px theme("colors.blue.600"),
-        0 0 5px theme("colors.blue.600");
+        0 0 10px var(--color-blue-600),
+        0 0 5px var(--color-blue-600);
 
       .dark & {
         box-shadow:
-          0 0 10px theme("colors.blue.500"),
-          0 0 5px theme("colors.blue.500");
+          0 0 10px var(--color-blue-500),
+          0 0 5px var(--color-blue-500);
       }
     }
   }

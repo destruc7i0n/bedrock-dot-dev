@@ -1,3 +1,4 @@
+// mirrors tailwind's breakpoints, kept in sync by hand
 export const BREAKPOINTS = {
   sm: 640,
   md: 768,

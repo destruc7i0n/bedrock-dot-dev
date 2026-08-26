@@ -1,11 +1,10 @@
-import { defineConfig } from "eslint/config";
-
-import globals from "globals";
 import js from "@eslint/js";
-import tseslint from "typescript-eslint";
 import astro from "eslint-plugin-astro";
 import prettier from "eslint-plugin-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
+import { defineConfig } from "eslint/config";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
@@ -45,6 +44,13 @@ export default defineConfig([
     },
   },
   {
-    ignores: ["node_modules/**", "dist/**", ".astro/**", "out/**", "build/**"],
+    ignores: [
+      "node_modules/**",
+      "dist/**",
+      ".astro/**",
+      ".vercel/**",
+      "out/**",
+      "build/**",
+    ],
   },
 ]);

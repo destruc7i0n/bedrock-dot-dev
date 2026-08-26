@@ -1,8 +1,8 @@
 import { defineConfig, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
+import tailwindcss from "@tailwindcss/vite";
 
 import vercelRedirects from "./src/integrations/vercel-redirects";
 
@@ -10,15 +10,20 @@ export default defineConfig({
   site: "https://bedrock.dev",
   output: "static",
   prefetch: true,
-  integrations: [tailwind(), react(), vercelRedirects()],
+  integrations: [react(), vercelRedirects()],
   adapter: vercel(),
   build: {
     redirects: false,
     concurrency: 10,
   },
   vite: {
+    plugins: [tailwindcss()],
     optimizeDeps: {
       include: ["nprogress"],
+    },
+    server: {
+      // vite rejects unknown Host headers
+      allowedHosts: true,
     },
   },
   fonts: [

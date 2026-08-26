@@ -25,7 +25,7 @@ const TagVersionChooser: FunctionComponent<VersionSelectorProps> = ({
   useEffect(updateVersion, [version, tags, setMajor, setMinor]);
 
   const selectClassName = cn(
-    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    "w-full rounded-md leading-5 text-black focus:border-blue-300 focus:ring focus:ring-blue-200/50",
     TAG_STYLES[version]
       ? [
           TAG_STYLES[version].border,
