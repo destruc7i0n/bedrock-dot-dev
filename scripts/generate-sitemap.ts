@@ -1,59 +1,54 @@
 import "isomorphic-unfetch";
 
+import { execFileSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
 import { LIVE_URL } from "@lib/constants/env";
-import { getLocale, Locale } from "@lib/i18n";
-import { getTags } from "@lib/tags";
-import { Tag } from "@lib/types";
+import { DOCS_SUBMODULE_PATH } from "@lib/docs/constants";
+import { getTaggedFiles } from "@lib/docs/tagged";
+import { Locale } from "@lib/i18n";
+import { docPath } from "@lib/markdown";
 
 if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
   console.log("sitemap.xml not generated");
   process.exit(0);
 }
 
+const submodule = path.resolve(process.cwd(), DOCS_SUBMODULE_PATH);
+
+// when the file changed, not when we deployed. no date is better than the same
+// date on everything, which is what a shallow checkout would give us
+const lastModified = (file: string): string | undefined => {
+  try {
+    const date = execFileSync(
+      "git",
+      ["log", "-1", "--format=%cI", "--", file],
+      { cwd: submodule, encoding: "utf-8" },
+    ).trim();
+    return date || undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 const main = async () => {
   const stream = new SitemapStream({ hostname: LIVE_URL });
 
-  stream.write({
-    url: "/",
-    changefreq: "weekly",
-    priority: 0.8,
-  });
+  stream.write({ url: "/", changefreq: "weekly", priority: 0.8 });
 
-  const staticFilePath = path.resolve("public/static/docs.json");
-  const staticFileContents = JSON.parse(
-    fs.readFileSync(staticFilePath).toString(),
-  );
-  const versions = staticFileContents["versions"];
+  const tagged = await getTaggedFiles(Locale.English);
 
-  const langs = Object.keys(staticFileContents["versions"]);
-
-  for (const lang of langs) {
-    const locale = getLocale(lang);
-    const tags = await getTags(locale);
-    const langVersions = versions[lang];
-
-    for (const tag of Object.keys(tags)) {
-      const [major, minor] = tags[tag as Tag];
-      if (!langVersions[major] || !langVersions[major][minor]) {
-        console.warn(
-          `Warning: Version ${major}.${minor} not found in docs.json for language ${lang}, skipping`,
-        );
-        continue;
-      }
-      const files = langVersions[major][minor];
-      for (const file of files) {
-        const prefix = locale === Locale.English ? "" : `/${locale}`;
-        stream.write({
-          url: `${prefix}/docs/${tag}/${file}`,
-          changefreq: "weekly",
-          priority: 0.8,
-        });
-      }
+  for (const [tag, { major, minor, files }] of Object.entries(tagged)) {
+    for (const file of files) {
+      stream.write({
+        url: docPath(tag, file),
+        changefreq: "weekly",
+        priority: 0.8,
+        lastmod: lastModified(`${major}/${minor}/${file}.html`),
+      });
     }
   }
 

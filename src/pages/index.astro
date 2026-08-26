@@ -7,6 +7,7 @@ import Layout from "@layouts/layout.astro";
 
 import { algolia } from "@lib/constants/algolia";
 import { Locale, t } from "@lib/i18n";
+import { websiteSchema } from "@lib/structured-data";
 import { getTags } from "@lib/tags";
 import { allFilesList } from "@lib/versions/list";
 import { compressVersions } from "@lib/versions/transform";
@@ -25,6 +26,14 @@ const tags = await getTags(Locale.English);
       rel="preconnect"
       href={`https://${algolia.appId}-dsn.algolia.net`}
       crossorigin
+    />
+    <link rel="alternate" type="text/markdown" href="/index.md" />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(
+        websiteSchema(t("page.home.website_description")),
+      )}
     />
   </Fragment>
 

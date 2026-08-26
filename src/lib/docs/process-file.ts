@@ -1,6 +1,8 @@
 import type { SidebarStructure } from "@components/sidebar";
 
 import { extractDataFromHtml, fetchHtml } from "../html";
+import type { DocTransform } from "../html/transforms";
+import { DISPLAY_TRANSFORMS } from "../html/transforms";
 import { Locale } from "../i18n";
 import Log from "../log";
 
@@ -8,7 +10,7 @@ export interface ProcessedDoc {
   major: string;
   minor: string;
   file: string;
-  html: string; // displayHtml - processed and ready to render
+  html: string; // the result of the transforms
   sidebar: SidebarStructure;
   title: {
     title?: string;
@@ -20,11 +22,13 @@ export interface ProcessedDoc {
  * Process a documentation file from GitHub
  * @param pathParts - Array of path parts: [major, minor, file] or [major, file] for old format
  * @param locale - Locale to fetch from
+ * @param transforms - Which html transforms to run, see @lib/html/transforms
  * @returns Processed document or null if processing fails
  */
 export async function processDocFile(
   pathParts: string[],
   locale: Locale,
+  transforms: DocTransform[] = DISPLAY_TRANSFORMS,
 ): Promise<ProcessedDoc | null> {
   // Ensure pathParts is an array
   if (!Array.isArray(pathParts)) {
@@ -49,7 +53,7 @@ export async function processDocFile(
   }
 
   try {
-    const htmlData = await fetchHtml([major, minor, file], locale);
+    const htmlData = await fetchHtml([major, minor, file], locale, transforms);
     if (!htmlData) {
       return null;
     }
@@ -63,7 +67,7 @@ export async function processDocFile(
       major,
       minor,
       file,
-      html: htmlData.displayHtml,
+      html: htmlData.output,
       sidebar,
       title,
     };

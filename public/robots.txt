@@ -1,0 +1,38 @@
+# bedrock.dev - unofficial Minecraft: Bedrock Edition documentation
+#
+# Machine-readable index: https://bedrock.dev/llms.txt
+# Discovery catalog:      https://bedrock.dev/.well-known/api-catalog
+#
+# Every /docs/stable/ and /docs/beta/ page is available as markdown by
+# appending `.md` to the URL, or by sending `Accept: text/markdown`.
+#
+# Content-Signal directives follow https://contentsignals.org
+# Crawl rules follow https://www.rfc-editor.org/rfc/rfc9309
+
+User-agent: *
+Disallow: /api/
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+# same policy as above, listed by name for tooling that looks for them
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: PerplexityBot
+User-agent: meta-externalagent
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: cohere-ai
+Disallow: /api/
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+Sitemap: https://bedrock.dev/sitemap.xml
