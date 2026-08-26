@@ -1,13 +1,12 @@
 import "isomorphic-unfetch";
 
-import { execFileSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
 import { SitemapStream, streamToPromise } from "sitemap";
 
 import { LIVE_URL } from "@lib/constants/env";
-import { DOCS_SUBMODULE_PATH } from "@lib/docs/constants";
+import { getLastModified, lastModifiedFor } from "@lib/docs/lastmod";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { Locale } from "@lib/i18n";
 import { docPath } from "@lib/markdown";
@@ -17,29 +16,14 @@ if (!process.env.VERCEL_GITHUB_DEPLOYMENT && process.platform !== "darwin") {
   process.exit(0);
 }
 
-const submodule = path.resolve(process.cwd(), DOCS_SUBMODULE_PATH);
-
-// when the file changed, not when we deployed. no date is better than the same
-// date on everything, which is what a shallow checkout would give us
-const lastModified = (file: string): string | undefined => {
-  try {
-    const date = execFileSync(
-      "git",
-      ["log", "-1", "--format=%cI", "--", file],
-      { cwd: submodule, encoding: "utf-8" },
-    ).trim();
-    return date || undefined;
-  } catch {
-    return undefined;
-  }
-};
-
 const main = async () => {
   const stream = new SitemapStream({ hostname: LIVE_URL });
 
   stream.write({ url: "/", changefreq: "weekly", priority: 0.8 });
+  stream.write({ url: "/packs", changefreq: "weekly", priority: 0.5 });
 
   const tagged = await getTaggedFiles(Locale.English);
+  const dates = getLastModified();
 
   for (const [tag, { major, minor, files }] of Object.entries(tagged)) {
     for (const file of files) {
@@ -47,7 +31,7 @@ const main = async () => {
         url: docPath(tag, file),
         changefreq: "weekly",
         priority: 0.8,
-        lastmod: lastModified(`${major}/${minor}/${file}.html`),
+        lastmod: lastModifiedFor(dates, major, minor, file),
       });
     }
   }

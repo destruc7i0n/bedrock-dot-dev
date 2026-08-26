@@ -20,7 +20,10 @@ const compressedVersions = compressVersions(versions);
 const tags = await getTags(Locale.English);
 ---
 
-<Layout title="bedrock.dev" description={t("page.home.website_description")}>
+<Layout
+  title={t("page.home.website_title")}
+  description={t("page.home.website_blurb")}
+>
   <Fragment slot="head">
     <link
       rel="preconnect"
@@ -31,9 +34,7 @@ const tags = await getTags(Locale.English);
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(
-        websiteSchema(t("page.home.website_description")),
-      )}
+      set:html={JSON.stringify(websiteSchema(t("page.home.website_blurb")))}
     />
   </Fragment>
 

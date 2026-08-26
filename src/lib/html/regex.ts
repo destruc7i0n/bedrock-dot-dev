@@ -8,6 +8,7 @@ const getTDMatch = (prefix: string) =>
   new RegExp(`<tr>[^<]*<td style=".*">(${prefix}.*)<\\/td>`, "g");
 
 export const H1_MATCH = /<h1>(.*)<\/h1>/;
+export const HEADING_MATCH = /<h([1-6])>(.*?)<\/h\1>/;
 export const TABLE_MATCH = /<table.*>([^]*?)<\/table>/;
 export const GREEDY_TABLE_MATCH = /<table.*>([^]*)<\/table>/;
 export const TH_MATCH = /<th>(.*)<\/th>/;

@@ -1,5 +1,6 @@
 import type { BedrockVersions } from "@lib/versions/types";
 
+import { docPath } from "./markdown";
 import { getVersionTag } from "./tags/util";
 import type { TagsResponse } from "./types";
 import { Tag } from "./types";
@@ -12,14 +13,14 @@ export const getLink = (
   tags: TagsResponse,
   replaceWithTagged: boolean = true,
 ) => {
-  file = encodeURI(file);
   if (replaceWithTagged) {
     const version = [major, minor];
     const tag = getVersionTag(version, tags);
-    if (tag === Tag.Stable) return `/docs/stable/${file}`;
-    if (tag === Tag.Beta) return `/docs/beta/${file}`;
+    if (tag === Tag.Stable) return docPath(Tag.Stable, file);
+    if (tag === Tag.Beta) return docPath(Tag.Beta, file);
   }
-  return `/docs/${major}/${minor}/${file}`;
+  // docPath encodes the file the same way, so both spellings match
+  return `/docs/${major}/${minor}/${encodeURIComponent(file)}`;
 };
 
 export const getMinorVersionTitle = (

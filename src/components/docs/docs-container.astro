@@ -1,6 +1,8 @@
 ---
 import { getDocAlerts } from "@lib/constants/docs-alerts";
+import type { DocChannel } from "@lib/seo";
 
+import DocMeta from "./doc-meta.astro";
 import DocsAlert from "./docs-alert.astro";
 
 import "@styles/docs-container.css";
@@ -9,13 +11,16 @@ interface Props {
   html: string;
   file: string;
   version: string;
+  name: string;
+  channel: DocChannel;
 }
 
-const { html, file, version } = Astro.props;
+const { html, file, version, name, channel } = Astro.props;
 const alerts = getDocAlerts(file, version);
 ---
 
 <div class="w-0 flex-1 bg-white dark:bg-dark-gray-900">
+  <DocMeta name={name} channel={channel} />
   <div class="mx-auto p-4 lg:max-w-[90%] lg:px-0">
     {alerts.map((alert) => <DocsAlert {...alert} />)}
     <div

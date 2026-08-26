@@ -4,8 +4,8 @@ import { ClientRouter } from "astro:transitions";
 import Head from "@components/head.astro";
 import NProgress from "@components/nprogress.astro";
 
-import { LIVE_URL } from "@lib/constants/env";
 import { getOgImageUrl } from "@lib/og-image";
+import { getCanonicalUrl } from "@lib/seo";
 
 import "@styles/tailwind.css";
 
@@ -23,7 +23,7 @@ const {
   ogType = "website",
 } = Astro.props;
 
-const canonical = `${LIVE_URL}${Astro.url.pathname}`;
+const canonical = getCanonicalUrl(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -36,6 +36,7 @@ const canonical = `${LIVE_URL}${Astro.url.pathname}`;
       ogType={ogType}
     />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={title} />
     <slot name="head" />
     <ClientRouter />
   </head>

@@ -52,7 +52,7 @@ const DocsCard = ({ file, taggedVersion, version, asset }: OgCardProps) => {
           {file}
         </h1>
         <h2 tw="flex mt-2 mb-0 text-5xl font-medium">
-          {trans.page.docs.website_title_tagged_stable.replace("{title} ", "")}
+          {trans.page.docs.og_subtitle}
         </h2>
 
         <div tw="flex flex-row mt-4">

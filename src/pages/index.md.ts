@@ -32,9 +32,7 @@ export const GET: APIRoute = async () => {
 
 # bedrock.dev
 
-${t("page.home.website_description")}. An unofficial, community-maintained mirror of
-Mojang's published Minecraft: Bedrock Edition add-on documentation, browsable by
-game version. Documentation is available for every release back to 1.2.
+${t("page.home.website_description")}. ${t("page.home.website_blurb")}
 
 ${WHEN_TO_USE}
 
