@@ -21,78 +21,76 @@ const {
 <style is:global>
   @reference "../../styles/tailwind.css";
 
-  .docsearch-wrapper {
-    &.full-width {
-      &,
-      .DocSearch.DocSearch-Button {
-        @apply w-full;
-      }
+  /* docsearch only resets the block-start padding @tailwindcss/forms adds */
+  .DocSearch-Input {
+    @apply py-0 ring-0 ring-transparent;
+  }
 
-      .DocSearch.DocSearch-Button {
-        @apply ml-0;
-      }
-
-      .DocSearch-Button-Placeholder {
-        display: inherit;
-      }
-    }
-
-    &.slim {
-      @variant md {
-        .DocSearch.DocSearch-Button {
-          height: 30px;
-        }
-      }
+  /* the modal goes full bleed here, but the bar and footer still round */
+  @media (max-width: 768px) {
+    .DocSearch-Container {
+      --docsearch-modal-radius: 0px;
     }
   }
 
-  .DocSearch-Title {
-    @apply text-black;
-  }
+  /* https://github.com/algolia/docsearch/blob/main/packages/docsearch-css/src/_variables.css */
 
-  html.dark {
-    .DocSearch-Title {
-      @apply text-white;
-    }
-  }
-
-  .DocSearch-Input:focus {
-    @apply ring-0 ring-transparent;
-  }
-
-  /* https://github.com/algolia/docsearch/blob/97b279a334e7debc06bfea3b283810b3685b683c/packages/docsearch-css/src/_variables.css */
-
-  :root {
+  /* on the modal, not :root, to beat docsearch's own [data-theme="dark"] */
+  .DocSearch-Container {
     --docsearch-primary-color: var(--color-blue-500);
+    --docsearch-primary-dark-color: var(--color-blue-600);
+    --docsearch-soft-primary-color: color-mix(
+      in srgb,
+      var(--docsearch-primary-color) 10%,
+      transparent
+    );
     --docsearch-highlight-color: var(--docsearch-primary-color);
-    --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
+    --docsearch-focus-color: var(--docsearch-primary-color);
+
+    /* docsearch tints its greys blue, ours are neutral */
+    --docsearch-text-color: var(--color-gray-900);
+    --docsearch-secondary-text-color: var(--color-gray-500);
+    --docsearch-icon-color: var(--color-gray-500);
+    --docsearch-muted-color: var(--color-gray-400);
+    --docsearch-subtle-color: var(--color-gray-200);
+    --docsearch-container-background: rgba(107, 114, 128, 0.8);
+    --docsearch-background-color: var(--color-gray-50);
+    --docsearch-hit-color: var(--color-gray-700);
+    --docsearch-hit-focus-background: var(--color-gray-50);
+    --docsearch-key-background: var(--color-gray-100);
+    --docsearch-key-color: var(--color-gray-500);
   }
 
-  html.dark {
+  html.dark .DocSearch-Container {
     --docsearch-primary-color: var(--color-blue-600);
+    --docsearch-primary-dark-color: var(--color-blue-300);
+
     --docsearch-text-color: var(--color-gray-200);
-    --docsearch-container-background: rgba(3, 3, 3, 0.8);
-    --docsearch-modal-background: var(--color-dark-gray-950);
-    --docsearch-modal-shadow:
-      inset 1px 1px 0 0 rgb(44, 46, 64), 0 3px 8px 0 rgb(0, 3, 9);
-    --docsearch-searchbox-background: var(--color-dark-gray-900);
-    --docsearch-searchbox-focus-background: #000;
-    --docsearch-hit-color: var(--color-gray-200);
-    --docsearch-hit-shadow: none;
-    --docsearch-hit-background: var(--color-dark-gray-975);
-    --docsearch-key-gradient: linear-gradient(
-      -26.5deg,
-      rgb(86, 88, 114) 0%,
-      rgb(49, 53, 91) 100%
-    );
-    --docsearch-key-shadow:
-      inset 0 -2px 0 0 rgb(40, 45, 85), inset 0 0 1px 1px rgb(81, 87, 125),
-      0 2px 2px 0 rgba(3, 4, 9, 0.3);
-    --docsearch-footer-background: var(--color-dark-gray-900);
-    --docsearch-footer-shadow:
-      inset 0 1px 0 0 rgba(73, 76, 106, 0.5), 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
-    --docsearch-logo-color: rgb(255, 255, 255);
+    --docsearch-secondary-text-color: var(--color-gray-400);
+    --docsearch-icon-color: var(--color-gray-400);
     --docsearch-muted-color: var(--color-gray-400);
+    --docsearch-subtle-color: var(--color-dark-gray-800);
+    --docsearch-container-background: rgba(3, 3, 3, 0.8);
+    --docsearch-background-color: var(--color-dark-gray-900);
+
+    /* the bar and footer are darker bands, the hits sit flat on the modal */
+    --docsearch-modal-background: var(--color-dark-gray-950);
+    --docsearch-searchbox-focus-background: var(--color-dark-gray-975);
+    --docsearch-footer-background: var(--color-dark-gray-975);
+    --docsearch-hit-background: var(--color-dark-gray-950);
+    --docsearch-hit-focus-background: var(--color-dark-gray-975);
+    --docsearch-hit-color: var(--color-gray-200);
+
+    --docsearch-key-background: var(--color-dark-gray-800);
+    --docsearch-key-color: var(--color-gray-300);
+    --docsearch-logo-color: rgb(255, 255, 255);
+
+    --docsearch-modal-shadow:
+      inset 1px 1px 0 0 var(--color-dark-gray-800),
+      0 3px 8px 0 rgba(0, 0, 0, 0.6);
+    --docsearch-footer-shadow:
+      inset 0 1px 0 0 var(--color-dark-gray-800),
+      0 -4px 8px 0 rgba(0, 0, 0, 0.2);
   }
 </style>
 
