@@ -66,7 +66,7 @@ const SidebarGroupTitle: React.FunctionComponent<Props> = ({
         {hasChildren && (
           <div
             className={cn(
-              "ml-auto flex transform cursor-pointer select-none items-center transition duration-150 ease-in-out",
+              "ml-auto flex transform cursor-pointer items-center transition duration-150 ease-in-out select-none",
               open ? "-rotate-90" : "",
             )}
           >
@@ -75,7 +75,7 @@ const SidebarGroupTitle: React.FunctionComponent<Props> = ({
         )}
       </summary>
       {hasChildren && (
-        <ul className="nav border-b border-gray-200 pl-4 pr-1 dark:border-dark-gray-800">
+        <ul className="nav border-b border-gray-200 pr-1 pl-4 dark:border-dark-gray-800">
           {children}
         </ul>
       )}

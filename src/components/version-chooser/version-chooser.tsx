@@ -121,11 +121,11 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
         <label className="flex items-center">
           <input
             type="checkbox"
-            className="rounded-md border-gray-300 text-blue-500 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            className="rounded-md border-gray-300 text-blue-500 focus:border-blue-300 focus:ring focus:ring-blue-200/50"
             checked={!quickSelect}
             onChange={({ target: { checked } }) => setQuickSelect(!checked)}
           />
-          <span className="ml-2 select-none text-sm">
+          <span className="ml-2 text-sm select-none">
             {t("component.version_chooser.view_all")}
           </span>
         </label>
@@ -135,7 +135,7 @@ const VersionChooser: FunctionComponent<VersionChooserProps> = ({
         <label className="mb-2 block text-sm font-bold">
           {t("component.version_chooser.file_selection")}
         </label>
-        <div className="grid w-full grid-cols-2 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-dark-gray-800 dark:bg-dark-gray-900 md:grid-cols-3">
+        <div className="grid w-full grid-cols-2 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2 md:grid-cols-3 dark:border-dark-gray-800 dark:bg-dark-gray-900">
           {files.map((file) => {
             const fileKey = file.toLowerCase().split(" ").join("_");
             const fileName = t(`files.${fileKey}`, { defaultValue: file });

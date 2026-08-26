@@ -1,97 +1,104 @@
-body {
-  -webkit-font-smoothing: antialiased;
+/* in base so utilities still win, unlayered rules outrank layers */
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
 
-  @apply bg-white;
-  .dark & {
-    @apply bg-dark-gray-900;
-  }
-}
-
-hr {
-  border-width: 1px;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  text-transform: none;
-  @apply font-bold;
-}
-
-.link {
-  @apply text-blue-600;
-  @apply transition;
-  @apply duration-75;
-  @apply ease-in-out;
-
-  .dark & {
-    @apply text-blue-500;
-  }
-
-  &:hover {
-    @apply text-blue-500;
-
+    @apply bg-white;
     .dark & {
-      @apply text-blue-400;
+      @apply bg-dark-gray-900;
     }
   }
-}
 
-/* docs */
-.docs-alert a {
-  @extend .link;
-  @apply underline;
-}
+  hr {
+    border-width: 1px;
+  }
 
-/* scrollbars */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-transform: none;
+    @apply font-bold;
+  }
 
-body {
-  ::-webkit-scrollbar,
-  &::-webkit-scrollbar {
+  /* scrollbars, flat because & cannot nest under a pseudo-element */
+
+  body ::-webkit-scrollbar,
+  body::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
     height: 10px;
   }
 
-  ::-webkit-scrollbar-track,
-  &::-webkit-scrollbar-track {
+  body ::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0;
-
-    .dark & {
-      background: rgba(255, 255, 255, 0.1);
-    }
   }
 
-  ::-webkit-scrollbar-thumb,
-  &::-webkit-scrollbar-thumb {
+  .dark body ::-webkit-scrollbar-track,
+  .dark body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  body ::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
     cursor: pointer;
     border-radius: 5px;
     background: rgba(0, 0, 0, 0.25);
     -webkit-transition: color 0.2s ease;
     transition: color 0.2s ease;
-
-    .dark & {
-      background: rgba(255, 255, 255, 0.25);
-    }
   }
 
-  ::-webkit-scrollbar-thumb:window-inactive,
-  &::-webkit-scrollbar-thumb:window-inactive {
+  .dark body ::-webkit-scrollbar-thumb,
+  .dark body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  body ::-webkit-scrollbar-thumb:window-inactive,
+  body::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.15);
+  }
+
+  .dark body ::-webkit-scrollbar-thumb:window-inactive,
+  .dark body::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  body ::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .dark body ::-webkit-scrollbar-thumb:hover,
+  .dark body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+@layer components {
+  .link,
+  .docs-alert a {
+    @apply text-blue-600;
+    @apply transition;
+    @apply duration-75;
+    @apply ease-in-out;
 
     .dark & {
-      background: rgba(255, 255, 255, 0.15);
+      @apply text-blue-500;
+    }
+
+    &:hover {
+      @apply text-blue-500;
+
+      .dark & {
+        @apply text-blue-400;
+      }
     }
   }
 
-  ::-webkit-scrollbar-thumb:hover,
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.4);
-
-    .dark & {
-      background: rgba(255, 255, 255, 0.35);
-    }
+  /* docs */
+  .docs-alert a {
+    @apply underline;
   }
 }

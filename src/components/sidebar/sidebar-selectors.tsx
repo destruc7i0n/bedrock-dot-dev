@@ -46,7 +46,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
   const currentTag = getVersionTag([major, minor], tags);
 
   const versionSelectClassName = cn(
-    "block w-full rounded-md leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50",
+    "block w-full rounded-md leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200/50",
     currentTag && TAG_STYLES[currentTag]
       ? [
           TAG_STYLES[currentTag].border,
@@ -158,7 +158,7 @@ const SidebarSelectors: FunctionComponent<Props> = ({
             value={file}
             id="file"
             onChange={onFileChange}
-            className="block w-full rounded-md border-gray-300 leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
+            className="block w-full rounded-md border-gray-300 leading-4 text-black focus:border-blue-300 focus:ring focus:ring-blue-200/50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-200"
           >
             {files.map((file) => (
               <option key={`file-${file}`} value={file}>

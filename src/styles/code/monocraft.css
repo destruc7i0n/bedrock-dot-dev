@@ -1,0 +1,6 @@
+.monocraft .docs-content {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    font-family: "Monocraft", serif !important;
+  }
+}

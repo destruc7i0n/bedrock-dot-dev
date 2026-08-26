@@ -4,7 +4,7 @@ import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
 
 const getDefaultValue = (): boolean => {
   if (typeof window === "undefined") return true;
-  const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+  const mobile = window.matchMedia(`(width < ${MOBILE_BREAKPOINT}px)`);
   return !mobile.matches;
 };
 

@@ -11,7 +11,7 @@ type Props = {
 };
 
 const baseButtonClasses =
-  "block cursor-pointer rounded-md border border-gray-300 bg-white text-left leading-4 text-gray-400 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-400 dark:hover:border-dark-gray-700 dark:hover:bg-dark-gray-800";
+  "block cursor-pointer rounded-md border border-gray-300 bg-white text-left leading-4 text-gray-400 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:border-blue-300 focus:outline-hidden focus:ring focus:ring-blue-200/50 dark:border-dark-gray-800 dark:bg-dark-gray-900 dark:text-gray-400 dark:hover:border-dark-gray-700 dark:hover:bg-dark-gray-800";
 
 const DocSearchButton = forwardRef<HTMLButtonElement, Props>(
   ({ placeHolder, size = "md", onClick }, ref) => {

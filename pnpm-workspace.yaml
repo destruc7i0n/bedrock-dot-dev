@@ -1,0 +1,9 @@
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true
+
+# both were published within the release-age window, drop these once they age out
+minimumReleaseAgeExclude:
+  - '@aws-sdk/client-s3@3.1118.0'
+  - astro@7.2.7
