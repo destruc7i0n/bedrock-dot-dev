@@ -11,6 +11,10 @@
       "title": "Template Packs Archive",
       "subtitle": "This is an archive of the default template packs provided by Mojang. The latest packs are available in Mojang's <bedrock-samples-repo>bedrock-samples</bedrock-samples-repo> GitHub repository. Older ones can be found in the <packs-repo>bedrock-dot-dev/packs</packs-repo> repository."
     },
+    "not_found": {
+      "message": "That page does not exist.",
+      "home_link": "Go to the homepage"
+    },
     "docs": {
       "website_title_loading": "Loading...",
       "website_title_untagged": "{title} Documentation | {version}",

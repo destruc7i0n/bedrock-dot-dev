@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import Head from "@components/head.astro";
 import NProgress from "@components/nprogress.astro";
 
+import { LIVE_URL } from "@lib/constants/env";
 import { getOgImageUrl } from "@lib/og-image";
 
 import "@styles/tailwind.css";
@@ -12,19 +13,28 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title = "bedrock.dev",
   description = "",
   ogImage = getOgImageUrl(),
+  ogType = "website",
 } = Astro.props;
+
+const canonical = `${LIVE_URL}${Astro.url.pathname}`;
 ---
 
 <!doctype html>
 <html lang="en" transition:animate="none">
   <head>
-    <Head title={title} description={description} />
+    <Head
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogType={ogType}
+    />
     <meta property="og:image" content={ogImage} />
     <slot name="head" />
     <ClientRouter />
