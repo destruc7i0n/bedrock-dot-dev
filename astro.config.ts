@@ -9,6 +9,7 @@ import vercelRedirects from "./src/integrations/vercel-redirects";
 export default defineConfig({
   site: "https://bedrock.dev",
   output: "static",
+  trailingSlash: "never",
   prefetch: true,
   integrations: [react(), vercelRedirects()],
   adapter: vercel(),
