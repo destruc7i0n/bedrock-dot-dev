@@ -118,7 +118,13 @@ const structuredData = [
     version: htmlVersion,
     dateModified: lastModifiedFor(getLastModified(), major, minor, file),
   }),
-  breadcrumbSchema(getBreadcrumbTrail({ name: documentTitle, channel })),
+  breadcrumbSchema(
+    getBreadcrumbTrail({
+      name: documentTitle,
+      channel,
+      path: Astro.url.pathname,
+    }),
+  ),
 ];
 
 // OG image URL
