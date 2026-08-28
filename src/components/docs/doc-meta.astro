@@ -13,7 +13,7 @@ interface Props {
 
 const { name, channel } = Astro.props;
 
-const trail = getBreadcrumbTrail({ name, channel });
+const trail = getBreadcrumbTrail({ name, channel, path: Astro.url.pathname });
 
 const tagLabel = (tag: Tag) =>
   t(`component.version_chooser.${tag}_string` as const);
@@ -40,17 +40,17 @@ const link = "transition-colors hover:text-gray-900 dark:hover:text-gray-100";
                   /
                 </span>
               )}
-              {crumb.path ? (
-                <a class={link} href={crumb.path}>
-                  {crumb.name}
-                </a>
-              ) : i === trail.length - 1 ? (
+              {i === trail.length - 1 ? (
                 <span
                   class="font-semibold text-gray-900 dark:text-white"
                   aria-current="page"
                 >
                   {crumb.name}
                 </span>
+              ) : crumb.path ? (
+                <a class={link} href={crumb.path}>
+                  {crumb.name}
+                </a>
               ) : (
                 <span>{crumb.name}</span>
               )}

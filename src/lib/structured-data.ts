@@ -62,10 +62,14 @@ export const docSchema = ({
 export const breadcrumbSchema = (trail: { name: string; path?: string }[]) => ({
   "@context": CONTEXT,
   "@type": "BreadcrumbList",
-  itemListElement: trail.map(({ name, path }, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name,
-    ...(path ? { item: `${LIVE_URL}${path}` } : {}),
-  })),
+  // a listitem without an item invalidates the whole list, so a step with no
+  // page of its own is left out rather than emitted bare
+  itemListElement: trail
+    .filter((crumb): crumb is { name: string; path: string } => !!crumb.path)
+    .map(({ name, path }, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item: `${LIVE_URL}${path}`,
+    })),
 });

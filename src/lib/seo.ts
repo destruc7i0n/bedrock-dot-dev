@@ -151,9 +151,11 @@ export type Crumb = { name: string; path?: string };
 export const getBreadcrumbTrail = ({
   name,
   channel,
+  path,
 }: {
   name: string;
   channel: DocChannel;
+  path: string;
 }): Crumb[] => {
   const { major, minor } = channel;
 
@@ -163,5 +165,5 @@ export const getBreadcrumbTrail = ({
       ? [{ name: major, path: versionPath(channel) }]
       : [{ name: major }, { name: minor, path: versionPath(channel) }];
 
-  return [{ name: "bedrock.dev", path: "/" }, ...version, { name }];
+  return [{ name: "bedrock.dev", path: "/" }, ...version, { name, path }];
 };
