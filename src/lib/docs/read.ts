@@ -56,7 +56,7 @@ export async function readProcessedDoc(
     return processed;
   } catch (error) {
     throw new Error(
-      `Could not read ${filePath}. Run pnpm build to generate docs.`,
+      `Could not read ${filePath}. Run bun run build to generate docs.`,
       {
         cause: error,
       },

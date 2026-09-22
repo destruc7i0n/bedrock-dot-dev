@@ -1,5 +1,5 @@
-import { glob } from "fs/promises";
-import { join, relative, sep } from "path";
+import { Glob } from "bun";
+import { sep } from "path";
 
 import { DOCS_SUBMODULE_PATH } from "@lib/docs/constants";
 import { groupVersionsByLocale, Locale } from "@lib/i18n";
@@ -10,15 +10,12 @@ export async function createDocsManifest(
 ): Promise<BedrockVersionsFile> {
   const versions: BedrockVersions = {};
 
-  const paths: string[] = [];
-  for await (const entry of glob("**/*.html", {
-    cwd: sourceDir,
-    withFileTypes: true,
-  })) {
-    if (entry.isFile()) {
-      paths.push(relative(sourceDir, join(entry.parentPath, entry.name)));
-    }
-  }
+  const paths = [
+    ...new Glob("**/*.html").scanSync({
+      cwd: sourceDir,
+      dot: true,
+    }),
+  ];
 
   for (const path of paths.sort()) {
     const parts = path.split(sep);

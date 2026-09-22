@@ -12,7 +12,7 @@ export function readDocsManifest(): Promise<BedrockVersionsFile> {
     .catch((error) => {
       manifest = undefined;
       throw new Error(
-        "Could not read docs manifest. Run pnpm dev or pnpm build.",
+        "Could not read docs manifest. Run bun run dev or bun run build.",
         {
           cause: error,
         },
