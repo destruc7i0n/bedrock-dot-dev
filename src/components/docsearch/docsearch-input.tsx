@@ -1,8 +1,9 @@
-import React, { lazy, Suspense, useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import type { DocSearchTheme } from "@docsearch/react";
 import type { DocSearchModalProps } from "@docsearch/react/modal";
+import { DocSearchModal } from "@docsearch/react/modal";
 import { useDocSearchKeyboardEvents } from "@docsearch/react/useDocSearchKeyboardEvents";
 
 import { algolia } from "@lib/constants/algolia";
@@ -18,12 +19,6 @@ type Props = {
 // the modal reads the theme off data-theme, the site off a class
 const currentTheme = (): DocSearchTheme =>
   document.documentElement.classList.contains("dark") ? "dark" : "light";
-
-const DocSearchModal = lazy(() =>
-  import("@docsearch/react/modal").then(({ DocSearchModal }) => ({
-    default: DocSearchModal,
-  })),
-);
 
 const noop = () => {};
 
@@ -90,33 +85,31 @@ const DocSearchInput: React.FC<Props> = ({
 
       {isOpen &&
         createPortal(
-          <Suspense fallback={null}>
-            <DocSearchModal
-              appId={algolia.appId}
-              apiKey={algolia.apiKey}
-              indices={indices}
-              theme={theme}
-              initialScrollY={window.scrollY}
-              initialQuery={initialQuery}
-              onClose={onClose}
-              transformItems={(items) => {
-                return items.map((item) => {
-                  // Transform absolute URL into relative URL
-                  const a = document.createElement("a");
-                  a.href = item.url;
-                  const hash = a.hash;
+          <DocSearchModal
+            appId={algolia.appId}
+            apiKey={algolia.apiKey}
+            indices={indices}
+            theme={theme}
+            initialScrollY={window.scrollY}
+            initialQuery={initialQuery}
+            onClose={onClose}
+            transformItems={(items) => {
+              return items.map((item) => {
+                // Transform absolute URL into relative URL
+                const a = document.createElement("a");
+                a.href = item.url;
+                const hash = a.hash;
 
-                  return {
-                    ...item,
-                    url: `${a.pathname}${hash}`,
-                  };
-                });
-              }}
-              hitComponent={({ hit, children }) => (
-                <a href={hit.url}>{children}</a>
-              )}
-            />
-          </Suspense>,
+                return {
+                  ...item,
+                  url: `${a.pathname}${hash}`,
+                };
+              });
+            }}
+            hitComponent={({ hit, children }) => (
+              <a href={hit.url}>{children}</a>
+            )}
+          />,
           document.body,
         )}
     </>
