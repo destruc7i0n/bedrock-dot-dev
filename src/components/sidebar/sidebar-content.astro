@@ -100,7 +100,7 @@ const { sidebar, file } = Astro.props;
           link.setAttribute("aria-current", "location");
           const group = link.closest("details");
           if (group) group.open = true;
-          // Keep the selected item below the selectors and search controls.
+          // keep the selected item below the selectors and search controls
           if (link.classList.contains("sidebar-id")) {
             this.scrollTop = link.offsetTop - 164;
           }

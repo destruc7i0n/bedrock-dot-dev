@@ -21,7 +21,7 @@ interface Props {
 
 const { sidebar, file, major, minor, tags } = Astro.props;
 
-// compress versions to reduce the size in the initial payload
+// use precompressed versions to reduce the initial payload
 const compressedVersions = await getCompressedVersions(Locale.English);
 
 const searchTitle = t("component.search.title");
@@ -228,10 +228,8 @@ const sidebarScript = `try {
 
     const handleMaskClick = () => sidebarOpen.set(false);
 
-    // close the drawer when a heading is picked, otherwise the scroll lock
-    // swallows the anchor jump. listens in the capture phase since the group
-    // titles stop propagation on link clicks, and react's island root sits
-    // inside the sidebar
+    // close the drawer before the anchor jump so the scroll lock does not
+    // prevent scrolling to the selected heading
     const handleLinkClick = (event: MouseEvent) => {
       const target = event.target as Element | null;
       if (!target?.closest?.(".sidebar a[href^='#']")) return;

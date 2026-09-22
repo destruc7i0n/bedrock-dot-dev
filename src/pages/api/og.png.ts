@@ -36,7 +36,7 @@ const OG_CACHE_CONTROL = "public, max-age=3600, stale-while-revalidate=86400";
 // the longest real title is 29 chars
 const TITLE_MAX_LENGTH = 48;
 
-// Cache only the small, fixed set of images used by this warm function.
+// cache only the small, fixed set of images used by this warm function
 const assetCache = new Map<string, Promise<string | null>>();
 
 const getAsset = (file: string): Promise<string | null> => {
