@@ -9,7 +9,8 @@ import Sidebar from "@components/sidebar/sidebar.astro";
 import Layout from "@layouts/layout.astro";
 
 import { getLastModified, lastModifiedFor } from "@lib/docs/lastmod";
-import { processDocFile } from "@lib/docs/process-file";
+import { processDoc } from "@lib/docs/process";
+import { readDocSource, readProcessedDoc } from "@lib/docs/read";
 import { Locale } from "@lib/i18n";
 import { docMarkdownPath } from "@lib/markdown";
 import { getOgImageUrl } from "@lib/og-image";
@@ -24,10 +25,10 @@ import { getTags } from "@lib/tags";
 import { getVersionTag } from "@lib/tags/util";
 import { Tag } from "@lib/types";
 import { bedrockVersionsInOrder } from "@lib/versions/helpers";
-import { allFilesList } from "@lib/versions/list";
+import { getVersions } from "@lib/versions/list";
 
 export async function getStaticPaths() {
-  const versions = await allFilesList(Locale.English);
+  const versions = await getVersions(Locale.English);
   const tags = await getTags(Locale.English);
   const paths = [];
 
@@ -73,14 +74,14 @@ export async function getStaticPaths() {
 const { tags, pathInfo } = Astro.props;
 const [major, minor, file] = pathInfo;
 
-const processedDoc = await processDocFile([major, minor, file], Locale.English);
-if (!processedDoc) {
-  return Astro.redirect("/404");
-}
+const doc = { major, minor, file };
+const processedDoc = import.meta.env.DEV
+  ? processDoc(await readDocSource(doc), doc)
+  : await readProcessedDoc(doc, Locale.English);
 
 const { html, sidebar, headings, title: docTitle } = processedDoc;
 
-const versions = await allFilesList(Locale.English);
+const versions = await getVersions(Locale.English);
 
 const slugRaw = Astro.params.slug;
 const slugParts = slugRaw.split("/").filter(Boolean);

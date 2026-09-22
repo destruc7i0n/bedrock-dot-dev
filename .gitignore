@@ -1,4 +1,6 @@
 .cache
+.turbo
+.generated
 .idea
 node_modules
 .astro

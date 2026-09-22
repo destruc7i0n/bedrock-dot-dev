@@ -1,7 +1,7 @@
 import type {
   SidebarStructure,
   SidebarStructureElement,
-} from "@components/sidebar";
+} from "@lib/docs/types";
 
 import Log from "../log";
 import { removeHashIfNeeded } from "../util";
@@ -11,8 +11,6 @@ import { getHeadings } from "./scrape/headings";
 import { getAIGoals, getComponentsList } from "./scrape/table";
 import type { TitleResponse } from "./scrape/title";
 import { getTitle } from "./scrape/title";
-
-export { default as fetchHtml } from "./fetch";
 
 const getSidebarContent = (html: string): SidebarStructure => {
   const format: SidebarStructure = {};

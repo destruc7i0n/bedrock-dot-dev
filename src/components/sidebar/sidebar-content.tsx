@@ -1,7 +1,8 @@
 import { memo, useEffect, useRef, useState } from "react";
 import type { FunctionComponent } from "react";
 
-import type { SidebarStructure } from "./index";
+import type { SidebarStructure } from "@lib/docs/types";
+
 import SidebarGroupItem from "./sidebar-group-item";
 import SidebarGroupTitle from "./sidebar-group-title";
 

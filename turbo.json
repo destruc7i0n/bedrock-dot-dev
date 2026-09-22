@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "cacheMaxSize": "10GB",
+  "tasks": {
+    "docs:manifest": {
+      "inputs": [
+        "data/docs/bedrock-dev-docs/**/*.html",
+        "scripts/generate-docs-manifest.ts",
+        "scripts/lib/docs.ts",
+        "src/lib/docs/constants.ts",
+        "src/lib/i18n.ts",
+        "src/locales/**",
+        "src/lib/versions/types.ts",
+        "tsconfig.json"
+      ],
+      "outputs": ["public/static/docs.json"],
+      "outputLogs": "new-only",
+      "env": ["!PUBLIC_*"]
+    },
+    "docs:process": {
+      "dependsOn": ["docs:manifest"],
+      "inputs": [
+        "data/docs/bedrock-dev-docs/**/*.html",
+        "scripts/process-docs.ts",
+        "src/lib/docs/**",
+        "src/lib/html/**",
+        "src/lib/versions/**",
+        "src/lib/i18n.ts",
+        "src/locales/**",
+        "src/lib/log.ts",
+        "src/lib/util.ts",
+        "src/lib/tags/util.ts",
+        "src/lib/types.ts",
+        "src/lib/markdown.ts",
+        "src/lib/constants/algolia.ts",
+        "src/lib/constants/env.ts",
+        "tsconfig.json"
+      ],
+      "outputs": [".generated/docs/**"],
+      "outputLogs": "new-only",
+      "env": ["!PUBLIC_*"]
+    },
+    "docs:lastmod": {
+      "cache": false
+    },
+    "sitemap": {
+      "dependsOn": ["docs:manifest", "docs:lastmod"],
+      "cache": false,
+      "passThroughEnv": ["VERCEL_*"]
+    },
+    "build:astro": {
+      "dependsOn": ["docs:process", "sitemap"],
+      "cache": false,
+      "passThroughEnv": ["VERCEL_*", "R2_*", "NODE_ENV"]
+    },
+    "dev:astro": {
+      "dependsOn": ["docs:manifest"],
+      "cache": false,
+      "persistent": true,
+      "passThroughEnv": ["VERCEL_*", "R2_*", "NODE_ENV"]
+    }
+  }
+}

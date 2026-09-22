@@ -1,6 +1,5 @@
 // get the regex for the title
-import type { SidebarStructure } from "@components/sidebar";
-
+import type { SidebarStructure } from "@lib/docs/types";
 import { oneLine } from "@lib/util";
 
 import { H_TITLE_MATCH, P_ID_MATCH } from "../regex";

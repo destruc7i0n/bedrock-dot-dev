@@ -14,23 +14,19 @@ jobs:
         with:
           submodules: "true"
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: "24"
-          cache: "pnpm"
+          bun-version: latest
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Run ESLint
-        run: pnpm exec eslint .
+        run: bunx --bun eslint .
 
       - name: Run Astro check
-        run: pnpm run check
+        run: bun run check
 
       - name: Run type check
-        run: pnpm run type-check
+        run: bun run type-check

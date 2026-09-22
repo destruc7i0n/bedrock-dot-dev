@@ -1,4 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro"
+  "framework": "astro",
+  "build": {
+    "env": {
+      "TURBO_PLATFORM_ENV_DISABLED": "true"
+    }
+  }
 }

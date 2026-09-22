@@ -1,13 +1,12 @@
-// fetch polyfill
-import "isomorphic-unfetch";
-
 import fs from "fs";
 import path from "path";
 
-import { getVersionsFile } from "@lib/versions/list";
+import { DOCS_MANIFEST_PATH } from "@lib/docs/constants";
 
-const main = async () => {
-  const file = await getVersionsFile();
+import { createDocsManifest } from "./lib/docs";
+
+const main = () => {
+  const file = createDocsManifest();
 
   // count the number of documentation files per locale
   for (const [locale, versions] of Object.entries(file["versions"])) {
@@ -22,12 +21,16 @@ const main = async () => {
     console.log(`found ${count} ${locale.toUpperCase()} documentation files`);
   }
 
-  if (!fs.existsSync("public/static")) fs.mkdirSync("public/static");
-
-  const docsFile = path.resolve("public/static/docs.json");
+  const docsFile = path.resolve(DOCS_MANIFEST_PATH);
+  fs.mkdirSync(path.dirname(docsFile), { recursive: true });
 
   fs.writeFileSync(docsFile, JSON.stringify(file));
   console.log("static docs file generated!");
 };
 
-main();
+try {
+  main();
+} catch (error) {
+  console.error(error);
+  process.exitCode = 1;
+}

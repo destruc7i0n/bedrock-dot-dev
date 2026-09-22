@@ -3,12 +3,12 @@ import DocSearch from "@components/docsearch/docsearch.astro";
 import ModeSelect from "@components/theme/mode-select.astro";
 
 import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
+import type { SidebarStructure } from "@lib/docs/types";
 import { Locale, t } from "@lib/i18n";
 import type { TagsResponse } from "@lib/types";
 import { compressVersions } from "@lib/versions/transform";
 import type { BedrockVersions } from "@lib/versions/types";
 
-import type { SidebarStructure } from "./index";
 import SidebarContent from "./sidebar-content";
 import Selectors from "./sidebar-selectors";
 
