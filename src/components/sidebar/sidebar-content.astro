@@ -1,0 +1,116 @@
+---
+import { ChevronLeftIcon } from "@heroicons/react/20/solid";
+
+import type { SidebarStructure } from "@lib/docs/types";
+
+interface Props {
+  sidebar: SidebarStructure;
+  file: string;
+}
+
+const { sidebar, file } = Astro.props;
+---
+
+<sidebar-content
+  class="content flex flex-1 flex-col overflow-y-auto overscroll-contain pb-48 md:pb-8"
+>
+  {
+    Object.values(sidebar).map(({ header, elements }) => (
+      <details class="sidebar-group group" open={file !== "Entities"}>
+        <summary
+          class:list={[
+            "flex cursor-pointer flex-row border-b border-gray-200 bg-white px-4 py-2 text-gray-800 dark:border-dark-gray-800 dark:bg-dark-gray-950 dark:text-gray-300",
+            {
+              "select-none group-open:sticky group-open:top-0":
+                elements.length > 0,
+            },
+          ]}
+        >
+          <a
+            class="sidebar-title font-bold transition-all duration-75 ease-in-out"
+            href={`#${encodeURIComponent(header.id)}`}
+            data-astro-reload
+          >
+            {header.title}
+          </a>
+          {elements.length > 0 && (
+            <div class="ml-auto flex transform cursor-pointer items-center transition duration-150 ease-in-out select-none group-open:-rotate-90">
+              <ChevronLeftIcon className="h-5 w-5" />
+            </div>
+          )}
+        </summary>
+        {elements.length > 0 && (
+          <ul class="nav border-b border-gray-200 pr-1 pl-4 dark:border-dark-gray-800">
+            {elements.map(({ id, title }) => (
+              <li class="my-1">
+                <a
+                  class="sidebar-id block w-full rounded-md px-2 py-1 text-sm transition-all duration-150 ease-in-out"
+                  href={`#${encodeURIComponent(id)}`}
+                  data-astro-reload
+                >
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </details>
+    ))
+  }
+</sidebar-content>
+
+<style>
+  @reference "../../styles/tailwind.css";
+
+  .sidebar-title {
+    @apply hover:text-gray-900 dark:hover:text-gray-200;
+  }
+  .sidebar-title[aria-current="location"] {
+    @apply text-blue-600 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400;
+  }
+  .sidebar-id {
+    @apply text-gray-800 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-dark-gray-900 dark:hover:text-gray-200;
+  }
+  .sidebar-id[aria-current="location"] {
+    @apply bg-gray-100 text-blue-600 dark:bg-dark-gray-900 dark:text-blue-500;
+  }
+</style>
+
+<script>
+  class SidebarContent extends HTMLElement {
+    connectedCallback() {
+      document.addEventListener("astro:page-load", this.updateHash);
+      window.addEventListener("hashchange", this.updateHash);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener("astro:page-load", this.updateHash);
+      window.removeEventListener("hashchange", this.updateHash);
+    }
+
+    private updateHash = () => {
+      let hash: string;
+      try {
+        hash = decodeURIComponent(location.hash.slice(1));
+      } catch {
+        return;
+      }
+      for (const link of this.querySelectorAll<HTMLAnchorElement>("a")) {
+        const active = decodeURIComponent(link.hash.slice(1)) === hash;
+        if (active && hash) {
+          link.setAttribute("aria-current", "location");
+          const group = link.closest("details");
+          if (group) group.open = true;
+          // keep the selected item below the selectors and search controls
+          if (link.classList.contains("sidebar-id")) {
+            this.scrollTop = link.offsetTop - 164;
+          }
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      }
+    };
+  }
+
+  customElements.define("sidebar-content", SidebarContent);
+</script>

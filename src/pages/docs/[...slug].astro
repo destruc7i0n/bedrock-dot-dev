@@ -81,8 +81,6 @@ const processedDoc = import.meta.env.DEV
 
 const { html, sidebar, headings, title: docTitle } = processedDoc;
 
-const versions = await getVersions(Locale.English);
-
 const slugRaw = Astro.params.slug;
 const slugParts = slugRaw.split("/").filter(Boolean);
 
@@ -168,7 +166,6 @@ const ogImageUrl = getOgImageUrl({ file, version: versionParam });
       file={file}
       major={major}
       minor={minor}
-      versions={versions}
       tags={tags}
     />
     <DocsContainer

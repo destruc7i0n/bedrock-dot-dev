@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { experimental_getFontFileURL, fontData } from "astro:assets";
 
 import { Renderer } from "takumi-js/node";
 import { ImageResponse } from "takumi-js/response";
@@ -35,43 +36,60 @@ const OG_CACHE_CONTROL = "public, max-age=3600, stale-while-revalidate=86400";
 // the longest real title is 29 chars
 const TITLE_MAX_LENGTH = 48;
 
-const FONT_URL_PREFIX =
-  "https://unpkg.com/@fontsource/inter@4.5.15/files/inter-latin-ext";
+// cache only the small, fixed set of images used by this warm function
+const assetCache = new Map<string, Promise<string | null>>();
 
-const FONT_WEIGHTS = [400, 500, 700];
-
-const getAsset = async (file: string): Promise<string | null> => {
+const getAsset = (file: string): Promise<string | null> => {
   const name = file.toLowerCase().replace(/ /g, "_");
-  if (!ASSET_NAMES.includes(name as (typeof ASSET_NAMES)[number])) return null;
+  if (!ASSET_NAMES.includes(name as (typeof ASSET_NAMES)[number]))
+    return Promise.resolve(null);
 
-  // a 404 body would still decode to base64 and only blow up during render
-  const arrayBuffer = await fetch(`${GITHUB_URL_PREFIX_ASSETS}/${name}.png`)
-    .then((res) => (res.ok ? res.arrayBuffer() : null))
-    .catch(() => null);
-  if (!arrayBuffer) return null;
-
-  return `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+  let asset = assetCache.get(name);
+  if (!asset) {
+    asset = fetch(`${GITHUB_URL_PREFIX_ASSETS}/${name}.png`)
+      .then(async (response) => {
+        if (!response.ok)
+          throw new Error(`Could not load OG image: ${response.status}`);
+        return `data:image/png;base64,${Buffer.from(await response.arrayBuffer()).toString("base64")}`;
+      })
+      .catch(() => {
+        assetCache.delete(name);
+        return null;
+      });
+    assetCache.set(name, asset);
+  }
+  return asset;
 };
 
 // built once so warm invocations reuse the parsed fonts
 let rendererPromise: Promise<Renderer> | null = null;
 
-const getRenderer = () => {
+const getRenderer = (requestUrl: URL) => {
   rendererPromise ??= (async () => {
     const renderer = new Renderer();
 
-    const fonts = await Promise.all(
-      FONT_WEIGHTS.map(async (weight) => ({
-        name: "Inter",
-        data: await fetch(`${FONT_URL_PREFIX}-${weight}-normal.woff`).then(
-          (res) => res.arrayBuffer(),
-        ),
-        weight,
-        style: "normal" as const,
-      })),
-    );
+    const fonts = fontData["--font-inter"];
+    if (!fonts?.length)
+      throw new Error("Inter is not configured in Astro fonts");
 
-    for (const font of fonts) await renderer.registerFont(font);
+    await Promise.all(
+      fonts.map(async (font) => {
+        const source = font.src.find((source) => "url" in source);
+        if (!source || !("url" in source))
+          throw new Error("Inter font file is missing");
+        const response = await fetch(
+          experimental_getFontFileURL(source.url, requestUrl),
+        );
+        if (!response.ok)
+          throw new Error(`Could not load Inter font: ${response.status}`);
+        await renderer.registerFont({
+          name: "Inter",
+          data: await response.arrayBuffer(),
+          weight: font.weight ? Number.parseInt(font.weight, 10) : undefined,
+          style: font.style ?? "normal",
+        });
+      }),
+    );
 
     return renderer;
   })().catch((e) => {
@@ -101,7 +119,7 @@ const resolveVersion = (
   }
 };
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ request, url }) => {
   try {
     const tags = await getTags(Locale.English);
 
@@ -111,11 +129,14 @@ export const GET: APIRoute = async ({ request }) => {
     const resolved = resolveVersion(searchParams.get("version"), tags);
     if (!resolved) return new Response("Invalid version", { status: 400 });
 
-    const asset = await getAsset(file);
+    const [asset, renderer] = await Promise.all([
+      getAsset(file),
+      getRenderer(url),
+    ]);
 
     const image = new ImageResponse(OgCard({ file, asset, ...resolved }), {
       ...SIZE,
-      renderer: await getRenderer(),
+      renderer,
       headers: { "cache-control": OG_CACHE_CONTROL },
     });
 

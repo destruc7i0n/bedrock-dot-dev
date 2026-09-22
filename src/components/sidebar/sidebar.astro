@@ -6,10 +6,9 @@ import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
 import type { SidebarStructure } from "@lib/docs/types";
 import { Locale, t } from "@lib/i18n";
 import type { TagsResponse } from "@lib/types";
-import { compressVersions } from "@lib/versions/transform";
-import type { BedrockVersions } from "@lib/versions/types";
+import { getCompressedVersions } from "@lib/versions/list";
 
-import SidebarContent from "./sidebar-content";
+import SidebarContent from "./sidebar-content.astro";
 import Selectors from "./sidebar-selectors";
 
 interface Props {
@@ -17,14 +16,13 @@ interface Props {
   file: string;
   major: string;
   minor: string;
-  versions: BedrockVersions;
   tags: TagsResponse;
 }
 
-const { sidebar, file, major, minor, versions, tags } = Astro.props;
+const { sidebar, file, major, minor, tags } = Astro.props;
 
-// compress versions to reduce the size in the initial payload
-const compressedVersions = compressVersions(versions);
+// use precompressed versions to reduce the initial payload
+const compressedVersions = await getCompressedVersions(Locale.English);
 
 const searchTitle = t("component.search.title");
 
@@ -176,7 +174,7 @@ const sidebarScript = `try {
         <DocSearch locale={Locale.English} />
       </div>
     </div>
-    <SidebarContent client:load sidebar={sidebar} file={file} />
+    <SidebarContent sidebar={sidebar} file={file} />
     <div
       class="bottom-safe-area-inset inset-2 flex w-full flex-row items-center justify-end border-t border-gray-200 bg-white px-4 py-2 dark:border-dark-gray-800 dark:bg-dark-gray-950"
     >
@@ -230,10 +228,8 @@ const sidebarScript = `try {
 
     const handleMaskClick = () => sidebarOpen.set(false);
 
-    // close the drawer when a heading is picked, otherwise the scroll lock
-    // swallows the anchor jump. listens in the capture phase since the group
-    // titles stop propagation on link clicks, and react's island root sits
-    // inside the sidebar
+    // close the drawer before the anchor jump so the scroll lock does not
+    // prevent scrolling to the selected heading
     const handleLinkClick = (event: MouseEvent) => {
       const target = event.target as Element | null;
       if (!target?.closest?.(".sidebar a[href^='#']")) return;
