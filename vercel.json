@@ -4,7 +4,8 @@
   "bunVersion": "1.4.x",
   "build": {
     "env": {
-      "ENABLE_EXPERIMENTAL_COREPACK": "0"
+      "ENABLE_EXPERIMENTAL_COREPACK": "0",
+      "TURBO_PLATFORM_ENV_DISABLED": "true"
     }
   }
 }
