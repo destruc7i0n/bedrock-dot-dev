@@ -11,6 +11,7 @@ import { readDocsManifest } from "@lib/versions/list";
 
 const main = async () => {
   const manifest = await readDocsManifest();
+  // Remove obsolete artifacts when Turbo reruns preprocessing on a cache miss.
   await rm(PROCESSED_DOCS_PATH, { recursive: true, force: true });
 
   const docs = Object.values(Locale).flatMap((locale) =>

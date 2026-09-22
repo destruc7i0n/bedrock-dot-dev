@@ -1,3 +1,4 @@
+// Used only by prerendered pages: builds run on Bun, deployed functions on Node.
 import { S3Client } from "bun";
 
 import { PACKS_REPO } from "./constants/packs";
@@ -32,10 +33,18 @@ const listArchivedPaths = async (): Promise<string[]> => {
   });
 
   try {
-    const objects = await r2.list();
-    return (objects.contents ?? [])
-      .filter((c) => c.key.endsWith(".zip"))
-      .map((c) => c.key);
+    const paths: string[] = [];
+    let continuationToken: string | undefined;
+    do {
+      const objects = await r2.list({ continuationToken });
+      for (const object of objects.contents ?? []) {
+        if (object.key.endsWith(".zip")) paths.push(object.key);
+      }
+      continuationToken = objects.isTruncated
+        ? objects.nextContinuationToken
+        : undefined;
+    } while (continuationToken);
+    return paths;
   } catch (error) {
     console.error("Could not list items from bucket!", error);
     return [];
@@ -44,13 +53,17 @@ const listArchivedPaths = async (): Promise<string[]> => {
 
 // used by the packs page and its markdown twin
 export const getPackVersions = async () => {
-  const tags = await getTags(Locale.English);
+  const [tags, archivedPaths, releases] = await Promise.all([
+    getTags(Locale.English),
+    listArchivedPaths(),
+    listReleases(PACKS_REPO),
+  ]);
   const stableTag = tags[Tag.Stable]?.at(-1) ?? "";
   const betaTag = tags[Tag.Beta]?.at(-1) ?? "";
 
   const versions: PackVersions = {};
 
-  for (const path of await listArchivedPaths()) {
+  for (const path of archivedPaths) {
     const [folder, name] = path.split("/");
     if (folder && name) {
       const version = name.replace(".zip", "");
@@ -61,7 +74,7 @@ export const getPackVersions = async () => {
   }
 
   // anything not archived comes from Mojang's releases
-  for (const release of await listReleases(PACKS_REPO)) {
+  for (const release of releases) {
     const version = release.tag_name.match(VERSION)?.[0];
     if (version && !versions[version])
       versions[version] = { git: release.html_url };

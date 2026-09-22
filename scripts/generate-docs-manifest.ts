@@ -5,8 +5,8 @@ import { DOCS_MANIFEST_PATH } from "@lib/docs/constants";
 
 import { createDocsManifest } from "./lib/docs";
 
-const main = async () => {
-  const file = await createDocsManifest();
+const main = () => {
+  const file = createDocsManifest();
 
   // count the number of documentation files per locale
   for (const [locale, versions] of Object.entries(file["versions"])) {
@@ -28,7 +28,9 @@ const main = async () => {
   console.log("static docs file generated!");
 };
 
-main().catch((error) => {
+try {
+  main();
+} catch (error) {
   console.error(error);
   process.exitCode = 1;
-});
+}

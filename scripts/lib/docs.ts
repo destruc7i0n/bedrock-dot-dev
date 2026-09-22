@@ -5,9 +5,9 @@ import { DOCS_SUBMODULE_PATH } from "@lib/docs/constants";
 import { groupVersionsByLocale, Locale } from "@lib/i18n";
 import type { BedrockVersions, BedrockVersionsFile } from "@lib/versions/types";
 
-export async function createDocsManifest(
+export function createDocsManifest(
   sourceDir = DOCS_SUBMODULE_PATH,
-): Promise<BedrockVersionsFile> {
+): BedrockVersionsFile {
   const versions: BedrockVersions = {};
 
   const paths = [

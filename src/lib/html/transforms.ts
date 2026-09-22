@@ -1,10 +1,9 @@
+import type { DocIdentity } from "../docs/types";
 import { cleanHtmlForDisplay } from "./clean";
 import { highlightHtml } from "./highlight";
 import { TEXTAREA_MATCH } from "./regex";
 
-export type DocMeta = { major: string; minor: string; file: string };
-
-export type DocTransform = (html: string, doc: DocMeta) => string;
+export type DocTransform = (html: string, doc: DocIdentity) => string;
 
 const clean =
   (anchors: boolean): DocTransform =>
@@ -33,6 +32,6 @@ export const MARKDOWN_TRANSFORMS: DocTransform[] = [clean(false), slim];
 
 export const applyTransforms = (
   html: string,
-  doc: DocMeta,
+  doc: DocIdentity,
   transforms: DocTransform[],
 ) => transforms.reduce((acc, transform) => transform(acc, doc), html);
