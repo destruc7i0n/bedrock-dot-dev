@@ -11,9 +11,11 @@
         "src/lib/i18n.ts",
         "src/locales/**",
         "src/lib/versions/types.ts",
+        "src/lib/versions/transform.ts",
+        "src/lib/versions/helpers.ts",
         "tsconfig.json"
       ],
-      "outputs": ["public/static/docs.json"],
+      "outputs": ["public/static/docs.json", ".generated/versions.json"],
       "outputLogs": "new-only",
       "env": ["!PUBLIC_*"]
     },

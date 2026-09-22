@@ -9,13 +9,9 @@ import { algolia } from "@lib/constants/algolia";
 import { Locale, t } from "@lib/i18n";
 import { websiteSchema } from "@lib/structured-data";
 import { getTags } from "@lib/tags";
-import { getVersions } from "@lib/versions/list";
-import { compressVersions } from "@lib/versions/transform";
+import { getCompressedVersions } from "@lib/versions/list";
 
-const versions = await getVersions(Locale.English);
-
-// compress versions to reduce the size in the initial payload
-const compressedVersions = compressVersions(versions);
+const compressedVersions = await getCompressedVersions(Locale.English);
 
 const tags = await getTags(Locale.English);
 ---
