@@ -1,8 +1,7 @@
 import type {
   SidebarStructureElement,
   SidebarStructureGroup,
-} from "@components/sidebar";
-
+} from "@lib/docs/types";
 import Log from "@lib/log";
 
 import { TABLE_MATCH, TD_COMPONENT_ID_MATCH } from "../regex";

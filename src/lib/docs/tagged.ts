@@ -1,7 +1,7 @@
 import { Locale } from "../i18n";
 import { getTags } from "../tags";
 import { Tag, TagValues } from "../types";
-import { allFilesList } from "../versions/list";
+import { getVersions } from "../versions/list";
 
 export type TaggedFiles = Record<
   Tag,
@@ -11,7 +11,7 @@ export type TaggedFiles = Record<
 // the stable and beta sets, which are what the sitemap and the markdown twins
 // both cover
 export const getTaggedFiles = async (locale: Locale): Promise<TaggedFiles> => {
-  const versions = await allFilesList(locale);
+  const versions = await getVersions(locale);
   const tags = await getTags(locale);
 
   return Object.fromEntries(

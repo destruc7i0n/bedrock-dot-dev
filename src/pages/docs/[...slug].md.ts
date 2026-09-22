@@ -1,7 +1,8 @@
 import type { APIRoute } from "astro";
 
 import { LIVE_URL } from "@lib/constants/env";
-import { processDocFile } from "@lib/docs/process-file";
+import { processDoc } from "@lib/docs/process";
+import { readDocSource } from "@lib/docs/read";
 import { getTaggedFiles } from "@lib/docs/tagged";
 import { MARKDOWN_TRANSFORMS } from "@lib/html/transforms";
 import { Locale } from "@lib/i18n";
@@ -29,18 +30,12 @@ export const GET: APIRoute = async ({ props }) => {
     tag: string;
   };
 
-  const doc = await processDocFile(
-    [major, minor, file],
-    Locale.English,
+  const identity = { major, minor, file };
+  const doc = processDoc(
+    await readDocSource(identity),
+    identity,
     MARKDOWN_TRANSFORMS,
   );
-
-  if (!doc) {
-    return new Response(`Documentation not found: ${tag}/${file}`, {
-      status: 404,
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
-    });
-  }
 
   const meta = frontmatter({
     title: JSON.stringify(doc.title.title || file),
