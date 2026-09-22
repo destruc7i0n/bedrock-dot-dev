@@ -1,4 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro"
+  "framework": "astro",
+  "bunVersion": "1.4.x"
 }
