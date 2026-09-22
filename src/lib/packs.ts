@@ -1,4 +1,4 @@
-import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import { S3Client } from "bun";
 
 import { PACKS_REPO } from "./constants/packs";
 import { listReleases } from "./github/api";
@@ -26,20 +26,16 @@ const listArchivedPaths = async (): Promise<string[]> => {
   const r2 = new S3Client({
     region: "auto",
     endpoint: import.meta.env.R2_ENDPOINT_BEDROCK,
-    credentials: {
-      accessKeyId: import.meta.env.R2_ACCESS_KEY_ID_BEDROCK,
-      secretAccessKey: import.meta.env.R2_SECRET_ACCESS_KEY_BEDROCK,
-    },
+    bucket: import.meta.env.R2_BUCKET_NAME_BEDROCK,
+    accessKeyId: import.meta.env.R2_ACCESS_KEY_ID_BEDROCK,
+    secretAccessKey: import.meta.env.R2_SECRET_ACCESS_KEY_BEDROCK,
   });
 
   try {
-    const command = new ListObjectsV2Command({
-      Bucket: import.meta.env.R2_BUCKET_NAME_BEDROCK,
-    });
-    const objects = await r2.send(command);
-    return (objects.Contents ?? [])
-      .filter((c) => c.Key?.endsWith(".zip"))
-      .map((c) => c.Key!);
+    const objects = await r2.list();
+    return (objects.contents ?? [])
+      .filter((c) => c.key.endsWith(".zip"))
+      .map((c) => c.key);
   } catch (error) {
     console.error("Could not list items from bucket!", error);
     return [];
