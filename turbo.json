@@ -14,7 +14,8 @@
         "tsconfig.json"
       ],
       "outputs": ["public/static/docs.json"],
-      "outputLogs": "new-only"
+      "outputLogs": "new-only",
+      "env": ["!PUBLIC_*"]
     },
     "docs:process": {
       "dependsOn": ["docs:manifest"],
@@ -30,32 +31,33 @@
         "src/lib/util.ts",
         "src/lib/tags/util.ts",
         "src/lib/types.ts",
-        "tsconfig.json",
         "src/lib/markdown.ts",
         "src/lib/constants/algolia.ts",
-        "src/lib/constants/env.ts"
+        "src/lib/constants/env.ts",
+        "tsconfig.json"
       ],
       "outputs": [".generated/docs/**"],
-      "outputLogs": "new-only"
+      "outputLogs": "new-only",
+      "env": ["!PUBLIC_*"]
+    },
+    "docs:lastmod": {
+      "cache": false
     },
     "sitemap": {
       "dependsOn": ["docs:manifest", "docs:lastmod"],
       "cache": false,
-      "passThroughEnv": ["VERCEL_*", "PUBLIC_VERCEL_*"]
+      "passThroughEnv": ["VERCEL_*"]
     },
     "build:astro": {
       "dependsOn": ["docs:process", "sitemap"],
       "cache": false,
-      "passThroughEnv": ["VERCEL_*", "PUBLIC_*", "R2_*", "NODE_ENV"]
+      "passThroughEnv": ["VERCEL_*", "R2_*", "NODE_ENV"]
     },
     "dev:astro": {
       "dependsOn": ["docs:manifest"],
       "cache": false,
       "persistent": true,
-      "passThroughEnv": ["VERCEL_*", "PUBLIC_*", "R2_*", "NODE_ENV"]
-    },
-    "docs:lastmod": {
-      "cache": false
+      "passThroughEnv": ["VERCEL_*", "R2_*", "NODE_ENV"]
     }
   }
 }
