@@ -3,6 +3,7 @@ import { join } from "path";
 
 import type { Locale } from "../i18n";
 import { DOCS_SUBMODULE_PATH, PROCESSED_DOCS_PATH } from "./constants";
+import { getProcessedDocPath } from "./paths";
 import type { DocIdentity, ProcessedDoc } from "./types";
 
 export async function readDocSource(
@@ -33,13 +34,7 @@ export async function readProcessedDoc(
   locale: Locale,
   outputDir = PROCESSED_DOCS_PATH,
 ): Promise<ProcessedDoc> {
-  const filePath = join(
-    outputDir,
-    locale,
-    doc.major,
-    doc.minor,
-    `${doc.file}.json`,
-  );
+  const filePath = getProcessedDocPath(doc, locale, outputDir);
 
   try {
     const processed: ProcessedDoc = JSON.parse(

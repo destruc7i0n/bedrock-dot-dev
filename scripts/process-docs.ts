@@ -1,7 +1,8 @@
 import { mkdir, rm, writeFile } from "fs/promises";
-import { join } from "path";
+import { dirname } from "path";
 
 import { PROCESSED_DOCS_PATH } from "@lib/docs/constants";
+import { getProcessedDocPath } from "@lib/docs/paths";
 import { processDoc } from "@lib/docs/process";
 import { readDocSource } from "@lib/docs/read";
 import { Locale } from "@lib/i18n";
@@ -23,12 +24,9 @@ const main = async () => {
     await Promise.all(
       docs.slice(i, i + 4).map(async ({ locale, ...doc }) => {
         const processed = processDoc(await readDocSource(doc), doc);
-        const dir = join(PROCESSED_DOCS_PATH, locale, doc.major, doc.minor);
-        await mkdir(dir, { recursive: true });
-        await writeFile(
-          join(dir, `${doc.file}.json`),
-          JSON.stringify(processed),
-        );
+        const filePath = getProcessedDocPath(doc, locale);
+        await mkdir(dirname(filePath), { recursive: true });
+        await writeFile(filePath, JSON.stringify(processed));
       }),
     );
   }
