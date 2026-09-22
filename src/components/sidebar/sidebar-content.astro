@@ -79,11 +79,12 @@ const { sidebar, file } = Astro.props;
 <script>
   class SidebarContent extends HTMLElement {
     connectedCallback() {
-      this.updateHash();
+      document.addEventListener("astro:page-load", this.updateHash);
       window.addEventListener("hashchange", this.updateHash);
     }
 
     disconnectedCallback() {
+      document.removeEventListener("astro:page-load", this.updateHash);
       window.removeEventListener("hashchange", this.updateHash);
     }
 
