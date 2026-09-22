@@ -2,14 +2,18 @@
 const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const isProd = import.meta.env.PROD;
 
-const gtagScript = `document.addEventListener('astro:page-load', () => {
+const gtagScript = new Bun.Transpiler({
+  loader: "js",
+  target: "browser",
+  minifyWhitespace: true,
+}).transformSync(`document.addEventListener('astro:page-load', () => {
   window.dataLayer = window.dataLayer || [];
   window.gtag = function gtag() {
     window.dataLayer.push(arguments);
   };
   window.gtag('js', new Date());
   window.gtag('config', '${measurementId}');
-});`;
+});`);
 ---
 
 {
