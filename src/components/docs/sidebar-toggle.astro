@@ -42,13 +42,18 @@ const { class: className } = Astro.props;
       iconOpen.classList.toggle("hidden", !isOpen);
     };
 
-    updateIcons(sidebarOpen.get());
     const unsub = sidebarOpen.subscribe(updateIcons);
 
-    button.addEventListener("click", () => sidebarOpen.set(!sidebarOpen.get()));
+    const handleClick = () => sidebarOpen.set(!sidebarOpen.get());
+    button.addEventListener("click", handleClick);
 
-    document.addEventListener("astro:before-preparation", unsub, {
-      once: true,
-    });
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        unsub();
+        button.removeEventListener("click", handleClick);
+      },
+      { once: true },
+    );
   });
 </script>

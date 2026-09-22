@@ -145,14 +145,6 @@ const sidebarScript = `try {
       }
     }
   }
-
-  .sidebar-group summary {
-    list-style: none;
-  }
-
-  .sidebar-group summary::-webkit-details-marker {
-    display: none;
-  }
 </style>
 
 <div>
@@ -187,73 +179,101 @@ const sidebarScript = `try {
 <script is:inline set:html={sidebarScript} />
 
 <script>
+  import type { TransitionBeforePreparationEvent } from "astro:transitions/client";
+
   import { MOBILE_BREAKPOINT } from "@lib/constants/breakpoints";
   import { sidebarOpen } from "@stores/sidebar-open";
 
+  document.addEventListener("astro:before-swap", (event) => {
+    const sidebar = event.newDocument.querySelector(".sidebar");
+    // apply state before the replacement is painted, including on mobile
+    sidebar?.classList.toggle("open", sidebarOpen.get());
+    sidebar?.classList.add("mounted");
+  });
+
   document.addEventListener("astro:page-load", () => {
-    const sidebar = document.querySelector(".sidebar");
+    const sidebar = document.querySelector<HTMLElement>(".sidebar");
     const mask = document.querySelector(".sidebar-mask");
+    if (!sidebar || !mask) return;
     const mobile = window.matchMedia(`(width < ${MOBILE_BREAKPOINT}px)`);
+    const listeners = new AbortController();
+    const { signal } = listeners;
 
     // the page scrolls on <html>, so overflow: hidden on <body> does nothing —
-    // and setting it on <html> breaks the sticky header on iOS Safari. Take the
-    // body out of flow instead, restoring scroll position on unlock.
+    // and setting it on <html> breaks the sticky header on iOS safari
+    // take the body out of flow instead, restoring scroll position on unlock
     let lockedScrollY = 0;
     let isLocked = false;
+
+    const unlockBodyScroll = () => {
+      if (!isLocked) return;
+      isLocked = false;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo({ top: lockedScrollY, behavior: "instant" });
+    };
 
     const updateBodyScroll = () => {
       const shouldLock = mobile.matches && sidebarOpen.get();
       if (shouldLock === isLocked) return;
-      isLocked = shouldLock;
-
       if (shouldLock) {
+        isLocked = true;
         lockedScrollY = window.scrollY;
         document.body.style.position = "fixed";
         document.body.style.top = `-${lockedScrollY}px`;
         document.body.style.left = "0";
         document.body.style.right = "0";
       } else {
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.left = "";
-        document.body.style.right = "";
-        window.scrollTo(0, lockedScrollY);
+        unlockBodyScroll();
       }
     };
 
     const unsub = sidebarOpen.subscribe((open) => {
-      sidebar?.classList.toggle("open", open);
+      sidebar.classList.toggle("open", open);
       updateBodyScroll();
     });
 
     const handleMaskClick = () => sidebarOpen.set(false);
-
     // close the drawer before the anchor jump so the scroll lock does not
     // prevent scrolling to the selected heading
     const handleLinkClick = (event: MouseEvent) => {
       const target = event.target as Element | null;
-      if (!target?.closest?.(".sidebar a[href^='#']")) return;
-      if (mobile.matches) sidebarOpen.set(false);
+      if (mobile.matches && target?.closest("a[href^='#']")) {
+        sidebarOpen.set(false);
+      }
     };
 
-    mask?.addEventListener("click", handleMaskClick);
-    document.addEventListener("click", handleLinkClick, true);
-    mobile.addEventListener("change", updateBodyScroll);
-    requestAnimationFrame(() => sidebar?.classList.add("mounted"));
+    const prepareNavigation = (event: TransitionBeforePreparationEvent) => {
+      const load = event.loader;
+      // unlock after loading so astro saves the real scroll position
+      event.loader = async () => {
+        await load();
+        if (!event.signal.aborted && !signal.aborted) unlockBodyScroll();
+      };
+      event.signal.addEventListener("abort", updateBodyScroll, {
+        once: true,
+        signal,
+      });
+    };
 
-    document.addEventListener(
-      "astro:before-preparation",
-      () => {
-        unsub();
-        mask?.removeEventListener("click", handleMaskClick);
-        document.removeEventListener("click", handleLinkClick, true);
-        mobile.removeEventListener("change", updateBodyScroll);
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.left = "";
-        document.body.style.right = "";
-      },
-      { once: true },
-    );
+    const cleanup = () => {
+      unsub();
+      listeners.abort();
+      unlockBodyScroll();
+    };
+
+    document.addEventListener("astro:before-preparation", prepareNavigation, {
+      signal,
+    });
+    document.addEventListener("astro:before-swap", cleanup, {
+      once: true,
+      signal,
+    });
+    mask.addEventListener("click", handleMaskClick, { signal });
+    sidebar.addEventListener("click", handleLinkClick, { signal });
+    mobile.addEventListener("change", updateBodyScroll, { signal });
+    sidebar.classList.add("mounted");
   });
 </script>

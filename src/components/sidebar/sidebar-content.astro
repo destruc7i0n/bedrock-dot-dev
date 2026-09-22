@@ -62,6 +62,14 @@ const { sidebar, file } = Astro.props;
 <style>
   @reference "../../styles/tailwind.css";
 
+  .sidebar-group summary {
+    list-style: none;
+  }
+
+  .sidebar-group summary::-webkit-details-marker {
+    display: none;
+  }
+
   .sidebar-title {
     @apply hover:text-gray-900 dark:hover:text-gray-200;
   }
@@ -88,27 +96,31 @@ const { sidebar, file } = Astro.props;
       window.removeEventListener("hashchange", this.updateHash);
     }
 
-    private updateHash = () => {
-      let hash: string;
+    private updateHash = (event: Event) => {
+      let hash = "";
       try {
         hash = decodeURIComponent(location.hash.slice(1));
       } catch {
-        return;
+        // an invalid fragment should clear the previous selection
       }
+      let selected: HTMLAnchorElement | undefined;
       for (const link of this.querySelectorAll<HTMLAnchorElement>("a")) {
         const active = decodeURIComponent(link.hash.slice(1)) === hash;
         if (active && hash) {
           link.setAttribute("aria-current", "location");
-          const group = link.closest("details");
-          if (group) group.open = true;
-          // keep the selected item below the selectors and search controls
-          if (link.classList.contains("sidebar-id")) {
-            this.scrollTop = link.offsetTop - 164;
-          }
+          if (!selected && link.classList.contains("sidebar-id"))
+            selected = link;
         } else {
           link.removeAttribute("aria-current");
         }
       }
+      if (!selected) return;
+      if (event.type === "astro:page-load") {
+        const group = selected.closest("details");
+        if (group) group.open = true;
+      }
+      // keep the selected item below the selectors and search controls
+      this.scrollTop = selected.offsetTop - 164;
     };
   }
 
