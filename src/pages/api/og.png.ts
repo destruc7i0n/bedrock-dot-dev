@@ -116,12 +116,7 @@ export const GET: APIRoute = async ({ request }) => {
     const image = new ImageResponse(OgCard({ file, asset, ...resolved }), {
       ...SIZE,
       renderer: await getRenderer(),
-      headers: {
-        "cache-control": OG_CACHE_CONTROL,
-        "x-runtime-check": process.versions.bun
-          ? `bun/${process.versions.bun}`
-          : `node/${process.versions.node}`,
-      },
+      headers: { "cache-control": OG_CACHE_CONTROL },
     });
 
     // takumi renders in the body stream, so a failure would ship a broken 200
