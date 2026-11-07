@@ -30,8 +30,8 @@ export async function listReleases(
       }
 
       const json = await res.json();
-      if (json.length === 0) break;
       releases = [...releases, ...(json as GithubReleasePartial[])];
+      if (json.length < 100) break;
       page++;
     } catch (error) {
       console.error(
